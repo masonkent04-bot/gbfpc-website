@@ -708,25 +708,47 @@
   }
 
   // Fetch from Supabase
-  var now = new Date().toISOString();
+  // NOTE: publish_at filter is applied client-side until v2 migration is confirmed run in Supabase.
+  // Once migration is run, the or=(publish_at.is.null,...) can be moved back into the URL.
+  var today = new Date().toISOString().slice(0,10);
   var endpoint = SUPABASE_URL + '/rest/v1/events'
     + '?is_published=eq.true'
-    + '&or=(publish_at.is.null,publish_at.lte.'+encodeURIComponent(now)+')'
-    + '&event_date=gte.'+new Date().toISOString().slice(0,10)
+    + '&event_date=gte.' + today
     + '&order=is_featured.desc,event_date.asc'
     + '&limit=20'
     + '&select=*';
 
+  // Hard timeout — clears spinner if fetch never resolves (network error, CORS, etc.)
+  var fetchTimeout = setTimeout(function(){
+    if(loading) loading.remove();
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:72px 0;">'
+      +'<p style="font-size:0.8rem;color:#bbb;">Events could not be loaded. Please try again later.</p>'
+      +'</div>';
+  }, 8000);
+
   fetch(endpoint, {
     headers: { 'apikey': ANON_KEY, 'Authorization': 'Bearer '+ANON_KEY }
   })
-  .then(function(r){ return r.json(); })
+  .then(function(r){
+    // Throw on HTTP errors (4xx/5xx) so .catch() handles them
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    return r.json();
+  })
   .then(function(events){
+    clearTimeout(fetchTimeout);
     if(loading) loading.remove();
-    if(!events || !events.length){
+
+    // Client-side publish_at filter (guards scheduled events until column exists in schema)
+    var nowMs = Date.now();
+    events = (events||[]).filter(function(ev){
+      if(!ev.publish_at) return true;
+      return new Date(ev.publish_at).getTime() <= nowMs;
+    });
+
+    if(!events.length){
       grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:72px 0;">'
         +'<p style="font-size:0.8rem;color:#bbb;font-weight:500;">No upcoming events right now.</p>'
-        +'<p style="font-size:0.72rem;color:#ccc;margin-top:8px;">Check back soon — we're always planning something.</p>'
+        +'<p style="font-size:0.72rem;color:#ccc;margin-top:8px;">Check back soon — we\'re always planning something.</p>'
         +'</div>';
       return;
     }
@@ -743,6 +765,7 @@
     grid.querySelectorAll('.r').forEach(function(el){ observer.observe(el); });
   })
   .catch(function(){
+    clearTimeout(fetchTimeout);
     if(loading) loading.remove();
     grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:72px 0;">'
       +'<p style="font-size:0.8rem;color:#bbb;">Could not load events. Please try again later.</p>'
