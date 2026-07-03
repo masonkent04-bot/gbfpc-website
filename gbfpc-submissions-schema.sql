@@ -45,29 +45,32 @@ CREATE INDEX IF NOT EXISTS idx_contact_submissions_status
 -- ────────────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS public.visit_submissions (
   id                UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
-  first_name        TEXT        NOT NULL,
-  last_name         TEXT        NOT NULL,
-  email             TEXT        NOT NULL,
-  phone             TEXT,
-  -- Which service they plan to attend
-  service_pref      TEXT        -- e.g. 'Sunday Morning', 'Tuesday Night', 'Either'
-                    CHECK (service_pref IN (
-                      'Sunday Morning', 'Tuesday Night', 'Either', NULL
-                    )),
-  -- Planned visit date (user picks a date)
-  visit_date        DATE,
-  -- Party size
-  party_size        INT         DEFAULT 1,
-  -- Children attending?
+  -- Q1: Full name
+  full_name         TEXT        NOT NULL,
+  -- Q2: Which service(s) — comma-separated e.g. "Sunday 10AM,Sunday 6PM"
+  services          TEXT,
+  -- Q3: Needs a ride?
+  needs_ride        BOOLEAN     DEFAULT FALSE,
+  -- Q4-5: Adults
+  adult_count       INT         DEFAULT 1,
+  adult_names       TEXT,
+  -- Q6-8: Children
   has_children      BOOLEAN     DEFAULT FALSE,
-  children_ages     TEXT,       -- free text e.g. "3, 7, 12"
-  -- First-time visitor?
-  first_visit       BOOLEAN     DEFAULT TRUE,
-  -- How did they hear about us
-  how_heard         TEXT,
-  -- Any questions or special needs
-  notes             TEXT,
-  -- workflow status
+  children_count    INT,
+  children_names    TEXT,
+  -- Q9-14: Contact info
+  email             TEXT,
+  phone             TEXT        NOT NULL,
+  address           TEXT        NOT NULL,
+  unit_number       TEXT,
+  city              TEXT        NOT NULL,
+  zip_code          TEXT        NOT NULL,
+  -- Q15: Bible study interest
+  wants_bible_study BOOLEAN     DEFAULT FALSE,
+  -- Q16-17: Prayer request
+  has_prayer_request BOOLEAN    DEFAULT FALSE,
+  prayer_request    TEXT,
+  -- Workflow
   status            TEXT        NOT NULL DEFAULT 'new'
                     CHECK (status IN ('new', 'contacted', 'completed')),
   staff_note        TEXT,
