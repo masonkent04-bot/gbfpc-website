@@ -22,37 +22,86 @@
   a { color: inherit; text-decoration: none; }
   img { display: block; }
 
-  /* ━━━━━━━━━━━━━━━━━━━━━━━━
-     HEADER
-  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  /* ━━ HEADER ━━ */
   #header {
-    position: relative; z-index: 200;
+    position: sticky; top: 0;
+    z-index: 200;
     background: rgba(255,255,255,0.97);
     backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid #e8e8e8;
+    display: flex; align-items: center;
+    padding: 0 48px; height: 68px; gap: 0;
   }
+  .hdr-logo-link {
+    flex-shrink: 0; display: flex; align-items: center; margin-right: 36px;
+  }
+  .hdr-logo { height: 36px; width: auto; object-fit: contain; filter: brightness(0); }
   .hdr-nav {
-    display: flex; justify-content: center; align-items: center;
-    gap: 40px; padding: 12px 56px; border-bottom: 1px solid var(--c-border);
+    display: flex; align-items: center; gap: 32px; flex: 1;
   }
   .hdr-nav a {
-    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.16em;
-    text-transform: uppercase; color: #555; transition: color 0.2s; white-space: nowrap;
+    font-size: 0.67rem; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; color: #666; transition: color 0.2s; white-space: nowrap;
   }
   .hdr-nav a:hover { color: #000; }
-  .hdr-nav a.active { color: #000; }
-  .hdr-brand { display: flex; align-items: center; justify-content: space-between; padding: 16px 56px; }
-  .hdr-left { display: flex; align-items: center; gap: 16px; }
-  .hdr-logo { height: 40px; width: auto; object-fit: contain; filter: brightness(0); }
-  .hdr-name { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; line-height: 1.35; color: var(--c-dark); }
-  .hdr-cta {
-    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
-    padding: 11px 24px; border: 1px solid var(--c-dark); color: var(--c-dark);
-    transition: background 0.2s, color 0.2s; white-space: nowrap;
-    border-radius: 8px;
+  .hdr-nav a.active { color: var(--c-brand); }
+  .hdr-pv {
+    flex-shrink: 0; margin-left: auto;
+    font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 10px 22px; border: 1.5px solid var(--c-dark); color: var(--c-dark);
+    border-radius: 100px;
+    transition: background 0.18s, color 0.18s, border-color 0.18s; white-space: nowrap;
   }
-  .hdr-cta:hover { background: #000; color: #fff; } /* keep #000 — not a token */
+  .hdr-pv:hover { background: #000; border-color: #000; color: #fff; }
   .hdr-spacer { height: 0; }
+  /* Mobile toggle */
+  .nav-toggle {
+    display: none; flex-direction: column; justify-content: center; gap: 5px;
+    background: none; border: none; cursor: pointer; padding: 10px;
+    flex-shrink: 0; margin-left: auto;
+  }
+  .nav-toggle-bar {
+    display: block; width: 22px; height: 2px; background: var(--c-dark);
+    border-radius: 2px; transition: transform 0.3s ease, opacity 0.2s ease;
+  }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  /* Mobile nav overlay */
+  .nav-close-btn {
+    display: none; position: absolute; top: 18px; right: 20px;
+    background: none; border: none; cursor: pointer;
+    width: 40px; height: 40px; align-items: center; justify-content: center;
+    color: #aaa; font-size: 1.6rem; line-height: 1; padding: 0;
+    transition: color 0.2s;
+  }
+  .nav-close-btn:hover { color: #111; }
+  @media (max-width: 900px) {
+    #header { padding: 0 28px; }
+    .hdr-nav { gap: 22px; }
+  }
+  @media (max-width: 768px) {
+    #header { padding: 0 20px; height: 60px; }
+    .hdr-pv { display: none; }
+    .nav-toggle { display: flex; }
+    .hdr-spacer { height: 60px; }
+    .hdr-nav {
+      display: none;
+      position: fixed; inset: 0;
+      background: #fff; z-index: 1050;
+      flex-direction: column; align-items: center; justify-content: center;
+      gap: 2.5rem;
+    }
+    .hdr-nav.nav-open { display: flex; }
+    .hdr-nav a { font-size: 1.3rem; font-weight: 700; letter-spacing: 0.05em; color: var(--c-dark); }
+    .hdr-nav a.active { color: var(--c-brand); }
+    .hdr-nav a:hover { color: var(--c-brand); }
+    .nav-close-btn { display: flex; }
+    /* Toggle floats above overlay when open */
+    .nav-toggle-open {
+      position: fixed; top: 14px; right: 20px; z-index: 1100;
+    }
+  }
 
   /* ━━━━━━━━━━━━━━━━━━━━━━━━
      SCROLL REVEAL
@@ -512,12 +561,11 @@
 
 <!-- ═══════ HEADER ═══════ -->
 <header id="header">
-  <button class="nav-toggle" id="navToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mainNav">
-    <span class="nav-toggle-bar"></span>
-    <span class="nav-toggle-bar"></span>
-    <span class="nav-toggle-bar"></span>
-  </button>
-  <nav class="hdr-nav" id="mainNav" aria-label="Main navigation">
+  <a href="/" class="hdr-logo-link" aria-label="GBFPC Home">
+    <img src="gbfpc-logo.svg" alt="GBFPC" class="hdr-logo"/>
+  </a>
+  <nav class="hdr-nav" id="mainNav" role="navigation" aria-label="Main navigation">
+    <button class="nav-close-btn" id="navClose" aria-label="Close menu">&#x2715;</button>
     <a href="gbfpc-about.html" class="active">About</a>
     <a href="gbfpc-ministries.html">Ministries</a>
     <a href="gbfpc-education.html">Education</a>
@@ -526,13 +574,12 @@
     <a href="gbfpc-connect.html">Connect</a>
     <a href="gbfpc-livestream.html">Livestream</a>
   </nav>
-  <div class="hdr-brand">
-    <a href="/" class="hdr-left">
-      <img src="gbfpc-logo.svg" alt="GBFPC" class="hdr-logo"/>
-      <span class="hdr-name">Greater Bakersfield's<br>First Pentecostal Church</span>
-    </a>
-    <a href="gbfpc-visit.html" class="hdr-cta">Plan Your Visit</a>
-  </div>
+  <a href="gbfpc-visit.html" class="hdr-pv">Plan Your Visit</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav">
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+  </button>
 </header>
 
 <div class="hdr-spacer"></div>
@@ -843,34 +890,17 @@
 </script>
 
 <script>
-(function() {
+(function(){
   var toggle = document.getElementById('navToggle');
   var nav = document.getElementById('mainNav');
-  if (!toggle || !nav) return;
-  toggle.addEventListener('click', function() {
-    var expanded = toggle.getAttribute('aria-expanded') === 'true';
-    toggle.setAttribute('aria-expanded', String(!expanded));
-    toggle.setAttribute('aria-label', expanded ? 'Open navigation menu' : 'Close navigation menu');
-    nav.classList.toggle('nav-open', !expanded);
-    document.body.style.overflow = expanded ? '' : 'hidden';
-  });
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && nav.classList.contains('nav-open')) {
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.setAttribute('aria-label', 'Open navigation menu');
-      nav.classList.remove('nav-open');
-      document.body.style.overflow = '';
-      toggle.focus();
-    }
-  });
-  nav.querySelectorAll('a').forEach(function(link) {
-    link.addEventListener('click', function() {
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.setAttribute('aria-label', 'Open navigation menu');
-      nav.classList.remove('nav-open');
-      document.body.style.overflow = '';
-    });
-  });
+  var closeBtn = document.getElementById('navClose');
+  if(!toggle || !nav) return;
+  function openMenu(){ nav.classList.add('nav-open'); toggle.setAttribute('aria-expanded','true'); toggle.setAttribute('aria-label','Close menu'); toggle.classList.add('nav-toggle-open'); document.body.style.overflow='hidden'; }
+  function closeMenu(){ nav.classList.remove('nav-open'); toggle.setAttribute('aria-expanded','false'); toggle.setAttribute('aria-label','Open menu'); toggle.classList.remove('nav-toggle-open'); document.body.style.overflow=''; }
+  toggle.addEventListener('click', function(){ if(toggle.getAttribute('aria-expanded')==='true'){closeMenu();}else{openMenu();} });
+  if(closeBtn) closeBtn.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape'&&nav.classList.contains('nav-open')) closeMenu(); });
+  nav.querySelectorAll('a').forEach(function(link){ link.addEventListener('click', closeMenu); });
 })();
 </script>
 
@@ -900,6 +930,7 @@ body:has(#intro-splash) #pg-t{opacity:0!important;pointer-events:none!important;
       setTimeout(function(){window.location.href=h},520);
     });
   });
+  window.addEventListener('pageshow',function(e){if(e.persisted){t.style.opacity='0';t.style.pointerEvents='none';}});
 }();
 </script>
 </body>

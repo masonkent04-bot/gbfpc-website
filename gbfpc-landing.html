@@ -55,129 +55,86 @@
   a { color: inherit; text-decoration: none; }
   img { display: block; }
 
-  /* ━━━━━━━━━━━━━━━━━━━━━━━━
-     HEADER — fixed, two rows
-  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  /* ━━ HEADER ━━ */
   #header {
-    position: relative;
+    position: sticky; top: 0;
     z-index: 200;
     background: rgba(255,255,255,0.97);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid #e8e8e8;
+    display: flex; align-items: center;
+    padding: 0 48px; height: 68px; gap: 0;
   }
-
-  /* ── Mobile Nav Toggle ── */
+  .hdr-logo-link {
+    flex-shrink: 0; display: flex; align-items: center; margin-right: 36px;
+  }
+  .hdr-logo { height: 36px; width: auto; object-fit: contain; filter: brightness(0); }
+  .hdr-nav {
+    display: flex; align-items: center; gap: 32px; flex: 1;
+  }
+  .hdr-nav a {
+    font-size: 0.67rem; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; color: #666; transition: color 0.2s; white-space: nowrap;
+  }
+  .hdr-nav a:hover { color: #000; }
+  .hdr-nav a.active { color: var(--c-brand); }
+  .hdr-pv {
+    flex-shrink: 0; margin-left: auto;
+    font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 10px 22px; border: 1.5px solid var(--c-dark); color: var(--c-dark);
+    border-radius: 100px;
+    transition: background 0.18s, color 0.18s, border-color 0.18s; white-space: nowrap;
+  }
+  .hdr-pv:hover { background: #000; border-color: #000; color: #fff; }
+  .hdr-spacer { height: 0; }
+  /* Mobile toggle */
   .nav-toggle {
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    gap: 5px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 10px;
-    z-index: 1100;
-    position: relative;
+    display: none; flex-direction: column; justify-content: center; gap: 5px;
+    background: none; border: none; cursor: pointer; padding: 10px;
+    flex-shrink: 0; margin-left: auto;
   }
   .nav-toggle-bar {
-    display: block;
-    width: 22px;
-    height: 2px;
-    background: var(--c-dark);
-    border-radius: 2px;
-    transition: transform 0.3s cubic-bezier(0.42,0,0.58,1), opacity 0.2s ease;
+    display: block; width: 22px; height: 2px; background: var(--c-dark);
+    border-radius: 2px; transition: transform 0.3s ease, opacity 0.2s ease;
   }
   .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
   .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
   .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-  @media (max-width: 768px) {
-    .nav-toggle { display: flex; }
-    .hdr-nav {
-      display: none !important;
-      position: fixed;
-      inset: 0;
-      background: #fff;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 2.5rem;
-      z-index: 1050;
-      padding: 2rem;
-    }
-    .hdr-nav.nav-open {
-      display: flex !important;
-    }
-    .hdr-nav a {
-      font-size: 1.25rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      color: var(--c-dark);
-      text-transform: uppercase;
-    }
-    .hdr-nav a.active { color: var(--c-brand); }
-    .hdr-spacer { height: 70px; }
-  }
-
-  /* Row 1 — centered nav */
-  .hdr-nav {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 40px;
-    padding: 12px 56px;
-    border-bottom: 1px solid var(--c-border);
-  }
-  .hdr-nav a {
-    font-size: 0.68rem;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: #555;
+  /* Mobile nav overlay */
+  .nav-close-btn {
+    display: none; position: absolute; top: 18px; right: 20px;
+    background: none; border: none; cursor: pointer;
+    width: 40px; height: 40px; align-items: center; justify-content: center;
+    color: #aaa; font-size: 1.6rem; line-height: 1; padding: 0;
     transition: color 0.2s;
-    white-space: nowrap;
   }
-  .hdr-nav a:hover { color: #000; }
-
-  /* Row 2 — logo left / cta right */
-  .hdr-brand {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 56px;
+  .nav-close-btn:hover { color: #111; }
+  @media (max-width: 900px) {
+    #header { padding: 0 28px; }
+    .hdr-nav { gap: 22px; }
   }
-  .hdr-left {
-    display: flex;
-    align-items: center;
-    gap: 16px;
+  @media (max-width: 768px) {
+    #header { padding: 0 20px; height: 60px; }
+    .hdr-pv { display: none; }
+    .nav-toggle { display: flex; }
+    .hdr-spacer { height: 60px; }
+    .hdr-nav {
+      display: none;
+      position: fixed; inset: 0;
+      background: #fff; z-index: 1050;
+      flex-direction: column; align-items: center; justify-content: center;
+      gap: 2.5rem;
+    }
+    .hdr-nav.nav-open { display: flex; }
+    .hdr-nav a { font-size: 1.3rem; font-weight: 700; letter-spacing: 0.05em; color: var(--c-dark); }
+    .hdr-nav a.active { color: var(--c-brand); }
+    .hdr-nav a:hover { color: var(--c-brand); }
+    .nav-close-btn { display: flex; }
+    /* Toggle floats above overlay when open */
+    .nav-toggle-open {
+      position: fixed; top: 14px; right: 20px; z-index: 1100;
+    }
   }
-  .hdr-logo { height: 40px; width: auto; object-fit: contain; filter: brightness(0); }
-  .hdr-name {
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    line-height: 1.35;
-    color: rgba(255,255,255,0.9);
-    transition: color 0.4s;
-  }
-  .hdr-name { color: var(--c-dark) !important; }
-  .hdr-cta {
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    padding: 11px 24px;
-    border: 1px solid var(--c-dark);
-    color: var(--c-dark);
-    border-radius: 8px;
-    transition: opacity 0.18s cubic-bezier(0,0,0.2,1), background 0.18s cubic-bezier(0,0,0.2,1), color 0.18s cubic-bezier(0,0,0.2,1);
-    white-space: nowrap;
-  }
-  .hdr-cta:hover { background: #000; border-color: #000; color: #fff; } /* hover stays black intentionally */
-
-  .hdr-spacer { height: 0; }
 
   /* ━━━━━━━━━━━━━━━━━━━━━━━━
      HERO — dark video box, rounded, slides in
@@ -1064,12 +1021,11 @@
 
 <!-- ═══════ HEADER ═══════ -->
 <header id="header">
-  <button class="nav-toggle" id="navToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mainNav">
-    <span class="nav-toggle-bar"></span>
-    <span class="nav-toggle-bar"></span>
-    <span class="nav-toggle-bar"></span>
-  </button>
+  <a href="gbfpc-landing.html" class="hdr-logo-link" aria-label="GBFPC Home">
+    <img src="gbfpc-logo.svg" alt="GBFPC" class="hdr-logo"/>
+  </a>
   <nav class="hdr-nav" id="mainNav" role="navigation" aria-label="Main navigation">
+    <button class="nav-close-btn" id="navClose" aria-label="Close menu">&#x2715;</button>
     <a href="gbfpc-about.html">About</a>
     <a href="gbfpc-ministries.html">Ministries</a>
     <a href="gbfpc-education.html">Education</a>
@@ -1078,13 +1034,12 @@
     <a href="gbfpc-connect.html">Connect</a>
     <a href="gbfpc-livestream.html">Livestream</a>
   </nav>
-  <div class="hdr-brand">
-    <a href="gbfpc-landing.html" class="hdr-left">
-      <img src="gbfpc-logo.svg" alt="GBFPC" class="hdr-logo"/>
-      <span class="hdr-name">Greater Bakersfield's<br>First Pentecostal Church</span>
-    </a>
-    <a href="gbfpc-visit.html" class="hdr-cta">Plan Your Visit</a>
-  </div>
+  <a href="gbfpc-visit.html" class="hdr-pv">Plan Your Visit</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav">
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+  </button>
 </header>
 
 <div class="hdr-spacer"></div>
@@ -1380,200 +1335,34 @@
     var hActive = hVA, hStandby = hVB, hFading = false;
     hActive.style.opacity = '1';
 
-    hActive.play().catch(function(){});
-
-    function heroTick() {
-      if (!hActive.duration || hFading) return;
-      if (hActive.currentTime >= hActive.duration - FADE) {
-        hFading = true;
-        hStandby.currentTime = 0;
-        hStandby.play().catch(function(){});
-        hStandby.style.opacity = '1'; // CSS transition does the fade
-        hActive.style.opacity  = '0';
-        setTimeout(function() {
-          hActive.pause();
-          hActive.currentTime = 0;
-          var tmp = hActive; hActive = hStandby; hStandby = tmp;
-          hFading = false;
-        }, FADE * 1000);
-      }
-    }
-    hVA.addEventListener('timeupdate', heroTick);
-    hVB.addEventListener('timeupdate', heroTick);
-  })();
-
-  // ── PASTOR VIDEO: autoplay on scroll ─────────────────────────────────────
-  (function() {
-    var pVid = document.getElementById('pastorVid');
-    if (!pVid) return;
-
-    // Show video (hide gradient) once it has data to display
-    pVid.addEventListener('loadeddata', function() {
-      pVid.classList.add('loaded');
-    });
-
-    // Autoplay / pause based on viewport visibility
-    var pObs = new IntersectionObserver(function(entries) {
-      entries.forEach(function(e) {
-        if (e.isIntersecting) {
-          pVid.play().catch(function(){});
-        } else {
-          pVid.pause();
-        }
-      });
-    }, { threshold: 0.35 });
-
-    pObs.observe(pVid.closest('.pastor-vbox') || pVid);
-  })();
-</script>
-
-<!-- LANDING MINISTRIES CAROUSEL -->
-<script>
-(function(){
-  var track = document.getElementById('ldScrollTrack');
-  if(!track) return;
-  var cardW = 244;
-  var prev = document.getElementById('ldPrev');
-  var next = document.getElementById('ldNext');
-  if(prev) prev.addEventListener('click', function(){ track.scrollBy({left: -cardW, behavior:'smooth'}); });
-  if(next) next.addEventListener('click', function(){ track.scrollBy({left: cardW, behavior:'smooth'}); });
-  // Wheel: vertical stays on page
-  track.addEventListener('wheel', function(e){
-    if(Math.abs(e.deltaY) > Math.abs(e.deltaX) && !e.shiftKey){ return; }
-    e.preventDefault();
-    track.scrollLeft += e.deltaX || e.deltaY;
-  }, {passive: false});
-  // Drag with momentum
-  var isDragging = false, startX = 0, scrollLeft0 = 0;
-  var velX = 0, prevClientX = 0, prevTime = 0, rafId, moved = false;
-  function momentum(){
-    velX *= 0.88;
-    track.scrollLeft += velX;
-    if(Math.abs(velX) > 0.5){ rafId = requestAnimationFrame(momentum); }
-  }
-  track.addEventListener('mousedown', function(e){
-    isDragging = true; moved = false; velX = 0;
-    cancelAnimationFrame(rafId);
-    startX = e.clientX;
-    scrollLeft0 = track.scrollLeft;
-    prevClientX = e.clientX; prevTime = Date.now();
-    track.style.cursor = 'grabbing';
-  });
-  document.addEventListener('mouseup', function(){
-    if(!isDragging) return;
-    isDragging = false;
-    track.style.cursor = 'grab';
-    rafId = requestAnimationFrame(momentum);
-  });
-  track.addEventListener('mousemove', function(e){
-    if(!isDragging) return;
-    e.preventDefault();
-    moved = true;
-    var now = Date.now(), dt = Math.max(now - prevTime, 1);
-    velX = (prevClientX - e.clientX) / dt * 10;
-    prevClientX = e.clientX; prevTime = now;
-    track.scrollLeft = scrollLeft0 - (e.clientX - startX);
-  });
-  track.addEventListener('click', function(e){
-    if(moved){ e.preventDefault(); moved = false; }
-  });
-})();
-</script>
-
-<!-- PAGE TRANSITION -->
-<div id="pg-t"></div>
-<style>
-#pg-t{position:fixed;inset:0;z-index:9999;background:var(--c-darker);opacity:1;pointer-events:all;transition:opacity .5s ease}
-body:has(#intro-splash) #pg-t{opacity:0!important;pointer-events:none!important;transition:none!important}
-</style>
-<script>
-!function(){
-  var t=document.getElementById('pg-t');
-  document.addEventListener('DOMContentLoaded',function(){
-    if(document.getElementById('intro-splash')){
-      t.style.cssText='opacity:0;pointer-events:none;transition:none';
-    } else {
-      requestAnimationFrame(function(){requestAnimationFrame(function(){
-        t.style.opacity='0';t.style.pointerEvents='none';
-      });});
-    }
-    document.addEventListener('click',function(e){
-      var a=e.target.closest('a[href]');if(!a)return;
-      var h=a.getAttribute('href');
-      if(!h||h[0]==='#'||h.startsWith('http')||h.startsWith('mailto')||h.startsWith('tel')||a.target==='_blank')return;
-      e.preventDefault();
-      t.style.cssText='opacity:1;pointer-events:all;transition:opacity .5s ease';
-      setTimeout(function(){window.location.href=h},520);
-    });
-  });
-  window.addEventListener('pageshow',function(e){if(e.persisted){t.style.opacity='0';t.style.pointerEvents='none';}});
-}();
-</script>
-
-<!-- INTRO SPLASH -->
-<div id="intro-splash">
-  <!-- Animated cross -->
-  <svg class="is-cross" viewBox="0 0 60 92" width="50" height="76" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path class="ic-vt" d="M30 30 L30 5"  stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-    <path class="ic-vb" d="M30 30 L30 87" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-    <path class="ic-h"  d="M4  30 L56 30" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-  </svg>
-  <!-- Church name -->
-  <div class="is-name">
-    <span class="is-w">Greater</span>
-    <span class="is-w">Bakersfield's</span>
-    <span class="is-w">First</span>
-    <span class="is-w">Pentecostal</span>
-    <span class="is-w">Church</span>
-  </div>
-  <!-- Location -->
-  <div class="is-loc">Bakersfield &nbsp;&middot;&nbsp; California</div>
-  <!-- Gold line -->
-  <div class="is-line-wrap"><div class="is-line"></div></div>
-</div>
-<script>
-!function(){
-  var s=document.getElementById('intro-splash');
-  if(!s)return;
-  setTimeout(function(){
-    s.classList.add('is-exit');
-    setTimeout(function(){s.remove();},900);
-  },3500);
-}();
-</script>
-
-
-
-
-<script>
-// ── Mobile Nav ──
-(function() {
+    hActive.play().catch(function(){
   var toggle = document.getElementById('navToggle');
   var nav = document.getElementById('mainNav');
-  if (!toggle || !nav) return;
-  toggle.addEventListener('click', function() {
-    var expanded = toggle.getAttribute('aria-expanded') === 'true';
-    toggle.setAttribute('aria-expanded', String(!expanded));
-    toggle.setAttribute('aria-label', expanded ? 'Open navigation menu' : 'Close navigation menu');
-    nav.classList.toggle('nav-open', !expanded);
-    document.body.style.overflow = expanded ? '' : 'hidden';
+  var closeBtn = document.getElementById('navClose');
+  if(!toggle || !nav) return;
+  function openMenu(){
+    nav.classList.add('nav-open');
+    toggle.setAttribute('aria-expanded','true');
+    toggle.setAttribute('aria-label','Close menu');
+    toggle.classList.add('nav-toggle-open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMenu(){
+    nav.classList.remove('nav-open');
+    toggle.setAttribute('aria-expanded','false');
+    toggle.setAttribute('aria-label','Open menu');
+    toggle.classList.remove('nav-toggle-open');
+    document.body.style.overflow = '';
+  }
+  toggle.addEventListener('click', function(){
+    if(toggle.getAttribute('aria-expanded')==='true'){ closeMenu(); } else { openMenu(); }
   });
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && nav.classList.contains('nav-open')) {
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.setAttribute('aria-label', 'Open navigation menu');
-      nav.classList.remove('nav-open');
-      document.body.style.overflow = '';
-      toggle.focus();
-    }
+  if(closeBtn) closeBtn.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', function(e){
+    if(e.key==='Escape' && nav.classList.contains('nav-open')) closeMenu();
   });
-  nav.querySelectorAll('a').forEach(function(link) {
-    link.addEventListener('click', function() {
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.setAttribute('aria-label', 'Open navigation menu');
-      nav.classList.remove('nav-open');
-      document.body.style.overflow = '';
-    });
+  nav.querySelectorAll('a').forEach(function(link){
+    link.addEventListener('click', closeMenu);
   });
 })();
 </script>
