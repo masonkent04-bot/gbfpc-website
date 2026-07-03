@@ -444,28 +444,28 @@
   <div class="contact-main-inner">
     <div class="contact-form-wrap r">
       <div class="form-title">Send Us<br>a Message</div>
-      <form id="contactForm" action="mailto:info@gbfpc.org" method="POST" enctype="text/plain" novalidate>
+      <form id="contactForm" novalidate>
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">First Name</label>
-            <input class="form-input" type="text" placeholder="John"/>
+            <label class="form-label" for="cf-first">First Name</label>
+            <input id="cf-first" name="first_name" class="form-input" type="text" placeholder="John" required/>
           </div>
           <div class="form-group">
-            <label class="form-label">Last Name</label>
-            <input class="form-input" type="text" placeholder="Smith"/>
+            <label class="form-label" for="cf-last">Last Name</label>
+            <input id="cf-last" name="last_name" class="form-input" type="text" placeholder="Smith" required/>
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">Email Address</label>
-          <input class="form-input" type="email" placeholder="john@example.com"/>
+          <label class="form-label" for="cf-email">Email Address</label>
+          <input id="cf-email" name="email" class="form-input" type="email" placeholder="john@example.com" required/>
         </div>
         <div class="form-group">
-          <label class="form-label">Phone (optional)</label>
-          <input class="form-input" type="tel" placeholder="(661) 000-0000"/>
+          <label class="form-label" for="cf-phone">Phone (optional)</label>
+          <input id="cf-phone" name="phone" class="form-input" type="tel" placeholder="(661) 000-0000"/>
         </div>
         <div class="form-group">
-          <label class="form-label">I'm reaching out about</label>
-          <select class="form-select form-input">
+          <label class="form-label" for="cf-topic">I'm reaching out about</label>
+          <select id="cf-topic" name="topic" class="form-select form-input">
             <option value="">Select a topic</option>
             <option>General Question</option>
             <option>Prayer Request</option>
@@ -478,14 +478,90 @@
           </select>
         </div>
         <div class="form-group">
-          <label class="form-label">Message</label>
-          <textarea class="form-textarea" placeholder="Tell us how we can help…"></textarea>
+          <label class="form-label" for="cf-message">Message</label>
+          <textarea id="cf-message" name="message" class="form-textarea" placeholder="Tell us how we can help…" required></textarea>
         </div>
-        <button class="form-submit" type="submit" aria-label="Send message to GBFPC">Send Message →</button>
+        <div id="cf-error" style="display:none;margin-bottom:14px;padding:12px 16px;background:#fff0f0;border:1px solid #fcc;border-radius:8px;font-size:0.78rem;color:#c00;"></div>
+        <button id="cf-btn" class="form-submit" type="submit" aria-label="Send message to GBFPC">Send Message →</button>
       </form>
-      <p class="form-note" style="font-size:0.78rem;color:#888;margin-top:1rem;text-align:center;">
-        Your message will open in your email client. Alternatively, call us at <a href="tel:+16613232851" style="color:#c9a96e;">(661) 323-2851</a>.
-      </p>
+
+      <!-- Success state — hidden until form sends -->
+      <div id="cf-success" style="display:none;text-align:center;padding:48px 24px;">
+        <div style="width:52px;height:52px;border-radius:50%;background:rgba(201,169,110,0.12);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#c9a96e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <p style="font-size:1.05rem;font-weight:700;color:#111;letter-spacing:-0.02em;margin-bottom:8px;">Message Received</p>
+        <p style="font-size:0.82rem;color:#888;line-height:1.6;">Thanks for reaching out. Someone from our team will get back to you shortly.<br>You can also reach us at <a href="tel:+16613232851" style="color:#c9a96e;">(661) 323-2851</a>.</p>
+      </div>
+
+      <script>
+      (function(){
+        var SUPABASE_URL = 'https://keuecvwaailuvouwegod.supabase.co';
+        var ANON_KEY = 'sb_publishable_LRE10Uf2omW1sP2qqKsbEQ_gvPLaKVC';
+
+        var form = document.getElementById('contactForm');
+        var btn  = document.getElementById('cf-btn');
+        var errBox = document.getElementById('cf-error');
+
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          errBox.style.display = 'none';
+
+          // Basic validation
+          var first   = form.first_name.value.trim();
+          var last    = form.last_name.value.trim();
+          var email   = form.email.value.trim();
+          var message = form.message.value.trim();
+
+          if (!first || !last || !email || !message) {
+            errBox.textContent = 'Please fill in your name, email, and message before sending.';
+            errBox.style.display = 'block';
+            return;
+          }
+          if (!/\S+@\S+\.\S+/.test(email)) {
+            errBox.textContent = 'Please enter a valid email address.';
+            errBox.style.display = 'block';
+            return;
+          }
+
+          btn.disabled = true;
+          btn.textContent = 'Sending…';
+
+          var payload = {
+            first_name : first,
+            last_name  : last,
+            email      : email,
+            phone      : form.phone.value.trim() || null,
+            topic      : form.topic.value || null,
+            message    : message
+          };
+
+          fetch(SUPABASE_URL + '/rest/v1/contact_submissions', {
+            method: 'POST',
+            headers: {
+              'Content-Type'  : 'application/json',
+              'apikey'        : ANON_KEY,
+              'Authorization' : 'Bearer ' + ANON_KEY,
+              'Prefer'        : 'return=minimal'
+            },
+            body: JSON.stringify(payload)
+          })
+          .then(function(r) {
+            if (!r.ok) { return r.text().then(function(t){ throw new Error(t); }); }
+            // Show success state
+            form.style.display = 'none';
+            document.getElementById('cf-success').style.display = 'block';
+          })
+          .catch(function(err) {
+            console.error('Contact form error:', err);
+            errBox.textContent = 'Something went wrong — please try again or call us at (661) 323-2851.';
+            errBox.style.display = 'block';
+            btn.disabled = false;
+            btn.textContent = 'Send Message →';
+          });
+        });
+      })();
+      </script>
     </div>
     <div class="contact-map-wrap r d1">
       <div class="map-title">Find<br>Us Here</div>

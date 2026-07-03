@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Plan Your Visit | GBFPC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+  :root {
+    --c-brand:   #c9a96e;
+    --c-dark:    #111111;
+    --c-darker:  #0f0f0f;
+    --c-surface: #f2f1ee;
+    --c-muted:   #888888;
+    --c-border:  #ebebeb;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: #fff; color: var(--c-dark); font-family: 'Montserrat', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: clip; }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; }
+
+  /* ━━ HEADER ━━ */
+  #header {
+    position: sticky; top: 0; z-index: 200;
+    background: rgba(255,255,255,0.97);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--c-border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 80px; height: 64px;
+  }
+  .hdr-logo { height: 36px; width: auto; }
+  .hdr-logo-link { display: flex; align-items: center; }
+  .hdr-nav {
+    display: flex; gap: 32px; align-items: center;
+    font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+  }
+  .hdr-nav a { color: #555; transition: color 0.2s; }
+  .hdr-nav a:hover { color: var(--c-dark); }
+  .hdr-pv {
+    font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 9px 20px; background: var(--c-dark); color: #fff; border-radius: 100px;
+    transition: opacity 0.2s;
+  }
+  .hdr-pv:hover { opacity: 0.78; }
+  .hdr-spacer { height: 64px; }
+  .nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+  .nav-toggle-bar { width: 22px; height: 2px; background: var(--c-dark); border-radius: 2px; transition: transform 0.3s ease, opacity 0.2s ease; }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) { opacity: 0; }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav-close-btn { display: none; }
+
+  /* ━━ PAGE HERO ━━ */
+  #page-hero {
+    padding: 80px 80px 0;
+    background: #fff;
+  }
+  .page-hero-inner {
+    max-width: 1240px; margin: 0 auto;
+    padding-bottom: 64px;
+    border-bottom: 1px solid var(--c-border);
+  }
+  .page-tag {
+    font-size: 0.58rem; font-weight: 700; letter-spacing: 0.28em;
+    text-transform: uppercase; color: var(--c-brand); margin-bottom: 20px; display: block;
+  }
+  .page-hero-title {
+    font-weight: 900; font-size: clamp(3.5rem, 7vw, 7rem);
+    line-height: 0.9; letter-spacing: -0.04em; text-transform: uppercase;
+    color: var(--c-dark); margin-bottom: 28px;
+  }
+  .page-hero-sub {
+    font-size: 0.95rem; font-weight: 400; color: var(--c-muted); max-width: 560px;
+    line-height: 1.65;
+  }
+
+  /* ━━ FORM SECTION ━━ */
+  #pv-form-section {
+    padding: 64px 80px 80px;
+  }
+  .pv-inner {
+    max-width: 1240px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 340px; gap: 80px; align-items: start;
+  }
+
+  /* ━━ FORM STYLES ━━ */
+  .pv-form-wrap {}
+  .form-section-title {
+    font-weight: 900; font-size: 1.1rem; letter-spacing: -0.02em; text-transform: uppercase;
+    color: var(--c-dark); margin-bottom: 24px; padding-bottom: 16px;
+    border-bottom: 1px solid var(--c-border);
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { margin-bottom: 20px; }
+  .form-label {
+    font-size: 0.55rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--c-muted); margin-bottom: 8px; display: block;
+  }
+  .form-input, .form-select, .form-textarea {
+    width: 100%; padding: 12px 14px;
+    border: 1px solid var(--c-border); border-radius: 10px;
+    font-family: 'Montserrat', sans-serif; font-size: 0.82rem; font-weight: 500;
+    color: var(--c-dark); background: #fff; outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--c-brand); }
+  .form-input::placeholder, .form-textarea::placeholder { color: #ccc; }
+  .form-textarea { min-height: 100px; resize: vertical; }
+  .form-select { appearance: none; -webkit-appearance: none; cursor: pointer; }
+  .form-select-wrap { position: relative; }
+  .form-select-wrap::after {
+    content: ''; position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+    width: 0; height: 0;
+    border-left: 4px solid transparent; border-right: 4px solid transparent;
+    border-top: 5px solid #aaa; pointer-events: none;
+  }
+
+  /* Yes/No toggle row */
+  .toggle-row { display: flex; gap: 8px; }
+  .toggle-btn {
+    flex: 1; padding: 11px; border: 1px solid var(--c-border); border-radius: 10px;
+    font-family: 'Montserrat', sans-serif; font-size: 0.78rem; font-weight: 600;
+    cursor: pointer; background: #fff; color: #888; transition: all 0.15s;
+  }
+  .toggle-btn.active { border-color: var(--c-brand); color: var(--c-brand); background: rgba(201,169,110,0.06); }
+
+  /* Children ages row — shown/hidden based on yes/no */
+  .children-detail { overflow: hidden; transition: max-height 0.3s ease, opacity 0.3s ease; max-height: 0; opacity: 0; }
+  .children-detail.visible { max-height: 120px; opacity: 1; }
+
+  /* Divider between form sections */
+  .form-divider { border: none; border-top: 1px solid var(--c-border); margin: 28px 0; }
+
+  /* Submit button */
+  .pv-submit {
+    width: 100%; padding: 16px; background: var(--c-dark); color: #fff;
+    font-family: 'Montserrat', sans-serif; font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase; border: none; border-radius: 12px;
+    cursor: pointer; transition: opacity 0.2s; margin-top: 8px;
+  }
+  .pv-submit:hover { opacity: 0.8; }
+  .pv-submit:disabled { opacity: 0.45; cursor: not-allowed; }
+
+  /* Error box */
+  #pv-error {
+    display: none; margin-bottom: 16px; padding: 12px 16px;
+    background: #fff0f0; border: 1px solid #fcc; border-radius: 10px;
+    font-size: 0.78rem; color: #c00;
+  }
+
+  /* ━━ SUCCESS STATE ━━ */
+  #pv-success {
+    display: none; text-align: center; padding: 64px 32px;
+  }
+  .success-icon {
+    width: 64px; height: 64px; border-radius: 50%; background: rgba(201,169,110,0.12);
+    display: flex; align-items: center; justify-content: center; margin: 0 auto 24px;
+  }
+  .success-icon svg { width: 26px; height: 26px; stroke: var(--c-brand); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .success-title { font-weight: 900; font-size: 1.6rem; letter-spacing: -0.03em; text-transform: uppercase; color: var(--c-dark); margin-bottom: 12px; }
+  .success-body { font-size: 0.85rem; color: var(--c-muted); line-height: 1.7; max-width: 400px; margin: 0 auto 32px; }
+  .success-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 28px; background: var(--c-dark); color: #fff;
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+    border-radius: 100px; transition: opacity 0.2s;
+  }
+  .success-cta:hover { opacity: 0.78; }
+
+  /* ━━ SIDEBAR INFO PANEL ━━ */
+  .pv-sidebar {}
+  .pv-sidebar-card {
+    background: var(--c-surface); border-radius: 18px; padding: 32px;
+    margin-bottom: 20px;
+  }
+  .sidebar-card-label {
+    font-size: 0.5rem; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase;
+    color: #bbb; margin-bottom: 14px; display: block;
+  }
+  .sidebar-card-title { font-weight: 800; font-size: 1rem; color: var(--c-dark); margin-bottom: 8px; letter-spacing: -0.02em; }
+  .sidebar-card-body { font-size: 0.8rem; color: var(--c-muted); line-height: 1.65; }
+  .sidebar-card-body strong { color: var(--c-dark); font-weight: 700; }
+  .sidebar-divider { border: none; border-top: 1px solid rgba(0,0,0,0.06); margin: 18px 0; }
+  .sidebar-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--c-brand); margin-top: 14px; border-bottom: 1px solid rgba(201,169,110,0.3);
+    padding-bottom: 1px; transition: border-color 0.2s;
+  }
+  .sidebar-link:hover { border-color: var(--c-brand); }
+
+  /* ━━ FOOTER ━━ */
+  footer {
+    background: #111; color: rgba(255,255,255,0.55);
+    font-size: 0.78rem; font-weight: 400;
+  }
+  .ft-grid {
+    max-width: 1380px; margin: 0 auto;
+    display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr;
+    gap: 48px; padding: 64px 80px 48px;
+  }
+  .ft-logo { height: 30px; margin-bottom: 16px; filter: brightness(0) invert(1) opacity(0.5); }
+  .ft-name { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 10px; line-height: 1.4; }
+  .ft-tag { font-size: 0.75rem; color: rgba(255,255,255,0.25); line-height: 1.6; margin-bottom: 20px; }
+  .ft-soc { display: flex; gap: 10px; }
+  .ft-s { width: 32px; height: 32px; border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.04em; color: rgba(255,255,255,0.4); transition: border-color 0.2s, color 0.2s; }
+  .ft-s:hover { border-color: var(--c-brand); color: var(--c-brand); }
+  .ft-col h5 { font-size: 0.56rem; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(255,255,255,0.2); margin-bottom: 17px; }
+  .ft-col ul { list-style: none; }
+  .ft-col li { margin-bottom: 10px; }
+  .ft-col a { font-size: 0.75rem; color: rgba(255,255,255,0.4); transition: color 0.2s; }
+  .ft-col a:hover { color: rgba(255,255,255,0.8); }
+  .ft-bot { max-width: 1380px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 20px 80px 28px; border-top: 1px solid rgba(255,255,255,0.06); }
+  .ft-copy { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.16); }
+  .ft-addr { font-size: 0.6rem; color: rgba(255,255,255,0.2); }
+
+  /* ━━ RESPONSIVE ━━ */
+  @media (max-width: 900px) {
+    #header { padding: 0 32px; }
+    .hdr-nav, .hdr-pv { display: none; }
+    .nav-toggle { display: flex; }
+    .hdr-nav.nav-open {
+      display: flex; flex-direction: column; align-items: flex-start; gap: 0;
+      position: fixed; inset: 0; background: #fff; z-index: 300;
+      padding: 80px 32px 40px; overflow-y: auto;
+    }
+    .hdr-nav.nav-open a { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.01em; padding: 14px 0; border-bottom: 1px solid var(--c-border); width: 100%; }
+    .nav-close-btn { display: block; position: absolute; top: 20px; right: 24px; font-size: 1.4rem; background: none; border: none; cursor: pointer; color: var(--c-dark); }
+    #page-hero { padding: 48px 32px 0; }
+    .page-hero-inner { padding-bottom: 40px; }
+    #pv-form-section { padding: 40px 32px 64px; }
+    .pv-inner { grid-template-columns: 1fr; gap: 48px; }
+    .ft-grid { grid-template-columns: 1fr 1fr; gap: 36px; padding: 48px 32px 36px; }
+    .ft-bot { flex-direction: column; gap: 8px; text-align: center; padding: 16px 32px 24px; }
+  }
+  @media (max-width: 540px) {
+    #header { padding: 0 20px; }
+    #page-hero { padding: 36px 20px 0; }
+    #pv-form-section { padding: 32px 20px 56px; }
+    .form-row { grid-template-columns: 1fr; }
+    .ft-grid { grid-template-columns: 1fr; gap: 28px; padding: 40px 20px 28px; }
+    .ft-bot { padding: 14px 20px 20px; }
+  }
+  </style>
+</head>
+<body>
+
+<header id="header">
+  <a href="/" class="hdr-logo-link" aria-label="GBFPC Home">
+    <img src="gbfpc-logo.svg" alt="GBFPC" class="hdr-logo"/>
+  </a>
+  <nav class="hdr-nav" id="mainNav" role="navigation" aria-label="Main navigation">
+    <button class="nav-close-btn" id="navClose" aria-label="Close menu">&#x2715;</button>
+    <a href="gbfpc-about.html">About</a>
+    <a href="gbfpc-ministries.html">Ministries</a>
+    <a href="gbfpc-education.html">Education</a>
+    <a href="gbfpc-events.html">Events</a>
+    <a href="gbfpc-give.html">Give</a>
+    <a href="gbfpc-connect.html">Connect</a>
+    <a href="gbfpc-livestream.html">Livestream</a>
+  </nav>
+  <a href="gbfpc-visit-plan.html" class="hdr-pv">Plan Your Visit</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav">
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+  </button>
+</header>
+
+<div class="hdr-spacer"></div>
+
+<!-- ═══════ PAGE HERO ═══════ -->
+<section id="page-hero">
+  <div class="page-hero-inner">
+    <span class="page-tag">We'd Love to Meet You</span>
+    <h1 class="page-hero-title">Plan<br>Your Visit</h1>
+    <p class="page-hero-sub">
+      Let us know you're coming and we'll make sure you and your family feel right at home.
+      Fill out the form below and our team will be in touch before Sunday.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════ FORM SECTION ═══════ -->
+<section id="pv-form-section">
+  <div class="pv-inner">
+
+    <!-- Left: form -->
+    <div class="pv-form-wrap">
+
+      <!-- The form itself -->
+      <form id="pvForm">
+
+        <!-- Contact info -->
+        <div class="form-section-title">Your Info</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="pv-first">First Name <span style="color:#c9a96e">*</span></label>
+            <input id="pv-first" name="first_name" class="form-input" type="text" placeholder="John" required/>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="pv-last">Last Name <span style="color:#c9a96e">*</span></label>
+            <input id="pv-last" name="last_name" class="form-input" type="text" placeholder="Smith" required/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="pv-email">Email Address <span style="color:#c9a96e">*</span></label>
+          <input id="pv-email" name="email" class="form-input" type="email" placeholder="john@example.com" required/>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="pv-phone">Phone Number (optional)</label>
+          <input id="pv-phone" name="phone" class="form-input" type="tel" placeholder="(661) 000-0000"/>
+        </div>
+
+        <hr class="form-divider"/>
+
+        <!-- Visit details -->
+        <div class="form-section-title">Visit Details</div>
+
+        <div class="form-group">
+          <label class="form-label" for="pv-service">Which service are you planning to attend?</label>
+          <div class="form-select-wrap">
+            <select id="pv-service" name="service_pref" class="form-select">
+              <option value="">Select a service</option>
+              <option value="Sunday Morning">Sunday Morning</option>
+              <option value="Tuesday Night">Tuesday Night</option>
+              <option value="Either">Either — flexible</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="pv-date">When are you planning to visit? (optional)</label>
+          <input id="pv-date" name="visit_date" class="form-input" type="date"/>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="pv-party">How many people are in your group?</label>
+          <div class="form-select-wrap">
+            <select id="pv-party" name="party_size" class="form-select">
+              <option value="1">Just me</option>
+              <option value="2">2 people</option>
+              <option value="3">3 people</option>
+              <option value="4">4 people</option>
+              <option value="5">5+ people</option>
+            </select>
+          </div>
+        </div>
+
+        <hr class="form-divider"/>
+
+        <!-- Children -->
+        <div class="form-section-title">Children &amp; Kids</div>
+
+        <div class="form-group">
+          <label class="form-label">Will there be children in your group?</label>
+          <div class="toggle-row">
+            <button type="button" class="toggle-btn active" id="kids-no" onclick="setKids(false)">No children</button>
+            <button type="button" class="toggle-btn" id="kids-yes" onclick="setKids(true)">Yes, children</button>
+          </div>
+          <input type="hidden" id="pv-has-kids" name="has_children" value="false"/>
+        </div>
+
+        <div class="form-group children-detail" id="kids-detail">
+          <label class="form-label" for="pv-ages">Children's ages (e.g. 3, 7, 12)</label>
+          <input id="pv-ages" name="children_ages" class="form-input" type="text" placeholder="e.g. 4, 8"/>
+        </div>
+
+        <hr class="form-divider"/>
+
+        <!-- Background -->
+        <div class="form-section-title">A Little More About You</div>
+
+        <div class="form-group">
+          <label class="form-label">Is this your first time visiting GBFPC?</label>
+          <div class="toggle-row">
+            <button type="button" class="toggle-btn active" id="first-yes" onclick="setFirst(true)">Yes, first visit</button>
+            <button type="button" class="toggle-btn" id="first-no" onclick="setFirst(false)">I've been before</button>
+          </div>
+          <input type="hidden" id="pv-first-visit" name="first_visit" value="true"/>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="pv-heard">How did you hear about us?</label>
+          <div class="form-select-wrap">
+            <select id="pv-heard" name="how_heard" class="form-select">
+              <option value="">Select one</option>
+              <option value="Friend or Family">Friend or Family</option>
+              <option value="Social Media">Social Media</option>
+              <option value="Google / Search">Google / Search</option>
+              <option value="Drove By">Drove By the Church</option>
+              <option value="Community Event">Community Event</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="pv-notes">Any questions or special accommodations? (optional)</label>
+          <textarea id="pv-notes" name="notes" class="form-textarea" placeholder="Let us know anything that would help us serve you better…"></textarea>
+        </div>
+
+        <!-- Error -->
+        <div id="pv-error"></div>
+
+        <button id="pv-btn" class="pv-submit" type="submit">Let Us Know You're Coming →</button>
+
+        <p style="font-size:0.7rem;color:#bbb;text-align:center;margin-top:14px;line-height:1.5;">
+          Your info is private and will only be used to help us welcome you.
+        </p>
+      </form>
+
+      <!-- Success confirmation -->
+      <div id="pv-success">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <p class="success-title">You're All Set!</p>
+        <p class="success-body">
+          We can't wait to see you. Someone from our team may reach out before your visit to answer any questions.
+          We'll see you Sunday!
+        </p>
+        <a href="/" class="success-cta">Back to Home</a>
+      </div>
+
+    </div><!-- /pv-form-wrap -->
+
+    <!-- Right: sidebar info -->
+    <aside class="pv-sidebar">
+      <div class="pv-sidebar-card">
+        <span class="sidebar-card-label">Service Times</span>
+        <div class="sidebar-card-title">Sunday Morning</div>
+        <div class="sidebar-card-body">
+          Doors open at <strong>9:00 AM</strong><br>
+          Service begins at <strong>10:00 AM</strong>
+        </div>
+        <hr class="sidebar-divider"/>
+        <div class="sidebar-card-title">Tuesday Night</div>
+        <div class="sidebar-card-body">
+          Bible Study &amp; Worship<br>
+          Begins at <strong>7:00 PM</strong>
+        </div>
+      </div>
+
+      <div class="pv-sidebar-card">
+        <span class="sidebar-card-label">Location</span>
+        <div class="sidebar-card-body">
+          <strong>1418 W Columbus St</strong><br>
+          Bakersfield, CA 93301<br><br>
+          Free parking is available on-site.
+        </div>
+        <a href="https://goo.gl/maps/EHDMwXpDuT59PkRHA" target="_blank" rel="noopener" class="sidebar-link">
+          Get Directions →
+        </a>
+      </div>
+
+      <div class="pv-sidebar-card">
+        <span class="sidebar-card-label">Questions?</span>
+        <div class="sidebar-card-body">
+          Call us at <strong>(661) 323-2851</strong><br>
+          or email <strong>info@gbfpc.org</strong>
+        </div>
+        <a href="gbfpc-connect.html" class="sidebar-link">Contact Us →</a>
+      </div>
+    </aside>
+
+  </div><!-- /pv-inner -->
+</section>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer>
+  <div class="ft-grid">
+    <div>
+      <img src="gbfpc-logo.svg" alt="GBFPC" class="ft-logo"/>
+      <div class="ft-name">Greater Bakersfield's<br>First Pentecostal Church</div>
+      <p class="ft-tag">Rooted in truth, alive in the Spirit, and built for community in Bakersfield, California.</p>
+      <div class="ft-soc">
+        <a href="https://www.facebook.com/gbfpcmedia/" class="ft-s">f</a>
+        <a href="https://www.instagram.com/gbfpc/" class="ft-s">ig</a>
+        <a href="https://www.youtube.com/channel/UCO1PnTTAT_uOS4ZkMjdBzGg/videos" class="ft-s">▶</a>
+      </div>
+    </div>
+    <div class="ft-col"><h5>Our House</h5><ul>
+      <li><a href="gbfpc-about.html">About Us</a></li>
+      <li><a href="gbfpc-about.html#vision">Our Vision</a></li>
+      <li><a href="gbfpc-about.html#articles">Articles of Faith</a></li>
+      <li><a href="gbfpc-about.html#history">Church History</a></li>
+    </ul></div>
+    <div class="ft-col"><h5>Ministries</h5><ul>
+      <li><a href="gbfpc-ministries.html#youth">Amplified Youth</a></li>
+      <li><a href="gbfpc-ministries.html#children">K.I.C.K.</a></li>
+      <li><a href="gbfpc-ministries.html">Thrive</a></li>
+      <li><a href="gbfpc-ministries.html">Kiddie Korral</a></li>
+      <li><a href="gbfpc-education.html">Education</a></li>
+    </ul></div>
+    <div class="ft-col"><h5>Connect</h5><ul>
+      <li><a href="gbfpc-visit-plan.html">Plan Your Visit</a></li>
+      <li><a href="gbfpc-give.html">Give Online</a></li>
+      <li><a href="gbfpc-events.html">Upcoming Events</a></li>
+      <li><a href="gbfpc-livestream.html">Livestream</a></li>
+      <li><a href="gbfpc-connect.html">Contact Us</a></li>
+    </ul></div>
+  </div>
+  <div class="ft-bot">
+    <div class="ft-copy">© 2026 GBFPC. All Rights Reserved.</div>
+    <div class="ft-addr">1418 W Columbus St, Bakersfield, CA 93301 · (661) 323-2851</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var SUPABASE_URL = 'https://keuecvwaailuvouwegod.supabase.co';
+  var ANON_KEY     = 'sb_publishable_LRE10Uf2omW1sP2qqKsbEQ_gvPLaKVC';
+
+  /* ── Nav toggle ── */
+  var toggle = document.getElementById('navToggle');
+  var nav    = document.getElementById('mainNav');
+  var closeBtn = document.getElementById('navClose');
+  if(toggle && nav){
+    function openMenu(){  nav.classList.add('nav-open');    toggle.setAttribute('aria-expanded','true');  document.body.style.overflow='hidden'; }
+    function closeMenu(){ nav.classList.remove('nav-open'); toggle.setAttribute('aria-expanded','false'); document.body.style.overflow=''; }
+    toggle.addEventListener('click', function(){ toggle.getAttribute('aria-expanded')==='true' ? closeMenu() : openMenu(); });
+    if(closeBtn) closeBtn.addEventListener('click', closeMenu);
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeMenu(); });
+  }
+
+  /* ── Yes/No toggle helpers ── */
+  window.setKids = function(val){
+    document.getElementById('pv-has-kids').value = val;
+    document.getElementById('kids-yes').classList.toggle('active',  val);
+    document.getElementById('kids-no').classList.toggle('active',  !val);
+    var detail = document.getElementById('kids-detail');
+    if(val){ detail.classList.add('visible'); } else { detail.classList.remove('visible'); }
+  };
+
+  window.setFirst = function(val){
+    document.getElementById('pv-first-visit').value = val;
+    document.getElementById('first-yes').classList.toggle('active',  val);
+    document.getElementById('first-no').classList.toggle('active', !val);
+  };
+
+  /* ── Form submission ── */
+  var form   = document.getElementById('pvForm');
+  var btn    = document.getElementById('pv-btn');
+  var errBox = document.getElementById('pv-error');
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    errBox.style.display = 'none';
+    errBox.textContent   = '';
+
+    var firstName = form.first_name.value.trim();
+    var lastName  = form.last_name.value.trim();
+    var email     = form.email.value.trim();
+
+    if(!firstName || !lastName){
+      showErr('Please enter your first and last name.'); return;
+    }
+    if(!email || !/\S+@\S+\.\S+/.test(email)){
+      showErr('Please enter a valid email address.'); return;
+    }
+
+    btn.disabled    = true;
+    btn.textContent = 'Submitting…';
+
+    var partySizeRaw = form.party_size.value;
+    var partySize    = parseInt(partySizeRaw, 10) || 1;
+    if(partySize >= 5) partySize = 5; // store 5 for "5+"
+
+    var payload = {
+      first_name   : firstName,
+      last_name    : lastName,
+      email        : email,
+      phone        : form.phone.value.trim()         || null,
+      service_pref : form.service_pref.value         || null,
+      visit_date   : form.visit_date.value           || null,
+      party_size   : partySize,
+      has_children : form.has_children.value === 'true',
+      children_ages: form.children_ages.value.trim() || null,
+      first_visit  : form.first_visit.value !== 'false',
+      how_heard    : form.how_heard.value            || null,
+      notes        : form.notes.value.trim()         || null
+    };
+
+    fetch(SUPABASE_URL + '/rest/v1/visit_submissions', {
+      method: 'POST',
+      headers:{
+        'Content-Type'  : 'application/json',
+        'apikey'        : ANON_KEY,
+        'Authorization' : 'Bearer ' + ANON_KEY,
+        'Prefer'        : 'return=minimal'
+      },
+      body: JSON.stringify(payload)
+    })
+    .then(function(r){
+      if(!r.ok){ return r.text().then(function(t){ throw new Error(t); }); }
+      form.style.display = 'none';
+      document.getElementById('pv-success').style.display = 'block';
+      // Scroll to top of form section
+      document.getElementById('pv-form-section').scrollIntoView({ behavior:'smooth' });
+    })
+    .catch(function(err){
+      console.error('PYV form error:', err);
+      showErr('Something went wrong — please try again or call us at (661) 323-2851.');
+      btn.disabled    = false;
+      btn.textContent = 'Let Us Know You\'re Coming →';
+    });
+  });
+
+  function showErr(msg){
+    errBox.textContent   = msg;
+    errBox.style.display = 'block';
+  }
+})();
+</script>
+</body>
+</html>
