@@ -1041,9 +1041,16 @@
          To activate: set HERO_SRC in the script block below.
          Canvas shows as fallback while no video is loaded. -->
     <div class="hero-bg">
-      <canvas id="heroCnv" class="hero-layer"></canvas>
-      <video id="heroVidA" class="hero-layer hero-vid" muted playsinline></video>
-      <video id="heroVidB" class="hero-layer hero-vid" muted playsinline></video>
+      <!-- ═══ HERO BACKGROUND ═══
+           Placeholder image until hero video is ready.
+           To activate video: remove the img tag, uncomment canvas/video elements,
+           and set HERO_SRC = 'MEDIA/hero-collage.mp4' in the script below. -->
+      <img
+        src="MEDIA/landing-placeholder.jpg"
+        alt=""
+        aria-hidden="true"
+        style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;"
+      />
     </div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
