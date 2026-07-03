@@ -549,6 +549,100 @@
     .min-panels-grid { grid-template-columns: 1fr; gap: 40px; }
     .hero-rot-wrap { display: none; }
   }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     MINISTRY SCROLL CAROUSEL
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #min-scroll { padding: 72px 80px 80px; }
+  .min-scroll-outer { max-width: 1300px; margin: 0 auto; }
+  .min-scroll-header {
+    display: flex; justify-content: space-between;
+    align-items: flex-end; margin-bottom: 40px;
+  }
+  .min-scroll-title {
+    font-weight: 900; font-size: clamp(2rem, 3.5vw, 3rem);
+    letter-spacing: -0.03em; text-transform: uppercase;
+    color: var(--c-dark); line-height: 1; margin-top: 10px;
+  }
+  .min-scroll-arrows { display: flex; gap: 10px; }
+  .sc-arr {
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid #e0e0e0; background: #fff;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: border-color 0.2s, background 0.2s, color 0.2s;
+    color: var(--c-dark);
+  }
+  .sc-arr:hover { border-color: var(--c-dark); background: var(--c-dark); color: #fff; }
+  .sc-arr svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; }
+
+  .min-scroll-track {
+    display: flex; gap: 16px;
+    overflow-x: auto; scroll-behavior: smooth;
+    scrollbar-width: none; -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    cursor: grab;
+    padding-bottom: 4px;
+  }
+  .min-scroll-track:active { cursor: grabbing; }
+  .min-scroll-track::-webkit-scrollbar { display: none; }
+
+  .min-sc-card {
+    flex: 0 0 292px;
+    aspect-ratio: 1/1;
+    border-radius: 18px;
+    overflow: hidden;
+    position: relative;
+    display: block;
+    background: var(--c-darker);
+    text-decoration: none;
+    user-select: none;
+  }
+  .min-sc-bg {
+    position: absolute; inset: 0;
+    background-size: cover; background-position: center;
+    transition: transform 0.75s cubic-bezier(0.22,1,0.36,1);
+  }
+  .min-sc-card:hover .min-sc-bg { transform: scale(1.06); }
+  .min-sc-ghost {
+    position: absolute; bottom: -14px; right: -4px;
+    font-weight: 900; font-size: 6.5rem; letter-spacing: -0.06em;
+    text-transform: uppercase; color: rgba(255,255,255,0.045);
+    line-height: 1; user-select: none; pointer-events: none;
+  }
+  .min-sc-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.84) 0%, rgba(0,0,0,0.28) 55%, rgba(0,0,0,0.06) 100%);
+    transition: opacity 0.35s;
+  }
+  .min-sc-card:hover .min-sc-overlay { opacity: 0.88; }
+  .min-sc-body {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 22px 24px 26px; z-index: 2;
+  }
+  .min-sc-tag {
+    font-size: 0.5rem; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--c-brand);
+    display: block; margin-bottom: 6px;
+  }
+  .min-sc-name {
+    font-weight: 900; font-size: 1.2rem; letter-spacing: -0.02em;
+    text-transform: uppercase; color: #fff; line-height: 1.05; margin-bottom: 10px;
+  }
+  .min-sc-cta {
+    font-size: 0.52rem; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: rgba(255,255,255,0.45);
+    display: flex; align-items: center; gap: 5px;
+    transition: color 0.2s;
+  }
+  .min-sc-card:hover .min-sc-cta { color: var(--c-brand); }
+  .min-sc-cta svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+
+  /* Styled dark cards (no photo) */
+  .min-sc-card.dark-gold { background: linear-gradient(140deg, #181510 0%, #0f0f0f 100%); }
+  .min-sc-card.dark-deep { background: linear-gradient(140deg, #101418 0%, #0a0c0f 100%); }
+
+  @media(max-width:1024px) { #min-scroll { padding: 56px 36px 64px; } .min-sc-card { flex: 0 0 260px; } }
+  @media(max-width:768px)  { #min-scroll { padding: 44px 20px 52px; } .min-sc-card { flex: 0 0 240px; } }
   </style>
 </head>
 <body>
@@ -635,16 +729,6 @@
   </div>
 </section>
 
-<!-- ═══════ MINISTRIES GRID ═══════ -->
-<section id="ministries-grid">
-  <div class="min-grid-inner">
-
-    <div class="min-grid">
-
-    </div><!-- /min-grid -->
-  </div>
-</section>
-
 <!-- ═══════ MINISTRY PANELS — Amplified Youth + Thrive ═══════ -->
 <section id="ministry-panels" aria-label="Featured Ministries">
   <div class="min-panels-wrap">
@@ -685,113 +769,96 @@
   </div>
 </section>
 
-<!-- ═══════ MINISTRIES GRID ═══════ -->
-<section id="ministries-grid">
-  <div class="min-grid-inner">
-    <div class="min-grid">
+<!-- ═══════ MINISTRY SCROLL CAROUSEL ═══════ -->
+<section id="min-scroll">
+  <div class="min-scroll-outer">
+    <div class="min-scroll-header r">
+      <div>
+        <span class="eyebrow gold">Get Involved</span>
+        <h2 class="min-scroll-title">More<br>Ministries.</h2>
+      </div>
+      <div class="min-scroll-arrows">
+        <button class="sc-arr" id="scPrev" aria-label="Previous ministries">
+          <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 5 5 12 12 19"/></svg>
+        </button>
+        <button class="sc-arr" id="scNext" aria-label="Next ministries">
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="min-scroll-track" id="minScrollTrack">
 
       <!-- K.I.C.K. -->
-      <div class="min-card r d1" id="children">
-        <div class="min-card-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <a href="gbfpc-connect.html#kick" class="min-sc-card r" id="children">
+        <div class="min-sc-bg" style="background-image:url('MEDIA/kick2.jpg')"></div>
+        <div class="min-sc-overlay"></div>
+        <div class="min-sc-body">
+          <span class="min-sc-tag">Children · Ages 4–12</span>
+          <div class="min-sc-name">K.I.C.K.</div>
+          <span class="min-sc-cta">Join This Ministry <svg viewBox="0 0 12 12"><path d="M1 6h10M7 2l4 4-4 4"/></svg></span>
         </div>
-        <span class="min-card-tag">Children · Ages 4–12</span>
-        <div class="min-card-name">K.I.C.K.</div>
-        <p class="min-card-body">Kids In Christ's Kingdom. A vibrant Sunday morning experience designed just for children — interactive worship, age-appropriate teaching, and activities that make faith come alive at every stage of childhood.</p>
-        <a href="gbfpc-connect.html#kick" class="min-card-link">
-          Join This Ministry →
-          <svg viewBox="0 0 12 12"><path d="M1 6h10M7 2l4 4-4 4"/></svg>
-        </a>
-      </div>
+      </a>
 
       <!-- EDUCATION -->
-      <div class="min-card r d2" id="education">
-        <div class="min-card-icon">
-          <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      <a href="gbfpc-education.html" class="min-sc-card r d1" id="education">
+        <div class="min-sc-bg" style="background-image:url('MEDIA/IMG_6615.jpg')"></div>
+        <div class="min-sc-overlay"></div>
+        <div class="min-sc-body">
+          <span class="min-sc-tag">Education &amp; Early Childhood</span>
+          <div class="min-sc-name">Education</div>
+          <span class="min-sc-cta">Learn More <svg viewBox="0 0 12 12"><path d="M1 6h10M7 2l4 4-4 4"/></svg></span>
         </div>
-        <span class="min-card-tag">Education & Early Childhood</span>
-        <div class="min-card-name">Education</div>
-        <p class="min-card-body">Bethel Apostolic Academy (K–12) and Kiddie Korral (daycare & Pre-K) — academic excellence grounded in Christian values. Training young people in faith, character, and knowledge from their earliest years through graduation.</p>
-        <a href="gbfpc-education.html" class="min-card-link">
-          Learn More →
-          <svg viewBox="0 0 12 12"><path d="M1 6h10M7 2l4 4-4 4"/></svg>
-        </a>
-      </div>
+      </a>
 
-      <!-- BIBLE QUIZZING — archived
-
-      <div class="min-card r d1">
-        <div class="min-card-icon">
-          <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      <!-- PRAISE TEAM -->
+      <a href="gbfpc-connect.html#praise-team" class="min-sc-card r d2" id="worship">
+        <div class="min-sc-bg" style="background-image:url('MEDIA/connect1.jpg')"></div>
+        <div class="min-sc-overlay"></div>
+        <div class="min-sc-body">
+          <span class="min-sc-tag">Worship &amp; Arts</span>
+          <div class="min-sc-name">Praise Team</div>
+          <span class="min-sc-cta">Join This Ministry <svg viewBox="0 0 12 12"><path d="M1 6h10M7 2l4 4-4 4"/></svg></span>
         </div>
-        <span class="min-card-tag">Youth · Competitive</span>
-        <div class="min-card-name">Bible Quizzing</div>
-        <p class="min-card-body">Competitive scripture memorization that transforms how youth engage with God's Word. Teams study, compete, and build a deep knowledge of the Bible while developing teamwork and confidence that lasts a lifetime.</p>
-        <a href="gbfpc-connect.html#bible-quizzing" class="min-card-link">
-          Join This Ministry →
-          <svg viewBox="0 0 12 12"><path d="M1 6h10M7 2l4 4-4 4"/></svg>
-        </a>
-      </div>
+      </a>
 
-      <!-- WORSHIP & ARTS -->
-      <div class="min-card r d2" id="worship">
-        <div class="min-card-icon">
-          <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+      <!-- MEN OF GBFPC -->
+      <a href="gbfpc-connect.html#mens-ministry" class="min-sc-card r d3 dark-gold">
+        <div class="min-sc-ghost">MEN</div>
+        <div class="min-sc-overlay" style="background:linear-gradient(to top,rgba(0,0,0,0.9) 0%,rgba(0,0,0,0.4) 60%,transparent 100%)"></div>
+        <div class="min-sc-body">
+          <span class="min-sc-tag">Men's Ministry</span>
+          <div class="min-sc-name">Men of<br>GBFPC</div>
+          <span class="min-sc-cta">Join This Ministry <svg viewBox="0 0 12 12"><path d="M1 6h10M7 2l4 4-4 4"/></svg></span>
         </div>
-        <span class="min-card-tag">Worship & Arts</span>
-        <div class="min-card-name">Praise Team</div>
-        <p class="min-card-body">Ushering the congregation into the presence of God through music, song, and creativity. Vocalists, musicians, and artists work together each week to create an atmosphere of genuine, Spirit-led worship.</p>
-        <a href="gbfpc-connect.html#praise-team" class="min-card-link">
-          Join This Ministry →
-          <svg viewBox="0 0 12 12"><path d="M1 6h10M7 2l4 4-4 4"/></svg>
-        </a>
-      </div>
-
-      <!-- MEN'S MINISTRY -->
-      <div class="min-card r d1">
-        <div class="min-card-icon">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M5.5 21H4a2 2 0 0 1-2-2v-1a5 5 0 0 1 5-5h10a5 5 0 0 1 5 5v1a2 2 0 0 1-2 2h-1.5"/><path d="M12 14v7"/></svg>
-        </div>
-        <span class="min-card-tag">Men's Ministry</span>
-        <div class="min-card-name">Men of GBFPC</div>
-        <p class="min-card-body">Brotherhood, accountability, and Spirit-filled growth. Monthly gatherings, service projects, and discipleship opportunities designed to help men become the husbands, fathers, and leaders God has called them to be.</p>
-        <a href="gbfpc-connect.html#mens-ministry" class="min-card-link">
-          Join This Ministry →
-          <svg viewBox="0 0 12 12"><path d="M1 6h10M7 2l4 4-4 4"/></svg>
-        </a>
-      </div>
+      </a>
 
       <!-- PRAYER MINISTRY -->
-      <div class="min-card r d2">
-        <div class="min-card-icon">
-          <svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+      <a href="gbfpc-connect.html#prayer-ministry" class="min-sc-card r d4 dark-deep">
+        <div class="min-sc-ghost">PRAY</div>
+        <div class="min-sc-overlay" style="background:linear-gradient(to top,rgba(0,0,0,0.9) 0%,rgba(0,0,0,0.4) 60%,transparent 100%)"></div>
+        <div class="min-sc-body">
+          <span class="min-sc-tag">Intercession</span>
+          <div class="min-sc-name">Prayer<br>Ministry</div>
+          <span class="min-sc-cta">Join This Ministry <svg viewBox="0 0 12 12"><path d="M1 6h10M7 2l4 4-4 4"/></svg></span>
         </div>
-        <span class="min-card-tag">Intercession</span>
-        <div class="min-card-name">Prayer Ministry</div>
-        <p class="min-card-body">The heartbeat of GBFPC. Our intercessory prayer team covers the church, the city, and the world in prayer. Pre-service prayer, prayer chains, and personal prayer support available for every member of the congregation.</p>
-        <a href="gbfpc-connect.html#prayer-ministry" class="min-card-link">
-          Join This Ministry →
-          <svg viewBox="0 0 12 12"><path d="M1 6h10M7 2l4 4-4 4"/></svg>
-        </a>
-      </div>
+      </a>
 
       <!-- OUTREACH -->
-      <div class="min-card r d1" id="outreach">
-        <div class="min-card-icon">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      <a href="gbfpc-connect.html#outreach" class="min-sc-card r d5" id="outreach">
+        <div class="min-sc-bg" style="background-image:url('MEDIA/SLJ03746.jpg')"></div>
+        <div class="min-sc-overlay"></div>
+        <div class="min-sc-body">
+          <span class="min-sc-tag">Community Outreach</span>
+          <div class="min-sc-name">Outreach</div>
+          <span class="min-sc-cta">Join This Ministry <svg viewBox="0 0 12 12"><path d="M1 6h10M7 2l4 4-4 4"/></svg></span>
         </div>
-        <span class="min-card-tag">Community Outreach</span>
-        <div class="min-card-name">Outreach</div>
-        <p class="min-card-body">Faith in action. From feeding the hungry to serving the homeless and sharing the Gospel in Bakersfield's neighborhoods — the Outreach ministry is the hands and feet of GBFPC in the community.</p>
-        <a href="gbfpc-connect.html#outreach" class="min-card-link">
-          Join This Ministry →
-          <svg viewBox="0 0 12 12"><path d="M1 6h10M7 2l4 4-4 4"/></svg>
-        </a>
-      </div>
+      </a>
 
-    </div><!-- /min-grid -->
+    </div><!-- /min-scroll-track -->
   </div>
 </section>
+
 
 <!-- ═══════ GET INVOLVED CTA ═══════ -->
 <section id="get-involved">
@@ -931,6 +998,43 @@
     cur = (cur + 1) % slides.length;
     slides[cur].classList.add('active');
   }, 3800);
+})();
+</script>
+
+
+<script>
+(function(){
+  var track = document.getElementById('minScrollTrack');
+  if(!track) return;
+  var cardW = 308; // card + gap
+  // Arrow buttons
+  var prev = document.getElementById('scPrev');
+  var next = document.getElementById('scNext');
+  if(prev) prev.addEventListener('click', function(){ track.scrollBy({left: -cardW, behavior:'smooth'}); });
+  if(next) next.addEventListener('click', function(){ track.scrollBy({left: cardW, behavior:'smooth'}); });
+  // Drag to scroll
+  var isDragging = false, startX = 0, scrollLeft = 0, moved = false;
+  track.addEventListener('mousedown', function(e){
+    isDragging = true; moved = false;
+    startX = e.pageX - track.offsetLeft;
+    scrollLeft = track.scrollLeft;
+    track.style.cursor = 'grabbing';
+  });
+  document.addEventListener('mouseup', function(){
+    isDragging = false;
+    track.style.cursor = 'grab';
+  });
+  track.addEventListener('mousemove', function(e){
+    if(!isDragging) return;
+    e.preventDefault();
+    moved = true;
+    var x = e.pageX - track.offsetLeft;
+    track.scrollLeft = scrollLeft - (x - startX) * 1.4;
+  });
+  // Prevent link click when dragging
+  track.addEventListener('click', function(e){
+    if(moved){ e.preventDefault(); moved = false; }
+  });
 })();
 </script>
 
