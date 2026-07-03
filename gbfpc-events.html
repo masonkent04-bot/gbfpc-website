@@ -683,7 +683,7 @@ setTimeout(function(){document.querySelectorAll('.r:not(.in),.r-sm:not(.in)').fo
     var catLabel = CAT_LABELS[ev.category] || ev.category || '';
 
     var imgHtml = ev.image_url
-      ? '<img src="'+escHtml(ev.image_url)+'" alt="'+escHtml(ev.title)+'" loading="lazy" onload="this.classList.add(\'ev-loaded\')" onerror="this.style.display=\'none\'">'
+      ? '<img src="'+escHtml(ev.image_url)+'" alt="'+escHtml(ev.title)+'" loading="lazy" onload="this.classList.add(\'ev-loaded\');if(this.naturalHeight>this.naturalWidth*1.1)this.style.objectPosition=\'center 12%\'" onerror="this.style.display=\'none\'">'
       : '';
 
     var descHtml = featured && ev.description
@@ -790,6 +790,28 @@ setTimeout(function(){document.querySelectorAll('.r:not(.in),.r-sm:not(.in)').fo
   });
 })();
 </script>
+
+<footer>
+  <div class="ft-grid">
+    <div>
+      <img src="gbfpc-logo.svg" alt="GBFPC" class="ft-logo" loading="lazy"/>
+      <div class="ft-name">Greater Bakersfield's<br>First Pentecostal Church</div>
+      <p class="ft-tag">Rooted in truth, alive in the Spirit, and built for community in Bakersfield, California.</p>
+      <div class="ft-soc">
+        <a href="https://www.facebook.com/gbfpcmedia/" class="ft-s">f</a>
+        <a href="https://www.instagram.com/gbfpc/" class="ft-s">ig</a>
+        <a href="https://www.youtube.com/channel/UCO1PnTTAT_uOS4ZkMjdBzGg/videos" class="ft-s">▶</a>
+      </div>
+    </div>
+    <div class="ft-col"><h5>Our House</h5><ul><li><a href="gbfpc-about.html">About Us</a></li><li><a href="gbfpc-about.html#vision">Our Vision</a></li><li><a href="gbfpc-about.html#articles">Articles of Faith</a></li><li><a href="gbfpc-about.html#history">Church History</a></li></ul></div>
+    <div class="ft-col"><h5>Ministries</h5><ul><li><a href="gbfpc-ministries.html#youth">Amplified Youth</a></li><li><a href="gbfpc-ministries.html#children">K.I.C.K.</a></li><li><a href="gbfpc-ministries.html#thrive">Thrive</a></li><li><a href="gbfpc-education.html">Education</a></li><li><a href="gbfpc-ministries.html#outreach">Outreach</a></li></ul></div>
+    <div class="ft-col"><h5>Connect</h5><ul><li><a href="gbfpc-visit.html">Plan Your Visit</a></li><li><a href="gbfpc-give.html">Give Online</a></li><li><a href="gbfpc-events.html">Upcoming Events</a></li><li><a href="gbfpc-livestream.html">Livestream</a></li><li><a href="gbfpc-connect.html">Contact Us</a></li></ul></div>
+  </div>
+  <div class="ft-bot">
+    <div class="ft-copy">© 2026 GBFPC. All Rights Reserved.</div>
+    <div class="ft-addr">1418 W Columbus St, Bakersfield, CA 93301 · (661) 323-2851</div>
+  </div>
+</footer>
 
 </body>
 </html>
