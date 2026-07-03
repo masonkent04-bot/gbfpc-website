@@ -17,7 +17,7 @@
   --c-border:  #ebebeb;
 }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; overflow-x: hidden; }
+  html { scroll-behavior: smooth; }
 
   /* ── Skip to main content ── */
   .skip-link {
@@ -47,6 +47,7 @@
     background: #fff;
     color: var(--c-dark);
     font-family: 'Montserrat', sans-serif;
+  overflow-x: clip; /* clip = no BFC, viewport stays scroll container */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
