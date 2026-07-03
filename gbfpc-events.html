@@ -45,47 +45,86 @@
   /* ── Focus Visible ── */
   :focus-visible { outline: 2px solid var(--c-brand); outline-offset: 3px; border-radius: 2px; }
 
-  /* ━━━━━━━━━━━━━━━━━━━━━━━━
-     HEADER
-  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  /* ━━ HEADER ━━ */
   #header {
-    position: relative; z-index: 200;
+    position: sticky; top: 0;
+    z-index: 200;
     background: rgba(255,255,255,0.97);
     backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid #e8e8e8;
+    display: flex; align-items: center;
+    padding: 0 48px; height: 68px; gap: 0;
   }
+  .hdr-logo-link {
+    flex-shrink: 0; display: flex; align-items: center; margin-right: 36px;
+  }
+  .hdr-logo { height: 36px; width: auto; object-fit: contain; filter: brightness(0); }
   .hdr-nav {
-    display: flex; justify-content: center; align-items: center;
-    gap: 40px; padding: 12px 56px;
-    border-bottom: 1px solid var(--c-border);
+    display: flex; align-items: center; gap: 32px; flex: 1;
   }
   .hdr-nav a {
-    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.16em;
-    text-transform: uppercase; color: #555;
-    transition: color 0.2s; white-space: nowrap;
+    font-size: 0.67rem; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; color: #666; transition: color 0.2s; white-space: nowrap;
   }
   .hdr-nav a:hover { color: #000; }
-  .hdr-nav a.active { color: #000; font-weight: 700; }
-  .hdr-brand {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 16px 56px;
+  .hdr-nav a.active { color: var(--c-brand); }
+  .hdr-pv {
+    flex-shrink: 0; margin-left: auto;
+    font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 10px 22px; border: 1.5px solid var(--c-dark); color: var(--c-dark);
+    border-radius: 100px;
+    transition: background 0.18s, color 0.18s, border-color 0.18s; white-space: nowrap;
   }
-  .hdr-left { display: flex; align-items: center; gap: 16px; }
-  .hdr-logo { height: 40px; width: auto; object-fit: contain; filter: brightness(0); }
-  .hdr-name {
-    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.07em;
-    text-transform: uppercase; line-height: 1.35; color: var(--c-dark);
-  }
-  .hdr-cta {
-    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em;
-    text-transform: uppercase; padding: 11px 24px;
-    border: 1px solid var(--c-dark); color: var(--c-dark);
-    border-radius: 8px;
-    transition: opacity 0.18s, background 0.18s, color 0.18s;
-    white-space: nowrap;
-  }
-  .hdr-cta:hover { background: #000; border-color: #000; color: #fff; }
+  .hdr-pv:hover { background: #000; border-color: #000; color: #fff; }
   .hdr-spacer { height: 0; }
+  /* Mobile toggle */
+  .nav-toggle {
+    display: none; flex-direction: column; justify-content: center; gap: 5px;
+    background: none; border: none; cursor: pointer; padding: 10px;
+    flex-shrink: 0; margin-left: auto;
+  }
+  .nav-toggle-bar {
+    display: block; width: 22px; height: 2px; background: var(--c-dark);
+    border-radius: 2px; transition: transform 0.3s ease, opacity 0.2s ease;
+  }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  /* Mobile nav overlay */
+  .nav-close-btn {
+    display: none; position: absolute; top: 18px; right: 20px;
+    background: none; border: none; cursor: pointer;
+    width: 40px; height: 40px; align-items: center; justify-content: center;
+    color: #aaa; font-size: 1.6rem; line-height: 1; padding: 0;
+    transition: color 0.2s;
+  }
+  .nav-close-btn:hover { color: #111; }
+  @media (max-width: 900px) {
+    #header { padding: 0 28px; }
+    .hdr-nav { gap: 22px; }
+  }
+  @media (max-width: 768px) {
+    #header { padding: 0 20px; height: 60px; }
+    .hdr-pv { display: none; }
+    .nav-toggle { display: flex; }
+    .hdr-spacer { height: 60px; }
+    .hdr-nav {
+      display: none;
+      position: fixed; inset: 0;
+      background: #fff; z-index: 1050;
+      flex-direction: column; align-items: center; justify-content: center;
+      gap: 2.5rem;
+    }
+    .hdr-nav.nav-open { display: flex; }
+    .hdr-nav a { font-size: 1.3rem; font-weight: 700; letter-spacing: 0.05em; color: var(--c-dark); }
+    .hdr-nav a.active { color: var(--c-brand); }
+    .hdr-nav a:hover { color: var(--c-brand); }
+    .nav-close-btn { display: flex; }
+    /* Toggle floats above overlay when open */
+    .nav-toggle-open {
+      position: fixed; top: 14px; right: 20px; z-index: 1100;
+    }
+  }
 
   /* ── Mobile Nav Toggle ── */
   .nav-toggle {
@@ -227,101 +266,99 @@
   #events { padding: 96px 68px; }
   .events-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 24px;
   }
+
+  /* ── Photo card ── */
   .event-card {
     background: #fff;
     border: 1px solid var(--c-border);
-    border-radius: 16px;
+    border-radius: 18px;
     overflow: hidden;
-    transition: box-shadow 0.2s, transform 0.2s;
+    transition: box-shadow 0.22s, transform 0.22s;
+    display: flex; flex-direction: column;
   }
-  .event-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.08); transform: translateY(-2px); }
-  .event-date-bar {
-    background: var(--c-surface);
-    padding: 20px 28px;
-    display: flex; align-items: center; gap: 20px;
-    border-bottom: 1px solid var(--c-border);
+  .event-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.09); transform: translateY(-3px); }
+
+  /* Image area */
+  .event-thumb {
+    position: relative; aspect-ratio: 3/2; overflow: hidden;
+    background: linear-gradient(135deg, #181610 0%, #2a2218 100%);
+    flex-shrink: 0;
   }
-  .event-cal {
-    width: 52px; height: 52px; border-radius: 10px;
-    background: #fff; border: 1px solid var(--c-border);
-    display: flex; flex-direction: column; align-items: center;
-    justify-content: center; flex-shrink: 0;
+  .event-thumb img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; opacity: 0; transition: opacity 0.5s ease;
   }
-  .event-cal-month {
-    font-size: 0.44rem; font-weight: 700; letter-spacing: 0.2em;
-    text-transform: uppercase; color: var(--c-brand);
-    line-height: 1; margin-bottom: 2px;
+  .event-thumb img.ev-loaded { opacity: 1; }
+  /* Subtle bottom scrim for date legibility */
+  .event-thumb::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 45%);
+    pointer-events: none;
   }
-  .event-cal-day {
-    font-size: 1.3rem; font-weight: 800; color: var(--c-dark); line-height: 1;
+
+  /* Category badge — top left */
+  .event-cat {
+    position: absolute; top: 13px; left: 13px; z-index: 2;
+    font-size: 0.47rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+    color: #fff; background: rgba(10,8,6,0.6); backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.14); padding: 5px 11px; border-radius: 100px;
   }
-  .event-time-stack { display: flex; flex-direction: column; gap: 3px; }
-  .event-time {
-    font-size: 0.75rem; font-weight: 600; color: var(--c-dark); letter-spacing: -0.01em;
+
+  /* Date badge — bottom left (over scrim) */
+  .event-date-badge {
+    position: absolute; bottom: 14px; left: 16px; z-index: 2;
+    color: #fff; line-height: 1.2;
   }
-  .event-weekday {
-    font-size: 0.6rem; font-weight: 500; color: var(--c-muted); letter-spacing: 0.05em;
+  .event-date-main {
+    font-size: 0.85rem; font-weight: 800; letter-spacing: -0.01em; display: block;
   }
-  .event-body { padding: 24px 28px 28px; }
-  .event-tag {
-    display: inline-block; font-size: 0.5rem; font-weight: 700; letter-spacing: 0.2em;
-    text-transform: uppercase; color: var(--c-brand);
-    border: 1px solid rgba(201,169,110,0.35); border-radius: 100px;
-    padding: 4px 10px; margin-bottom: 12px;
+  .event-date-sub {
+    font-size: 0.56rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(255,255,255,0.65); display: block; margin-top: 1px;
   }
+
+  /* Card body */
+  .event-body { padding: 20px 22px 24px; flex: 1; display: flex; flex-direction: column; }
   .event-title {
-    font-weight: 700; font-size: 1.05rem; color: var(--c-dark);
+    font-weight: 700; font-size: 1rem; color: var(--c-dark);
     letter-spacing: -0.01em; line-height: 1.3; margin-bottom: 10px;
   }
-  .event-desc {
-    font-size: 0.8rem; font-weight: 400; color: #666; line-height: 1.7; margin-bottom: 20px;
+  .event-times {
+    font-size: 0.71rem; font-weight: 700; color: var(--c-brand);
+    letter-spacing: 0.02em; margin-bottom: 6px;
   }
-  .event-location {
-    display: flex; align-items: center; gap: 7px;
-    font-size: 0.68rem; font-weight: 500; color: var(--c-muted); margin-bottom: 20px;
+  .event-recurrence {
+    font-size: 0.6rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--c-muted); margin-bottom: 10px;
   }
-  .event-location svg { flex-shrink: 0; width: 13px; height: 13px; stroke: var(--c-muted); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-  .event-link {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em;
-    text-transform: uppercase; color: var(--c-dark);
-    border-bottom: 1px solid var(--c-border);
-    padding-bottom: 2px;
-    transition: border-color 0.2s, color 0.2s;
+  .event-location-row {
+    display: flex; align-items: center; gap: 5px; margin-top: auto; padding-top: 10px;
+    border-top: 1px solid var(--c-border);
+    font-size: 0.62rem; font-weight: 500; color: var(--c-muted);
   }
-  .event-link:hover { border-color: var(--c-dark); }
-  .event-link svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.2s; }
-  .event-link:hover svg { transform: translateX(3px); }
+  .event-location-row svg { flex-shrink: 0; }
 
-  /* Featured / large event */
-  .event-card.featured {
-    grid-column: 1 / -1;
-    display: grid; grid-template-columns: 1fr 1fr;
+  /* Featured card */
+  .event-card.featured { grid-column: 1 / -1; }
+  .event-card.featured .event-thumb { aspect-ratio: 16/7; }
+  .event-card.featured .event-title { font-size: 1.35rem; }
+  .event-card.featured .event-body { padding: 26px 30px 30px; }
+  .event-card.featured .event-desc {
+    font-size: 0.82rem; font-weight: 400; color: #666; line-height: 1.7;
+    margin-bottom: 14px; max-width: 560px;
   }
-  .event-card.featured .event-date-bar {
-    flex-direction: column; align-items: flex-start;
-    justify-content: flex-end; padding: 40px;
-    background: var(--c-darker);
-    border-bottom: none; border-right: 1px solid rgba(255,255,255,0.07);
+  .featured-pip {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.47rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--c-brand); background: rgba(201,169,110,0.1);
+    border-radius: 100px; padding: 5px 12px; margin-bottom: 14px;
   }
-  .event-card.featured .event-cal { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.1); }
-  .event-card.featured .event-cal-month { color: var(--c-brand); }
-  .event-card.featured .event-cal-day { color: #fff; }
-  .event-card.featured .event-time { color: rgba(255,255,255,0.7); }
-  .event-card.featured .event-weekday { color: rgba(255,255,255,0.35); }
-  .event-card.featured .event-body { padding: 40px; }
-  .featured-badge {
-    font-size: 0.48rem; font-weight: 700; letter-spacing: 0.25em;
-    text-transform: uppercase; color: var(--c-brand);
-    background: rgba(201,169,110,0.1); border-radius: 100px;
-    padding: 5px 12px; display: inline-block; margin-bottom: 16px;
+  .featured-pip::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--c-brand);
   }
-  .event-card.featured .event-title { font-size: 1.5rem; margin-bottom: 14px; }
-  .event-card.featured .event-desc { font-size: 0.85rem; margin-bottom: 28px; max-width: 440px; }
-  .event-card.featured .event-link { font-size: 0.66rem; }
 
   /* ━━━━━━━━━━━━━━━━━━━━━━━━
      SUBMIT AN EVENT BANNER
@@ -386,8 +423,7 @@
     .ft-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
     .hdr-nav { padding: 12px 28px; gap: 24px; }
     .hdr-brand { padding: 13px 28px; }
-    .event-card.featured { grid-template-columns: 1fr; }
-    .event-card.featured .event-date-bar { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .event-card.featured .event-thumb { aspect-ratio: 3/2; }
   }
   @media(max-width:768px) {
     #page-hero { padding: 32px 20px 0; }
@@ -415,12 +451,11 @@
 
 <!-- ═══════ HEADER ═══════ -->
 <header id="header">
-  <button class="nav-toggle" id="navToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mainNav">
-    <span class="nav-toggle-bar"></span>
-    <span class="nav-toggle-bar"></span>
-    <span class="nav-toggle-bar"></span>
-  </button>
-  <nav class="hdr-nav" id="mainNav" aria-label="Main navigation">
+  <a href="/" class="hdr-logo-link" aria-label="GBFPC Home">
+    <img src="gbfpc-logo.svg" alt="GBFPC" class="hdr-logo"/>
+  </a>
+  <nav class="hdr-nav" id="mainNav" role="navigation" aria-label="Main navigation">
+    <button class="nav-close-btn" id="navClose" aria-label="Close menu">&#x2715;</button>
     <a href="gbfpc-about.html">About</a>
     <a href="gbfpc-ministries.html">Ministries</a>
     <a href="gbfpc-education.html">Education</a>
@@ -429,13 +464,12 @@
     <a href="gbfpc-connect.html">Connect</a>
     <a href="gbfpc-livestream.html">Livestream</a>
   </nav>
-  <div class="hdr-brand">
-    <a href="/" class="hdr-left">
-      <img src="gbfpc-logo.svg" alt="GBFPC" class="hdr-logo"/>
-      <span class="hdr-name">Greater Bakersfield's<br>First Pentecostal Church</span>
-    </a>
-    <a href="gbfpc-visit.html" class="hdr-cta">Plan Your Visit</a>
-  </div>
+  <a href="gbfpc-visit.html" class="hdr-pv">Plan Your Visit</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav">
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+  </button>
 </header>
 <div class="hdr-spacer"></div>
 
@@ -538,156 +572,181 @@
 </style>
 <script>
 (function(){
-  var SB_URL  = 'https://keuecvwaailuvouwegod.supabase.co';
-  var SB_KEY  = 'sb_publishable_LRE10Uf2omW1sP2qqKsbEQ_gvPLaKVC';
-  var CATS    = {general:'General',youth:'Youth',women:'Women',men:'Men',kids:'Kids',special:'Special Service',vbs:'VBS',holiday:'Holiday'};
-  var MONTHS  = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  var DAYS    = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  var PIN_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true" style="width:13px;height:13px;stroke:#bbb;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;margin-top:1px"><path d="M12 2C8.134 2 5 5.134 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.866-3.134-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>';
-  var ARR_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
-
-  function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-
-  function fmtDate(str){
-    var p=str.split('-').map(Number), dt=new Date(p[0],p[1]-1,p[2]);
-    return { mon:MONTHS[dt.getMonth()], day:dt.getDate(), dayName:DAYS[dt.getDay()] };
+  var toggle = document.getElementById('navToggle');
+  var nav = document.getElementById('mainNav');
+  var closeBtn = document.getElementById('navClose');
+  if(!toggle || !nav) return;
+  function openMenu(){
+    nav.classList.add('nav-open');
+    toggle.setAttribute('aria-expanded','true');
+    toggle.setAttribute('aria-label','Close menu');
+    toggle.classList.add('nav-toggle-open');
+    document.body.style.overflow = 'hidden';
   }
-
-  function fmtTime(t){
-    if(!t) return '';
-    var p=t.split(':').map(Number), h=p[0], m=p[1];
-    return (h>12?h-12:(h===0?12:h))+':'+(m<10?'0':'')+m+(h>=12?' PM':' AM');
+  function closeMenu(){
+    nav.classList.remove('nav-open');
+    toggle.setAttribute('aria-expanded','false');
+    toggle.setAttribute('aria-label','Open menu');
+    toggle.classList.remove('nav-toggle-open');
+    document.body.style.overflow = '';
   }
-
-  function card(ev, feat){
-    var d=fmtDate(ev.event_date);
-    var t0=fmtTime(ev.start_time), t1=fmtTime(ev.end_time);
-    var ts=t1?t0+' – '+t1:t0;
-    var cat=CATS[ev.category]||'Event';
-    var loc=esc(ev.location||'GBFPC · Main Sanctuary');
-    var dateBar='<div class="event-date-bar"><div class="event-cal" aria-hidden="true"><span class="event-cal-month">'+d.mon+'</span><span class="event-cal-day">'+d.day+'</span></div><div class="event-time-stack">'+(ts?'<span class="event-time">'+ts+'</span>':'')+'<span class="event-weekday">'+d.dayName+'</span></div></div>';
-
-    if(feat){
-      return '<article class="event-card featured">'+dateBar+'<div class="event-body"><span class="featured-badge">Featured</span><span class="event-tag">'+cat+'</span><h3 class="event-title">'+esc(ev.title)+'</h3>'+(ev.description?'<p class="event-desc">'+esc(ev.description)+'</p>':'')+'<div class="event-location">'+PIN_SVG+' '+loc+'</div><a href="gbfpc-connect.html" class="event-link">Learn More '+ARR_SVG+'</a></div></article>';
-    }
-    return '<article class="event-card">'+dateBar+'<div class="event-body"><span class="event-tag">'+cat+'</span><h3 class="event-title">'+esc(ev.title)+'</h3>'+(ev.description?'<p class="event-desc">'+esc(ev.description)+'</p>':'')+'<div class="event-location">'+PIN_SVG+' '+loc+'</div></div></article>';
-  }
-
-  function load(){
-    var grid=document.getElementById('eventsGrid');
-    var loading=document.getElementById('eventsLoading');
-    // today as YYYY-MM-DD in local time
-    var now=new Date(), today=now.getFullYear()+'-'+(now.getMonth()<9?'0':'')+(now.getMonth()+1)+'-'+(now.getDate()<10?'0':'')+now.getDate();
-    var url=SB_URL+'/rest/v1/events?select=*&is_published=eq.true&event_date=gte.'+today+'&order=is_featured.desc,event_date.asc';
-
-    fetch(url,{headers:{apikey:SB_KEY,'Authorization':'Bearer '+SB_KEY}})
-      .then(function(r){ return r.json(); })
-      .then(function(events){
-        loading.remove();
-        if(!events||!events.length){
-          grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:80px 0 40px;"><p style="font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:#111;margin-bottom:10px;">Nothing scheduled yet</p><p style="font-size:0.85rem;color:#aaa;font-weight:300;">Check back soon — new events are added regularly.<br>Follow us on social for updates.</p></div>';
-          return;
-        }
-        grid.innerHTML=events.map(function(ev,i){ return card(ev, ev.is_featured && i===0); }).join('');
-      })
-      .catch(function(){
-        loading.remove();
-        grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:60px 0;"><p style="font-size:0.85rem;color:#bbb;">Unable to load events right now. <a href="gbfpc-connect.html" style="color:#c9a96e;">Contact us</a> for details.</p></div>';
-      });
-  }
-
-  document.addEventListener('DOMContentLoaded', load);
+  toggle.addEventListener('click', function(){
+    if(toggle.getAttribute('aria-expanded')==='true'){ closeMenu(); } else { openMenu(); }
+  });
+  if(closeBtn) closeBtn.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', function(e){
+    if(e.key==='Escape' && nav.classList.contains('nav-open')) closeMenu();
+  });
+  nav.querySelectorAll('a').forEach(function(link){
+    link.addEventListener('click', closeMenu);
+  });
 })();
 </script>
 
-<!-- ═══════ SUBMIT AN EVENT ═══════ -->
-<section id="submit-event">
-  <div class="submit-card r">
-    <div class="submit-text">
-      <span class="submit-eyebrow">GBFPC Community</span>
-      <h2 class="submit-h">Have an event to share?</h2>
-      <p class="submit-p">If you're a ministry leader or church member with an upcoming event, reach out and we'll get it added to the calendar. Contact the church office to submit your event details.</p>
-    </div>
-    <a href="gbfpc-connect.html" class="btn-dark">Contact Us →</a>
-  </div>
-</section>
-
-<!-- ═══════ FOOTER ═══════ -->
-<footer>
-  <div class="ft-grid">
-    <div>
-      <img src="gbfpc-logo.svg" alt="GBFPC" class="ft-logo"/>
-      <div class="ft-name">Greater Bakersfield's<br>First Pentecostal Church</div>
-      <p class="ft-tag">Rooted in truth, alive in the Spirit, and built for community in Bakersfield, California.</p>
-      <div class="ft-soc">
-        <a href="https://www.facebook.com/gbfpcmedia/" class="ft-s" aria-label="Facebook">f</a>
-        <a href="https://www.instagram.com/gbfpc/" class="ft-s" aria-label="Instagram">ig</a>
-        <a href="https://www.youtube.com/channel/UCO1PnTTAT_uOS4ZkMjdBzGg/videos" class="ft-s" aria-label="YouTube">▶</a>
-      </div>
-    </div>
-    <div class="ft-col"><h5>Our House</h5><ul>
-      <li><a href="gbfpc-about.html">About Us</a></li>
-      <li><a href="gbfpc-about.html#vision">Our Vision</a></li>
-      <li><a href="gbfpc-about.html#articles">Articles of Faith</a></li>
-      <li><a href="gbfpc-about.html#history">Church History</a></li>
-    </ul></div>
-    <div class="ft-col"><h5>Ministries</h5><ul>
-      <li><a href="gbfpc-ministries.html#youth">Amplified Youth</a></li>
-      <li><a href="gbfpc-ministries.html#children">K.I.C.K.</a></li>
-      <li><a href="gbfpc-ministries.html">Thrive</a></li>
-      <li><a href="gbfpc-education.html">Education</a></li>
-      <li><a href="gbfpc-education.html">Education</a></li>
-    </ul></div>
-    <div class="ft-col"><h5>Connect</h5><ul>
-      <li><a href="gbfpc-visit.html">Plan Your Visit</a></li>
-      <li><a href="gbfpc-give.html">Give Online</a></li>
-      <li><a href="gbfpc-events.html">Upcoming Events</a></li>
-      <li><a href="gbfpc-livestream.html">Livestream</a></li>
-      <li><a href="gbfpc-connect.html">Contact Us</a></li>
-    </ul></div>
-  </div>
-  <div class="ft-bot">
-    <div class="ft-copy">© 2026 GBFPC. All Rights Reserved.</div>
-    <div class="ft-addr">1418 W Columbus St, Bakersfield, CA 93301 · (661) 323-2851</div>
-  </div>
-</footer>
-
+<!-- ═══════ EVENTS FETCH ═══════ -->
 <script>
-  // Scroll reveal
-  const revObs = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); revObs.unobserve(e.target); } });
-  }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('.r, .r-sm').forEach(el => revObs.observe(el));
+(function(){
+  var SUPABASE_URL = 'https://keuecvwaailuvouwegod.supabase.co';
+  var ANON_KEY = 'sb_publishable_LRE10Uf2omW1sP2qqKsbEQ_gvPLaKVC';
+  var grid = document.getElementById('eventsGrid');
+  var loading = document.getElementById('eventsLoading');
 
-  // Smooth scroll for in-page anchor links
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const target = document.querySelector(a.getAttribute('href'));
-      if(target){ e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-    });
-  });
-</script>
+  var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var DAY_LABELS = { sun:'Sun', mon:'Mon', tue:'Tue', wed:'Wed', thu:'Thu', fri:'Fri', sat:'Sat' };
+  var CAT_LABELS = {
+    general:'General', special:'Special Service', revival:'Revival', conference:'Conference',
+    youth:'Youth', women:'Women', men:'Men', kids:'Kids', vbs:'VBS', holiday:'Holiday'
+  };
 
-<script>
-(function() {
-  var toggle = document.getElementById('navToggle');
-  var nav = document.getElementById('mainNav');
-  if (!toggle || !nav) return;
-  toggle.addEventListener('click', function() {
-    var expanded = toggle.getAttribute('aria-expanded') === 'true';
-    toggle.setAttribute('aria-expanded', String(!expanded));
-    toggle.setAttribute('aria-label', expanded ? 'Open navigation menu' : 'Close navigation menu');
-    nav.classList.toggle('nav-open', !expanded);
-    document.body.style.overflow = expanded ? '' : 'hidden';
-  });
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && nav.classList.contains('nav-open')) {
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.setAttribute('aria-label', 'Open navigation menu');
-      nav.classList.remove('nav-open');
-      document.body.style.overflow = '';
-      toggle.focus();
+  function fmt12(t){
+    if(!t) return '';
+    var parts = t.split(':');
+    var h = parseInt(parts[0],10), m = parseInt(parts[1]||'0',10);
+    var ampm = h>=12?'PM':'AM'; var h12 = h%12||12;
+    return h12+':'+(m<10?'0':'')+m+' '+ampm;
+  }
+
+  function fmtDate(dateStr){
+    if(!dateStr) return '';
+    var d = new Date(dateStr+'T00:00:00');
+    return MONTHS[d.getMonth()]+' '+d.getDate();
+  }
+
+  function fmtDateRange(start, end){
+    if(!end || end===start) return fmtDate(start);
+    var s = new Date(start+'T00:00:00');
+    var e = new Date(end+'T00:00:00');
+    var sm = MONTHS[s.getMonth()], em = MONTHS[e.getMonth()];
+    if(sm===em) return sm+' '+s.getDate()+'–'+e.getDate();
+    return sm+' '+s.getDate()+' – '+em+' '+e.getDate();
+  }
+
+  function buildSessionsText(sessions){
+    if(!sessions || !sessions.length) return '';
+    return sessions.map(function(s){
+      return s.label ? s.label+' · '+fmt12(s.time) : fmt12(s.time);
+    }).join('  ·  ');
+  }
+
+  function buildRecurrenceText(days){
+    if(!days || !days.length) return '';
+    return days.map(function(d){ return DAY_LABELS[d]||d; }).join(' · ');
+  }
+
+  function escHtml(str){ return (str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+  function buildCard(ev, featured){
+    var dateRange = fmtDateRange(ev.event_date, ev.date_end);
+    var dateSubline = ev.event_type==='range' ? 'Through '+fmtDate(ev.date_end) : '';
+    if(ev.event_type==='single') { dateSubline=''; }
+
+    var recText = buildRecurrenceText(ev.recurrence_days);
+    var sessText = buildSessionsText(ev.sessions && ev.sessions.length ? ev.sessions
+      : (ev.start_time ? [{label:'',time:ev.start_time}] : []));
+    var catLabel = CAT_LABELS[ev.category] || ev.category || '';
+
+    var imgHtml = ev.image_url
+      ? '<img src="'+escHtml(ev.image_url)+'" alt="'+escHtml(ev.title)+'" loading="lazy" onload="this.classList.add('ev-loaded')" onerror="this.style.display='none'">'
+      : '';
+
+    var descHtml = featured && ev.description
+      ? '<p class="event-desc">'+escHtml(ev.description)+'</p>'
+      : '';
+
+    var featuredBadge = featured
+      ? '<span class="featured-pip">Featured</span><br>'
+      : '';
+
+    var dateHtml = '<div class="event-date-badge">'
+      + '<span class="event-date-main">'+escHtml(dateRange)+'</span>'
+      + (dateSubline ? '<span class="event-date-sub">'+escHtml(dateSubline)+'</span>' : '')
+      + '</div>';
+
+    var recHtml  = recText ? '<div class="event-recurrence">'+escHtml(recText)+'</div>' : '';
+    var sessHtml = sessText ? '<div class="event-times">'+escHtml(sessText)+'</div>' : '';
+
+    var locShort = (ev.location||'GBFPC').replace('GBFPC — ','').replace(', Bakersfield CA','').replace(', Bakersfield, CA','');
+
+    return '<div class="event-card r'+(featured?' featured':'')+'">'+
+      '<div class="event-thumb">'+
+        imgHtml+
+        '<div class="event-cat">'+escHtml(catLabel)+'</div>'+
+        dateHtml+
+      '</div>'+
+      '<div class="event-body">'+
+        featuredBadge+
+        '<div class="event-title">'+escHtml(ev.title)+'</div>'+
+        sessHtml+
+        recHtml+
+        descHtml+
+        '<div class="event-location-row">'+
+          '<svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1C5.2 1 3 3.2 3 6c0 4 5 9 5 9s5-5 5-9c0-2.8-2.2-5-5-5z"/><circle cx="8" cy="6" r="1.5"/></svg>'+
+          escHtml(locShort)+
+        '</div>'+
+      '</div>'+
+    '</div>';
+  }
+
+  // Fetch from Supabase
+  var now = new Date().toISOString();
+  var endpoint = SUPABASE_URL + '/rest/v1/events'
+    + '?is_published=eq.true'
+    + '&or=(publish_at.is.null,publish_at.lte.'+encodeURIComponent(now)+')'
+    + '&event_date=gte.'+new Date().toISOString().slice(0,10)
+    + '&order=is_featured.desc,event_date.asc'
+    + '&limit=20'
+    + '&select=*';
+
+  fetch(endpoint, {
+    headers: { 'apikey': ANON_KEY, 'Authorization': 'Bearer '+ANON_KEY }
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(events){
+    if(loading) loading.remove();
+    if(!events || !events.length){
+      grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:72px 0;">'
+        +'<p style="font-size:0.8rem;color:#bbb;font-weight:500;">No upcoming events right now.</p>'
+        +'<p style="font-size:0.72rem;color:#ccc;margin-top:8px;">Check back soon — we're always planning something.</p>'
+        +'</div>';
+      return;
     }
+    var html = '';
+    events.forEach(function(ev){
+      html += buildCard(ev, !!ev.is_featured);
+    });
+    grid.innerHTML = html;
+
+    // Scroll reveal
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); observer.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    grid.querySelectorAll('.r').forEach(function(el){ observer.observe(el); });
+  })
+  .catch(function(){
+    if(loading) loading.remove();
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:72px 0;">'
+      +'<p style="font-size:0.8rem;color:#bbb;">Could not load events. Please try again later.</p>'
+      +'</div>';
   });
 })();
 </script>
