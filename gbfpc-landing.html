@@ -1,0 +1,1593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GBFPC | Greater Bakersfield's First Pentecostal Church</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+  :root {
+  --c-brand:   #c9a96e;
+  --c-dark:    #111111;
+  --c-darker:  #0f0f0f;
+  --c-surface: #f2f1ee;
+  --c-muted:   #888888;
+  --c-border:  #ebebeb;
+}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  /* ── Skip to main content ── */
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 1rem;
+    background: var(--c-brand);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-radius: 0 0 6px 6px;
+    z-index: 9999;
+    transition: top 0.2s ease;
+  }
+  .skip-link:focus { top: 0; }
+
+  /* ── Focus visible ── */
+  :focus-visible {
+    outline: 2px solid var(--c-brand);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  body {
+    background: #fff;
+    color: var(--c-dark);
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     HEADER — fixed, two rows
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #header {
+    position: relative;
+    z-index: 200;
+    background: rgba(255,255,255,0.97);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid #e8e8e8;
+  }
+
+  /* ── Mobile Nav Toggle ── */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 1100;
+    position: relative;
+  }
+  .nav-toggle-bar {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--c-dark);
+    border-radius: 2px;
+    transition: transform 0.3s cubic-bezier(0.42,0,0.58,1), opacity 0.2s ease;
+  }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  @media (max-width: 768px) {
+    .nav-toggle { display: flex; }
+    .hdr-nav {
+      display: none !important;
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      z-index: 1050;
+      padding: 2rem;
+    }
+    .hdr-nav.nav-open {
+      display: flex !important;
+    }
+    .hdr-nav a {
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--c-dark);
+      text-transform: uppercase;
+    }
+    .hdr-nav a.active { color: var(--c-brand); }
+    .hdr-spacer { height: 70px; }
+  }
+
+  /* Row 1 — centered nav */
+  .hdr-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    padding: 12px 56px;
+    border-bottom: 1px solid var(--c-border);
+  }
+  .hdr-nav a {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #555;
+    transition: color 0.2s;
+    white-space: nowrap;
+  }
+  .hdr-nav a:hover { color: #000; }
+
+  /* Row 2 — logo left / cta right */
+  .hdr-brand {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 56px;
+  }
+  .hdr-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .hdr-logo { height: 40px; width: auto; object-fit: contain; filter: brightness(0); }
+  .hdr-name {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    line-height: 1.35;
+    color: rgba(255,255,255,0.9);
+    transition: color 0.4s;
+  }
+  .hdr-name { color: var(--c-dark) !important; }
+  .hdr-cta {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 11px 24px;
+    border: 1px solid var(--c-dark);
+    color: var(--c-dark);
+    border-radius: 8px;
+    transition: opacity 0.18s cubic-bezier(0,0,0.2,1), background 0.18s cubic-bezier(0,0,0.2,1), color 0.18s cubic-bezier(0,0,0.2,1);
+    white-space: nowrap;
+  }
+  .hdr-cta:hover { background: #000; border-color: #000; color: #fff; } /* hover stays black intentionally */
+
+  .hdr-spacer { height: 0; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     HERO — dark video box, rounded, slides in
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #hero { padding: 18px 80px 0; background: #fff; }
+
+  .hero-box {
+    position: relative;
+    border-radius: 22px;
+    overflow: hidden;
+    background: #1c1c1e; /* fallback when CDN photo doesn't load */
+    /* cap width and height so it doesn't fill a massive screen */
+    max-width: 1380px;
+    margin: 0 auto;
+    height: calc(100vh - 128px);
+    max-height: 840px;
+    min-height: 520px;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  /* Hero background container */
+  .hero-bg {
+    position: absolute; inset: 0;
+    overflow: hidden;
+  }
+  /* Shared layer base — canvas fallback + video elements */
+  .hero-layer {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+  /* Video layers start invisible; soft-loop JS makes them visible */
+  .hero-vid {
+    opacity: 0;
+    transition: opacity 2.2s ease;
+    z-index: 1;
+  }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(to top,  rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.4) 45%, rgba(0,0,0,0.08) 100%),
+      linear-gradient(to right, rgba(0,0,0,0.4) 0%, transparent 55%);
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 56px 64px;
+    max-width: 860px;
+    color: #fff;
+  }
+  .hero-eyebrow {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) forwards 4.52s;
+  }
+  .hero-h1 {
+    font-weight: 900;
+    font-size: clamp(3rem, 7.5vw, 6.8rem);
+    line-height: 0.93;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    color: #fff;
+  }
+  .hero-h1 .word { display: block; overflow: hidden; line-height: 1.02; padding-bottom: 0.04em; }
+  .hero-h1 .word span { display: block; opacity: 0; transform: translateY(105%); }
+  .hero-h1 .word:nth-child(1) span { animation: wordUp 0.72s cubic-bezier(0.22,1,0.36,1) forwards 4.46s; }
+  .hero-h1 .word:nth-child(2) span { animation: wordUp 0.72s cubic-bezier(0.22,1,0.36,1) forwards 4.58s; }
+  .hero-h1 .word:nth-child(3) span { animation: wordUp 0.72s cubic-bezier(0.22,1,0.36,1) forwards 4.70s; }
+  .hero-h1 .word:nth-child(4) span { animation: wordUp 0.72s cubic-bezier(0.22,1,0.36,1) forwards 4.82s; }
+  @keyframes wordUp  { to { opacity:1; transform:translateY(0); } }
+  @keyframes fadeUp  { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:none; } }
+
+  .hero-body {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.62);
+    max-width: 400px;
+    line-height: 1.75;
+    margin-bottom: 34px;
+    opacity: 0;
+    animation: fadeUp 0.85s cubic-bezier(0.22,1,0.36,1) forwards 4.98s;
+  }
+  .hero-btns {
+    display: flex; gap: 12px; flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.85s cubic-bezier(0.22,1,0.36,1) forwards 5.10s;
+  }
+  .btn-white {
+    display: inline-block;
+    background: #fff; color: #000;
+    font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 13px 28px;
+    border-radius: 8px;
+    transition: opacity 0.18s cubic-bezier(0,0,0.2,1), background 0.18s cubic-bezier(0,0,0.2,1), color 0.18s cubic-bezier(0,0,0.2,1);
+  }
+  .btn-white:hover { opacity: 0.85; }
+  .btn-ghost-w {
+    display: inline-block;
+    border: 1px solid rgba(255,255,255,0.5);
+    color: #fff;
+    font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 13px 28px;
+    border-radius: 8px;
+    transition: opacity 0.18s cubic-bezier(0,0,0.2,1), background 0.18s cubic-bezier(0,0,0.2,1), color 0.18s cubic-bezier(0,0,0.2,1);
+  }
+  .btn-ghost-w:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.8); }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     INFO STRIP — Apple/Passion clean style
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .info-strip {
+    max-width: 1380px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 0 0 14px 14px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    box-shadow: 0 1px 0 0 #eee, 1px 0 0 0 #eee, -1px 0 0 0 #eee, 0 4px 20px rgba(0,0,0,0.04);
+  }
+  .info-cell {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 26px 28px;
+    border-right: 1px solid #f0f0f0;
+    transition: background 0.2s;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .info-cell:last-child { border-right: none; }
+  .info-cell:hover { background: rgba(0,0,0,0.02); }
+  /* Clean SVG icon container */
+  .info-icon-wrap {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: #f5f5f5;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+  .info-cell:hover .info-icon-wrap { background: #efefef; }
+  .info-icon-wrap svg { width: 16px; height: 16px; stroke: #555; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .info-text {}
+  .info-label {
+    font-size: 0.56rem; font-weight: 600;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: #bbb; margin-bottom: 4px;
+    display: block;
+  }
+  .info-val {
+    font-size: 0.8rem; font-weight: 600;
+    color: var(--c-dark); display: block;
+    letter-spacing: -0.01em;
+  }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     FLOATING CARD SECTIONS
+     — colored sections sit inside rounded cards
+       on the white page, not edge-to-edge
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .float-sec {
+    background: #fff;
+    padding: 0 48px;
+  }
+  /* light card */
+  .float-card {
+    max-width: 1300px;
+    margin: 0 auto;
+    background: var(--c-surface);
+    border-radius: 22px;
+    padding: 80px 72px;
+  }
+  /* dark card */
+  .float-card-dark {
+    max-width: 1300px;
+    margin: 0 auto;
+    background: var(--c-darker);
+    border-radius: 22px;
+    padding: 80px 72px;
+  }
+  @media(max-width:1024px){
+    .float-card, .float-card-dark { padding: 60px 44px; }
+    .float-sec { padding: 0 24px; }
+  }
+  @media(max-width:768px){
+    .float-card, .float-card-dark { padding: 44px 28px; border-radius: 16px; }
+    .float-sec { padding: 0 16px; }
+  }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     SCROLL REVEAL
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .r       { opacity: 0; transform: translateY(32px); transition: opacity 0.85s cubic-bezier(0.22,1,0.36,1), transform 0.85s cubic-bezier(0.22,1,0.36,1); }
+  .r.in    { opacity: 1; transform: none; }
+  .r-sm    { opacity: 0; transform: translateY(16px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
+  .r-sm.in { opacity: 1; transform: none; }
+  .d1 { transition-delay: 0.08s; } .d2 { transition-delay: 0.16s; } .d3 { transition-delay: 0.24s; }
+  .d4 { transition-delay: 0.32s; } .d5 { transition-delay: 0.40s; } .d6 { transition-delay: 0.48s; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     SHARED
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .sec { padding: 100px 68px; }
+  .inner { max-width: 1260px; margin: 0 auto; }
+
+  .eyebrow {
+    font-size: 0.6rem; font-weight: 700;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    color: #bbb; margin-bottom: 14px;
+  }
+  .eyebrow.inv { color: rgba(255,255,255,0.35); }
+
+  .h2 {
+    font-weight: 900;
+    font-size: clamp(2.4rem, 4.5vw, 4.2rem);
+    line-height: 0.95; letter-spacing: -0.025em;
+    text-transform: uppercase;
+    color: var(--c-dark); margin-bottom: 20px;
+  }
+  .h2.inv { color: #fff; }
+
+  .para {
+    font-size: 0.95rem; font-weight: 300;
+    color: #777; line-height: 1.75;
+    max-width: 460px;
+  }
+  .para.inv { color: rgba(255,255,255,0.5); }
+
+  .sec-head {
+    display: flex; justify-content: space-between;
+    align-items: flex-end; margin-bottom: 52px;
+    flex-wrap: wrap; gap: 20px;
+  }
+  .view-all {
+    font-size: 0.6rem; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: #bbb; display: flex; align-items: center; gap: 8px;
+    transition: color 0.2s, gap 0.2s;
+  }
+  .view-all:hover { color: var(--c-dark); gap: 14px; }
+  .view-all.inv { color: rgba(255,255,255,0.3); }
+  .view-all.inv:hover { color: #fff; }
+
+  .btn-dark {
+    display: inline-block;
+    background: var(--c-dark); color: #fff;
+    font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 13px 28px;
+    transition: opacity 0.18s cubic-bezier(0,0,0.2,1), background 0.18s cubic-bezier(0,0,0.2,1), color 0.18s cubic-bezier(0,0,0.2,1);
+    border-radius: 8px;
+  }
+  .btn-dark:hover { opacity: 0.75; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     PASTOR — clean Apple-style
+     White page, video as contained dark block,
+     generous side margins
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #pastor {
+    background: #fff;
+    padding: 100px 80px;
+  }
+  .pastor-inner {
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+  /* Top row: eyebrow + heading */
+  .pastor-head {
+    margin-bottom: 56px;
+  }
+  .pastor-feat-eyebrow {
+    font-size: 0.58rem; font-weight: 700;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    color: #bbb; margin-bottom: 14px;
+    display: block;
+  }
+  .pastor-feat-title {
+    font-weight: 900;
+    font-size: clamp(2.8rem, 5vw, 4.8rem);
+    line-height: 0.93;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    color: var(--c-dark);
+  }
+  /* Bottom row: narrow video col (portrait) + wider text col */
+  .pastor-body {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 72px;
+    align-items: start;
+  }
+  /* Left: vertical video — portrait 9:16, strict contained block */
+  .pastor-vbox {
+    border-radius: 20px;
+    overflow: hidden;
+    aspect-ratio: 9/16;
+    position: relative;
+    background: #0d0d0d;
+    box-shadow: 0 8px 48px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.08);
+  }
+  /* Pastor video — fills vbox, sits above gradient, fades in when loaded */
+  .pastor-vbox video {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+  .pastor-vbox video.loaded {
+    opacity: 1;
+  }
+  /* Right: intro text + ministry list */
+  .pastor-text {
+    padding-top: 8px;
+  }
+  .pastor-intro {
+    font-size: 0.93rem;
+    font-weight: 300;
+    color: #666;
+    line-height: 1.78;
+    max-width: 400px;
+    margin-bottom: 32px;
+  }
+  /* Ministry list */
+  .min-list { border-top: 1px solid #eee; }
+  .min-item-dark {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 17px 0;
+    border-bottom: 1px solid #eee;
+    cursor: pointer; transition: padding-left 0.2s;
+    text-decoration: none;
+  }
+  .min-item-dark:hover { padding-left: 10px; }
+  .min-item-dark .min-name { color: var(--c-dark); }
+  .min-item-dark .min-sub { color: #aaa; }
+  .min-item-dark .min-arr { color: #ccc; transition: color 0.2s, transform 0.2s; }
+  .min-item-dark:hover .min-arr { color: var(--c-dark); transform: translateX(5px); }
+
+  /* rounded video box (shared base) */
+  .vbox {
+    border-radius: 18px; overflow: hidden;
+    aspect-ratio: 16/9; position: relative;
+    cursor: pointer; background: #0d0d0d;
+  }
+  .vbox-grad {
+    position: absolute; inset: 0;
+    background: linear-gradient(130deg,#06001a 0%,#110033 35%,#1e0055 65%,#06001a 100%);
+    background-size: 300% 300%;
+    animation: vgAnim 12s ease infinite;
+  }
+  @keyframes vgAnim { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+  .vbox-noise {
+    position:absolute;inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity:0.05; pointer-events:none;
+  }
+  .vbox-center {
+    position:absolute;inset:0;
+    display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:12px;z-index:2;
+  }
+  .vbox-play {
+    width:64px;height:64px;border-radius:50%;
+    border:1.5px solid rgba(255,255,255,0.55);
+    display:flex;align-items:center;justify-content:center;
+    transition:background 0.3s,border-color 0.3s,transform 0.3s;
+  }
+  .vbox:hover .vbox-play { background:#fff;border-color:#fff;transform:scale(1.1); }
+  .vbox:hover .vbox-play path { fill:#000; }
+  .vbox-soon {
+    font-size:0.56rem;font-weight:700;
+    letter-spacing:0.22em;text-transform:uppercase;
+    color:rgba(255,255,255,0.3);
+  }
+  .vbox-footer {
+    position:absolute;bottom:0;left:0;right:0;
+    background:linear-gradient(to top,rgba(0,0,0,0.85),transparent);
+    padding:28px 24px 20px;z-index:2;
+  }
+  .vbox-tag { font-size:0.54rem;font-weight:700;letter-spacing:0.24em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:5px; }
+  .vbox-name { font-weight:800;font-size:1.05rem;letter-spacing:0.03em;text-transform:uppercase;color:#fff; }
+  .vbox-role { font-size:0.68rem;font-weight:400;color:rgba(255,255,255,0.4);margin-top:3px; }
+
+  /* ministry list (light sections) */
+  .min-list { border-top:1px solid #eee; }
+  .min-item {
+    display:flex;align-items:center;justify-content:space-between;
+    padding:17px 0;border-bottom:1px solid #eee;
+    cursor:pointer;transition:padding-left 0.2s;
+  }
+  .min-item:hover { padding-left:10px; }
+  .min-name { font-size:0.8rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--c-dark);margin-bottom:2px; }
+  .min-sub  { font-size:0.7rem;font-weight:300;color:#aaa; }
+  .min-arr  { color:#ccc;font-size:0.9rem;transition:color 0.2s,transform 0.2s; }
+  .min-item:hover .min-arr { color:var(--c-dark);transform:translateX(5px); }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     MINISTRIES — cards
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .mc {
+    border-radius: 14px; overflow: hidden;
+    position: relative; aspect-ratio: 3/4;
+    cursor: pointer; background: #ddd;
+  }
+  .mc-bg {
+    position:absolute;inset:0;
+    background-size:cover;background-position:center;
+    transition:transform 0.7s cubic-bezier(0.22,1,0.36,1),filter 0.4s;
+    filter:brightness(0.62);
+  }
+  .mc:hover .mc-bg { transform:scale(1.05);filter:brightness(0.42); }
+  .g1 { background:linear-gradient(150deg,#0a0020,#220055); }
+  .g2 { background:linear-gradient(150deg,#001828,#004a76); }
+  .mc-ov { position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.88) 0%,rgba(0,0,0,0.15) 55%,transparent 100%); }
+  .mc-body { position:absolute;bottom:0;left:0;right:0;padding:26px 22px;z-index:2; }
+  .mc-tag { font-size:0.54rem;font-weight:700;letter-spacing:0.26em;text-transform:uppercase;color:rgba(255,255,255,0.38);margin-bottom:7px; }
+  .mc-name { font-weight:800;font-size:1.1rem;letter-spacing:-0.01em;text-transform:uppercase;line-height:1.1;color:#fff; }
+  .mc-desc {
+    font-size:0.76rem;font-weight:300;color:rgba(255,255,255,0.55);
+    line-height:1.55;margin-top:9px;
+    max-height:0;overflow:hidden;opacity:0;
+    transition:max-height 0.5s ease,opacity 0.4s ease;
+  }
+  .mc:hover .mc-desc { max-height:80px;opacity:1; }
+  .mc-link {
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:0.58rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#fff;
+    margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.12);
+    width:100%;opacity:0;max-height:0;overflow:hidden;
+    transition:opacity 0.35s ease 0.1s,max-height 0.45s ease;
+    border-radius: 8px;
+  }
+  .mc:hover .mc-link { opacity:1;max-height:34px; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     LEADERSHIP — Passion City card style
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #leadership {
+    background: #fff;
+    padding: 80px 24px 80px;
+  }
+  .lead-outer { max-width: 1260px; margin: 0 auto; }
+
+  /* Big heading overlaps the card */
+  .lead-big-title {
+    font-weight: 900;
+    font-size: clamp(3.5rem, 8.5vw, 7.5rem);
+    letter-spacing: -0.03em;
+    color: var(--c-dark);
+    line-height: 0.95;
+    margin-bottom: -28px; /* pulls card up under the heading */
+    position: relative;
+    z-index: 2;
+  }
+
+  /* The beige card */
+  .lead-card {
+    background: #e0ddd4;
+    border-radius: 20px;
+    padding: 52px 52px 36px;
+    position: relative;
+  }
+
+  /* Slides container — crossfade transition */
+  .lead-slides-wrap { position: relative; }
+  .lead-slide {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    transition: opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .lead-slide.active {
+    opacity: 1;
+    pointer-events: auto;
+    position: relative;
+  }
+
+  /* Left: text */
+  .lead-role {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: #999;
+    margin-bottom: 10px;
+  }
+  .lead-name {
+    font-weight: 700;
+    font-size: clamp(1.4rem, 2.2vw, 1.85rem);
+    color: var(--c-dark);
+    line-height: 1.2;
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+  }
+  .lead-bio {
+    font-size: 0.88rem;
+    font-weight: 400;
+    color: #555;
+    line-height: 1.72;
+    margin-bottom: 28px;
+    max-width: 380px;
+  }
+  /* Teal pill button — matches Passion City exactly */
+  .lead-btn {
+    display: inline-block;
+    background: var(--c-brand);
+    color: #fff;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 12px 22px;
+    border-radius: 100px;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .lead-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+
+  /* Right: photo */
+  .lead-slide-img {
+    border-radius: 14px;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    background: #ccc;
+    position: relative; /* contain the absolutely-positioned img */
+  }
+  /* position: absolute guarantees the image fills the aspect-ratio box
+     exactly — no overflow that would clip the bottom border-radius */
+  .lead-slide-img img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: top;
+  }
+  .lead-img-ph {
+    width:100%;height:100%;
+    display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:10px;
+    background: linear-gradient(140deg,#d8d5cc,#c8c5bc);
+  }
+  .lead-img-ph span { font-size:4rem;opacity:0.25; }
+  .lead-img-ph p { font-size:0.56rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#999; }
+
+  /* Arrows — bottom right of card */
+  .lead-arrows {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 32px;
+  }
+  .lead-arrow {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(0,0,0,0.18);
+    background: transparent;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: #666;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+    font-family: inherit;
+  }
+  .lead-arrow:hover { background: rgba(0,0,0,0.08); border-color: rgba(0,0,0,0.35); color: var(--c-dark); }
+  .lead-arrow:disabled { opacity: 0.3; cursor: default; }
+
+  @media(max-width:1024px){
+    #leadership { padding: 48px 36px 64px; }
+    .lead-slide, .lead-slide.active { grid-template-columns:1fr;gap:36px; }
+    .lead-big-title { font-size: clamp(3rem,7vw,5rem); margin-bottom:-20px; }
+  }
+  @media(max-width:768px){
+    #leadership { padding: 40px 20px 56px; }
+    .lead-card { padding: 36px 28px 28px; }
+  }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     GIVING
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .give-grid { display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center; }
+  .give-img { border-radius:16px;overflow:hidden;aspect-ratio:4/3; }
+  .give-img img { width:100%;height:100%;object-fit:cover; }
+  .give-text .eyebrow { margin-bottom:12px; }
+  .give-text .h2 { margin-bottom:20px; }
+  .give-text .para { margin-bottom:36px; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     SERMONS — white bg
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #sermons { background: #fff; border-top: 1px solid #eee; }
+  .sermon-cards { display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:52px; }
+  .sc {
+    border-radius:12px;border:1px solid #eee;
+    background:#fff;padding:34px;
+    display:flex;flex-direction:column;
+    transition:background 0.2s,border-color 0.2s,box-shadow 0.2s;
+    cursor:pointer;
+  }
+  .sc:hover { background:#fafafa;border-color:#ccc;box-shadow:0 4px 24px rgba(0,0,0,0.06); }
+  .sc-date { font-size:0.58rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:#bbb;margin-bottom:14px; }
+  .sc-title { font-weight:800;font-size:1.1rem;letter-spacing:-0.01em;text-transform:uppercase;line-height:1.15;flex:1;color:var(--c-dark);margin-bottom:7px; }
+  .sc-spkr { font-size:0.74rem;font-weight:300;color:#aaa;margin-bottom:26px; }
+  .sc-watch {
+    display:flex;align-items:center;gap:10px;
+    font-size:0.6rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;
+    color:#bbb;padding-top:18px;border-top:1px solid #eee;
+    transition:color 0.2s;
+  }
+  .sc:hover .sc-watch { color:var(--c-dark); }
+  .sc-icon {
+    width:26px;height:26px;border-radius:50%;
+    border:1px solid currentColor;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     DARK SECTION — "Passion Equip" equivalent
+     One dark section mid-page like the original
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .connect-dark-inner {
+    display:grid;grid-template-columns:1fr 1fr;
+    gap:80px;align-items:center;
+  }
+  .cd-text .eyebrow.inv { margin-bottom:12px; }
+  .cd-text .h2.inv { margin-bottom:20px; }
+  .cd-text .para.inv { margin-bottom:36px; }
+  .cd-img {
+    border-radius:16px;overflow:hidden;aspect-ratio:4/3;
+    position:relative;
+  }
+  .cd-img img { width:100%;height:100%;object-fit:cover; }
+  .btn-white-solid {
+    display:inline-block;background:#fff;color:#000;
+    font-size:0.65rem;font-weight:700;
+    letter-spacing:0.15em;text-transform:uppercase;
+    padding:13px 28px;
+    transition:opacity 0.2s;
+    border-radius: 8px;
+  }
+  .btn-white-solid:hover { opacity:0.85; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     SIGNUP — white bg (Passion City newsletter)
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .signup-inner { max-width:1260px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap; }
+  .signup-eyebrow { font-size:0.58rem;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;color:#bbb;margin-bottom:7px; }
+  .signup-title { font-weight:900;font-size:clamp(1.6rem,2.8vw,2.4rem);text-transform:uppercase;letter-spacing:-0.01em;color:var(--c-dark);line-height:1.0; }
+  .signup-sub { font-size:0.83rem;font-weight:300;color:#999;margin-top:9px;max-width:320px; }
+  .signup-form { display:flex;gap:10px;flex-shrink:0;flex-wrap:wrap; }
+  .signup-input {
+    font-family:'Montserrat',sans-serif;font-size:0.75rem;
+    padding:13px 18px;border:1px solid #ddd;background:#fff;
+    color:var(--c-dark);outline:none;min-width:240px;
+    transition:border-color 0.2s;
+    border-radius: 8px 0 0 8px;
+  }
+  .signup-input:focus { border-color:var(--c-dark); }
+  .signup-input::placeholder { color:#bbb; }
+  .signup-btn {
+    font-family:'Montserrat',sans-serif;font-size:0.65rem;font-weight:700;
+    letter-spacing:0.15em;text-transform:uppercase;
+    padding:13px 24px;background:var(--c-dark);color:#fff;border:none;cursor:pointer;
+    transition:opacity 0.2s;
+    border-radius: 0 8px 8px 0;
+  }
+  .signup-btn:hover { opacity:0.75; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     FOOTER — dark (Passion City footer is dark)
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  footer { background:#000;border-top:1px solid rgba(255,255,255,0.06);padding:72px 68px 40px; }
+  .ft-grid { max-width:1260px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:52px;margin-bottom:56px; }
+  .ft-logo { height:44px;width:auto;margin-bottom:14px;object-fit:contain; }
+  .ft-name { font-size:0.66rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:14px;line-height:1.4;max-width:190px; }
+  .ft-tag { font-size:0.78rem;font-weight:300;color:rgba(255,255,255,0.28);line-height:1.75;max-width:230px;margin-bottom:26px; }
+  .ft-soc { display:flex;gap:9px; }
+  .ft-s {
+    width:33px;height:33px;border-radius:50%;
+    border:1px solid rgba(255,255,255,0.1);
+    display:flex;align-items:center;justify-content:center;
+    font-size:0.62rem;font-weight:700;color:rgba(255,255,255,0.3);
+    transition:border-color 0.2s,color 0.2s;
+  }
+  .ft-s:hover { border-color:rgba(255,255,255,0.5);color:#fff; }
+  .ft-col h5 { font-size:0.56rem;font-weight:700;letter-spacing:0.24em;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-bottom:17px; }
+  .ft-col ul { list-style:none; }
+  .ft-col li { margin-bottom:8px; }
+  .ft-col a { font-size:0.8rem;font-weight:300;color:rgba(255,255,255,0.42);transition:color 0.2s; }
+  .ft-col a:hover { color:#fff; }
+  .ft-bot { max-width:1260px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding-top:24px;border-top:1px solid rgba(255,255,255,0.06);flex-wrap:wrap;gap:10px; }
+  .ft-copy { font-size:0.6rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.16); }
+  .ft-addr { font-size:0.7rem;font-weight:300;color:rgba(255,255,255,0.18); }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     RESPONSIVE
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  @media(max-width:1024px){
+    .sec{padding-left:36px;padding-right:36px;}
+    footer{padding:60px 36px 36px;}
+    .hdr-nav{padding:12px 28px;gap:24px;}
+    .hdr-brand{padding:13px 28px;}
+    #hero{padding:12px 24px 0;}
+    #pastor { padding: 72px 40px; }
+    .pastor-body { grid-template-columns: 1fr; gap: 44px; }
+    .pastor-vbox { max-width: 280px; margin: 0 auto; }
+    .give-grid,.connect-dark-inner{grid-template-columns:1fr;gap:44px;}
+    .cards{grid-template-columns:repeat(2,1fr);}
+    .sermon-cards{grid-template-columns:repeat(2,1fr);}
+    .ft-grid{grid-template-columns:1fr 1fr;gap:36px;}
+  }
+  @media(max-width:768px){
+    .hdr-spacer{height:70px;}
+    .hero-content{padding:0 26px 44px;}
+    .info-strip{grid-template-columns:1fr 1fr;}
+    .info-cell:nth-child(2){border-right:none;}
+    .info-cell:nth-child(1),.info-cell:nth-child(2){border-bottom:1px solid #eee;}
+    .cards{grid-template-columns:1fr;}
+    .sermon-cards{grid-template-columns:1fr;}
+    .ft-grid{grid-template-columns:1fr;}
+    .sec-head,.sermons-head{flex-direction:column;align-items:flex-start;}
+    .ft-bot{flex-direction:column;}
+    .signup-inner{flex-direction:column;}
+    .signup-input{min-width:100%;}
+  }
+  
+  /* ── INTRO SPLASH ─────────────────────────── */
+  #intro-splash{
+    position:fixed;inset:0;z-index:10000;
+    background:#080808;
+    display:flex;align-items:center;justify-content:center;flex-direction:column;
+    pointer-events:all;
+  }
+  #intro-splash.is-exit{
+    animation:isExit .9s cubic-bezier(.76,0,.24,1) forwards;
+    pointer-events:none;
+  }
+  @keyframes isExit{to{transform:translateY(-100%)}}
+
+  /* Cross SVG draw */
+  .ic-vt{stroke-dasharray:25;stroke-dashoffset:25;animation:icDraw .45s ease-out forwards .15s}
+  .ic-vb{stroke-dasharray:57;stroke-dashoffset:57;animation:icDraw .65s ease-out forwards .15s}
+  .ic-h {stroke-dasharray:52;stroke-dashoffset:52;animation:icDraw .55s ease-out forwards .85s}
+  @keyframes icDraw{to{stroke-dashoffset:0}}
+
+  /* Church name words */
+  .is-cross{margin-bottom:36px}
+  .is-name{
+    display:flex;gap:0 14px;flex-wrap:wrap;justify-content:center;
+    max-width:min(860px,90vw);text-align:center;
+  }
+  .is-w{
+    font-family:'Montserrat',sans-serif;font-weight:900;
+    font-size:clamp(2rem,5.5vw,4rem);letter-spacing:-.025em;
+    text-transform:uppercase;color:#fff;
+    opacity:0;transform:translateY(28px);
+  }
+  .is-w:nth-child(1){animation:isUp .65s cubic-bezier(.22,1,.36,1) forwards 1.10s}
+  .is-w:nth-child(2){animation:isUp .65s cubic-bezier(.22,1,.36,1) forwards 1.22s}
+  .is-w:nth-child(3){animation:isUp .65s cubic-bezier(.22,1,.36,1) forwards 1.34s}
+  .is-w:nth-child(4){animation:isUp .65s cubic-bezier(.22,1,.36,1) forwards 1.46s}
+  .is-w:nth-child(5){animation:isUp .65s cubic-bezier(.22,1,.36,1) forwards 1.58s}
+  @keyframes isUp{to{opacity:1;transform:translateY(0)}}
+
+  /* Location tag */
+  .is-loc{
+    font-family:'Montserrat',sans-serif;font-size:.6rem;font-weight:600;
+    letter-spacing:.3em;text-transform:uppercase;color:var(--c-brand);
+    margin-top:18px;opacity:0;
+    animation:isUp .6s ease forwards 2.0s;
+  }
+
+  /* Gold progress line */
+  .is-line-wrap{
+    position:absolute;bottom:52px;left:50%;transform:translateX(-50%);
+    width:80px;height:1px;overflow:hidden;
+  }
+  .is-line{
+    height:1px;background:var(--c-brand);width:0%;
+    animation:isLine 1.1s ease forwards 2.3s;
+  }
+  @keyframes isLine{to{width:100%}}
+  
+  .vbox-silhouette {
+    position: absolute; inset: 0; z-index: 1;
+    display: flex; align-items: flex-end; justify-content: center;
+    pointer-events: none;
+  }
+  .vbox-silhouette svg {
+    width: 52%; height: auto;
+    margin-bottom: -4px;
+    filter: blur(0.5px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+  @view-transition { navigation: auto; }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- ═══════ HEADER ═══════ -->
+<header id="header">
+  <button class="nav-toggle" id="navToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mainNav">
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+  </button>
+  <nav class="hdr-nav" id="mainNav" role="navigation" aria-label="Main navigation">
+    <a href="gbfpc-about.html">About</a>
+    <a href="gbfpc-ministries.html">Ministries</a>
+    <a href="gbfpc-academy.html">Academy</a>
+    <a href="gbfpc-events.html">Events</a>
+    <a href="gbfpc-give.html">Give</a>
+    <a href="gbfpc-connect.html">Connect</a>
+    <a href="gbfpc-livestream.html">Livestream</a>
+  </nav>
+  <div class="hdr-brand">
+    <a href="gbfpc-landing.html" class="hdr-left">
+      <img src="gbfpc-logo.svg" alt="GBFPC" class="hdr-logo"/>
+      <span class="hdr-name">Greater Bakersfield's<br>First Pentecostal Church</span>
+    </a>
+    <a href="gbfpc-visit.html" class="hdr-cta">Plan Your Visit</a>
+  </div>
+</header>
+
+<div class="hdr-spacer"></div>
+
+<!-- ═══════ HERO ═══════ -->
+<main id="main-content">
+<section id="hero">
+  <div class="hero-box">
+    <!-- ═══ HERO BACKGROUND ═══
+         Collage video autoplays + soft crossfade loops here.
+         To activate: set HERO_SRC in the script block below.
+         Canvas shows as fallback while no video is loaded. -->
+    <div class="hero-bg">
+      <canvas id="heroCnv" class="hero-layer"></canvas>
+      <video id="heroVidA" class="hero-layer hero-vid" muted playsinline></video>
+      <video id="heroVidB" class="hero-layer hero-vid" muted playsinline></video>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Bakersfield, California</p>
+      <h1 class="hero-h1">
+        <span class="word"><span>We Are</span></span>
+        <span class="word"><span>So Glad</span></span>
+        <span class="word"><span>You Are</span></span>
+        <span class="word"><span>Here.</span></span>
+      </h1>
+      <p class="hero-body">A church rooted in truth and alive in the Spirit. Join us every Sunday and Tuesday.</p>
+      <div class="hero-btns">
+        <a href="gbfpc-livestream.html" class="btn-white">Watch Livestream</a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfeTShxX-b3HMdneoQOEXa7uXsiu_fSJVFfwyXnLq5ljYfUMw/viewform" class="btn-ghost-w">Plan Your Visit</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Info strip lives inside hero so it shares the same 80px side padding and max-width -->
+<div class="info-strip">
+  <a href="https://goo.gl/maps/EHDMwXpDuT59PkRHA" class="info-cell">
+    <div class="info-icon-wrap">
+      <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" stroke="none" fill="#555"/></svg>
+    </div>
+    <div class="info-text"><span class="info-label">Location</span><span class="info-val">1418 W Columbus St, Bakersfield</span></div>
+  </a>
+  <a href="gbfpc-visit.html#services" class="info-cell">
+    <div class="info-icon-wrap">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 15.5"/></svg>
+    </div>
+    <div class="info-text"><span class="info-label">Services</span><span class="info-val">Every Sunday &amp; Tuesday</span></div>
+  </a>
+  <a href="gbfpc-visit.html" class="info-cell">
+    <div class="info-icon-wrap">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+    </div>
+    <div class="info-text"><span class="info-label">New Here?</span><span class="info-val">Plan Your Visit</span></div>
+  </a>
+  <a href="gbfpc-give.html" class="info-cell">
+    <div class="info-icon-wrap">
+      <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    </div>
+    <div class="info-text"><span class="info-label">Generosity</span><span class="info-val">Give Online</span></div>
+  </a>
+</div>
+</section>
+
+<!-- ═══════ PASTOR / FEATURING ═══════ -->
+<section id="pastor">
+  <div class="pastor-inner">
+
+    <!-- Heading row -->
+    <div class="pastor-head">
+      <span class="pastor-feat-eyebrow r">Featuring</span>
+      <h2 class="pastor-feat-title r d1">Our Pastor &amp; Ministries.</h2>
+    </div>
+
+    <!-- Content row: video left / text + list right -->
+    <div class="pastor-body">
+
+      <!-- Left: vertical portrait — placeholder photo until video is ready -->
+      <div class="pastor-vbox r d1">
+        <!-- ═══ PASTOR VIDEO ═══
+             To activate: replace the img below with:
+             <video id="pastorVid" src="MEDIA/pastor-bradford.mp4" muted loop playsinline autoplay></video> -->
+        <img
+          src="MEDIA/pastor-video-placeholder.jpg"
+          alt="Pastor Kevin Bradford"
+          style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;z-index:2;display:block;"
+        />
+        <div class="vbox-footer">
+          <div class="vbox-tag">Our Pastor</div>
+          <div class="vbox-name">Kevin Bradford</div>
+          <div class="vbox-role">Greater Bakersfield's First Pentecostal Church</div>
+        </div>
+      </div>
+
+      <!-- Right: intro + ministry list -->
+      <div class="pastor-text r d2">
+        <p class="pastor-intro">Hear from Pastor Kevin Bradford and explore the ministries that make GBFPC a home for every person, every age, and every season of life.</p>
+        <div class="min-list">
+          <a href="gbfpc-ministries.html#youth" class="min-item-dark"><div><div class="min-name">Amplified Youth</div><div class="min-sub">Energy, truth, and purpose for young people</div></div><span class="min-arr">→</span></a>
+          <a href="gbfpc-ministries.html#children" class="min-item-dark"><div><div class="min-name">K.I.C.K.</div><div class="min-sub">Kids In Christ's Kingdom — Pre-K through 6th grade</div></div><span class="min-arr">→</span></a>
+          <a href="gbfpc-ministries.html" class="min-item-dark"><div><div class="min-name">Thrive</div><div class="min-sub">Helping families, marriages, and women thrive through prayer and unity</div></div><span class="min-arr">→</span></a>
+          <a href="gbfpc-academy.html" class="min-item-dark"><div><div class="min-name">Bethel Apostolic Academy</div><div class="min-sub">Academic excellence in a Christian environment</div></div><span class="min-arr">→</span></a>
+          <a href="gbfpc-academy.html" class="min-item-dark"><div><div class="min-name">Kiddie Korral</div><div class="min-sub">Early childhood education for the community</div></div><span class="min-arr">→</span></a>
+          <a href="gbfpc-ministries.html" class="min-item-dark"><div><div class="min-name">Bible Quizzing</div><div class="min-sub">Hiding God's Word deep in the heart</div></div><span class="min-arr">→</span></a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ MINISTRIES CARDS ═══════ -->
+<div class="float-sec" style="padding-top:60px;padding-bottom:0;">
+  <div class="float-card" id="ministries">
+    <div class="sec-head">
+      <div>
+        <div class="eyebrow r">Our Ministries</div>
+        <h2 class="h2 r d1">A Place for<br>Everyone.</h2>
+      </div>
+      <a href="gbfpc-ministries.html" class="view-all r d2">View All Ministries →</a>
+    </div>
+    <div class="cards">
+      <div class="mc r"><div class="mc-bg" style="background-image:url('MEDIA/t-rocket1.jpg')"></div><div class="mc-ov"></div><div class="mc-body"><div class="mc-tag">Youth</div><div class="mc-name">Amplified Youth</div><div class="mc-desc">Fostering an environment for young people to be filled with Holy Ghost energy and sent out as a voice of truth.</div><a href="gbfpc-ministries.html#youth" class="mc-link">Explore ↗</a></div></div>
+      <div class="mc r d1"><div class="mc-bg" style="background-image:url('MEDIA/kick1.jpg')"></div><div class="mc-ov"></div><div class="mc-body"><div class="mc-tag">Children</div><div class="mc-name">K.I.C.K.</div><div class="mc-desc">Kids In Christ's Kingdom — teaching children God's Word through fun, community, and the power of His Spirit.</div><a href="gbfpc-ministries.html#children" class="mc-link">Explore ↗</a></div></div>
+      <div class="mc r d2"><div class="mc-bg" style="background-image:url('MEDIA/SLJ03694-2.jpg')"></div><div class="mc-ov"></div><div class="mc-body"><div class="mc-tag">Family</div><div class="mc-name">Thrive</div><div class="mc-desc">Helping families and marriages thrive through prayer, fellowship, relationships, and unity.</div><a href="gbfpc-ministries.html" class="mc-link">Explore ↗</a></div></div>
+      <div class="mc r d1"><div class="mc-bg" style="background-image:url('MEDIA/IMG_6615.jpg')"></div><div class="mc-ov"></div><div class="mc-body"><div class="mc-tag">Education</div><div class="mc-name">Bethel Apostolic Academy</div><div class="mc-desc">Academic excellence in a Christian environment — training young men and women in faith since 1972.</div><a href="gbfpc-academy.html" class="mc-link">Explore ↗</a></div></div>
+      <div class="mc r d2"><div class="mc-bg g1"></div><div class="mc-ov"></div><div class="mc-body"><div class="mc-tag">Early Childhood</div><div class="mc-name">Kiddie Korral</div><div class="mc-desc">An early childhood education facility contributing to the wholesome growth of our community's children.</div><a href="gbfpc-academy.html" class="mc-link">Explore ↗</a></div></div>
+      <div class="mc r d3"><div class="mc-bg g2"></div><div class="mc-ov"></div><div class="mc-body"><div class="mc-tag">Scripture</div><div class="mc-name">Bible Quizzing</div><div class="mc-desc">Hiding God's Word deep in the heart through a competitive and faith-building program for all ages.</div><a href="gbfpc-ministries.html" class="mc-link">Explore ↗</a></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ LEADERSHIP — Passion City card style ═══════ -->
+<section id="leadership">
+  <div class="lead-outer">
+
+    <!-- Huge heading overlaps top of card -->
+    <h2 class="lead-big-title r">Our Leadership</h2>
+
+    <!-- Beige card -->
+    <div class="lead-card r d1">
+
+      <div class="lead-slides-wrap">
+      <!-- Slide 1: Senior Pastor -->
+      <div class="lead-slide active" id="lead-slide-0">
+        <div class="lead-left">
+          <div class="lead-role">Pastor</div>
+          <div class="lead-name">Pastor Kevin Bradford</div>
+          <p class="lead-bio">Kevin Bradford and his family have served Greater Bakersfield's First Pentecostal Church full-time since 1992, and as senior pastor since October 2010. He holds a degree in Business Administration from CSUB and a master's in Biblical Studies from Fuller Theological Seminary.</p>
+          <a href="gbfpc-about.html" class="lead-btn">See Our Leadership</a>
+        </div>
+        <div class="lead-slide-img">
+          <img src="MEDIA/pastor-bradford.jpg" alt="Pastor Kevin Bradford" loading="lazy"/>
+        </div>
+      </div>
+
+      <!-- Slide 2: Bishop Leon Frost -->
+      <div class="lead-slide" id="lead-slide-1">
+        <div class="lead-left">
+          <div class="lead-role">Bishop</div>
+          <div class="lead-name">Bishop Leon Frost</div>
+          <p class="lead-bio">Bishop Leon Frost has served First Pentecostal Church for most of his life. Known for his anointed teaching, preaching, stature, and leadership, he guided GBFPC through over 30 years of growth and ministry. His legacy continues to shape the church today.</p>
+          <a href="gbfpc-about.html" class="lead-btn">See Our Leadership</a>
+        </div>
+        <div class="lead-slide-img">
+          <img src="MEDIA/bishop-frost.jpg" alt="Bishop Leon Frost" loading="lazy"/>
+        </div>
+      </div>
+
+      </div><!-- /.lead-slides-wrap -->
+
+      <!-- Arrows bottom right -->
+      <div class="lead-arrows">
+        <button class="lead-arrow" id="leadPrev" onclick="leadNav(-1)" disabled>←</button>
+        <button class="lead-arrow" id="leadNext" onclick="leadNav(1)">→</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ GIVING ═══════ -->
+<section id="giving" style="padding:100px 80px;">
+  <div style="max-width:1240px;margin:0 auto;">
+    <div class="give-grid">
+      <div class="give-img r">
+        <img src="MEDIA/SLJ03746.jpg" alt="Giving" loading="lazy"/>
+      </div>
+      <div class="give-text">
+        <div class="eyebrow r">Generosity</div>
+        <h2 class="h2 r d1">Giving<br>Is Worship.</h2>
+        <p class="para r d2">We believe generosity is a response to God's grace — not an obligation. When you give, you partner with the work God is doing in Bakersfield and beyond.</p>
+        <div class="r d3" style="margin-top:36px;"><a href="https://gbfpc.org/give" class="btn-dark">Give Now</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ DARK MID-SECTION (Stay Connected) ═══════ -->
+<div class="float-sec" style="padding-top:60px;padding-bottom:0;">
+  <div class="float-card-dark">
+    <div class="connect-dark-inner">
+      <div class="cd-text">
+        <div class="eyebrow inv r">Stay Connected</div>
+        <h2 class="h2 inv r d1">Now It's Easier<br>Than Ever.</h2>
+        <p class="para inv r d2">Join us for service in-person or online. It's never too late to get involved in what God is doing through GBFPC.</p>
+        <div class="r d3" style="margin-top:36px;display:flex;gap:12px;flex-wrap:wrap;">
+          <a href="gbfpc-livestream.html" class="btn-white-solid">Watch Livestream</a>
+          <a href="https://gbfpc.org/pages/church-calendar" class="btn-ghost-w">View Calendar</a>
+        </div>
+      </div>
+      <div class="cd-img r d2">
+        <img src="MEDIA/connect1.jpg" alt="Church" loading="lazy"/>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════ NEWSLETTER ═══════ -->
+<div class="float-sec" style="padding-top:60px;padding-bottom:60px;">
+  <div class="float-card" id="signup" style="display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap;padding:56px 64px;">
+    <div class="r">
+      <div class="signup-eyebrow">Sign Up</div>
+      <div class="signup-title">Stay Up<br>To Date.</div>
+      <div class="signup-sub">Join our community and never miss a moment at GBFPC.</div>
+    </div>
+    <form class="signup-form r d2" onsubmit="return false;">
+      <input class="signup-input" type="email" placeholder="Email address"/>
+      <button class="signup-btn" type="submit">Stay Connected →</button>
+    </form>
+  </div>
+</div>
+
+</main>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer>
+  <div class="ft-grid">
+    <div>
+      <img src="gbfpc-logo.svg" alt="GBFPC" class="ft-logo" loading="lazy"/>
+      <div class="ft-name">Greater Bakersfield's<br>First Pentecostal Church</div>
+      <p class="ft-tag">Rooted in truth, alive in the Spirit, and built for community in Bakersfield, California.</p>
+      <div class="ft-soc">
+        <a href="https://www.facebook.com/gbfpcmedia/" class="ft-s">f</a>
+        <a href="https://www.instagram.com/gbfpc/" class="ft-s">ig</a>
+        <a href="https://www.youtube.com/channel/UCO1PnTTAT_uOS4ZkMjdBzGg/videos" class="ft-s">▶</a>
+      </div>
+    </div>
+    <div class="ft-col"><h5>Our House</h5><ul><li><a href="gbfpc-about.html">About Us</a></li><li><a href="gbfpc-about.html#vision">Our Vision</a></li><li><a href="gbfpc-about.html#articles">Articles of Faith</a></li><li><a href="gbfpc-about.html#history">Church History</a></li></ul></div>
+    <div class="ft-col"><h5>Ministries</h5><ul><li><a href="gbfpc-ministries.html#youth">Amplified Youth</a></li><li><a href="gbfpc-ministries.html#children">K.I.C.K.</a></li><li><a href="gbfpc-ministries.html">Thrive</a></li><li><a href="gbfpc-academy.html">Bethel Academy</a></li><li><a href="gbfpc-academy.html">Kiddie Korral</a></li></ul></div>
+    <div class="ft-col"><h5>Connect</h5><ul><li><a href="gbfpc-visit.html">Plan Your Visit</a></li><li><a href="gbfpc-give.html">Give Online</a></li><li><a href="gbfpc-events.html">Upcoming Events</a></li><li><a href="gbfpc-livestream.html">Livestream</a></li><li><a href="gbfpc-connect.html">Contact Us</a></li></ul></div>
+  </div>
+  <div class="ft-bot">
+    <div class="ft-copy">© 2026 GBFPC. All Rights Reserved.</div>
+    <div class="ft-addr">1418 W Columbus St, Bakersfield, CA 93301 · (661) 323-2851</div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const revObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); revObs.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.r, .r-sm').forEach(el => revObs.observe(el));
+
+  // Pastor video — no click handler needed (video plays inline)
+
+  // Leadership carousel
+  const leadSlides = document.querySelectorAll('.lead-slide');
+  const leadPrev   = document.getElementById('leadPrev');
+  const leadNext   = document.getElementById('leadNext');
+  let leadCurrent  = 0;
+
+  function leadNav(dir) {
+    leadSlides[leadCurrent].classList.remove('active');
+    leadCurrent = Math.max(0, Math.min(leadSlides.length - 1, leadCurrent + dir));
+    leadSlides[leadCurrent].classList.add('active');
+    leadPrev.disabled = leadCurrent === 0;
+    leadNext.disabled = leadCurrent === leadSlides.length - 1;
+  }
+
+  // ── HERO SOFT-LOOP VIDEO ──────────────────────────────────────────────────
+  // Drop your collage mp4 path here when ready, e.g. 'video/hero-collage.mp4'
+  var HERO_SRC = '';
+  var FADE     = 2.2; // seconds of crossfade overlap
+
+  (function() {
+    if (!HERO_SRC) return; // canvas fallback stays visible
+    var hVA = document.getElementById('heroVidA');
+    var hVB = document.getElementById('heroVidB');
+    if (!hVA || !hVB) return;
+    hVA.src = hVB.src = HERO_SRC;
+
+    var hActive = hVA, hStandby = hVB, hFading = false;
+    hActive.style.opacity = '1';
+
+    hActive.play().catch(function(){});
+
+    function heroTick() {
+      if (!hActive.duration || hFading) return;
+      if (hActive.currentTime >= hActive.duration - FADE) {
+        hFading = true;
+        hStandby.currentTime = 0;
+        hStandby.play().catch(function(){});
+        hStandby.style.opacity = '1'; // CSS transition does the fade
+        hActive.style.opacity  = '0';
+        setTimeout(function() {
+          hActive.pause();
+          hActive.currentTime = 0;
+          var tmp = hActive; hActive = hStandby; hStandby = tmp;
+          hFading = false;
+        }, FADE * 1000);
+      }
+    }
+    hVA.addEventListener('timeupdate', heroTick);
+    hVB.addEventListener('timeupdate', heroTick);
+  })();
+
+  // ── PASTOR VIDEO: autoplay on scroll ─────────────────────────────────────
+  (function() {
+    var pVid = document.getElementById('pastorVid');
+    if (!pVid) return;
+
+    // Show video (hide gradient) once it has data to display
+    pVid.addEventListener('loadeddata', function() {
+      pVid.classList.add('loaded');
+    });
+
+    // Autoplay / pause based on viewport visibility
+    var pObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          pVid.play().catch(function(){});
+        } else {
+          pVid.pause();
+        }
+      });
+    }, { threshold: 0.35 });
+
+    pObs.observe(pVid.closest('.pastor-vbox') || pVid);
+  })();
+</script>
+
+<!-- PAGE TRANSITION -->
+<div id="pg-t"></div>
+<style>
+#pg-t{position:fixed;inset:0;z-index:9999;background:var(--c-darker);opacity:1;pointer-events:all;transition:opacity .5s ease}
+body:has(#intro-splash) #pg-t{opacity:0!important;pointer-events:none!important;transition:none!important}
+</style>
+<script>
+!function(){
+  var t=document.getElementById('pg-t');
+  document.addEventListener('DOMContentLoaded',function(){
+    if(document.getElementById('intro-splash')){
+      t.style.cssText='opacity:0;pointer-events:none;transition:none';
+    } else {
+      requestAnimationFrame(function(){requestAnimationFrame(function(){
+        t.style.opacity='0';t.style.pointerEvents='none';
+      });});
+    }
+    document.addEventListener('click',function(e){
+      var a=e.target.closest('a[href]');if(!a)return;
+      var h=a.getAttribute('href');
+      if(!h||h[0]==='#'||h.startsWith('http')||h.startsWith('mailto')||h.startsWith('tel')||a.target==='_blank')return;
+      e.preventDefault();
+      t.style.cssText='opacity:1;pointer-events:all;transition:opacity .5s ease';
+      setTimeout(function(){window.location.href=h},520);
+    });
+  });
+}();
+</script>
+
+<!-- INTRO SPLASH -->
+<div id="intro-splash">
+  <!-- Animated cross -->
+  <svg class="is-cross" viewBox="0 0 60 92" width="50" height="76" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path class="ic-vt" d="M30 30 L30 5"  stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+    <path class="ic-vb" d="M30 30 L30 87" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+    <path class="ic-h"  d="M4  30 L56 30" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+  </svg>
+  <!-- Church name -->
+  <div class="is-name">
+    <span class="is-w">Greater</span>
+    <span class="is-w">Bakersfield's</span>
+    <span class="is-w">First</span>
+    <span class="is-w">Pentecostal</span>
+    <span class="is-w">Church</span>
+  </div>
+  <!-- Location -->
+  <div class="is-loc">Bakersfield &nbsp;&middot;&nbsp; California</div>
+  <!-- Gold line -->
+  <div class="is-line-wrap"><div class="is-line"></div></div>
+</div>
+<script>
+!function(){
+  var s=document.getElementById('intro-splash');
+  if(!s)return;
+  setTimeout(function(){
+    s.classList.add('is-exit');
+    setTimeout(function(){s.remove();},900);
+  },3500);
+}();
+</script>
+
+
+
+
+<script>
+// ── Mobile Nav ──
+(function() {
+  var toggle = document.getElementById('navToggle');
+  var nav = document.getElementById('mainNav');
+  if (!toggle || !nav) return;
+  toggle.addEventListener('click', function() {
+    var expanded = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!expanded));
+    toggle.setAttribute('aria-label', expanded ? 'Open navigation menu' : 'Close navigation menu');
+    nav.classList.toggle('nav-open', !expanded);
+    document.body.style.overflow = expanded ? '' : 'hidden';
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && nav.classList.contains('nav-open')) {
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open navigation menu');
+      nav.classList.remove('nav-open');
+      document.body.style.overflow = '';
+      toggle.focus();
+    }
+  });
+  nav.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open navigation menu');
+      nav.classList.remove('nav-open');
+      document.body.style.overflow = '';
+    });
+  });
+})();
+</script>
+
+<!-- ═══ HERO CANVAS ANIMATION (mock video — swap for real footage) ═══ -->
+<script>
+(function(){
+  var cv = document.getElementById('heroCnv');
+  if (!cv) return;
+  var cx = cv.getContext('2d');
+  var W, H, last = 0;
+
+  /* ── particles ── */
+  var PCOUNT = 60;
+  var pts = [];
+  function initPt(p) {
+    p = p || {};
+    p.x  = Math.random() * 1.3 - 0.15;
+    p.y  = 1.05 + Math.random() * 0.08;
+    p.vy = 0.00005 + Math.random() * 0.00011;
+    p.vx = (Math.random() - 0.5) * 0.000035;
+    p.r  = 0.5 + Math.random() * 1.3;
+    p.a  = 0.12 + Math.random() * 0.32;
+    p.life = 0;
+    p.max  = 0.65 + Math.random() * 0.32;
+    return p;
+  }
+  for (var i = 0; i < PCOUNT; i++) {
+    var p = initPt({});
+    p.y = Math.random(); // scatter on first load
+    p.life = Math.random() * p.max;
+    pts.push(p);
+  }
+
+  /* ── light rays ── */
+  var rays = [
+    { a: -0.58, w: 0.20, spd: 0.00014, ph: 0.0 },
+    { a: -0.33, w: 0.15, spd: 0.00021, ph: 1.3 },
+    { a: -0.10, w: 0.24, spd: 0.00017, ph: 0.7 },
+    { a:  0.12, w: 0.14, spd: 0.00026, ph: 2.2 },
+    { a:  0.36, w: 0.18, spd: 0.00012, ph: 1.6 },
+    { a:  0.60, w: 0.11, spd: 0.00020, ph: 0.3 },
+  ];
+
+  function resize() {
+    var dpr = window.devicePixelRatio || 1;
+    W = cv.offsetWidth  || cv.parentElement.offsetWidth  || 1200;
+    H = cv.offsetHeight || cv.parentElement.offsetHeight || 800;
+    cv.width  = Math.round(W * dpr);
+    cv.height = Math.round(H * dpr);
+    cx.setTransform(dpr, 0, 0, dpr, 0, 0); // all draw calls stay in CSS px
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function frame(ts) {
+    var dt = Math.min(ts - last, 50); last = ts;
+
+    /* background */
+    cx.fillStyle = '#08070b';
+    cx.fillRect(0, 0, W, H);
+
+    /* ambient warm glow — upper area, slightly left of center */
+    var gx = W * 0.40, gy = H * 0.02;
+    var g1 = cx.createRadialGradient(gx, gy, 0, gx, gy, W * 0.72);
+    g1.addColorStop(0,   'rgba(201,169,110,0.09)');
+    g1.addColorStop(0.35,'rgba(150,105,45,0.045)');
+    g1.addColorStop(1,   'rgba(0,0,0,0)');
+    cx.fillStyle = g1;
+    cx.fillRect(0, 0, W, H);
+
+    /* secondary blue-violet depth glow — lower right */
+    var g2 = cx.createRadialGradient(W*0.78, H*0.85, 0, W*0.78, H*0.85, W*0.55);
+    g2.addColorStop(0,   'rgba(40,25,80,0.12)');
+    g2.addColorStop(1,   'rgba(0,0,0,0)');
+    cx.fillStyle = g2;
+    cx.fillRect(0, 0, W, H);
+
+    /* light rays */
+    var ox = W * 0.38, oy = -H * 0.18;
+    var len = H * 2.4;
+    rays.forEach(function(r) {
+      var angle = r.a + Math.sin(ts * r.spd + r.ph) * 0.055;
+      var ca = Math.cos(angle), sa = Math.sin(angle);
+      var hw  = W * r.w * 0.5;
+      var perp = angle + Math.PI * 0.5;
+      var cp = Math.cos(perp), sp = Math.sin(perp);
+
+      cx.save();
+      cx.beginPath();
+      cx.moveTo(ox, oy);
+      cx.lineTo(ox + ca*len - cp*hw, oy + sa*len - sp*hw);
+      cx.lineTo(ox + ca*len + cp*hw, oy + sa*len + sp*hw);
+      cx.closePath();
+
+      var pulse = 0.05 + 0.018 * Math.sin(ts * 0.0007 + r.ph);
+      var rg = cx.createLinearGradient(ox, oy, ox + ca*len, oy + sa*len);
+      rg.addColorStop(0,    'rgba(255,235,185,' + pulse + ')');
+      rg.addColorStop(0.25, 'rgba(215,175,110,' + (pulse*0.55) + ')');
+      rg.addColorStop(0.7,  'rgba(180,135,70,'  + (pulse*0.18) + ')');
+      rg.addColorStop(1,    'rgba(180,135,70,0)');
+      cx.fillStyle = rg;
+      cx.fill();
+      cx.restore();
+    });
+
+    /* particles */
+    pts.forEach(function(p) {
+      p.y   -= p.vy * dt;
+      p.x   += p.vx * dt;
+      p.life += p.vy * dt;
+      if (p.life >= p.max || p.y < -0.04) initPt(p);
+      var fade = Math.min(p.life / 0.07, 1) * Math.min((p.max - p.life) / 0.10, 1);
+      if (fade <= 0) return;
+      cx.beginPath();
+      cx.arc(p.x * W, p.y * H, p.r, 0, Math.PI * 2);
+      cx.fillStyle = 'rgba(225,195,135,' + (p.a * fade) + ')';
+      cx.fill();
+    });
+
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

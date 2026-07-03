@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Events | Greater Bakersfield's First Pentecostal Church</title>
+  <meta name="description" content="Upcoming events, services, and gatherings at Greater Bakersfield's First Pentecostal Church. Join us Sundays at 10:30 AM and Wednesdays at 7:00 PM."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+  <script type="application/ld+json">
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "Event",
+      "name": "Sunday Morning Worship",
+      "startDate": "2026-06-01T10:30:00-07:00",
+      "endDate": "2026-06-01T12:00:00-07:00",
+      "eventSchedule": {
+        "@type": "Schedule",
+        "repeatFrequency": "P1W",
+        "byDay": "http://schema.org/Sunday"
+      },
+      "location": {
+        "@type": "Place",
+        "name": "Greater Bakersfield's First Pentecostal Church",
+        "address": { "@type": "PostalAddress", "streetAddress": "1418 W Columbus St", "addressLocality": "Bakersfield", "addressRegion": "CA", "postalCode": "93301" }
+      },
+      "organizer": { "@type": "Church", "name": "Greater Bakersfield's First Pentecostal Church", "url": "https://gbfpc.org" }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Event",
+      "name": "Youth Sunday — Special Service",
+      "startDate": "2026-06-14T10:30:00-07:00",
+      "endDate": "2026-06-14T12:30:00-07:00",
+      "description": "Our Amplified Youth lead the service. Followed by a free lunch in the fellowship hall for all who attend.",
+      "location": {
+        "@type": "Place",
+        "name": "Greater Bakersfield's First Pentecostal Church",
+        "address": { "@type": "PostalAddress", "streetAddress": "1418 W Columbus St", "addressLocality": "Bakersfield", "addressRegion": "CA", "postalCode": "93301" }
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Event",
+      "name": "VBS — Vacation Bible School",
+      "startDate": "2026-07-14T09:00:00-07:00",
+      "endDate": "2026-07-18T12:00:00-07:00",
+      "description": "Five days of Bible stories, worship, crafts, and games for kids ages 4–11. Registration required.",
+      "location": {
+        "@type": "Place",
+        "name": "Greater Bakersfield's First Pentecostal Church",
+        "address": { "@type": "PostalAddress", "streetAddress": "1418 W Columbus St", "addressLocality": "Bakersfield", "addressRegion": "CA", "postalCode": "93301" }
+      }
+    }
+  ]
+  </script>
+
+  <style>
+  :root {
+    --c-brand:   #c9a96e;
+    --c-dark:    #111111;
+    --c-darker:  #0f0f0f;
+    --c-surface: #f2f1ee;
+    --c-muted:   #888888;
+    --c-border:  #ebebeb;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: #fff;
+    color: var(--c-dark);
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; }
+
+  /* ── Skip Link ── */
+  .skip-link {
+    position: absolute; top: -100%; left: 1rem;
+    background: var(--c-brand); color: #fff;
+    padding: 0.5rem 1rem; font-size: 0.85rem; font-weight: 700;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    border-radius: 0 0 6px 6px; z-index: 9999; transition: top 0.2s ease;
+  }
+  .skip-link:focus { top: 0; }
+
+  /* ── Focus Visible ── */
+  :focus-visible { outline: 2px solid var(--c-brand); outline-offset: 3px; border-radius: 2px; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     HEADER
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #header {
+    position: relative; z-index: 200;
+    background: rgba(255,255,255,0.97);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid #e8e8e8;
+  }
+  .hdr-nav {
+    display: flex; justify-content: center; align-items: center;
+    gap: 40px; padding: 12px 56px;
+    border-bottom: 1px solid var(--c-border);
+  }
+  .hdr-nav a {
+    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.16em;
+    text-transform: uppercase; color: #555;
+    transition: color 0.2s; white-space: nowrap;
+  }
+  .hdr-nav a:hover { color: #000; }
+  .hdr-nav a.active { color: #000; font-weight: 700; }
+  .hdr-brand {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 56px;
+  }
+  .hdr-left { display: flex; align-items: center; gap: 16px; }
+  .hdr-logo { height: 40px; width: auto; object-fit: contain; filter: brightness(0); }
+  .hdr-name {
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.07em;
+    text-transform: uppercase; line-height: 1.35; color: var(--c-dark);
+  }
+  .hdr-cta {
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em;
+    text-transform: uppercase; padding: 11px 24px;
+    border: 1px solid var(--c-dark); color: var(--c-dark);
+    border-radius: 8px;
+    transition: opacity 0.18s, background 0.18s, color 0.18s;
+    white-space: nowrap;
+  }
+  .hdr-cta:hover { background: #000; border-color: #000; color: #fff; }
+  .hdr-spacer { height: 0; }
+
+  /* ── Mobile Nav Toggle ── */
+  .nav-toggle {
+    display: none; flex-direction: column; justify-content: center;
+    gap: 5px; background: none; border: none; cursor: pointer;
+    padding: 10px; z-index: 1100; position: relative;
+  }
+  .nav-toggle-bar {
+    display: block; width: 22px; height: 2px; background: var(--c-dark);
+    border-radius: 2px;
+    transition: transform 0.3s cubic-bezier(0.42,0,0.58,1), opacity 0.2s ease;
+  }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  @media (max-width: 768px) {
+    .nav-toggle { display: flex; }
+    .hdr-nav {
+      display: none !important; position: fixed; inset: 0;
+      background: #fff; flex-direction: column; align-items: center;
+      justify-content: center; gap: 2.5rem; z-index: 1050; padding: 2rem;
+    }
+    .hdr-nav.nav-open { display: flex !important; }
+    .hdr-nav a { font-size: 1.25rem; font-weight: 600; letter-spacing: 0.08em; color: var(--c-dark); text-transform: uppercase; }
+    .hdr-nav a.active { color: var(--c-brand); }
+    .hdr-spacer { height: 70px; }
+  }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     PAGE HERO
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #page-hero { background: #fff; padding: 80px 48px 0; }
+  .page-hero-inner { max-width: 1240px; margin: 0 auto; }
+  .page-hero-big {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900; font-size: clamp(3.5rem, 8.5vw, 7.5rem);
+    letter-spacing: -0.03em; color: var(--c-dark);
+    line-height: 0.95; margin-bottom: -28px;
+    position: relative; z-index: 2; text-transform: uppercase;
+  }
+  .page-hero-card {
+    background: #e0ddd4; border-radius: 20px;
+    padding: 52px 52px 48px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 56px;
+    align-items: center; position: relative;
+  }
+  .page-tag {
+    font-size: 0.58rem; font-weight: 700; letter-spacing: 0.28em;
+    text-transform: uppercase; color: #999; margin-bottom: 12px; display: block;
+  }
+  .page-hero-tagline {
+    font-weight: 700; font-size: clamp(1.3rem, 2vw, 1.75rem);
+    color: var(--c-dark); line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 16px;
+  }
+  .page-hero-desc {
+    font-size: 0.88rem; font-weight: 400; color: #555;
+    line-height: 1.72; max-width: 380px; margin-bottom: 28px;
+  }
+  .page-hero-links { display: flex; gap: 8px; flex-wrap: wrap; }
+  .page-link {
+    font-size: 0.56rem; font-weight: 700; letter-spacing: 0.16em;
+    text-transform: uppercase; padding: 9px 16px;
+    border: 1px solid rgba(0,0,0,0.14); color: #777; border-radius: 100px;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+  .page-link:hover { border-color: var(--c-dark); color: var(--c-dark); }
+  .page-link.active { background: var(--c-dark); color: #fff; border-color: var(--c-dark); }
+  .page-hero-visual {
+    display: flex; align-items: center; justify-content: center;
+    gap: 24px; flex-direction: column;
+  }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     SCROLL REVEAL
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .r       { opacity: 0; transform: translateY(32px); transition: opacity 0.85s cubic-bezier(0.22,1,0.36,1), transform 0.85s cubic-bezier(0.22,1,0.36,1); }
+  .r.in    { opacity: 1; transform: none; }
+  .r-sm    { opacity: 0; transform: translateY(16px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
+  .r-sm.in { opacity: 1; transform: none; }
+  .d1 { transition-delay: 0.08s; } .d2 { transition-delay: 0.16s; } .d3 { transition-delay: 0.24s; }
+  .d4 { transition-delay: 0.32s; } .d5 { transition-delay: 0.40s; } .d6 { transition-delay: 0.48s; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     SHARED LAYOUT
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .sec { padding: 100px 68px; }
+  .inner { max-width: 1260px; margin: 0 auto; }
+  .eyebrow {
+    font-size: 0.6rem; font-weight: 700; letter-spacing: 0.28em;
+    text-transform: uppercase; color: var(--c-muted); margin-bottom: 16px; display: block;
+  }
+  .sec-h2 {
+    font-weight: 800; font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    letter-spacing: -0.025em; color: var(--c-dark); line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .sec-lead {
+    font-size: 0.93rem; font-weight: 300; color: #777;
+    line-height: 1.75; max-width: 520px; margin-bottom: 56px;
+  }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     WEEKLY SERVICES STRIP
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #weekly { background: var(--c-surface); padding: 0 48px; }
+  .weekly-card {
+    max-width: 1240px; margin: 0 auto;
+    background: var(--c-darker); border-radius: 20px;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    overflow: hidden;
+  }
+  .weekly-item {
+    padding: 40px 40px;
+    border-right: 1px solid rgba(255,255,255,0.07);
+  }
+  .weekly-item:last-child { border-right: none; }
+  .weekly-day {
+    font-size: 0.54rem; font-weight: 700; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--c-brand); margin-bottom: 12px; display: block;
+  }
+  .weekly-name {
+    font-weight: 700; font-size: 1.1rem; color: #fff;
+    letter-spacing: -0.01em; margin-bottom: 8px;
+  }
+  .weekly-time {
+    font-size: 0.8rem; font-weight: 300; color: rgba(255,255,255,0.45);
+    margin-bottom: 18px;
+  }
+  .weekly-desc {
+    font-size: 0.78rem; font-weight: 300; color: rgba(255,255,255,0.28);
+    line-height: 1.7; max-width: 240px;
+  }
+  .weekly-wrap { padding: 48px 0; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     EVENTS LIST
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #events { padding: 96px 68px; }
+  .events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 24px;
+  }
+  .event-card {
+    background: #fff;
+    border: 1px solid var(--c-border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .event-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.08); transform: translateY(-2px); }
+  .event-date-bar {
+    background: var(--c-surface);
+    padding: 20px 28px;
+    display: flex; align-items: center; gap: 20px;
+    border-bottom: 1px solid var(--c-border);
+  }
+  .event-cal {
+    width: 52px; height: 52px; border-radius: 10px;
+    background: #fff; border: 1px solid var(--c-border);
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; flex-shrink: 0;
+  }
+  .event-cal-month {
+    font-size: 0.44rem; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--c-brand);
+    line-height: 1; margin-bottom: 2px;
+  }
+  .event-cal-day {
+    font-size: 1.3rem; font-weight: 800; color: var(--c-dark); line-height: 1;
+  }
+  .event-time-stack { display: flex; flex-direction: column; gap: 3px; }
+  .event-time {
+    font-size: 0.75rem; font-weight: 600; color: var(--c-dark); letter-spacing: -0.01em;
+  }
+  .event-weekday {
+    font-size: 0.6rem; font-weight: 500; color: var(--c-muted); letter-spacing: 0.05em;
+  }
+  .event-body { padding: 24px 28px 28px; }
+  .event-tag {
+    display: inline-block; font-size: 0.5rem; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--c-brand);
+    border: 1px solid rgba(201,169,110,0.35); border-radius: 100px;
+    padding: 4px 10px; margin-bottom: 12px;
+  }
+  .event-title {
+    font-weight: 700; font-size: 1.05rem; color: var(--c-dark);
+    letter-spacing: -0.01em; line-height: 1.3; margin-bottom: 10px;
+  }
+  .event-desc {
+    font-size: 0.8rem; font-weight: 400; color: #666; line-height: 1.7; margin-bottom: 20px;
+  }
+  .event-location {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 0.68rem; font-weight: 500; color: var(--c-muted); margin-bottom: 20px;
+  }
+  .event-location svg { flex-shrink: 0; width: 13px; height: 13px; stroke: var(--c-muted); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .event-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--c-dark);
+    border-bottom: 1px solid var(--c-border);
+    padding-bottom: 2px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .event-link:hover { border-color: var(--c-dark); }
+  .event-link svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.2s; }
+  .event-link:hover svg { transform: translateX(3px); }
+
+  /* Featured / large event */
+  .event-card.featured {
+    grid-column: 1 / -1;
+    display: grid; grid-template-columns: 1fr 1fr;
+  }
+  .event-card.featured .event-date-bar {
+    flex-direction: column; align-items: flex-start;
+    justify-content: flex-end; padding: 40px;
+    background: var(--c-darker);
+    border-bottom: none; border-right: 1px solid rgba(255,255,255,0.07);
+  }
+  .event-card.featured .event-cal { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.1); }
+  .event-card.featured .event-cal-month { color: var(--c-brand); }
+  .event-card.featured .event-cal-day { color: #fff; }
+  .event-card.featured .event-time { color: rgba(255,255,255,0.7); }
+  .event-card.featured .event-weekday { color: rgba(255,255,255,0.35); }
+  .event-card.featured .event-body { padding: 40px; }
+  .featured-badge {
+    font-size: 0.48rem; font-weight: 700; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--c-brand);
+    background: rgba(201,169,110,0.1); border-radius: 100px;
+    padding: 5px 12px; display: inline-block; margin-bottom: 16px;
+  }
+  .event-card.featured .event-title { font-size: 1.5rem; margin-bottom: 14px; }
+  .event-card.featured .event-desc { font-size: 0.85rem; margin-bottom: 28px; max-width: 440px; }
+  .event-card.featured .event-link { font-size: 0.66rem; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     SUBMIT AN EVENT BANNER
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #submit-event { padding: 0 48px 96px; }
+  .submit-card {
+    max-width: 1240px; margin: 0 auto;
+    background: var(--c-surface); border-radius: 20px;
+    padding: 56px 64px;
+    display: flex; align-items: center; justify-content: space-between; gap: 40px;
+    flex-wrap: wrap;
+  }
+  .submit-text {}
+  .submit-eyebrow {
+    font-size: 0.56rem; font-weight: 700; letter-spacing: 0.28em;
+    text-transform: uppercase; color: var(--c-muted); margin-bottom: 10px; display: block;
+  }
+  .submit-h { font-weight: 800; font-size: 1.5rem; color: var(--c-dark); letter-spacing: -0.02em; margin-bottom: 10px; }
+  .submit-p { font-size: 0.85rem; font-weight: 300; color: #777; line-height: 1.65; max-width: 420px; }
+  .btn-dark {
+    display: inline-block; background: var(--c-dark); color: #fff;
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em;
+    text-transform: uppercase; padding: 14px 28px; border-radius: 8px;
+    transition: opacity 0.18s; white-space: nowrap; flex-shrink: 0;
+  }
+  .btn-dark:hover { opacity: 0.8; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     FOOTER
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  footer { background: #000; border-top: 1px solid rgba(255,255,255,0.06); padding: 72px 68px 40px; }
+  .ft-grid { max-width: 1260px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 52px; margin-bottom: 56px; }
+  .ft-logo { height: 44px; width: auto; margin-bottom: 14px; object-fit: contain; }
+  .ft-name { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 14px; line-height: 1.4; max-width: 190px; }
+  .ft-tag { font-size: 0.78rem; font-weight: 300; color: rgba(255,255,255,0.28); line-height: 1.75; max-width: 230px; margin-bottom: 26px; }
+  .ft-soc { display: flex; gap: 9px; }
+  .ft-s { width: 33px; height: 33px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 0.62rem; font-weight: 700; color: rgba(255,255,255,0.3); transition: border-color 0.2s, color 0.2s; }
+  .ft-s:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
+  .ft-col h5 { font-size: 0.56rem; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(255,255,255,0.2); margin-bottom: 17px; }
+  .ft-col ul { list-style: none; }
+  .ft-col li { margin-bottom: 8px; }
+  .ft-col a { font-size: 0.8rem; font-weight: 300; color: rgba(255,255,255,0.42); transition: color 0.2s; }
+  .ft-col a:hover { color: #fff; }
+  .ft-bot { max-width: 1260px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.06); flex-wrap: wrap; gap: 10px; }
+  .ft-copy { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.16); }
+  .ft-addr { font-size: 0.7rem; font-weight: 300; color: rgba(255,255,255,0.18); }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     RESPONSIVE
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  @media(max-width:1024px) {
+    #page-hero { padding: 48px 36px 0; }
+    .page-hero-card { grid-template-columns: 1fr; gap: 32px; padding: 40px 36px; }
+    #events { padding: 72px 40px; }
+    .weekly-card { grid-template-columns: 1fr; }
+    .weekly-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .weekly-item:last-child { border-bottom: none; }
+    #weekly { padding: 0 24px; }
+    #submit-event { padding: 0 24px 72px; }
+    .submit-card { padding: 44px 44px; }
+    footer { padding: 60px 36px 36px; }
+    .ft-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+    .hdr-nav { padding: 12px 28px; gap: 24px; }
+    .hdr-brand { padding: 13px 28px; }
+    .event-card.featured { grid-template-columns: 1fr; }
+    .event-card.featured .event-date-bar { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  }
+  @media(max-width:768px) {
+    #page-hero { padding: 32px 20px 0; }
+    .page-hero-big { font-size: clamp(2.5rem, 10vw, 4rem); }
+    .page-hero-card { padding: 28px 24px; }
+    #events { padding: 56px 20px; }
+    .events-grid { grid-template-columns: 1fr; }
+    .submit-card { padding: 32px 28px; flex-direction: column; align-items: flex-start; }
+    .ft-grid { grid-template-columns: 1fr; }
+    .ft-bot { flex-direction: column; }
+    #submit-event { padding: 0 16px 56px; }
+    #weekly { padding: 0 16px; }
+    .weekly-wrap { padding: 32px 0; }
+    .weekly-item { padding: 28px 28px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  }
+  @view-transition { navigation: auto; }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- ═══════ HEADER ═══════ -->
+<header id="header">
+  <button class="nav-toggle" id="navToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mainNav">
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+  </button>
+  <nav class="hdr-nav" id="mainNav" aria-label="Main navigation">
+    <a href="gbfpc-about.html">About</a>
+    <a href="gbfpc-ministries.html">Ministries</a>
+    <a href="gbfpc-academy.html">Academy</a>
+    <a href="gbfpc-events.html" class="active">Events</a>
+    <a href="gbfpc-give.html">Give</a>
+    <a href="gbfpc-connect.html">Connect</a>
+    <a href="gbfpc-livestream.html">Livestream</a>
+  </nav>
+  <div class="hdr-brand">
+    <a href="/" class="hdr-left">
+      <img src="gbfpc-logo.svg" alt="GBFPC" class="hdr-logo"/>
+      <span class="hdr-name">Greater Bakersfield's<br>First Pentecostal Church</span>
+    </a>
+    <a href="gbfpc-visit.html" class="hdr-cta">Plan Your Visit</a>
+  </div>
+</header>
+<div class="hdr-spacer"></div>
+
+<!-- ═══════ MAIN CONTENT ═══════ -->
+<div id="main-content"></div>
+
+<!-- ═══════ PAGE HERO ═══════ -->
+<section id="page-hero" aria-labelledby="page-title">
+  <div class="page-hero-inner">
+    <h1 class="page-hero-big" id="page-title">Events.</h1>
+    <div class="page-hero-card">
+      <div>
+        <span class="page-tag">What's happening</span>
+        <p class="page-hero-tagline">Gather.<br>Celebrate.<br>Grow Together.</p>
+        <p class="page-hero-desc">From Sunday worship to youth nights and special services — there's always something happening at GBFPC. All are welcome.</p>
+        <div class="page-hero-links">
+          <a href="#weekly" class="page-link active">Weekly Services</a>
+          <a href="#events" class="page-link">Upcoming Events</a>
+          <a href="gbfpc-connect.html" class="page-link">Contact Us</a>
+        </div>
+      </div>
+      <div class="page-hero-visual" aria-hidden="true">
+        <!-- Service time display -->
+        <div style="background:#fff;border-radius:16px;padding:28px 32px;width:100%;max-width:320px;box-shadow:0 2px 20px rgba(0,0,0,0.06);">
+          <div style="font-size:0.52rem;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:#bbb;margin-bottom:20px;">This Week</div>
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;border-bottom:1px solid #f0f0f0;">
+              <div>
+                <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#bbb;margin-bottom:3px;">Sunday</div>
+                <div style="font-size:0.9rem;font-weight:600;color:#111;">Morning Worship</div>
+              </div>
+              <div style="font-size:0.85rem;font-weight:700;color:#c9a96e;"><time datetime="10:30">10:30 AM</time></div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;border-bottom:1px solid #f0f0f0;">
+              <div>
+                <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#bbb;margin-bottom:3px;">Sunday</div>
+                <div style="font-size:0.9rem;font-weight:600;color:#111;">Sunday School</div>
+              </div>
+              <div style="font-size:0.85rem;font-weight:700;color:#c9a96e;"><time datetime="09:00">9:00 AM</time></div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <div>
+                <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#bbb;margin-bottom:3px;">Wednesday</div>
+                <div style="font-size:0.9rem;font-weight:600;color:#111;">Bible Study</div>
+              </div>
+              <div style="font-size:0.85rem;font-weight:700;color:#c9a96e;"><time datetime="19:00">7:00 PM</time></div>
+            </div>
+          </div>
+          <a href="gbfpc-visit.html" style="display:block;margin-top:22px;background:#111;color:#fff;text-align:center;padding:11px;border-radius:8px;font-size:0.6rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;">Plan Your Visit →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ WEEKLY SERVICES ═══════ -->
+<section id="weekly" aria-labelledby="weekly-heading">
+  <div class="weekly-wrap">
+    <div class="weekly-card r">
+      <div class="weekly-item">
+        <span class="weekly-day">Every Sunday</span>
+        <div class="weekly-name">Sunday School</div>
+        <div class="weekly-time"><time datetime="09:00">9:00 AM</time> · All Ages</div>
+        <p class="weekly-desc">Classes for adults, youth, and children. Dig deeper into the Word before the morning service.</p>
+      </div>
+      <div class="weekly-item">
+        <span class="weekly-day">Every Sunday</span>
+        <div class="weekly-name">Morning Worship</div>
+        <div class="weekly-time"><time datetime="10:30">10:30 AM</time> · 90 min</div>
+        <p class="weekly-desc">Our primary gathering — spirit-filled worship, teaching from the Word, and community. Children's church available ages 3–11.</p>
+      </div>
+      <div class="weekly-item">
+        <span class="weekly-day">Every Wednesday</span>
+        <div class="weekly-name">Bible Study</div>
+        <div class="weekly-time"><time datetime="19:00">7:00 PM</time> · ~75 min</div>
+        <p class="weekly-desc">Mid-week teaching and prayer. A smaller, more intimate gathering for going deeper into scripture together.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ UPCOMING EVENTS ═══════ -->
+<section id="events" aria-labelledby="events-heading">
+  <div class="inner">
+    <span class="eyebrow r">Upcoming</span>
+    <h2 class="sec-h2 r d1" id="events-heading">What's Coming Up</h2>
+    <p class="sec-lead r d2">Special services, community gatherings, and ministry events. Mark your calendar and bring a friend.</p>
+
+    <div class="events-grid">
+
+      <!-- FEATURED EVENT -->
+      <article class="event-card featured r">
+        <div class="event-date-bar">
+          <div class="event-cal" aria-hidden="true">
+            <span class="event-cal-month">Jul</span>
+            <span class="event-cal-day">14</span>
+          </div>
+          <div class="event-time-stack">
+            <span class="event-time"><time datetime="2026-07-14T09:00">9:00 AM</time> – <time datetime="2026-07-18T12:00">Jul 18, Noon</time></span>
+            <span class="event-weekday">Tuesday – Saturday · All Week</span>
+          </div>
+        </div>
+        <div class="event-body">
+          <span class="featured-badge">Featured Event</span>
+          <h3 class="event-title">Vacation Bible School 2026</h3>
+          <p class="event-desc">Five days of Bible stories, worship, crafts, and games for kids ages 4–11. VBS is free and open to the whole community — invite your neighbors. Registration is required to help us plan snacks and supplies.</p>
+          <div class="event-location">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.134 2 5 5.134 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.866-3.134-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            GBFPC · 1418 W Columbus St, Bakersfield
+          </div>
+          <a href="gbfpc-connect.html" class="event-link">
+            Register / Get More Info
+            <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- EVENT CARD 1 -->
+      <article class="event-card r d1">
+        <div class="event-date-bar">
+          <div class="event-cal" aria-hidden="true">
+            <span class="event-cal-month">Jun</span>
+            <span class="event-cal-day">14</span>
+          </div>
+          <div class="event-time-stack">
+            <span class="event-time"><time datetime="2026-06-14T10:30">10:30 AM</time></span>
+            <span class="event-weekday">Sunday</span>
+          </div>
+        </div>
+        <div class="event-body">
+          <span class="event-tag">Special Service</span>
+          <h3 class="event-title">Youth Sunday</h3>
+          <p class="event-desc">Our Amplified Youth take the lead — from worship to the message. Followed by a free lunch in the fellowship hall for everyone who attends.</p>
+          <div class="event-location">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.134 2 5 5.134 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.866-3.134-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            GBFPC · Main Sanctuary
+          </div>
+          <a href="gbfpc-ministries.html" class="event-link">
+            About Amplified Youth
+            <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- EVENT CARD 2 -->
+      <article class="event-card r d2">
+        <div class="event-date-bar">
+          <div class="event-cal" aria-hidden="true">
+            <span class="event-cal-month">Jun</span>
+            <span class="event-cal-day">21</span>
+          </div>
+          <div class="event-time-stack">
+            <span class="event-time"><time datetime="2026-06-21T10:30">10:30 AM</time></span>
+            <span class="event-weekday">Sunday · Father's Day</span>
+          </div>
+        </div>
+        <div class="event-body">
+          <span class="event-tag">Celebration</span>
+          <h3 class="event-title">Father's Day Service</h3>
+          <p class="event-desc">Honoring the fathers, grandfathers, and father figures in our congregation. A special morning to celebrate the men who shape our families and community.</p>
+          <div class="event-location">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.134 2 5 5.134 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.866-3.134-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            GBFPC · Main Sanctuary
+          </div>
+          <a href="gbfpc-visit.html" class="event-link">
+            Plan Your Visit
+            <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- EVENT CARD 3 -->
+      <article class="event-card r d3">
+        <div class="event-date-bar">
+          <div class="event-cal" aria-hidden="true">
+            <span class="event-cal-month">Jun</span>
+            <span class="event-cal-day">25</span>
+          </div>
+          <div class="event-time-stack">
+            <span class="event-time"><time datetime="2026-06-25T19:00">7:00 PM</time></span>
+            <span class="event-weekday">Thursday</span>
+          </div>
+        </div>
+        <div class="event-body">
+          <span class="event-tag">Prayer</span>
+          <h3 class="event-title">Night of Prayer & Worship</h3>
+          <p class="event-desc">An extended evening set aside for corporate prayer, Spirit-led worship, and seeking God together. Open to all — no experience required.</p>
+          <div class="event-location">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.134 2 5 5.134 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.866-3.134-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            GBFPC · Main Sanctuary
+          </div>
+          <a href="gbfpc-connect.html" class="event-link">
+            Contact Us
+            <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- EVENT CARD 4 -->
+      <article class="event-card r d4">
+        <div class="event-date-bar">
+          <div class="event-cal" aria-hidden="true">
+            <span class="event-cal-month">Jul</span>
+            <span class="event-cal-day">4</span>
+          </div>
+          <div class="event-time-stack">
+            <span class="event-time"><time datetime="2026-07-04T10:30">10:30 AM</time></span>
+            <span class="event-weekday">Saturday · 4th of July</span>
+          </div>
+        </div>
+        <div class="event-body">
+          <span class="event-tag">Community</span>
+          <h3 class="event-title">Independence Day Celebration</h3>
+          <p class="event-desc">A special holiday service with music, prayer for our nation, and fellowship. All are welcome. Childcare available for infants and toddlers.</p>
+          <div class="event-location">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.134 2 5 5.134 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.866-3.134-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            GBFPC · Main Sanctuary
+          </div>
+          <a href="gbfpc-visit.html" class="event-link">
+            Plan Your Visit
+            <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- EVENT CARD 5 -->
+      <article class="event-card r d5">
+        <div class="event-date-bar">
+          <div class="event-cal" aria-hidden="true">
+            <span class="event-cal-month">Aug</span>
+            <span class="event-cal-day">9</span>
+          </div>
+          <div class="event-time-stack">
+            <span class="event-time"><time datetime="2026-08-09T11:00">11:00 AM</time></span>
+            <span class="event-weekday">Sunday</span>
+          </div>
+        </div>
+        <div class="event-body">
+          <span class="event-tag">Back to School</span>
+          <h3 class="event-title">Back to School Sunday</h3>
+          <p class="event-desc">We pray over every student and teacher as they head into a new school year. Backpacks and school supplies blessed. Students stay for pizza after service.</p>
+          <div class="event-location">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.134 2 5 5.134 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.866-3.134-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            GBFPC · Main Sanctuary
+          </div>
+          <a href="gbfpc-visit.html" class="event-link">
+            Plan Your Visit
+            <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </article>
+
+    </div><!-- /.events-grid -->
+  </div>
+</section>
+
+<!-- ═══════ SUBMIT AN EVENT ═══════ -->
+<section id="submit-event">
+  <div class="submit-card r">
+    <div class="submit-text">
+      <span class="submit-eyebrow">GBFPC Community</span>
+      <h2 class="submit-h">Have an event to share?</h2>
+      <p class="submit-p">If you're a ministry leader or church member with an upcoming event, reach out and we'll get it added to the calendar. Contact the church office to submit your event details.</p>
+    </div>
+    <a href="gbfpc-connect.html" class="btn-dark">Contact Us →</a>
+  </div>
+</section>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer>
+  <div class="ft-grid">
+    <div>
+      <img src="gbfpc-logo.svg" alt="GBFPC" class="ft-logo"/>
+      <div class="ft-name">Greater Bakersfield's<br>First Pentecostal Church</div>
+      <p class="ft-tag">Rooted in truth, alive in the Spirit, and built for community in Bakersfield, California.</p>
+      <div class="ft-soc">
+        <a href="https://www.facebook.com/gbfpcmedia/" class="ft-s" aria-label="Facebook">f</a>
+        <a href="https://www.instagram.com/gbfpc/" class="ft-s" aria-label="Instagram">ig</a>
+        <a href="https://www.youtube.com/channel/UCO1PnTTAT_uOS4ZkMjdBzGg/videos" class="ft-s" aria-label="YouTube">▶</a>
+      </div>
+    </div>
+    <div class="ft-col"><h5>Our House</h5><ul>
+      <li><a href="gbfpc-about.html">About Us</a></li>
+      <li><a href="gbfpc-about.html#vision">Our Vision</a></li>
+      <li><a href="gbfpc-about.html#articles">Articles of Faith</a></li>
+      <li><a href="gbfpc-about.html#history">Church History</a></li>
+    </ul></div>
+    <div class="ft-col"><h5>Ministries</h5><ul>
+      <li><a href="gbfpc-ministries.html#youth">Amplified Youth</a></li>
+      <li><a href="gbfpc-ministries.html#children">K.I.C.K.</a></li>
+      <li><a href="gbfpc-ministries.html">Thrive</a></li>
+      <li><a href="gbfpc-academy.html">Bethel Academy</a></li>
+      <li><a href="gbfpc-academy.html">Kiddie Korral</a></li>
+    </ul></div>
+    <div class="ft-col"><h5>Connect</h5><ul>
+      <li><a href="gbfpc-visit.html">Plan Your Visit</a></li>
+      <li><a href="gbfpc-give.html">Give Online</a></li>
+      <li><a href="gbfpc-events.html">Upcoming Events</a></li>
+      <li><a href="gbfpc-livestream.html">Livestream</a></li>
+      <li><a href="gbfpc-connect.html">Contact Us</a></li>
+    </ul></div>
+  </div>
+  <div class="ft-bot">
+    <div class="ft-copy">© 2026 GBFPC. All Rights Reserved.</div>
+    <div class="ft-addr">1418 W Columbus St, Bakersfield, CA 93301 · (661) 323-2851</div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const revObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); revObs.unobserve(e.target); } });
+  }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.r, .r-sm').forEach(el => revObs.observe(el));
+
+  // Smooth scroll for in-page anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if(target){ e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+</script>
+
+<script>
+(function() {
+  var toggle = document.getElementById('navToggle');
+  var nav = document.getElementById('mainNav');
+  if (!toggle || !nav) return;
+  toggle.addEventListener('click', function() {
+    var expanded = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!expanded));
+    toggle.setAttribute('aria-label', expanded ? 'Open navigation menu' : 'Close navigation menu');
+    nav.classList.toggle('nav-open', !expanded);
+    document.body.style.overflow = expanded ? '' : 'hidden';
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && nav.classList.contains('nav-open')) {
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open navigation menu');
+      nav.classList.remove('nav-open');
+      document.body.style.overflow = '';
+      toggle.focus();
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

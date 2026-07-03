@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Connect | GBFPC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+  :root {
+    --c-brand:   #c9a96e;
+    --c-dark:    #111111;
+    --c-darker:  #0f0f0f;
+    --c-surface: #f2f1ee;
+    --c-muted:   #888888;
+    --c-border:  #ebebeb;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: #fff; color: var(--c-dark); font-family: 'Montserrat', sans-serif; overflow-x: hidden; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ HEADER ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #header { position: relative; z-index: 200; background: rgba(255,255,255,0.97); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid #e8e8e8; }
+  .hdr-nav { display: flex; justify-content: center; align-items: center; gap: 40px; padding: 12px 56px; border-bottom: 1px solid var(--c-border); }
+  .hdr-nav a { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #555; transition: color 0.2s; white-space: nowrap; }
+  .hdr-nav a:hover { color: #000; }
+  .hdr-nav a.active { color: #000; }
+  .hdr-brand { display: flex; align-items: center; justify-content: space-between; padding: 16px 56px; }
+  .hdr-left { display: flex; align-items: center; gap: 16px; }
+  .hdr-logo { height: 40px; width: auto; object-fit: contain; filter: brightness(0); }
+  .hdr-name { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; line-height: 1.35; color: var(--c-dark); }
+  .hdr-cta { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 11px 24px; border: 1px solid var(--c-dark); color: var(--c-dark); border-radius: 8px; transition: background 0.2s, color 0.2s; white-space: nowrap; }
+  .hdr-cta:hover { background: #000; color: #fff; }
+  .hdr-spacer { height: 0; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ SCROLL REVEAL ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .r       { opacity: 0; transform: translateY(32px); transition: opacity 0.85s cubic-bezier(0.22,1,0.36,1), transform 0.85s cubic-bezier(0.22,1,0.36,1); }
+  .r.in    { opacity: 1; transform: none; }
+  .r-sm    { opacity: 0; transform: translateY(16px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
+  .r-sm.in { opacity: 1; transform: none; }
+  .d1 { transition-delay: 0.08s; } .d2 { transition-delay: 0.16s; } .d3 { transition-delay: 0.24s; }
+  .d4 { transition-delay: 0.32s; } .d5 { transition-delay: 0.40s; } .d6 { transition-delay: 0.48s; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ UTILITIES ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .eyebrow { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: #bbb; margin-bottom: 14px; display: block; }
+  .eyebrow.gold { color: var(--c-brand); }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ PAGE HERO ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #page-hero { padding: 60px 48px; background: #fff; }
+  .page-hero-card { max-width: 1300px; margin: 0 auto; background: var(--c-surface); border-radius: 22px; padding: 80px 72px; }
+  .page-hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; }
+  .page-tag { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: var(--c-brand); margin-bottom: 20px; display: block; }
+  .page-hero-title { font-weight: 900; font-size: clamp(4rem, 8vw, 8rem); line-height: 0.9; letter-spacing: -0.04em; text-transform: uppercase; color: var(--c-dark); }
+  .page-hero-desc { font-size: 1.05rem; font-weight: 300; color: #666; line-height: 1.75; max-width: 440px; margin-bottom: 32px; }
+  .page-hero-links { display: flex; gap: 8px; flex-wrap: wrap; }
+  .page-link { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; padding: 9px 16px; border: 1px solid rgba(0,0,0,0.12); color: #777; border-radius: 100px; background: rgba(255,255,255,0.82); backdrop-filter: blur(6px); transition: border-color 0.2s, color 0.2s; }
+  .page-link:hover { border-color: var(--c-dark); color: var(--c-dark); }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ CONTACT INFO STRIP ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #contact-strip { padding: 80px 80px 0; }
+  .contact-strip-inner { max-width: 1240px; margin: 0 auto; }
+  .contact-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 80px; }
+  .contact-card {
+    border: 1px solid var(--c-border); border-radius: 18px; padding: 40px 36px;
+    transition: border-color 0.2s;
+  }
+  .contact-card:hover { border-color: #ccc; }
+  .contact-card-icon { width: 44px; height: 44px; background: var(--c-surface); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+  .contact-card-icon svg { width: 20px; height: 20px; stroke: var(--c-brand); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .contact-card-label { font-size: 0.52rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #bbb; margin-bottom: 8px; display: block; }
+  .contact-card-value { font-weight: 700; font-size: 1rem; color: var(--c-dark); line-height: 1.35; }
+  .contact-card-value a { transition: color 0.2s; }
+  .contact-card-value a:hover { color: var(--c-brand); }
+  .contact-card-sub { font-size: 0.78rem; font-weight: 300; color: #999; margin-top: 6px; line-height: 1.5; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ CONTACT FORM + MAP ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #contact-main { padding: 0 80px 80px; }
+  .contact-main-inner { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+  .contact-form-wrap {}
+  .form-title { font-weight: 900; font-size: clamp(1.4rem, 2.5vw, 2rem); letter-spacing: -0.03em; text-transform: uppercase; color: var(--c-dark); margin-bottom: 32px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { margin-bottom: 20px; }
+  .form-label { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--c-muted); margin-bottom: 8px; display: block; }
+  .form-input, .form-select, .form-textarea {
+    width: 100%; padding: 13px 16px;
+    border: 1px solid #e0e0e0; border-radius: 8px;
+    font-family: 'Montserrat', sans-serif; font-size: 0.82rem; color: var(--c-dark);
+    background: #fff; outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--c-brand); }
+  .form-textarea { min-height: 120px; resize: vertical; }
+  .form-select { appearance: none; -webkit-appearance: none; cursor: pointer; }
+  .form-submit {
+    width: 100%; padding: 15px; background: var(--c-dark); color: #fff; border: none;
+    font-family: 'Montserrat', sans-serif; font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; transition: opacity 0.2s;
+    border-radius: 8px;
+  }
+  .form-submit:hover { opacity: 0.78; }
+  .contact-map-wrap {}
+  .map-title { font-weight: 900; font-size: clamp(1.4rem, 2.5vw, 2rem); letter-spacing: -0.03em; text-transform: uppercase; color: var(--c-dark); margin-bottom: 32px; }
+  .map-embed { border-radius: 18px; overflow: hidden; height: 340px; margin-bottom: 28px; }
+  .map-embed iframe { width: 100%; height: 100%; border: none; }
+  .map-address { font-size: 0.88rem; font-weight: 300; color: #666; line-height: 1.7; }
+  .map-address strong { display: block; font-weight: 700; color: var(--c-dark); margin-bottom: 4px; }
+  .map-address a { color: var(--c-brand); font-weight: 600; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; display: inline-block; margin-top: 12px; border-bottom: 1px solid rgba(201,169,110,0.3); padding-bottom: 2px; transition: border-color 0.2s; }
+  .map-address a:hover { border-color: var(--c-brand); }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ SOCIAL SECTION ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #social { padding: 0 48px 72px; }
+  .social-card {
+    max-width: 1300px; margin: 0 auto;
+    background: var(--c-darker); border-radius: 22px; padding: 72px;
+    display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap;
+  }
+  .social-text {}
+  .social-eyebrow { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-bottom: 12px; display: block; }
+  .social-headline { font-weight: 900; font-size: clamp(1.8rem, 3vw, 2.8rem); letter-spacing: -0.03em; text-transform: uppercase; color: #fff; line-height: 1; }
+  .social-sub { font-size: 0.88rem; font-weight: 300; color: rgba(255,255,255,0.45); line-height: 1.7; margin-top: 14px; max-width: 400px; }
+  .social-links { display: flex; gap: 16px; flex-shrink: 0; flex-wrap: wrap; }
+  .social-link {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 24px; border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.7);
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+    border-radius: 100px; transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+  .social-link:hover { border-color: var(--c-brand); color: var(--c-brand); background: rgba(201,169,110,0.06); }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ NEWSLETTER + FOOTER ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .newsletter-sec { padding: 0 48px 60px; }
+  .newsletter-card { max-width: 1300px; margin: 0 auto; background: var(--c-surface); border-radius: 22px; padding: 56px 64px; display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+  .nl-eyebrow { font-size: 0.56rem; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; color: var(--c-brand); margin-bottom: 6px; display: block; }
+  .nl-title { font-weight: 900; font-size: clamp(1.4rem, 2.5vw, 2rem); letter-spacing: -0.03em; text-transform: uppercase; color: var(--c-dark); line-height: 1.05; }
+  .nl-sub { font-size: 0.78rem; font-weight: 300; color: var(--c-muted); margin-top: 8px; }
+  .nl-form { display: flex; gap: 0; flex-shrink: 0; }
+  .nl-input { padding: 13px 20px; border: 1px solid #ddd; border-right: none; font-family: 'Montserrat', sans-serif; font-size: 0.78rem; color: var(--c-dark); background: #fff; min-width: 260px; outline: none; border-radius: 8px 0 0 8px; }
+  .nl-input::placeholder { color: #bbb; }
+  .nl-btn { padding: 13px 24px; background: var(--c-dark); color: #fff; border: none; font-family: 'Montserrat', sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; transition: opacity 0.2s; }
+  .nl-btn:hover { opacity: 0.78; }
+  footer { background: #000; border-top: 1px solid rgba(255,255,255,0.06); padding: 72px 68px 40px; }
+  .ft-grid { max-width: 1260px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 52px; margin-bottom: 56px; }
+  .ft-logo { height: 44px; width: auto; margin-bottom: 14px; object-fit: contain; }
+  .ft-name { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 14px; line-height: 1.4; max-width: 190px; }
+  .ft-tag { font-size: 0.78rem; font-weight: 300; color: rgba(255,255,255,0.28); line-height: 1.75; max-width: 230px; margin-bottom: 26px; }
+  .ft-soc { display: flex; gap: 9px; }
+  .ft-s { width: 33px; height: 33px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 0.62rem; font-weight: 700; color: rgba(255,255,255,0.4); transition: border-color 0.2s, color 0.2s; }
+  .ft-s:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
+  .ft-col h5 { font-size: 0.56rem; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(255,255,255,0.2); margin-bottom: 17px; }
+  .ft-col ul { list-style: none; }
+  .ft-col li { margin-bottom: 8px; }
+  .ft-col a { font-size: 0.8rem; font-weight: 300; color: rgba(255,255,255,0.42); transition: color 0.2s; }
+  .ft-col a:hover { color: #fff; }
+  .ft-bot { max-width: 1260px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.06); flex-wrap: wrap; gap: 10px; }
+  .ft-copy { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.16); }
+  .ft-addr { font-size: 0.7rem; font-weight: 300; color: rgba(255,255,255,0.18); }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ RESPONSIVE ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  @media(max-width:1024px) {
+    .hdr-nav { padding: 12px 28px; gap: 24px; }
+    .hdr-brand { padding: 13px 28px; }
+    #page-hero { padding: 40px 24px; }
+    .page-hero-card { padding: 60px 44px; }
+    .page-hero-inner { gap: 48px; }
+    #contact-strip { padding: 60px 36px 0; }
+    .contact-cards { grid-template-columns: 1fr 1fr; }
+    #contact-main { padding: 0 36px 60px; }
+    .contact-main-inner { grid-template-columns: 1fr; gap: 56px; }
+    #social { padding: 0 24px 56px; }
+    .social-card { padding: 60px 44px; }
+    .newsletter-sec { padding: 0 24px 48px; }
+    .newsletter-card { padding: 44px 40px; }
+    footer { padding: 60px 36px 36px; }
+    .ft-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+  }
+  /* ── Skip Link ── */
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 1rem;
+    background: var(--c-brand);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-radius: 0 0 6px 6px;
+    z-index: 9999;
+    transition: top 0.2s ease;
+  }
+  .skip-link:focus { top: 0; }
+
+  /* ── Focus Visible ── */
+  :focus-visible {
+    outline: 2px solid var(--c-brand);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* ── Mobile Nav Toggle ── */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 1100;
+    position: relative;
+  }
+  .nav-toggle-bar {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--c-dark);
+    border-radius: 2px;
+    transition: transform 0.3s cubic-bezier(0.42,0,0.58,1), opacity 0.2s ease;
+  }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  @media (max-width: 768px) {
+    .nav-toggle { display: flex; }
+    .hdr-nav {
+      display: none !important;
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      z-index: 1050;
+      padding: 2rem;
+    }
+    .hdr-nav.nav-open { display: flex !important; }
+    .hdr-nav a {
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--c-dark);
+      text-transform: uppercase;
+    }
+    .hdr-nav a.active { color: var(--c-brand); }
+  }
+
+  /* ── Prefers Reduced Motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  @media(max-width:768px) {
+    .hdr-spacer { height: 70px; }
+    #page-hero { padding: 20px 16px; }
+    .page-hero-card { padding: 44px 28px; border-radius: 16px; }
+    .page-hero-inner { grid-template-columns: 1fr; gap: 28px; }
+    #contact-strip { padding: 48px 20px 0; }
+    .contact-cards { grid-template-columns: 1fr; }
+    #contact-main { padding: 0 20px 48px; }
+    .form-row { grid-template-columns: 1fr; }
+    #social { padding: 0 16px 48px; }
+    .social-card { padding: 44px 32px; flex-direction: column; align-items: flex-start; border-radius: 16px; }
+    .social-links { flex-direction: column; width: 100%; }
+    .social-link { justify-content: center; }
+    .newsletter-sec { padding: 0 16px 40px; }
+    .newsletter-card { padding: 36px 28px; flex-direction: column; align-items: flex-start; }
+    .nl-form { flex-direction: column; width: 100%; }
+    .nl-input { min-width: 100%; border-right: 1px solid #ddd; border-bottom: none; }
+    footer { padding: 48px 20px 28px; }
+    .ft-grid { grid-template-columns: 1fr; }
+  }
+  @view-transition { navigation: auto; }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<header id="header">
+  <button class="nav-toggle" id="navToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mainNav">
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+  </button>
+  <div class="hdr-nav" id="mainNav" aria-label="Main navigation">
+    <a href="gbfpc-about.html">About</a>
+    <a href="gbfpc-ministries.html">Ministries</a>
+    <a href="gbfpc-academy.html">Academy</a>
+    <a href="gbfpc-events.html">Events</a>
+    <a href="gbfpc-give.html">Give</a>
+    <a href="gbfpc-connect.html" class="active">Connect</a>
+    <a href="gbfpc-livestream.html">Livestream</a>
+  </div>
+  <div class="hdr-brand">
+    <a href="/" class="hdr-left">
+      <img src="gbfpc-logo.svg" alt="GBFPC" class="hdr-logo"/>
+      <span class="hdr-name">Greater Bakersfield's<br>First Pentecostal Church</span>
+    </a>
+    <a href="gbfpc-visit.html" class="hdr-cta">Plan Your Visit</a>
+  </div>
+</header>
+
+<div class="hdr-spacer"></div>
+
+<!-- ═══════ PAGE HERO ═══════ -->
+<span id="main-content" aria-hidden="true" style="position:absolute;top:0;"></span>
+<section id="page-hero">
+  <div class="page-hero-card">
+    <div class="page-hero-inner">
+      <div class="page-hero-left">
+        <span class="page-tag r">Get in Touch</span>
+        <h1 class="page-hero-title r d1">Con&shy;nect.</h1>
+      </div>
+      <div class="page-hero-right r d2">
+        <p class="page-hero-desc">Have a question, prayer request, or just want to know more about GBFPC? We'd love to hear from you — our team is here and ready.</p>
+        <div class="page-hero-links">
+          <a href="#contact-main" class="page-link">Send a Message</a>
+          <a href="#social" class="page-link">Follow Us</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CONTACT INFO CARDS ═══════ -->
+<section id="contact-strip">
+  <!-- Ministry anchors for deep linking from Ministries page -->
+  <span id="amplified-youth"></span>
+  <span id="kick"></span>
+  <span id="bible-quizzing"></span>
+  <span id="praise-team"></span>
+  <span id="mens-ministry"></span>
+  <span id="prayer-ministry"></span>
+  <span id="thrive"></span>
+  <span id="outreach"></span>
+  <div class="contact-strip-inner">
+    <div class="contact-cards">
+      <div class="contact-card r">
+        <div class="contact-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" stroke="none" fill="#c9a96e"/></svg>
+        </div>
+        <span class="contact-card-label">Address</span>
+        <div class="contact-card-value"><a href="https://goo.gl/maps/EHDMwXpDuT59PkRHA" target="_blank" rel="noopener">1418 W Columbus St<br>Bakersfield, CA 93301</a></div>
+        <div class="contact-card-sub">Free parking available on-site.</div>
+      </div>
+      <div class="contact-card r d1">
+        <div class="contact-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <span class="contact-card-label">Phone</span>
+        <div class="contact-card-value"><a href="tel:+16613232851">(661) 323-2851</a></div>
+        <div class="contact-card-sub">Monday – Friday, 9am – 5pm PT</div>
+      </div>
+      <div class="contact-card r d2">
+        <div class="contact-card-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <span class="contact-card-label">Service Times</span>
+        <div class="contact-card-value">Sunday &amp; Tuesday</div>
+        <div class="contact-card-sub">Sun 10:00 AM &amp; 11:00 AM<br>Tue 7:00 PM</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CONTACT FORM + MAP ═══════ -->
+<section id="contact-main">
+  <div class="contact-main-inner">
+    <div class="contact-form-wrap r">
+      <div class="form-title">Send Us<br>a Message</div>
+      <form id="contactForm" action="mailto:info@gbfpc.org" method="POST" enctype="text/plain" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input class="form-input" type="text" placeholder="John"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input class="form-input" type="text" placeholder="Smith"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input class="form-input" type="email" placeholder="john@example.com"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone (optional)</label>
+          <input class="form-input" type="tel" placeholder="(661) 000-0000"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">I'm reaching out about</label>
+          <select class="form-select form-input">
+            <option value="">Select a topic</option>
+            <option>General Question</option>
+            <option>Prayer Request</option>
+            <option>Plan My Visit</option>
+            <option>Ministries &amp; Get Involved</option>
+            <option>Giving &amp; Stewardship</option>
+            <option>Pastoral Support</option>
+            <option>Academy / School Inquiry</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Message</label>
+          <textarea class="form-textarea" placeholder="Tell us how we can help…"></textarea>
+        </div>
+        <button class="form-submit" type="submit" aria-label="Send message to GBFPC">Send Message →</button>
+      </form>
+      <p class="form-note" style="font-size:0.78rem;color:#888;margin-top:1rem;text-align:center;">
+        Your message will open in your email client. Alternatively, call us at <a href="tel:+16613232851" style="color:#c9a96e;">(661) 323-2851</a>.
+      </p>
+    </div>
+    <div class="contact-map-wrap r d1">
+      <div class="map-title">Find<br>Us Here</div>
+      <div class="map-embed">
+        <iframe
+          src="https://maps.google.com/maps?q=1418+W+Columbus+St,+Bakersfield,+CA+93301&output=embed"
+          allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          title="Church location map">
+        </iframe>
+      </div>
+      <div class="map-address">
+        <strong>Greater Bakersfield's First Pentecostal Church</strong>
+        1418 W Columbus St, Bakersfield, CA 93301<br>
+        (661) 323-2851
+        <a href="https://goo.gl/maps/EHDMwXpDuT59PkRHA" target="_blank" rel="noopener">Get Directions →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SOCIAL ═══════ -->
+<section id="social">
+  <div class="social-card r">
+    <div class="social-text">
+      <span class="social-eyebrow">Stay Connected</span>
+      <div class="social-headline">Follow<br>Along.</div>
+      <p class="social-sub">Sermons, updates, events, and more — stay connected with GBFPC on social media wherever you are.</p>
+    </div>
+    <div class="social-links">
+      <a href="https://www.facebook.com/gbfpcmedia/" class="social-link" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        Facebook
+      </a>
+      <a href="https://www.instagram.com/gbfpc/" class="social-link" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        Instagram
+      </a>
+      <a href="https://www.youtube.com/channel/UCO1PnTTAT_uOS4ZkMjdBzGg/videos" class="social-link" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20.06 12 20.06 12 20.06s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+        YouTube
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ NEWSLETTER ═══════ -->
+<div class="newsletter-sec">
+  <div class="newsletter-card r">
+    <div>
+      <span class="nl-eyebrow">Email Updates</span>
+      <div class="nl-title">Stay Up<br>To Date.</div>
+      <div class="nl-sub">Join our community and never miss a moment at GBFPC.</div>
+    </div>
+    <div class="nl-form">
+      <a href="https://gbfpc.org" class="btn-dark" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;padding:13px 24px;background:#111;color:#fff;font-family:'Montserrat',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;border-radius:0 8px 8px 0;white-space:nowrap;transition:opacity 0.2s;">Stay Connected →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer>
+  <div class="ft-grid">
+    <div>
+      <img src="gbfpc-logo.svg" alt="GBFPC" class="ft-logo"/>
+      <div class="ft-name">Greater Bakersfield's<br>First Pentecostal Church</div>
+      <p class="ft-tag">Rooted in truth, alive in the Spirit, and built for community in Bakersfield, California.</p>
+      <div class="ft-soc">
+        <a href="https://www.facebook.com/gbfpcmedia/" class="ft-s">f</a>
+        <a href="https://www.instagram.com/gbfpc/" class="ft-s">ig</a>
+        <a href="https://www.youtube.com/channel/UCO1PnTTAT_uOS4ZkMjdBzGg/videos" class="ft-s">▶</a>
+      </div>
+    </div>
+    <div class="ft-col"><h5>Our House</h5><ul>
+      <li><a href="gbfpc-about.html">About Us</a></li>
+      <li><a href="gbfpc-about.html#vision">Our Vision</a></li>
+      <li><a href="gbfpc-about.html#articles">Articles of Faith</a></li>
+      <li><a href="gbfpc-about.html#history">Church History</a></li>
+    </ul></div>
+    <div class="ft-col"><h5>Ministries</h5><ul>
+      <li><a href="gbfpc-ministries.html#youth">Amplified Youth</a></li>
+      <li><a href="gbfpc-ministries.html#children">K.I.C.K.</a></li>
+      <li><a href="gbfpc-ministries.html">Thrive</a></li>
+      <li><a href="gbfpc-academy.html">Bethel Academy</a></li>
+      <li><a href="gbfpc-ministries.html">Kiddie Korral</a></li>
+    </ul></div>
+    <div class="ft-col"><h5>Connect</h5><ul>
+      <li><a href="gbfpc-visit.html">Plan Your Visit</a></li>
+      <li><a href="gbfpc-give.html">Give Online</a></li>
+      <li><a href="gbfpc-events.html">Upcoming Events</a></li>
+      <li><a href="gbfpc-livestream.html">Livestream</a></li>
+      <li><a href="gbfpc-connect.html">Contact Us</a></li>
+    </ul></div>
+  </div>
+  <div class="ft-bot">
+    <div class="ft-copy">© 2026 GBFPC. All Rights Reserved.</div>
+    <div class="ft-addr">1418 W Columbus St, Bakersfield, CA 93301 · (661) 323-2851</div>
+  </div>
+</footer>
+
+<script>
+(function() {
+  var toggle = document.getElementById('navToggle');
+  var nav = document.getElementById('mainNav');
+  if (!toggle || !nav) return;
+  toggle.addEventListener('click', function() {
+    var expanded = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!expanded));
+    toggle.setAttribute('aria-label', expanded ? 'Open navigation menu' : 'Close navigation menu');
+    nav.classList.toggle('nav-open', !expanded);
+    document.body.style.overflow = expanded ? '' : 'hidden';
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && nav.classList.contains('nav-open')) {
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open navigation menu');
+      nav.classList.remove('nav-open');
+      document.body.style.overflow = '';
+      toggle.focus();
+    }
+  });
+  nav.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open navigation menu');
+      nav.classList.remove('nav-open');
+      document.body.style.overflow = '';
+    });
+  });
+})();
+</script>
+
+<script>
+  const revObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); revObs.unobserve(e.target); } });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.r, .r-sm').forEach(el => revObs.observe(el));
+</script>
+
+<!-- PAGE TRANSITION -->
+<div id="pg-t"></div>
+<style>
+#pg-t{position:fixed;inset:0;z-index:9999;background:var(--c-darker);opacity:1;pointer-events:all;transition:opacity .5s ease}
+body:has(#intro-splash) #pg-t{opacity:0!important;pointer-events:none!important;transition:none!important}
+</style>
+<script>
+!function(){
+  var t=document.getElementById('pg-t');
+  document.addEventListener('DOMContentLoaded',function(){
+    if(document.getElementById('intro-splash')){
+      t.style.cssText='opacity:0;pointer-events:none;transition:none';
+    } else {
+      requestAnimationFrame(function(){requestAnimationFrame(function(){
+        t.style.opacity='0';t.style.pointerEvents='none';
+      });});
+    }
+    document.addEventListener('click',function(e){
+      var a=e.target.closest('a[href]');if(!a)return;
+      var h=a.getAttribute('href');
+      if(!h||h[0]==='#'||h.startsWith('http')||h.startsWith('mailto')||h.startsWith('tel')||a.target==='_blank')return;
+      e.preventDefault();
+      t.style.cssText='opacity:1;pointer-events:all;transition:opacity .5s ease';
+      setTimeout(function(){window.location.href=h},520);
+    });
+  });
+}();
+</script>
+</body>
+</html>

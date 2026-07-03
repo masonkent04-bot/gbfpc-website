@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Livestream | Greater Bakersfield's First Pentecostal Church</title>
+  <meta name="description" content="Watch GBFPC live online — Sunday at 10:30 AM and Wednesday at 7:00 PM. If we're not streaming right now, catch up on our latest sermon."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+  <style>
+  :root {
+    --c-brand:   #c9a96e;
+    --c-dark:    #111111;
+    --c-darker:  #0f0f0f;
+    --c-surface: #f2f1ee;
+    --c-muted:   #888888;
+    --c-border:  #ebebeb;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: #fff;
+    color: var(--c-dark);
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; }
+
+  /* ── Skip Link ── */
+  .skip-link {
+    position: absolute; top: -100%; left: 1rem;
+    background: var(--c-brand); color: #fff;
+    padding: 0.5rem 1rem; font-size: 0.85rem; font-weight: 700;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    border-radius: 0 0 6px 6px; z-index: 9999; transition: top 0.2s ease;
+  }
+  .skip-link:focus { top: 0; }
+  :focus-visible { outline: 2px solid var(--c-brand); outline-offset: 3px; border-radius: 2px; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     HEADER
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #header {
+    position: relative; z-index: 200;
+    background: rgba(255,255,255,0.97);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid #e8e8e8;
+  }
+  .hdr-nav {
+    display: flex; justify-content: center; align-items: center;
+    gap: 40px; padding: 12px 56px;
+    border-bottom: 1px solid var(--c-border);
+  }
+  .hdr-nav a {
+    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.16em;
+    text-transform: uppercase; color: #555; transition: color 0.2s; white-space: nowrap;
+  }
+  .hdr-nav a:hover { color: #000; }
+  .hdr-nav a.active { color: #000; font-weight: 700; }
+  .hdr-brand {
+    display: flex; align-items: center; justify-content: space-between; padding: 16px 56px;
+  }
+  .hdr-left { display: flex; align-items: center; gap: 16px; }
+  .hdr-logo { height: 40px; width: auto; object-fit: contain; filter: brightness(0); }
+  .hdr-name { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; line-height: 1.35; color: var(--c-dark); }
+  .hdr-cta {
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em;
+    text-transform: uppercase; padding: 11px 24px;
+    border: 1px solid var(--c-dark); color: var(--c-dark); border-radius: 8px;
+    transition: opacity 0.18s, background 0.18s, color 0.18s; white-space: nowrap;
+  }
+  .hdr-cta:hover { background: #000; border-color: #000; color: #fff; }
+  .hdr-spacer { height: 0; }
+
+  /* ── Mobile Nav Toggle ── */
+  .nav-toggle {
+    display: none; flex-direction: column; justify-content: center;
+    gap: 5px; background: none; border: none; cursor: pointer;
+    padding: 10px; z-index: 1100; position: relative;
+  }
+  .nav-toggle-bar {
+    display: block; width: 22px; height: 2px; background: var(--c-dark); border-radius: 2px;
+    transition: transform 0.3s cubic-bezier(0.42,0,0.58,1), opacity 0.2s ease;
+  }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  @media (max-width: 768px) {
+    .nav-toggle { display: flex; }
+    .hdr-nav {
+      display: none !important; position: fixed; inset: 0;
+      background: #fff; flex-direction: column; align-items: center;
+      justify-content: center; gap: 2.5rem; z-index: 1050; padding: 2rem;
+    }
+    .hdr-nav.nav-open { display: flex !important; }
+    .hdr-nav a { font-size: 1.25rem; font-weight: 600; letter-spacing: 0.08em; color: var(--c-dark); text-transform: uppercase; }
+    .hdr-nav a.active { color: var(--c-brand); }
+    .hdr-spacer { height: 70px; }
+  }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     SCROLL REVEAL
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .r       { opacity: 0; transform: translateY(32px); transition: opacity 0.85s cubic-bezier(0.22,1,0.36,1), transform 0.85s cubic-bezier(0.22,1,0.36,1); }
+  .r.in    { opacity: 1; transform: none; }
+  .r-sm    { opacity: 0; transform: translateY(16px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
+  .r-sm.in { opacity: 1; transform: none; }
+  .d1 { transition-delay: 0.08s; } .d2 { transition-delay: 0.16s; } .d3 { transition-delay: 0.24s; }
+  .d4 { transition-delay: 0.32s; } .d5 { transition-delay: 0.40s; } .d6 { transition-delay: 0.48s; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     LIVE HERO — full dark section
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #live-hero {
+    background: var(--c-darker);
+    padding: 72px 68px 80px;
+  }
+  .live-hero-inner { max-width: 1260px; margin: 0 auto; }
+
+  /* Status pill — shown/hidden by JS */
+  .live-status {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 100px; padding: 7px 14px; margin-bottom: 28px;
+  }
+  .live-dot {
+    width: 8px; height: 8px; border-radius: 50%; background: #888; flex-shrink: 0;
+  }
+  .live-status.is-live .live-dot {
+    background: #ff3b30;
+    box-shadow: 0 0 0 3px rgba(255,59,48,0.3);
+    animation: pulse-dot 1.6s ease infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { box-shadow: 0 0 0 3px rgba(255,59,48,0.3); }
+    50%       { box-shadow: 0 0 0 6px rgba(255,59,48,0.1); }
+  }
+  .live-status-text {
+    font-size: 0.58rem; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: rgba(255,255,255,0.5);
+  }
+  .live-status.is-live .live-status-text { color: #ff3b30; }
+
+  .live-hero-h1 {
+    font-weight: 900; font-size: clamp(2.5rem, 6vw, 5.5rem);
+    letter-spacing: -0.03em; color: #fff; line-height: 0.95;
+    text-transform: uppercase; margin-bottom: 20px;
+  }
+  .live-hero-sub {
+    font-size: 0.9rem; font-weight: 300; color: rgba(255,255,255,0.45);
+    line-height: 1.7; max-width: 520px; margin-bottom: 48px;
+  }
+
+  /* ── VIDEO EMBED ── */
+  .video-wrap {
+    position: relative; width: 100%;
+    border-radius: 16px; overflow: hidden;
+    background: #000;
+    /* Maintain 16:9 */
+    aspect-ratio: 16 / 9;
+    margin-bottom: 32px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+  }
+  .video-wrap iframe {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  /* Offline placeholder — shown when not live */
+  .video-offline {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    background: #0a0a0a; color: rgba(255,255,255,0.3);
+    gap: 20px;
+  }
+  .video-offline-icon {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .video-offline-icon svg { width: 28px; height: 28px; stroke: rgba(255,255,255,0.2); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .video-offline-label {
+    font-size: 0.65rem; font-weight: 600; letter-spacing: 0.2em;
+    text-transform: uppercase; color: rgba(255,255,255,0.2); text-align: center;
+    max-width: 260px; line-height: 1.7;
+  }
+
+  /* Next service countdown */
+  .next-service {
+    display: flex; align-items: center; gap: 14px;
+    flex-wrap: wrap;
+  }
+  .next-service-label {
+    font-size: 0.6rem; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: rgba(255,255,255,0.25);
+  }
+  .next-service-time {
+    font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.55);
+  }
+  .next-service-time strong { color: var(--c-brand); }
+
+  /* Replay / YouTube CTA */
+  .live-cta-row {
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 28px;
+  }
+  .btn-brand {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--c-brand); color: #fff;
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em;
+    text-transform: uppercase; padding: 13px 24px;
+    border-radius: 8px; transition: opacity 0.18s; white-space: nowrap;
+  }
+  .btn-brand:hover { opacity: 0.85; }
+  .btn-ghost-dark {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.55);
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em;
+    text-transform: uppercase; padding: 13px 24px;
+    border-radius: 8px; transition: border-color 0.18s, color 0.18s; white-space: nowrap;
+  }
+  .btn-ghost-dark:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
+  .btn-brand svg, .btn-ghost-dark svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     SERVICE TIMES (light section)
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #service-times { padding: 96px 68px; background: #fff; }
+  .st-inner { max-width: 1260px; margin: 0 auto; }
+  .eyebrow {
+    font-size: 0.6rem; font-weight: 700; letter-spacing: 0.28em;
+    text-transform: uppercase; color: var(--c-muted); margin-bottom: 16px; display: block;
+  }
+  .sec-h2 {
+    font-weight: 800; font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    letter-spacing: -0.025em; color: var(--c-dark); line-height: 1.1; margin-bottom: 16px;
+  }
+  .sec-lead { font-size: 0.93rem; font-weight: 300; color: #777; line-height: 1.75; max-width: 520px; margin-bottom: 56px; }
+
+  .st-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+    background: var(--c-border); border-radius: 16px; overflow: hidden;
+  }
+  .st-item {
+    background: #fff; padding: 40px 36px;
+    transition: background 0.2s;
+  }
+  .st-item:hover { background: #fafafa; }
+  .st-day {
+    font-size: 0.54rem; font-weight: 700; letter-spacing: 0.28em;
+    text-transform: uppercase; color: var(--c-brand); margin-bottom: 12px; display: block;
+  }
+  .st-name {
+    font-weight: 700; font-size: 1.05rem; color: var(--c-dark);
+    letter-spacing: -0.01em; margin-bottom: 8px;
+  }
+  .st-time { font-size: 1.5rem; font-weight: 800; color: var(--c-dark); letter-spacing: -0.03em; margin-bottom: 14px; }
+  .st-time time { display: block; }
+  .st-desc { font-size: 0.78rem; font-weight: 300; color: #777; line-height: 1.7; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     PAST SERMONS
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #sermons { padding: 0 68px 96px; background: #fff; }
+  .sermons-inner { max-width: 1260px; margin: 0 auto; }
+  .sermon-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+  }
+  .sermon-card {
+    border: 1px solid var(--c-border); border-radius: 14px; overflow: hidden;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .sermon-card:hover { box-shadow: 0 6px 28px rgba(0,0,0,0.07); transform: translateY(-2px); }
+  .sermon-thumb {
+    aspect-ratio: 16/9; background: var(--c-surface);
+    position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .sermon-thumb-dark { background: #1c1c1e; }
+  .play-btn {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: rgba(255,255,255,0.9);
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.2s, background 0.2s;
+    flex-shrink: 0;
+  }
+  .sermon-card:hover .play-btn { transform: scale(1.08); background: #fff; }
+  .play-btn svg { width: 16px; height: 16px; fill: var(--c-dark); stroke: none; margin-left: 2px; }
+  .sermon-body { padding: 20px 22px 24px; }
+  .sermon-date {
+    font-size: 0.56rem; font-weight: 600; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--c-muted); margin-bottom: 8px; display: block;
+  }
+  .sermon-title { font-weight: 700; font-size: 0.95rem; color: var(--c-dark); letter-spacing: -0.01em; line-height: 1.35; margin-bottom: 8px; }
+  .sermon-speaker { font-size: 0.72rem; font-weight: 400; color: #888; }
+  .sermon-cta {
+    display: block; margin-top: 40px; text-align: center;
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--c-muted);
+    transition: color 0.2s;
+  }
+  .sermon-cta:hover { color: var(--c-dark); }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     WATCH ANYWHERE STRIP
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #platforms { padding: 0 48px 96px; }
+  .platforms-card {
+    max-width: 1240px; margin: 0 auto;
+    background: var(--c-surface); border-radius: 20px;
+    padding: 56px 64px;
+    display: flex; align-items: center; gap: 64px; flex-wrap: wrap;
+  }
+  .platforms-text { flex: 1; min-width: 260px; }
+  .platforms-eyebrow {
+    font-size: 0.56rem; font-weight: 700; letter-spacing: 0.28em;
+    text-transform: uppercase; color: var(--c-muted); margin-bottom: 10px; display: block;
+  }
+  .platforms-h { font-weight: 800; font-size: 1.5rem; color: var(--c-dark); letter-spacing: -0.02em; margin-bottom: 10px; }
+  .platforms-p { font-size: 0.85rem; font-weight: 300; color: #777; line-height: 1.65; }
+  .platforms-links { display: flex; flex-direction: column; gap: 12px; flex-shrink: 0; }
+  .platform-btn {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: #fff; border: 1px solid var(--c-border);
+    padding: 12px 20px; border-radius: 10px;
+    font-size: 0.72rem; font-weight: 600; color: var(--c-dark);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    min-width: 200px;
+  }
+  .platform-btn:hover { border-color: #bbb; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  .platform-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+  .platform-btn .pf-label { font-size: 0.5rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-muted); display: block; }
+  .platform-btn .pf-name { font-size: 0.82rem; font-weight: 700; color: var(--c-dark); display: block; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     FOOTER
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  footer { background: #000; border-top: 1px solid rgba(255,255,255,0.06); padding: 72px 68px 40px; }
+  .ft-grid { max-width: 1260px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 52px; margin-bottom: 56px; }
+  .ft-logo { height: 44px; width: auto; margin-bottom: 14px; object-fit: contain; }
+  .ft-name { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 14px; line-height: 1.4; max-width: 190px; }
+  .ft-tag { font-size: 0.78rem; font-weight: 300; color: rgba(255,255,255,0.28); line-height: 1.75; max-width: 230px; margin-bottom: 26px; }
+  .ft-soc { display: flex; gap: 9px; }
+  .ft-s { width: 33px; height: 33px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 0.62rem; font-weight: 700; color: rgba(255,255,255,0.3); transition: border-color 0.2s, color 0.2s; }
+  .ft-s:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
+  .ft-col h5 { font-size: 0.56rem; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(255,255,255,0.2); margin-bottom: 17px; }
+  .ft-col ul { list-style: none; }
+  .ft-col li { margin-bottom: 8px; }
+  .ft-col a { font-size: 0.8rem; font-weight: 300; color: rgba(255,255,255,0.42); transition: color 0.2s; }
+  .ft-col a:hover { color: #fff; }
+  .ft-bot { max-width: 1260px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.06); flex-wrap: wrap; gap: 10px; }
+  .ft-copy { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.16); }
+  .ft-addr { font-size: 0.7rem; font-weight: 300; color: rgba(255,255,255,0.18); }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     RESPONSIVE
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  @media(max-width:1024px) {
+    #live-hero { padding: 56px 40px 64px; }
+    #service-times { padding: 72px 40px; }
+    #sermons { padding: 0 40px 72px; }
+    #platforms { padding: 0 24px 72px; }
+    .platforms-card { padding: 44px 44px; gap: 40px; }
+    .sermon-grid { grid-template-columns: 1fr 1fr; }
+    .st-grid { grid-template-columns: 1fr; }
+    footer { padding: 60px 36px 36px; }
+    .ft-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+    .hdr-nav { padding: 12px 28px; gap: 24px; }
+    .hdr-brand { padding: 13px 28px; }
+  }
+  @media(max-width:768px) {
+    #live-hero { padding: 40px 24px 56px; }
+    #service-times { padding: 56px 24px; }
+    #sermons { padding: 0 20px 56px; }
+    .sermon-grid { grid-template-columns: 1fr; }
+    .platforms-card { padding: 32px 28px; flex-direction: column; }
+    .platforms-links { width: 100%; }
+    .platform-btn { min-width: unset; width: 100%; }
+    .ft-grid { grid-template-columns: 1fr; }
+    .ft-bot { flex-direction: column; }
+    .live-cta-row { flex-direction: column; align-items: flex-start; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  }
+  @view-transition { navigation: auto; }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- ═══════ HEADER ═══════ -->
+<header id="header">
+  <button class="nav-toggle" id="navToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mainNav">
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+  </button>
+  <nav class="hdr-nav" id="mainNav" aria-label="Main navigation">
+    <a href="gbfpc-about.html">About</a>
+    <a href="gbfpc-ministries.html">Ministries</a>
+    <a href="gbfpc-academy.html">Academy</a>
+    <a href="gbfpc-events.html">Events</a>
+    <a href="gbfpc-give.html">Give</a>
+    <a href="gbfpc-connect.html">Connect</a>
+    <a href="gbfpc-livestream.html" class="active">Livestream</a>
+  </nav>
+  <div class="hdr-brand">
+    <a href="/" class="hdr-left">
+      <img src="gbfpc-logo.svg" alt="GBFPC" class="hdr-logo"/>
+      <span class="hdr-name">Greater Bakersfield's<br>First Pentecostal Church</span>
+    </a>
+    <a href="gbfpc-visit.html" class="hdr-cta">Plan Your Visit</a>
+  </div>
+</header>
+<div class="hdr-spacer"></div>
+
+<div id="main-content"></div>
+
+<!-- ═══════ LIVE HERO ═══════ -->
+<section id="live-hero" aria-labelledby="live-heading">
+  <div class="live-hero-inner">
+
+    <!-- Dynamic status pill — JS updates this -->
+    <div class="live-status" id="liveStatus" aria-live="polite" aria-atomic="true">
+      <span class="live-dot" aria-hidden="true"></span>
+      <span class="live-status-text" id="liveStatusText">Loading...</span>
+    </div>
+
+    <h1 class="live-hero-h1 r" id="live-heading">Watch<br>Live.</h1>
+    <p class="live-hero-sub r d1" id="liveSubtext">
+      We stream every Sunday at 10:30 AM and Wednesday at 7:00 PM (Pacific Time). If we're not live right now, catch up with our latest message below.
+    </p>
+
+    <!-- VIDEO AREA — JS swaps iframe in when live, shows offline state otherwise -->
+    <div class="video-wrap r d2" id="videoWrap" role="region" aria-label="Video player">
+      <!-- Offline placeholder (default — JS replaces if live) -->
+      <div class="video-offline" id="videoOffline">
+        <div class="video-offline-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+        </div>
+        <p class="video-offline-label" id="offlineLabel">Not streaming right now. Our next service is below.</p>
+      </div>
+      <!-- iframe injected here by JS when live -->
+    </div>
+
+    <!-- Next service info + CTA row -->
+    <div class="next-service r d3" id="nextServiceRow">
+      <span class="next-service-label">Next service</span>
+      <span class="next-service-time" id="nextServiceTime">Loading...</span>
+    </div>
+
+    <div class="live-cta-row r d4">
+      <a href="https://www.youtube.com/channel/UCO1PnTTAT_uOS4ZkMjdBzGg/videos" target="_blank" rel="noopener noreferrer" class="btn-brand" id="ctaPrimary">
+        <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Watch on YouTube
+      </a>
+      <a href="#sermons" class="btn-ghost-dark">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><polyline points="10 8 16 12 10 16 10 8"/></svg>
+        Browse Past Sermons
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════ SERVICE TIMES ═══════ -->
+<section id="service-times" aria-labelledby="times-heading">
+  <div class="st-inner">
+    <span class="eyebrow r">Join Us</span>
+    <h2 class="sec-h2 r d1" id="times-heading">Services This Week</h2>
+    <p class="sec-lead r d2">All services stream live on YouTube. Missed one? Every message is archived on our channel.</p>
+
+    <div class="st-grid r d3">
+      <div class="st-item">
+        <span class="st-day">Every Sunday</span>
+        <div class="st-name">Sunday School</div>
+        <div class="st-time"><time datetime="09:00">9:00 AM</time></div>
+        <p class="st-desc">All ages · In-person only</p>
+      </div>
+      <div class="st-item">
+        <span class="st-day">Every Sunday</span>
+        <div class="st-name">Morning Worship</div>
+        <div class="st-time"><time datetime="10:30">10:30 AM</time></div>
+        <p class="st-desc">In-person + livestream · Children's church ages 3–11</p>
+      </div>
+      <div class="st-item">
+        <span class="st-day">Every Wednesday</span>
+        <div class="st-name">Bible Study</div>
+        <div class="st-time"><time datetime="19:00">7:00 PM</time></div>
+        <p class="st-desc">In-person + livestream · ~75 minutes</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ PAST SERMONS ═══════ -->
+<section id="sermons" aria-labelledby="sermons-heading">
+  <div class="sermons-inner">
+    <span class="eyebrow r">On Demand</span>
+    <h2 class="sec-h2 r d1" id="sermons-heading">Recent Messages</h2>
+    <p class="sec-lead r d2">Every sermon is available on our YouTube channel after it airs. Search by topic, scripture, or speaker.</p>
+
+    <div class="sermon-grid">
+
+      <a href="https://www.youtube.com/channel/UCO1PnTTAT_uOS4ZkMjdBzGg/videos" target="_blank" rel="noopener noreferrer" class="sermon-card r d1" aria-label="Watch recent sermons on YouTube">
+        <div class="sermon-thumb sermon-thumb-dark">
+          <div class="play-btn" aria-hidden="true">
+            <svg viewBox="0 0 16 16"><polygon points="3 2 13 8 3 14"/></svg>
+          </div>
+        </div>
+        <div class="sermon-body">
+          <span class="sermon-date">Latest Message</span>
+          <div class="sermon-title">Watch Our Most Recent Sermon</div>
+          <div class="sermon-speaker">Pastor Bradford · GBFPC</div>
+        </div>
+      </a>
+
+      <a href="https://www.youtube.com/channel/UCO1PnTTAT_uOS4ZkMjdBzGg/videos" target="_blank" rel="noopener noreferrer" class="sermon-card r d2" aria-label="Browse sermon archive on YouTube">
+        <div class="sermon-thumb">
+          <div class="play-btn" aria-hidden="true">
+            <svg viewBox="0 0 16 16"><polygon points="3 2 13 8 3 14"/></svg>
+          </div>
+        </div>
+        <div class="sermon-body">
+          <span class="sermon-date">Sermon Archive</span>
+          <div class="sermon-title">Browse All Messages by Topic or Date</div>
+          <div class="sermon-speaker">Multiple speakers · GBFPC</div>
+        </div>
+      </a>
+
+      <a href="https://www.youtube.com/channel/UCO1PnTTAT_uOS4ZkMjdBzGg/videos" target="_blank" rel="noopener noreferrer" class="sermon-card r d3" aria-label="Wednesday Bible studies on YouTube">
+        <div class="sermon-thumb sermon-thumb-dark">
+          <div class="play-btn" aria-hidden="true">
+            <svg viewBox="0 0 16 16"><polygon points="3 2 13 8 3 14"/></svg>
+          </div>
+        </div>
+        <div class="sermon-body">
+          <span class="sermon-date">Wednesday Studies</span>
+          <div class="sermon-title">Mid-Week Bible Study Recordings</div>
+          <div class="sermon-speaker">GBFPC · Wednesday 7:00 PM</div>
+        </div>
+      </a>
+
+    </div>
+
+    <a href="https://www.youtube.com/channel/UCO1PnTTAT_uOS4ZkMjdBzGg/videos" target="_blank" rel="noopener noreferrer" class="sermon-cta r">
+      View Full Sermon Archive on YouTube →
+    </a>
+  </div>
+</section>
+
+<!-- ═══════ WATCH ANYWHERE ═══════ -->
+<section id="platforms">
+  <div class="platforms-card r">
+    <div class="platforms-text">
+      <span class="platforms-eyebrow">Watch Anywhere</span>
+      <h2 class="platforms-h">Never miss a service.</h2>
+      <p class="platforms-p">Subscribe to our YouTube channel and hit the bell to get notified the moment we go live. You can also find us on Facebook for live video and community updates.</p>
+    </div>
+    <div class="platforms-links">
+      <a href="https://www.youtube.com/channel/UCO1PnTTAT_uOS4ZkMjdBzGg/videos" target="_blank" rel="noopener noreferrer" class="platform-btn">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="5" fill="#FF0000"/><polygon points="9.5,7 17.5,12 9.5,17" fill="white"/></svg>
+        <div>
+          <span class="pf-label">Subscribe on</span>
+          <span class="pf-name">YouTube</span>
+        </div>
+      </a>
+      <a href="https://www.facebook.com/gbfpcmedia/" target="_blank" rel="noopener noreferrer" class="platform-btn">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="5" fill="#1877F2"/><path d="M15.5 8H13.5C13.2 8 13 8.2 13 8.5V10H15.5L15.2 12.5H13V19H10.5V12.5H9V10H10.5V8.5C10.5 7 11.5 5.5 13.5 5.5H15.5V8Z" fill="white"/></svg>
+        <div>
+          <span class="pf-label">Follow on</span>
+          <span class="pf-name">Facebook</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer>
+  <div class="ft-grid">
+    <div>
+      <img src="gbfpc-logo.svg" alt="GBFPC" class="ft-logo"/>
+      <div class="ft-name">Greater Bakersfield's<br>First Pentecostal Church</div>
+      <p class="ft-tag">Rooted in truth, alive in the Spirit, and built for community in Bakersfield, California.</p>
+      <div class="ft-soc">
+        <a href="https://www.facebook.com/gbfpcmedia/" class="ft-s" aria-label="Facebook">f</a>
+        <a href="https://www.instagram.com/gbfpc/" class="ft-s" aria-label="Instagram">ig</a>
+        <a href="https://www.youtube.com/channel/UCO1PnTTAT_uOS4ZkMjdBzGg/videos" class="ft-s" aria-label="YouTube">▶</a>
+      </div>
+    </div>
+    <div class="ft-col"><h5>Our House</h5><ul>
+      <li><a href="gbfpc-about.html">About Us</a></li>
+      <li><a href="gbfpc-about.html#vision">Our Vision</a></li>
+      <li><a href="gbfpc-about.html#articles">Articles of Faith</a></li>
+      <li><a href="gbfpc-about.html#history">Church History</a></li>
+    </ul></div>
+    <div class="ft-col"><h5>Ministries</h5><ul>
+      <li><a href="gbfpc-ministries.html#youth">Amplified Youth</a></li>
+      <li><a href="gbfpc-ministries.html#children">K.I.C.K.</a></li>
+      <li><a href="gbfpc-ministries.html">Thrive</a></li>
+      <li><a href="gbfpc-academy.html">Bethel Academy</a></li>
+      <li><a href="gbfpc-academy.html">Kiddie Korral</a></li>
+    </ul></div>
+    <div class="ft-col"><h5>Connect</h5><ul>
+      <li><a href="gbfpc-visit.html">Plan Your Visit</a></li>
+      <li><a href="gbfpc-give.html">Give Online</a></li>
+      <li><a href="gbfpc-events.html">Upcoming Events</a></li>
+      <li><a href="gbfpc-livestream.html">Livestream</a></li>
+      <li><a href="gbfpc-connect.html">Contact Us</a></li>
+    </ul></div>
+  </div>
+  <div class="ft-bot">
+    <div class="ft-copy">© 2026 GBFPC. All Rights Reserved.</div>
+    <div class="ft-addr">1418 W Columbus St, Bakersfield, CA 93301 · (661) 323-2851</div>
+  </div>
+</footer>
+
+<script>
+  // ── Scroll reveal ──
+  const revObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); revObs.unobserve(e.target); } });
+  }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.r, .r-sm').forEach(el => revObs.observe(el));
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if(target){ e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+
+  // ── Live/offline toggle ──
+  // Service windows (Pacific Time):
+  //   Sunday 10:30 AM – 12:00 PM   (day=0, hour 10-11)
+  //   Wednesday 7:00 PM – 9:00 PM  (day=3, hour 19-20)
+  // Adds a 10-minute early window so viewers can tune in early.
+  (function() {
+    const YT_CHANNEL_ID = 'UCO1PnTTAT_uOS4ZkMjdBzGg'; // GBFPC YouTube channel
+    // YouTube live embed — uses the channel's live stream
+    const LIVE_EMBED_URL = 'https://www.youtube.com/embed/live_stream?channel=' + YT_CHANNEL_ID + '&autoplay=1';
+    // Latest video embed (fallback when not live)
+    const REPLAY_EMBED_URL = 'https://www.youtube.com/embed?listType=user_uploads&list=' + YT_CHANNEL_ID + '&autoplay=0';
+
+    const statusEl    = document.getElementById('liveStatus');
+    const statusText  = document.getElementById('liveStatusText');
+    const videoWrap   = document.getElementById('videoWrap');
+    const offlineEl   = document.getElementById('videoOffline');
+    const offlineLabel= document.getElementById('offlineLabel');
+    const nextEl      = document.getElementById('nextServiceTime');
+    const ctaEl       = document.getElementById('ctaPrimary');
+    const subtext     = document.getElementById('liveSubtext');
+
+    function getNextService(now) {
+      const day  = now.getDay();
+      const hour = now.getHours();
+      const min  = now.getMinutes();
+      const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+      // How many days until target day?
+      function daysUntil(target) {
+        return ((target - day + 7) % 7) || 7;
+      }
+
+      // Sunday next?
+      const daysTilSun = day === 0 && (hour < 10) ? 0 : daysUntil(0);
+      // Wednesday next?
+      const daysTilWed = day === 3 && (hour < 19) ? 0 : daysUntil(3);
+
+      if (daysTilSun <= daysTilWed || (daysTilSun === daysTilWed && day === 0)) {
+        if (daysTilSun === 0) return 'Today · Sunday at <strong>10:30 AM</strong>';
+        if (daysTilSun === 1) return 'Tomorrow · Sunday at <strong>10:30 AM</strong>';
+        return 'This ' + days[0] + ' at <strong>10:30 AM</strong>';
+      } else {
+        if (daysTilWed === 0) return 'Today · Wednesday at <strong>7:00 PM</strong>';
+        if (daysTilWed === 1) return 'Tomorrow · Wednesday at <strong>7:00 PM</strong>';
+        return 'This ' + days[3] + ' at <strong>7:00 PM</strong>';
+      }
+    }
+
+    function update() {
+      // Get current Pacific time
+      const nowUTC = new Date();
+      // Convert to PT (UTC-7 PDT / UTC-8 PST)
+      // Using Intl API for accuracy
+      const ptFormatter = new Intl.DateTimeFormat('en-US', {
+        timeZone: 'America/Los_Angeles',
+        weekday: 'short', hour: 'numeric', minute: 'numeric', hour12: false,
+        year: 'numeric', month: 'numeric', day: 'numeric'
+      });
+      const parts = ptFormatter.formatToParts(nowUTC).reduce((acc, p) => { acc[p.type] = p.value; return acc; }, {});
+      const ptDay  = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].indexOf(parts.weekday);
+      const ptHour = parseInt(parts.hour, 10);
+      const ptMin  = parseInt(parts.minute, 10);
+
+      // Early window: start streaming 10 min before service
+      const isSunday    = ptDay === 0 && (ptHour === 10 && ptMin >= 20 || ptHour === 11);
+      const isWednesday = ptDay === 3 && (ptHour === 19 && ptMin >= 50 || ptHour === 20 || (ptHour === 21 && ptMin === 0));
+      // Actually let's simplify: Sun 10:20am-12:00pm, Wed 6:50pm-9:00pm
+      const isSunLive    = ptDay === 0 && (ptHour === 10 && ptMin >= 20 || ptHour === 11);
+      const isWedLive    = ptDay === 3 && ((ptHour === 18 && ptMin >= 50) || ptHour === 19 || ptHour === 20);
+      const isLive       = isSunLive || isWedLive;
+
+      if (isLive) {
+        // LIVE STATE
+        statusEl.classList.add('is-live');
+        statusText.textContent = 'We are live now';
+
+        // Inject iframe
+        if (!document.getElementById('liveIframe')) {
+          offlineEl.style.display = 'none';
+          const iframe = document.createElement('iframe');
+          iframe.id = 'liveIframe';
+          iframe.src = LIVE_EMBED_URL;
+          iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+          iframe.allowFullscreen = true;
+          iframe.title = 'GBFPC Live Service';
+          videoWrap.appendChild(iframe);
+        }
+
+        subtext.textContent = 'We\'re streaming right now. Join us live — worship, prayer, and the Word.';
+        nextEl.innerHTML = 'Currently streaming — join the service!';
+
+        ctaEl.href = 'https://www.youtube.com/channel/' + YT_CHANNEL_ID + '/live';
+        ctaEl.innerHTML = '<svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg> Join Live Now';
+
+      } else {
+        // OFFLINE STATE
+        statusEl.classList.remove('is-live');
+        statusText.textContent = 'Not live right now';
+
+        // Remove iframe if it exists
+        const existingIframe = document.getElementById('liveIframe');
+        if (existingIframe) { existingIframe.remove(); offlineEl.style.display = ''; }
+
+        // Show latest sermon in offline placeholder if possible
+        offlineLabel.textContent = 'We\'re not live right now. Watch our latest sermon on YouTube.';
+
+        const ptNow = new Date(nowUTC.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }));
+        nextEl.innerHTML = getNextService(ptNow);
+
+        ctaEl.href = 'https://www.youtube.com/channel/' + YT_CHANNEL_ID + '/videos';
+        ctaEl.innerHTML = '<svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><polygon points="5 3 19 12 5 21 5 3"/></svg> Watch Latest Sermon';
+      }
+    }
+
+    update();
+    // Re-check every 60 seconds
+    setInterval(update, 60000);
+  })();
+</script>
+
+<script>
+// Mobile nav
+(function() {
+  var toggle = document.getElementById('navToggle');
+  var nav = document.getElementById('mainNav');
+  if (!toggle || !nav) return;
+  toggle.addEventListener('click', function() {
+    var expanded = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!expanded));
+    toggle.setAttribute('aria-label', expanded ? 'Open navigation menu' : 'Close navigation menu');
+    nav.classList.toggle('nav-open', !expanded);
+    document.body.style.overflow = expanded ? '' : 'hidden';
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && nav.classList.contains('nav-open')) {
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open navigation menu');
+      nav.classList.remove('nav-open');
+      document.body.style.overflow = '';
+      toggle.focus();
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

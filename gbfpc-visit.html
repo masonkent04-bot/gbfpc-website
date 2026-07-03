@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Plan Your Visit | GBFPC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+  :root {
+  --c-brand:   #c9a96e;
+  --c-dark:    #111111;
+  --c-darker:  #0f0f0f;
+  --c-surface: #f2f1ee;
+  --c-muted:   #888888;
+  --c-border:  #ebebeb;
+}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: #fff; color: var(--c-dark); font-family: 'Montserrat', sans-serif; overflow-x: hidden; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ HEADER ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #header { position: relative; z-index: 200; background: rgba(255,255,255,0.97); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid #e8e8e8; }
+  .hdr-nav { display: flex; justify-content: center; align-items: center; gap: 40px; padding: 12px 56px; border-bottom: 1px solid var(--c-border); }
+  .hdr-nav a { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #555; transition: color 0.2s; white-space: nowrap; }
+  .hdr-nav a:hover { color: #000; }
+  .hdr-nav a.active { color: #000; }
+  .hdr-brand { display: flex; align-items: center; justify-content: space-between; padding: 16px 56px; }
+  .hdr-left { display: flex; align-items: center; gap: 16px; }
+  .hdr-logo { height: 40px; width: auto; object-fit: contain; filter: brightness(0); }
+  .hdr-name { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; line-height: 1.35; color: var(--c-dark); }
+  .hdr-cta { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 11px 24px; border: 1px solid var(--c-dark); color: var(--c-dark); border-radius: 8px; transition: background 0.2s, color 0.2s; white-space: nowrap; }
+  .hdr-cta:hover { background: #000; color: #fff; }
+  .hdr-spacer { height: 0; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ SCROLL REVEAL ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .r       { opacity: 0; transform: translateY(32px); transition: opacity 0.85s cubic-bezier(0.22,1,0.36,1), transform 0.85s cubic-bezier(0.22,1,0.36,1); }
+  .r.in    { opacity: 1; transform: none; }
+  .r-sm    { opacity: 0; transform: translateY(16px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
+  .r-sm.in { opacity: 1; transform: none; }
+  .d1 { transition-delay: 0.08s; } .d2 { transition-delay: 0.16s; } .d3 { transition-delay: 0.24s; }
+  .d4 { transition-delay: 0.32s; } .d5 { transition-delay: 0.40s; } .d6 { transition-delay: 0.48s; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ UTILITIES ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .eyebrow { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: #bbb; margin-bottom: 14px; display: block; }
+  .eyebrow.gold { color: var(--c-brand); }
+  .float-sec { background: #fff; padding: 0 48px; }
+  .float-card { max-width: 1300px; margin: 0 auto; background: var(--c-surface); border-radius: 22px; padding: 80px 72px; }
+  .float-card-dark { max-width: 1300px; margin: 0 auto; background: var(--c-darker); border-radius: 22px; padding: 80px 72px; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ PAGE HERO ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #page-hero { padding: 60px 48px; background: #fff; }
+  .page-hero-card { max-width: 1300px; margin: 0 auto; background: var(--c-darker); border-radius: 22px; padding: 80px 72px; }
+  .page-hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; }
+  .page-tag { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: var(--c-brand); margin-bottom: 20px; display: block; }
+  .page-hero-title { font-weight: 900; font-size: clamp(3.5rem, 7vw, 7rem); line-height: 0.9; letter-spacing: -0.04em; text-transform: uppercase; color: #fff; }
+  .page-hero-desc { font-size: 1.05rem; font-weight: 300; color: rgba(255,255,255,0.55); line-height: 1.75; max-width: 440px; margin-bottom: 32px; }
+  .page-hero-links { display: flex; gap: 8px; flex-wrap: wrap; }
+  .page-link { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; padding: 9px 16px; border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.6); border-radius: 100px; background: rgba(255,255,255,0.05); transition: border-color 0.2s, color 0.2s; }
+  .page-link:hover { border-color: rgba(255,255,255,0.6); color: #fff; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ EXPECT SECTION ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #expect { padding: 100px 80px; }
+  .expect-inner { max-width: 1240px; margin: 0 auto; }
+  .expect-top { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; margin-bottom: 80px; }
+  .expect-headline { font-weight: 900; font-size: clamp(2.4rem, 4vw, 3.8rem); line-height: 1.0; letter-spacing: -0.03em; text-transform: uppercase; color: var(--c-dark); }
+  .expect-body p { font-size: 0.93rem; font-weight: 300; color: #666; line-height: 1.82; margin-bottom: 20px; }
+  .expect-body p:last-child { margin-bottom: 0; }
+  .expect-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; border-top: 1px solid #f0f0f0; }
+  .expect-step { padding: 40px 32px; border-right: 1px solid #f0f0f0; }
+  .expect-step:last-child { border-right: none; }
+  .expect-step-num { font-weight: 900; font-size: 2.8rem; letter-spacing: -0.04em; color: #f0ede8; line-height: 1; margin-bottom: 16px; display: block; }
+  .expect-step-title { font-weight: 800; font-size: 0.88rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--c-dark); margin-bottom: 10px; }
+  .expect-step-body { font-size: 0.78rem; font-weight: 300; color: var(--c-muted); line-height: 1.72; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ SERVICE TIMES ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #services { padding: 0 48px 72px; }
+  .services-card { max-width: 1300px; margin: 0 auto; background: var(--c-surface); border-radius: 22px; padding: 72px; }
+  .services-head { margin-bottom: 56px; }
+  .services-title { font-weight: 900; font-size: clamp(2rem, 3.5vw, 3rem); letter-spacing: -0.03em; text-transform: uppercase; color: var(--c-dark); margin-top: 12px; }
+  .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .service-block {
+    background: #fff; border-radius: 16px; padding: 40px 44px;
+    display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: start;
+  }
+  .service-day-badge {
+    background: var(--c-dark); color: #fff;
+    font-size: 0.56rem; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase;
+    padding: 8px 14px; border-radius: 100px; white-space: nowrap; align-self: start; margin-top: 4px;
+  }
+  .service-block-title { font-weight: 900; font-size: 1.4rem; letter-spacing: -0.02em; text-transform: uppercase; color: var(--c-dark); margin-bottom: 8px; }
+  .service-time { font-size: 0.82rem; font-weight: 300; color: var(--c-muted); line-height: 1.6; }
+  .service-time strong { color: var(--c-dark); font-weight: 600; }
+  .service-note {
+    margin-top: 32px; padding: 20px 28px;
+    background: rgba(201,169,110,0.1); border-left: 3px solid var(--c-brand);
+    border-radius: 0 8px 8px 0;
+  }
+  .service-note p { font-size: 0.8rem; font-weight: 400; color: var(--c-muted); line-height: 1.7; }
+  .service-note strong { color: var(--c-brand); }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ LOCATION ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #location { padding: 72px 80px; }
+  .location-inner { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .location-info {}
+  .location-address { font-weight: 900; font-size: 1.6rem; letter-spacing: -0.02em; text-transform: uppercase; color: var(--c-dark); line-height: 1.2; margin-bottom: 24px; }
+  .location-detail { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 18px; }
+  .location-detail svg { width: 18px; height: 18px; stroke: var(--c-brand); fill: none; stroke-width: 1.6; stroke-linecap: round; flex-shrink: 0; margin-top: 2px; }
+  .location-detail-text { font-size: 0.85rem; font-weight: 300; color: #666; line-height: 1.6; }
+  .location-detail-text strong { color: var(--c-dark); font-weight: 600; display: block; margin-bottom: 2px; }
+  .location-map-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 28px; padding: 13px 28px;
+    background: var(--c-dark); color: #fff;
+    border-radius: 8px;
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+    transition: opacity 0.2s;
+  }
+  .location-map-btn:hover { opacity: 0.78; }
+  .location-map-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; }
+  .location-map {
+    border-radius: 18px; overflow: hidden;
+    background: var(--c-surface); height: 340px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .location-map iframe { width: 100%; height: 100%; border: none; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ FAQ ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #faq { padding: 0 48px 72px; }
+  .faq-card { max-width: 1300px; margin: 0 auto; background: var(--c-darker); border-radius: 22px; padding: 80px 72px; }
+  .faq-head { margin-bottom: 52px; display: flex; justify-content: space-between; align-items: end; }
+  .faq-title { font-weight: 900; font-size: clamp(1.8rem, 3.5vw, 3rem); letter-spacing: -0.03em; text-transform: uppercase; color: #fff; margin-top: 12px; }
+  .faq-list { border-top: 1px solid rgba(255,255,255,0.08); }
+  .faq-item { border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .faq-trigger {
+    width: 100%; display: flex; justify-content: space-between; align-items: center;
+    padding: 28px 0; background: none; border: none; cursor: pointer; gap: 24px; text-align: left;
+    border-radius: 8px;
+  }
+  .faq-q { font-size: 0.92rem; font-weight: 700; color: #fff; letter-spacing: 0.02em; }
+  .faq-icon { width: 28px; height: 28px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: border-color 0.2s, transform 0.3s; }
+  .faq-icon svg { width: 12px; height: 12px; stroke: rgba(255,255,255,0.5); fill: none; stroke-width: 2; stroke-linecap: round; transition: stroke 0.2s; }
+  .faq-item.open .faq-icon { border-color: var(--c-brand); transform: rotate(45deg); }
+  .faq-item.open .faq-icon svg { stroke: var(--c-brand); }
+  .faq-body { display: none; padding-bottom: 24px; }
+  .faq-item.open .faq-body { display: block; }
+  .faq-body p { font-size: 0.85rem; font-weight: 300; color: rgba(255,255,255,0.52); line-height: 1.8; max-width: 680px; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ VISIT CTA ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #visit-cta { padding: 72px 80px; }
+  .visit-cta-inner { max-width: 1240px; margin: 0 auto; text-align: center; }
+  .visit-cta-headline { font-weight: 900; font-size: clamp(2.8rem, 6vw, 5.5rem); letter-spacing: -0.04em; text-transform: uppercase; color: var(--c-dark); line-height: 0.95; margin-bottom: 24px; }
+  .visit-cta-headline em { font-style: italic; color: var(--c-brand); }
+  .visit-cta-sub { font-size: 0.93rem; font-weight: 300; color: var(--c-muted); line-height: 1.75; max-width: 440px; margin: 0 auto 40px; }
+  .visit-cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-dark { display: inline-block; background: var(--c-dark); color: #fff; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 16px 40px; border-radius: 8px; transition: opacity 0.2s; }
+  .btn-dark:hover { opacity: 0.75; }
+  .btn-ghost { display: inline-block; border: 1px solid #ddd; color: #555; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 16px 40px; border-radius: 8px; transition: border-color 0.2s, color 0.2s; }
+  .btn-ghost:hover { border-color: #111; color: #111; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ NEWSLETTER ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .newsletter-sec { padding: 0 48px 60px; }
+  .newsletter-card { max-width: 1300px; margin: 0 auto; background: var(--c-surface); border-radius: 22px; padding: 56px 64px; display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+  .nl-eyebrow { font-size: 0.56rem; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; color: var(--c-brand); margin-bottom: 6px; display: block; }
+  .nl-title { font-weight: 900; font-size: 2rem; letter-spacing: -0.03em; text-transform: uppercase; color: var(--c-dark); line-height: 1.05; }
+  .nl-sub { font-size: 0.78rem; font-weight: 300; color: var(--c-muted); margin-top: 8px; }
+  .nl-form { display: flex; gap: 0; flex-shrink: 0; }
+  .nl-input { padding: 13px 20px; border: 1px solid #ddd; border-right: none; font-family: 'Montserrat', sans-serif; font-size: 0.78rem; color: var(--c-dark); background: #fff; min-width: 260px; outline: none; border-radius: 8px 0 0 8px; }
+  .nl-input::placeholder { color: #bbb; }
+  .nl-btn { padding: 13px 24px; background: var(--c-dark); color: #fff; border: none; font-family: 'Montserrat', sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; transition: opacity 0.2s; }
+  .nl-btn:hover { opacity: 0.78; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ FOOTER ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  footer { background: #000; border-top: 1px solid rgba(255,255,255,0.06); padding: 72px 68px 40px; }
+  .ft-grid { max-width: 1260px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 52px; margin-bottom: 56px; }
+  .ft-logo { height: 44px; width: auto; margin-bottom: 14px; object-fit: contain; }
+  .ft-name { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 14px; line-height: 1.4; max-width: 190px; }
+  .ft-tag { font-size: 0.78rem; font-weight: 300; color: rgba(255,255,255,0.28); line-height: 1.75; max-width: 230px; margin-bottom: 26px; }
+  .ft-soc { display: flex; gap: 9px; }
+  .ft-s { width: 33px; height: 33px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 0.62rem; font-weight: 700; color: rgba(255,255,255,0.4); transition: border-color 0.2s, color 0.2s; }
+  .ft-s:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
+  .ft-col h5 { font-size: 0.56rem; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(255,255,255,0.2); margin-bottom: 17px; }
+  .ft-col ul { list-style: none; }
+  .ft-col li { margin-bottom: 8px; }
+  .ft-col a { font-size: 0.8rem; font-weight: 300; color: rgba(255,255,255,0.42); transition: color 0.2s; }
+  .ft-col a:hover { color: #fff; }
+  .ft-bot { max-width: 1260px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.06); flex-wrap: wrap; gap: 10px; }
+  .ft-copy { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.16); }
+  .ft-addr { font-size: 0.7rem; font-weight: 300; color: rgba(255,255,255,0.18); }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ RESPONSIVE ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  @media(max-width:1024px) {
+    .hdr-nav { padding: 12px 28px; gap: 24px; }
+    .hdr-brand { padding: 13px 28px; }
+    #page-hero { padding: 40px 24px; }
+    .page-hero-card { padding: 60px 44px; }
+    .page-hero-inner { gap: 48px; }
+    #expect { padding: 72px 36px; }
+    .expect-top { grid-template-columns: 1fr; gap: 32px; }
+    .expect-steps { grid-template-columns: repeat(2, 1fr); }
+    #services { padding: 0 24px 56px; }
+    .services-card { padding: 60px 44px; }
+    .services-grid { grid-template-columns: 1fr; }
+    #location { padding: 56px 36px; }
+    .location-inner { grid-template-columns: 1fr; gap: 44px; }
+    #faq { padding: 0 24px 56px; }
+    .faq-card { padding: 60px 44px; }
+    .faq-head { flex-direction: column; align-items: flex-start; gap: 20px; }
+    #visit-cta { padding: 56px 36px; }
+    .newsletter-sec { padding: 0 24px 48px; }
+    .newsletter-card { padding: 44px 40px; }
+    footer { padding: 60px 36px 36px; }
+    .ft-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+  }
+  /* ── Mobile Nav Toggle ── */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 1100;
+    position: relative;
+  }
+  .nav-toggle-bar {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--c-dark);
+    border-radius: 2px;
+    transition: transform 0.3s cubic-bezier(0.42,0,0.58,1), opacity 0.2s ease;
+  }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* ── Skip Link ── */
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 1rem;
+    background: var(--c-brand);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-radius: 0 0 6px 6px;
+    z-index: 9999;
+    transition: top 0.2s ease;
+  }
+  .skip-link:focus { top: 0; }
+
+  /* ── Focus Visible ── */
+  :focus-visible {
+    outline: 2px solid var(--c-brand);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  @media (max-width: 768px) {
+    .nav-toggle { display: flex; }
+    .hdr-nav {
+      display: none !important;
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      z-index: 1050;
+      padding: 2rem;
+    }
+    .hdr-nav.nav-open { display: flex !important; }
+    .hdr-nav a {
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--c-dark);
+      text-transform: uppercase;
+    }
+    .hdr-nav a.active { color: var(--c-brand); }
+  }
+
+  @media(max-width:768px) {
+    .hdr-nav { display: none; }
+    .hdr-spacer { height: 70px; }
+    #page-hero { padding: 20px 16px; }
+    .page-hero-card { padding: 44px 28px; border-radius: 16px; }
+    .page-hero-inner { grid-template-columns: 1fr; gap: 28px; }
+    #expect { padding: 48px 20px; }
+    .expect-steps { grid-template-columns: 1fr 1fr; }
+    #services { padding: 0 16px 48px; }
+    .services-card { padding: 44px 28px; border-radius: 16px; }
+    .service-block { grid-template-columns: 1fr; gap: 16px; }
+    #location { padding: 48px 20px; }
+    .location-map { height: 240px; }
+    #faq { padding: 0 16px 48px; }
+    .faq-card { padding: 44px 28px; border-radius: 16px; }
+    #visit-cta { padding: 48px 20px; }
+    .newsletter-sec { padding: 0 16px 40px; }
+    .newsletter-card { padding: 36px 28px; flex-direction: column; align-items: flex-start; }
+    .nl-form { flex-direction: column; width: 100%; }
+    .nl-input { min-width: 100%; border-right: 1px solid #ddd; border-bottom: none; }
+    footer { padding: 48px 20px 28px; }
+    .ft-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+  @view-transition { navigation: auto; }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<header id="header">
+  <button class="nav-toggle" id="navToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mainNav">
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+  </button>
+  <nav class="hdr-nav" id="mainNav" aria-label="Main navigation">
+    <a href="gbfpc-about.html">About</a>
+    <a href="gbfpc-ministries.html">Ministries</a>
+    <a href="gbfpc-academy.html">Academy</a>
+    <a href="gbfpc-events.html">Events</a>
+    <a href="gbfpc-give.html">Give</a>
+    <a href="gbfpc-connect.html">Connect</a>
+    <a href="gbfpc-livestream.html">Livestream</a>
+  </nav>
+  <div class="hdr-brand">
+    <a href="/" class="hdr-left">
+      <img src="gbfpc-logo.svg" alt="GBFPC" class="hdr-logo"/>
+      <span class="hdr-name">Greater Bakersfield's<br>First Pentecostal Church</span>
+    </a>
+    <a href="gbfpc-visit.html" class="hdr-cta">Plan Your Visit</a>
+  </div>
+</header>
+
+<div class="hdr-spacer"></div>
+
+<!-- ═══════ PAGE HERO ═══════ -->
+<section id="page-hero">
+<span id="main-content" style="display:block;height:0;overflow:hidden;" aria-hidden="true"></span>
+  <div class="page-hero-card">
+    <div class="page-hero-inner">
+      <div class="page-hero-left">
+        <span class="page-tag r">New Here?</span>
+        <h1 class="page-hero-title r d1">We'd Love<br>to Meet<br>You.</h1>
+      </div>
+      <div class="page-hero-right r d2">
+        <p class="page-hero-desc">Whether you've been thinking about visiting for weeks or just decided today — you are welcome here exactly as you are.</p>
+        <div class="page-hero-links">
+          <a href="#expect" class="page-link">What to Expect</a>
+          <a href="#services" class="page-link">Service Times</a>
+          <a href="#location" class="page-link">Location</a>
+          <a href="#faq" class="page-link">FAQ</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ WHAT TO EXPECT ═══════ -->
+<section id="expect">
+  <div class="expect-inner">
+    <div class="expect-top">
+      <div>
+        <span class="eyebrow gold r">Your First Visit</span>
+        <h2 class="expect-headline r d1">Here's What<br>to Expect.</h2>
+      </div>
+      <div class="expect-body">
+        <p class="r d2">GBFPC is a warm, welcoming family that takes faith seriously without taking itself too seriously. Come comfortable, come curious, and come ready to encounter God in a genuine way.</p>
+        <p class="r d3">Our services blend powerful worship with practical, Scripture-based teaching — and you'll always find friendly faces ready to help you feel at home.</p>
+      </div>
+    </div>
+    <div class="expect-steps">
+      <div class="expect-step r">
+        <span class="expect-step-num">01</span>
+        <div class="expect-step-title">Arrive & Park</div>
+        <p class="expect-step-body">Ample parking is available on-site. Our team will greet you at the door and point you in the right direction.</p>
+      </div>
+      <div class="expect-step r d1">
+        <span class="expect-step-num">02</span>
+        <div class="expect-step-title">Drop Off Kids</div>
+        <p class="expect-step-body">K.I.C.K. children's ministry is available during Sunday services for ages 4–12. Safe, fun, and Spirit-filled.</p>
+      </div>
+      <div class="expect-step r d2">
+        <span class="expect-step-num">03</span>
+        <div class="expect-step-title">Worship Together</div>
+        <p class="expect-step-body">Expect powerful praise and worship led by our team, followed by a message grounded in Scripture and relevant to your life.</p>
+      </div>
+      <div class="expect-step r d3">
+        <span class="expect-step-num">04</span>
+        <div class="expect-step-title">Stay & Connect</div>
+        <p class="expect-step-body">After service, our Connect team will welcome you, answer questions, and help you take a next step — no pressure.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SERVICE TIMES ═══════ -->
+<section id="services">
+  <div class="services-card r">
+    <div class="services-head">
+      <span class="eyebrow gold">Schedule</span>
+      <h2 class="services-title">Service Times</h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-block">
+        <span class="service-day-badge">Sunday</span>
+        <div>
+          <div class="service-block-title">Sunday Worship</div>
+          <div class="service-time">
+            <strong>Sunday School — 10:00 AM</strong>
+            Bible-based classes for all ages before morning service.
+          </div>
+          <div class="service-time" style="margin-top:12px;">
+            <strong>Morning Worship — 11:00 AM</strong>
+            Our main weekly gathering. Worship, the Word, and community.
+          </div>
+        </div>
+      </div>
+      <div class="service-block">
+        <span class="service-day-badge">Tuesday</span>
+        <div>
+          <div class="service-block-title">Midweek Service</div>
+          <div class="service-time">
+            <strong>Bible Study — 7:00 PM</strong>
+            A midweek gathering for deeper study of the Word and prayer.
+          </div>
+          <div class="service-time" style="margin-top:12px;">
+            <strong>Youth — Amplified Night</strong>
+            Wednesday evenings — contact us for current times.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="service-note" style="margin-top:28px;">
+      <p><strong>Note on times:</strong> Service schedules may vary on holidays or special events. Follow us on social media or <a href="gbfpc-connect.html" style="color:#c9a96e;">contact us</a> to confirm current times.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ LOCATION ═══════ -->
+<section id="location">
+  <div class="location-inner">
+    <div class="location-info">
+      <span class="eyebrow gold r">Find Us</span>
+      <div class="location-address r d1">1418 W Columbus St<br>Bakersfield, CA 93301</div>
+      <div class="location-detail r d2">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <div class="location-detail-text">
+          <strong>Phone</strong>
+          (661) 323-2851
+        </div>
+      </div>
+      <div class="location-detail r d3">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <div class="location-detail-text">
+          <strong>Services</strong>
+          Sunday 10:00 AM &amp; 11:00 AM · Tuesday 7:00 PM
+        </div>
+      </div>
+      <div class="location-detail r d4">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <div class="location-detail-text">
+          <strong>Events</strong>
+          Check our calendar for special services and events.
+        </div>
+      </div>
+      <a href="https://goo.gl/maps/EHDMwXpDuT59PkRHA" class="location-map-btn r d4" target="_blank" rel="noopener">
+        Get Directions →
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+    </div>
+    <div class="location-map r d2">
+      <iframe
+        src="https://maps.google.com/maps?q=1418+W+Columbus+St,+Bakersfield,+CA+93301&output=embed"
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+        title="Church location map">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FAQ ═══════ -->
+<section id="faq">
+  <div class="faq-card r">
+    <div class="faq-head">
+      <div>
+        <span class="eyebrow" style="color:rgba(255,255,255,0.25);">Questions</span>
+        <div class="faq-title">Common<br>Questions</div>
+      </div>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-trigger">
+          <span class="faq-q">What should I wear?</span>
+          <span class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></span>
+        </button>
+        <div class="faq-body"><p>Come as you are. Seriously. You'll find members in everything from casual jeans to Sunday best — what matters is that you show up. There is no dress code at GBFPC.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-trigger">
+          <span class="faq-q">Do you have childcare?</span>
+          <span class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></span>
+        </button>
+        <div class="faq-body"><p>Yes! K.I.C.K. (Kids In Christ's Kingdom) is available during Sunday morning services for children ages 4–12. Our team creates a safe, fun, and faith-filled environment for your kids so you can fully engage in worship.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-trigger">
+          <span class="faq-q">How long is a service?</span>
+          <span class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></span>
+        </button>
+        <div class="faq-body"><p>Services typically run about 90 minutes, including worship and a message. We don't watch the clock — when God is moving, we make room for it.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-trigger">
+          <span class="faq-q">Is GBFPC the right church for me?</span>
+          <span class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></span>
+        </button>
+        <div class="faq-body"><p>If you're looking for a church that's real, Spirit-filled, and genuinely cares about people — you'll feel right at home. We're not perfect, but we are a family. The best way to know is to come and experience it yourself.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-trigger">
+          <span class="faq-q">Do I have to be a member to participate?</span>
+          <span class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></span>
+        </button>
+        <div class="faq-body"><p>Not at all. Membership is something you grow into as you become part of the family. Whether it's your first Sunday or your fiftieth, there's a place for you to belong and get involved.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-trigger">
+          <span class="faq-q">Where can I watch services online?</span>
+          <span class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></span>
+        </button>
+        <div class="faq-body"><p>We livestream Sunday services on our website and YouTube channel. Visit <a href="gbfpc-livestream.html" style="color:#c9a96e;">gbfpc.org/livestream</a> or check our YouTube to join online from anywhere.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ VISIT CTA ═══════ -->
+<section id="visit-cta">
+  <div class="visit-cta-inner">
+    <h2 class="visit-cta-headline r">We'll Save You a <em>Seat.</em></h2>
+    <p class="visit-cta-sub r d1">Let us know you're coming and our team will make sure your first visit is one you won't forget.</p>
+    <div class="visit-cta-btns r d2">
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfeTShxX-b3HMdneoQOEXa7uXsiu_fSJVFfwyXnLq5ljYfUMw/viewform" class="btn-dark" target="_blank" rel="noopener">RSVP for My Visit</a>
+      <a href="gbfpc-connect.html" class="btn-ghost">Contact Us First</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ NEWSLETTER ═══════ -->
+<div class="newsletter-sec">
+  <div class="newsletter-card r">
+    <div>
+      <span class="nl-eyebrow">Stay Connected</span>
+      <div class="nl-title">Stay Up<br>To Date.</div>
+      <div class="nl-sub">Join our community and never miss a moment at GBFPC.</div>
+    </div>
+    <div class="newsletter-wrap">
+      <p class="newsletter-text">Stay connected — join our email list.</p>
+      <a href="https://gbfpc.org" class="btn-dark" target="_blank" rel="noopener">Stay Connected →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer>
+  <div class="ft-grid">
+    <div>
+      <img src="gbfpc-logo.svg" alt="GBFPC" class="ft-logo"/>
+      <div class="ft-name">Greater Bakersfield's<br>First Pentecostal Church</div>
+      <p class="ft-tag">Rooted in truth, alive in the Spirit, and built for community in Bakersfield, California.</p>
+      <div class="ft-soc">
+        <a href="https://www.facebook.com/gbfpcmedia/" class="ft-s">f</a>
+        <a href="https://www.instagram.com/gbfpc/" class="ft-s">ig</a>
+        <a href="https://www.youtube.com/channel/UCO1PnTTAT_uOS4ZkMjdBzGg/videos" class="ft-s">▶</a>
+      </div>
+    </div>
+    <div class="ft-col"><h5>Our House</h5><ul>
+      <li><a href="gbfpc-about.html">About Us</a></li>
+      <li><a href="gbfpc-about.html#vision">Our Vision</a></li>
+      <li><a href="gbfpc-about.html#articles">Articles of Faith</a></li>
+      <li><a href="gbfpc-about.html#history">Church History</a></li>
+    </ul></div>
+    <div class="ft-col"><h5>Ministries</h5><ul>
+      <li><a href="gbfpc-ministries.html#youth">Amplified Youth</a></li>
+      <li><a href="gbfpc-ministries.html#children">K.I.C.K.</a></li>
+      <li><a href="gbfpc-ministries.html">Thrive</a></li>
+      <li><a href="gbfpc-ministries.html">Kiddie Korral</a></li>
+      <li><a href="gbfpc-academy.html">Bethel Academy</a></li>
+    </ul></div>
+    <div class="ft-col"><h5>Connect</h5><ul>
+      <li><a href="gbfpc-visit.html">Plan Your Visit</a></li>
+      <li><a href="gbfpc-give.html">Give Online</a></li>
+      <li><a href="gbfpc-events.html">Upcoming Events</a></li>
+      <li><a href="gbfpc-livestream.html">Livestream</a></li>
+      <li><a href="gbfpc-connect.html">Contact Us</a></li>
+    </ul></div>
+  </div>
+  <div class="ft-bot">
+    <div class="ft-copy">© 2026 GBFPC. All Rights Reserved.</div>
+    <div class="ft-addr">1418 W Columbus St, Bakersfield, CA 93301 · (661) 323-2851</div>
+  </div>
+</footer>
+
+<script>
+(function() {
+  var toggle = document.getElementById('navToggle');
+  var nav = document.getElementById('mainNav');
+  if (!toggle || !nav) return;
+  toggle.addEventListener('click', function() {
+    var expanded = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!expanded));
+    toggle.setAttribute('aria-label', expanded ? 'Open navigation menu' : 'Close navigation menu');
+    nav.classList.toggle('nav-open', !expanded);
+    document.body.style.overflow = expanded ? '' : 'hidden';
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && nav.classList.contains('nav-open')) {
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open navigation menu');
+      nav.classList.remove('nav-open');
+      document.body.style.overflow = '';
+      toggle.focus();
+    }
+  });
+  nav.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open navigation menu');
+      nav.classList.remove('nav-open');
+      document.body.style.overflow = '';
+    });
+  });
+})();
+</script>
+
+<script>
+  // Scroll reveal
+  const revObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); revObs.unobserve(e.target); } });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.r, .r-sm').forEach(el => revObs.observe(el));
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-trigger').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+</script>
+
+<!-- PAGE TRANSITION -->
+<div id="pg-t"></div>
+<style>
+#pg-t{position:fixed;inset:0;z-index:9999;background:#0f0f0f;opacity:1;pointer-events:all;transition:opacity .5s ease}
+body:has(#intro-splash) #pg-t{opacity:0!important;pointer-events:none!important;transition:none!important}
+</style>
+<script>
+!function(){
+  var t=document.getElementById('pg-t');
+  document.addEventListener('DOMContentLoaded',function(){
+    if(document.getElementById('intro-splash')){
+      t.style.cssText='opacity:0;pointer-events:none;transition:none';
+    } else {
+      requestAnimationFrame(function(){requestAnimationFrame(function(){
+        t.style.opacity='0';t.style.pointerEvents='none';
+      });});
+    }
+    document.addEventListener('click',function(e){
+      var a=e.target.closest('a[href]');if(!a)return;
+      var h=a.getAttribute('href');
+      if(!h||h[0]==='#'||h.startsWith('http')||h.startsWith('mailto')||h.startsWith('tel')||a.target==='_blank')return;
+      e.preventDefault();
+      t.style.cssText='opacity:1;pointer-events:all;transition:opacity .5s ease';
+      setTimeout(function(){window.location.href=h},520);
+    });
+  });
+}();
+</script>
+</body>
+</html>

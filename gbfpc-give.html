@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Give | GBFPC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+  :root {
+  --c-brand:   #c9a96e;
+  --c-dark:    #111111;
+  --c-darker:  #0f0f0f;
+  --c-surface: #f2f1ee;
+  --c-muted:   #888888;
+  --c-border:  #ebebeb;
+}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: #fff; color: var(--c-dark); font-family: 'Montserrat', sans-serif; overflow-x: hidden; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ HEADER ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #header { position: relative; z-index: 200; background: rgba(255,255,255,0.97); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid #e8e8e8; }
+  .hdr-nav { display: flex; justify-content: center; align-items: center; gap: 40px; padding: 12px 56px; border-bottom: 1px solid var(--c-border); }
+  .hdr-nav a { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #555; transition: color 0.2s; white-space: nowrap; }
+  .hdr-nav a:hover { color: #000; }
+  .hdr-nav a.active { color: #000; }
+  .hdr-brand { display: flex; align-items: center; justify-content: space-between; padding: 16px 56px; }
+  .hdr-left { display: flex; align-items: center; gap: 16px; }
+  .hdr-logo { height: 40px; width: auto; object-fit: contain; filter: brightness(0); }
+  .hdr-name { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; line-height: 1.35; color: var(--c-dark); }
+  .hdr-cta { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 11px 24px; border: 1px solid var(--c-dark); color: var(--c-dark); border-radius: 8px; transition: background 0.2s, color 0.2s; white-space: nowrap; }
+  .hdr-cta:hover { background: #000; color: #fff; }
+  .hdr-spacer { height: 0; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ SCROLL REVEAL ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .r       { opacity: 0; transform: translateY(32px); transition: opacity 0.85s cubic-bezier(0.22,1,0.36,1), transform 0.85s cubic-bezier(0.22,1,0.36,1); }
+  .r.in    { opacity: 1; transform: none; }
+  .r-sm    { opacity: 0; transform: translateY(16px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
+  .r-sm.in { opacity: 1; transform: none; }
+  .d1 { transition-delay: 0.08s; } .d2 { transition-delay: 0.16s; } .d3 { transition-delay: 0.24s; }
+  .d4 { transition-delay: 0.32s; } .d5 { transition-delay: 0.40s; } .d6 { transition-delay: 0.48s; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ UTILITIES ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .eyebrow { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: #bbb; margin-bottom: 14px; display: block; }
+  .eyebrow.gold { color: var(--c-brand); }
+  .eyebrow.inv { color: rgba(255,255,255,0.3); }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ PAGE HERO ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #page-hero { padding: 60px 48px; background: #fff; }
+  .page-hero-card { max-width: 1300px; margin: 0 auto; background: var(--c-surface); border-radius: 22px; padding: 80px 72px; }
+  .page-hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; }
+  .page-tag { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: var(--c-brand); margin-bottom: 20px; display: block; }
+  .page-hero-title { font-weight: 900; font-size: clamp(4rem, 8vw, 8rem); line-height: 0.9; letter-spacing: -0.04em; text-transform: uppercase; color: var(--c-dark); }
+  .page-hero-desc { font-size: 1.05rem; font-weight: 300; color: #666; line-height: 1.75; max-width: 440px; margin-bottom: 32px; }
+  .page-hero-scripture {
+    font-size: 0.78rem; font-weight: 400; color: #999; line-height: 1.7;
+    font-style: italic; border-left: 2px solid var(--c-brand); padding-left: 16px;
+  }
+  .page-hero-scripture cite { display: block; font-style: normal; font-weight: 600; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-brand); margin-top: 8px; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ WHY WE GIVE ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #why { padding: 100px 80px; }
+  .why-inner { max-width: 1240px; margin: 0 auto; }
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .why-headline { font-weight: 900; font-size: clamp(2.2rem, 4vw, 3.6rem); line-height: 1.0; letter-spacing: -0.03em; text-transform: uppercase; color: var(--c-dark); }
+  .why-body p { font-size: 0.93rem; font-weight: 300; color: #666; line-height: 1.82; margin-bottom: 20px; }
+  .why-body p:last-child { margin-bottom: 0; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ WAYS TO GIVE ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #ways { padding: 0 48px 80px; }
+  .ways-inner { max-width: 1300px; margin: 0 auto; }
+  .ways-title-row { margin-bottom: 40px; }
+  .ways-headline { font-weight: 900; font-size: clamp(1.8rem, 3vw, 2.6rem); letter-spacing: -0.03em; text-transform: uppercase; color: var(--c-dark); margin-top: 12px; }
+  .ways-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .way-card {
+    border: 1px solid var(--c-border); border-radius: 18px;
+    padding: 48px 44px; position: relative; overflow: hidden;
+    transition: border-color 0.25s, box-shadow 0.25s;
+  }
+  .way-card:hover { border-color: #ccc; box-shadow: 0 4px 32px rgba(0,0,0,0.05); }
+  .way-card.featured { background: var(--c-darker); border-color: transparent; }
+  .way-card.featured:hover { border-color: transparent; box-shadow: 0 8px 48px rgba(0,0,0,0.2); }
+  .way-icon { width: 52px; height: 52px; background: var(--c-surface); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; }
+  .way-card.featured .way-icon { background: rgba(255,255,255,0.08); }
+  .way-icon svg { width: 24px; height: 24px; stroke: var(--c-brand); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .way-label { font-size: 0.52rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--c-brand); margin-bottom: 10px; display: block; }
+  .way-title { font-weight: 900; font-size: 1.4rem; letter-spacing: -0.02em; text-transform: uppercase; color: var(--c-dark); line-height: 1.1; margin-bottom: 14px; }
+  .way-card.featured .way-title { color: #fff; }
+  .way-body { font-size: 0.82rem; font-weight: 300; color: var(--c-muted); line-height: 1.72; margin-bottom: 24px; }
+  .way-card.featured .way-body { color: rgba(255,255,255,0.5); }
+  .way-btn {
+    display: inline-block; padding: 12px 28px;
+    border-radius: 8px;
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+    background: var(--c-dark); color: #fff; transition: opacity 0.2s;
+  }
+  .way-btn:hover { opacity: 0.78; }
+  .way-btn.gold { background: var(--c-brand); }
+  .way-detail { font-size: 0.78rem; font-weight: 400; color: var(--c-muted); }
+  .way-detail strong { color: var(--c-dark); display: block; margin-bottom: 4px; }
+  .way-card.featured .way-detail { color: rgba(255,255,255,0.45); }
+  .way-card.featured .way-detail strong { color: rgba(255,255,255,0.8); }
+  .btn-dark { display: inline-block; background: var(--c-dark); color: #fff; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 16px 40px; border-radius: 8px; transition: opacity 0.2s; }
+  .btn-dark:hover { opacity: 0.75; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ IMPACT QUOTE ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #impact { padding: 0 48px 80px; }
+  .impact-card {
+    max-width: 1300px; margin: 0 auto;
+    background: #c9a96e; border-radius: 22px; padding: 80px 72px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+  }
+  .impact-left {}
+  .impact-quote-mark { font-size: clamp(2.8rem, 8vw, 8rem); line-height: 0.7; color: rgba(255,255,255,0.2); font-weight: 900; margin-bottom: 24px; display: block; }
+  .impact-quote { font-weight: 700; font-size: clamp(1.2rem, 2.5vw, 1.8rem); color: #fff; line-height: 1.4; letter-spacing: -0.01em; }
+  .impact-cite { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-top: 20px; display: block; }
+  .impact-right {}
+  .impact-eyebrow { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 16px; display: block; }
+  .impact-headline { font-weight: 900; font-size: clamp(1.6rem, 3vw, 2.6rem); letter-spacing: -0.03em; text-transform: uppercase; color: #fff; line-height: 1; margin-bottom: 20px; }
+  .impact-body { font-size: 0.88rem; font-weight: 300; color: rgba(255,255,255,0.75); line-height: 1.78; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ NEWSLETTER + FOOTER ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .newsletter-sec { padding: 0 48px 60px; }
+  .newsletter-card { max-width: 1300px; margin: 0 auto; background: var(--c-surface); border-radius: 22px; padding: 56px 64px; display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+  .nl-eyebrow { font-size: 0.56rem; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; color: var(--c-brand); margin-bottom: 6px; display: block; }
+  .nl-title { font-weight: 900; font-size: 2rem; letter-spacing: -0.03em; text-transform: uppercase; color: var(--c-dark); line-height: 1.05; }
+  .nl-sub { font-size: 0.78rem; font-weight: 300; color: var(--c-muted); margin-top: 8px; }
+  .nl-form { display: flex; gap: 0; flex-shrink: 0; }
+  .nl-input { padding: 13px 20px; border: 1px solid #ddd; border-right: none; font-family: 'Montserrat', sans-serif; font-size: 0.78rem; color: var(--c-dark); background: #fff; min-width: 260px; outline: none; border-radius: 8px 0 0 8px; }
+  .nl-input::placeholder { color: #bbb; }
+  .nl-btn { padding: 13px 24px; background: var(--c-dark); color: #fff; border: none; font-family: 'Montserrat', sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; transition: opacity 0.2s; }
+  .nl-btn:hover { opacity: 0.78; }
+  footer { background: #000; border-top: 1px solid rgba(255,255,255,0.06); padding: 72px 68px 40px; }
+  .ft-grid { max-width: 1260px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 52px; margin-bottom: 56px; }
+  .ft-logo { height: 44px; width: auto; margin-bottom: 14px; object-fit: contain; }
+  .ft-name { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 14px; line-height: 1.4; max-width: 190px; }
+  .ft-tag { font-size: 0.78rem; font-weight: 300; color: rgba(255,255,255,0.28); line-height: 1.75; max-width: 230px; margin-bottom: 26px; }
+  .ft-soc { display: flex; gap: 9px; }
+  .ft-s { width: 33px; height: 33px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 0.62rem; font-weight: 700; color: rgba(255,255,255,0.4); transition: border-color 0.2s, color 0.2s; }
+  .ft-s:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
+  .ft-col h5 { font-size: 0.56rem; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(255,255,255,0.2); margin-bottom: 17px; }
+  .ft-col ul { list-style: none; }
+  .ft-col li { margin-bottom: 8px; }
+  .ft-col a { font-size: 0.8rem; font-weight: 300; color: rgba(255,255,255,0.42); transition: color 0.2s; }
+  .ft-col a:hover { color: #fff; }
+  .ft-bot { max-width: 1260px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.06); flex-wrap: wrap; gap: 10px; }
+  .ft-copy { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.16); }
+  .ft-addr { font-size: 0.7rem; font-weight: 300; color: rgba(255,255,255,0.18); }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ RESPONSIVE ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  @media(max-width:1024px) {
+    .hdr-nav { padding: 12px 28px; gap: 24px; }
+    .hdr-brand { padding: 13px 28px; }
+    #page-hero { padding: 40px 24px; }
+    .page-hero-card { padding: 60px 44px; }
+    .page-hero-inner { gap: 48px; }
+    #why { padding: 72px 36px; }
+    .why-grid { grid-template-columns: 1fr; gap: 36px; }
+    #ways { padding: 0 24px 60px; }
+    .ways-grid { grid-template-columns: 1fr; }
+    #impact { padding: 0 24px 60px; }
+    .impact-card { grid-template-columns: 1fr; gap: 44px; padding: 60px 44px; }
+    .newsletter-sec { padding: 0 24px 48px; }
+    .newsletter-card { padding: 44px 40px; }
+    footer { padding: 60px 36px 36px; }
+    .ft-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+  }
+  /* ── Mobile Nav Toggle ── */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 1100;
+    position: relative;
+  }
+  .nav-toggle-bar {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--c-dark);
+    border-radius: 2px;
+    transition: transform 0.3s cubic-bezier(0.42,0,0.58,1), opacity 0.2s ease;
+  }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* ── Skip Link ── */
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 1rem;
+    background: var(--c-brand);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-radius: 0 0 6px 6px;
+    z-index: 9999;
+    transition: top 0.2s ease;
+  }
+  .skip-link:focus { top: 0; }
+
+  /* ── Focus Visible ── */
+  :focus-visible {
+    outline: 2px solid var(--c-brand);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  @media (max-width: 768px) {
+    .nav-toggle { display: flex; }
+    .hdr-nav {
+      display: none !important;
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      z-index: 1050;
+      padding: 2rem;
+    }
+    .hdr-nav.nav-open { display: flex !important; }
+    .hdr-nav a {
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--c-dark);
+      text-transform: uppercase;
+    }
+    .hdr-nav a.active { color: var(--c-brand); }
+  }
+
+  @media(max-width:768px) {
+    .hdr-nav { display: none; }
+    .hdr-spacer { height: 70px; }
+    #page-hero { padding: 20px 16px; }
+    .page-hero-card { padding: 44px 28px; border-radius: 16px; }
+    .page-hero-inner { grid-template-columns: 1fr; gap: 28px; }
+    #why { padding: 48px 20px; }
+    #ways { padding: 0 16px 48px; }
+    .way-card { padding: 36px 28px; }
+    #impact { padding: 0 16px 48px; }
+    .impact-card { padding: 44px 32px; border-radius: 16px; }
+    .newsletter-sec { padding: 0 16px 40px; }
+    .newsletter-card { padding: 36px 28px; flex-direction: column; align-items: flex-start; }
+    .nl-form { flex-direction: column; width: 100%; }
+    .nl-input { min-width: 100%; border-right: 1px solid #ddd; border-bottom: none; }
+    footer { padding: 48px 20px 28px; }
+    .ft-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+  @view-transition { navigation: auto; }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<header id="header">
+  <button class="nav-toggle" id="navToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mainNav">
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+  </button>
+  <nav class="hdr-nav" id="mainNav" aria-label="Main navigation">
+    <a href="gbfpc-about.html">About</a>
+    <a href="gbfpc-ministries.html">Ministries</a>
+    <a href="gbfpc-academy.html">Academy</a>
+    <a href="gbfpc-events.html">Events</a>
+    <a href="gbfpc-give.html" class="active">Give</a>
+    <a href="gbfpc-connect.html">Connect</a>
+    <a href="gbfpc-livestream.html">Livestream</a>
+  </nav>
+  <div class="hdr-brand">
+    <a href="/" class="hdr-left">
+      <img src="gbfpc-logo.svg" alt="GBFPC" class="hdr-logo"/>
+      <span class="hdr-name">Greater Bakersfield's<br>First Pentecostal Church</span>
+    </a>
+    <a href="gbfpc-visit.html" class="hdr-cta">Plan Your Visit</a>
+  </div>
+</header>
+
+<div class="hdr-spacer"></div>
+
+<!-- ═══════ PAGE HERO ═══════ -->
+<section id="page-hero">
+<span id="main-content" style="display:block;height:0;overflow:hidden;" aria-hidden="true"></span>
+  <div class="page-hero-card">
+    <div class="page-hero-inner">
+      <div class="page-hero-left">
+        <span class="page-tag r">Generosity</span>
+        <h1 class="page-hero-title r d1">Give.</h1>
+      </div>
+      <div class="page-hero-right r d2">
+        <p class="page-hero-desc">Your generosity is more than a transaction — it's an act of worship that fuels the mission of GBFPC in Bakersfield and around the world.</p>
+        <blockquote class="page-hero-scripture">
+          "Each of you should give what you have decided in your heart to give, not reluctantly or under compulsion, for God loves a cheerful giver."
+          <cite>2 Corinthians 9:7</cite>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ WHY WE GIVE ═══════ -->
+<section id="why">
+  <div class="why-inner">
+    <div class="why-grid">
+      <div>
+        <span class="eyebrow gold r">Our Belief</span>
+        <h2 class="why-headline r d1">Giving is<br>an Act of<br>Worship.</h2>
+      </div>
+      <div class="why-body">
+        <p class="r d2">At GBFPC, we believe generosity is one of the most powerful expressions of faith. When you give, you partner directly with what God is doing through this church — in our congregation, in Bakersfield, and in communities around the world.</p>
+        <p class="r d3">Your tithe and offering support everything from ministry programs and community outreach to the operations that keep the doors open. Every dollar given is stewarded with integrity and purpose.</p>
+        <p class="r d4">We never want finances to be a barrier to giving. Whether you give weekly or for the very first time, every act of generosity matters.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ WAYS TO GIVE ═══════ -->
+<section id="ways">
+  <div class="ways-inner">
+    <div class="ways-title-row">
+      <span class="eyebrow gold r">Options</span>
+      <h2 class="ways-headline r d1">Ways to Give</h2>
+    </div>
+    <div class="ways-grid">
+
+      <!-- Online — Featured -->
+      <div class="way-card featured r">
+        <div class="way-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+        </div>
+        <span class="way-label">Easiest</span>
+        <div class="way-title">Give Online</div>
+        <p class="way-body">Secure, simple, and available anytime. Give a one-time gift or set up recurring giving in just a few clicks. You can give to the general fund or designate to a specific ministry.</p>
+        <a href="https://gbfpc.org/give" class="way-btn gold" target="_blank" rel="noopener">Give Securely Online →</a>
+      </div>
+
+      <!-- In Person -->
+      <div class="way-card r d1">
+        <div class="way-icon">
+          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <span class="way-label">Traditional</span>
+        <div class="way-title">In Person</div>
+        <p class="way-body">Offering is received during every Sunday and Tuesday service. Envelopes are available in the sanctuary if you prefer to designate your gift to a specific fund or ministry area.</p>
+        <div class="way-detail">
+          <strong>Services</strong>
+          Sunday 10:00 AM &amp; 11:00 AM · Tuesday 7:00 PM
+        </div>
+      </div>
+
+      <!-- Text to Give -->
+      <div class="way-card r d1">
+        <div class="way-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <span class="way-label">Fast &amp; Simple</span>
+        <div class="way-title">Text to Give</div>
+        <p class="way-body">Give in seconds from your phone. Text any dollar amount to our giving number and follow the simple prompts. No app required — just your mobile number.</p>
+        <div class="way-detail">
+          <strong>How it works</strong>
+          Text your giving amount to <a href="tel:+18449484695" style="color:#c9a96e;font-weight:700;">(844) 948-4695</a><br>
+          Follow the simple prompts — no app or account required.
+        </div>
+      </div>
+
+      <!-- Mail -->
+      <div class="way-card r d2">
+        <div class="way-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <span class="way-label">By Mail</span>
+        <div class="way-title">Mail a Check</div>
+        <p class="way-body">Make checks payable to GBFPC and mail to our church address. Include your contact information and any fund designation in the memo line.</p>
+        <div class="way-detail">
+          <strong>Mailing Address</strong>
+          GBFPC<br>1418 W Columbus St<br>Bakersfield, CA 93301
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ IMPACT QUOTE ═══════ -->
+<section id="impact">
+  <div class="impact-card r">
+    <div class="impact-left">
+      <span class="impact-quote-mark">&ldquo;</span>
+      <p class="impact-quote">Honor the Lord with your wealth and with the firstfruits of all your produce; then your barns will be filled with plenty, and your vats will be bursting with wine.</p>
+      <cite class="impact-cite">Proverbs 3:9–10</cite>
+    </div>
+    <div class="impact-right">
+      <span class="impact-eyebrow">Your Impact</span>
+      <h2 class="impact-headline">Every Dollar<br>Matters.</h2>
+      <p class="impact-body">Every gift — large or small — goes directly toward ministry programs, community outreach, supporting families in need, and spreading the Gospel throughout Bakersfield and beyond. GBFPC is committed to financial transparency and responsible stewardship of every resource entrusted to us.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ NEWSLETTER ═══════ -->
+<div class="newsletter-sec">
+  <div class="newsletter-card r">
+    <div>
+      <span class="nl-eyebrow">Stay Connected</span>
+      <div class="nl-title">Stay Up<br>To Date.</div>
+      <div class="nl-sub">Join our community and never miss a moment at GBFPC.</div>
+    </div>
+    <div class="newsletter-wrap">
+      <p class="newsletter-text">Stay connected — join our email list.</p>
+      <a href="https://gbfpc.org" class="btn-dark" target="_blank" rel="noopener">Stay Connected →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer>
+  <div class="ft-grid">
+    <div>
+      <img src="gbfpc-logo.svg" alt="GBFPC" class="ft-logo"/>
+      <div class="ft-name">Greater Bakersfield's<br>First Pentecostal Church</div>
+      <p class="ft-tag">Rooted in truth, alive in the Spirit, and built for community in Bakersfield, California.</p>
+      <div class="ft-soc">
+        <a href="https://www.facebook.com/gbfpcmedia/" class="ft-s">f</a>
+        <a href="https://www.instagram.com/gbfpc/" class="ft-s">ig</a>
+        <a href="https://www.youtube.com/channel/UCO1PnTTAT_uOS4ZkMjdBzGg/videos" class="ft-s">▶</a>
+      </div>
+    </div>
+    <div class="ft-col"><h5>Our House</h5><ul>
+      <li><a href="gbfpc-about.html">About Us</a></li>
+      <li><a href="gbfpc-about.html#vision">Our Vision</a></li>
+      <li><a href="gbfpc-about.html#articles">Articles of Faith</a></li>
+      <li><a href="gbfpc-about.html#history">Church History</a></li>
+    </ul></div>
+    <div class="ft-col"><h5>Ministries</h5><ul>
+      <li><a href="gbfpc-ministries.html#youth">Amplified Youth</a></li>
+      <li><a href="gbfpc-ministries.html#children">K.I.C.K.</a></li>
+      <li><a href="gbfpc-ministries.html">Thrive</a></li>
+      <li><a href="gbfpc-ministries.html">Kiddie Korral</a></li>
+      <li><a href="gbfpc-academy.html">Bethel Academy</a></li>
+    </ul></div>
+    <div class="ft-col"><h5>Connect</h5><ul>
+      <li><a href="gbfpc-visit.html">Plan Your Visit</a></li>
+      <li><a href="gbfpc-give.html">Give Online</a></li>
+      <li><a href="gbfpc-events.html">Upcoming Events</a></li>
+      <li><a href="gbfpc-livestream.html">Livestream</a></li>
+      <li><a href="gbfpc-connect.html">Contact Us</a></li>
+    </ul></div>
+  </div>
+  <div class="ft-bot">
+    <div class="ft-copy">© 2026 GBFPC. All Rights Reserved.</div>
+    <div class="ft-addr">1418 W Columbus St, Bakersfield, CA 93301 · (661) 323-2851</div>
+  </div>
+</footer>
+
+<script>
+(function() {
+  var toggle = document.getElementById('navToggle');
+  var nav = document.getElementById('mainNav');
+  if (!toggle || !nav) return;
+  toggle.addEventListener('click', function() {
+    var expanded = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!expanded));
+    toggle.setAttribute('aria-label', expanded ? 'Open navigation menu' : 'Close navigation menu');
+    nav.classList.toggle('nav-open', !expanded);
+    document.body.style.overflow = expanded ? '' : 'hidden';
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && nav.classList.contains('nav-open')) {
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open navigation menu');
+      nav.classList.remove('nav-open');
+      document.body.style.overflow = '';
+      toggle.focus();
+    }
+  });
+  nav.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open navigation menu');
+      nav.classList.remove('nav-open');
+      document.body.style.overflow = '';
+    });
+  });
+})();
+</script>
+
+<script>
+  const revObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); revObs.unobserve(e.target); } });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.r, .r-sm').forEach(el => revObs.observe(el));
+</script>
+
+<!-- PAGE TRANSITION -->
+<div id="pg-t"></div>
+<style>
+#pg-t{position:fixed;inset:0;z-index:9999;background:#0f0f0f;opacity:1;pointer-events:all;transition:opacity .5s ease}
+body:has(#intro-splash) #pg-t{opacity:0!important;pointer-events:none!important;transition:none!important}
+</style>
+<script>
+!function(){
+  var t=document.getElementById('pg-t');
+  document.addEventListener('DOMContentLoaded',function(){
+    if(document.getElementById('intro-splash')){
+      t.style.cssText='opacity:0;pointer-events:none;transition:none';
+    } else {
+      requestAnimationFrame(function(){requestAnimationFrame(function(){
+        t.style.opacity='0';t.style.pointerEvents='none';
+      });});
+    }
+    document.addEventListener('click',function(e){
+      var a=e.target.closest('a[href]');if(!a)return;
+      var h=a.getAttribute('href');
+      if(!h||h[0]==='#'||h.startsWith('http')||h.startsWith('mailto')||h.startsWith('tel')||a.target==='_blank')return;
+      e.preventDefault();
+      t.style.cssText='opacity:1;pointer-events:all;transition:opacity .5s ease';
+      setTimeout(function(){window.location.href=h},520);
+    });
+  });
+}();
+</script>
+</body>
+</html>

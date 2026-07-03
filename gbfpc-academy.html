@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bethel Academy | GBFPC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+  :root {
+    --c-brand:   #c9a96e;
+    --c-dark:    #111111;
+    --c-darker:  #0f0f0f;
+    --c-surface: #f2f1ee;
+    --c-muted:   #888888;
+    --c-border:  #ebebeb;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: #fff; color: var(--c-dark); font-family: 'Montserrat', sans-serif; overflow-x: hidden; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ HEADER ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #header { position: relative; z-index: 200; background: rgba(255,255,255,0.97); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid #e8e8e8; }
+  .hdr-nav { display: flex; justify-content: center; align-items: center; gap: 40px; padding: 12px 56px; border-bottom: 1px solid var(--c-border); }
+  .hdr-nav a { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #555; transition: color 0.2s; white-space: nowrap; }
+  .hdr-nav a:hover { color: #000; }
+  .hdr-nav a.active { color: #000; }
+  .hdr-brand { display: flex; align-items: center; justify-content: space-between; padding: 16px 56px; }
+  .hdr-left { display: flex; align-items: center; gap: 16px; }
+  .hdr-logo { height: 40px; width: auto; object-fit: contain; filter: brightness(0); }
+  .hdr-name { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; line-height: 1.35; color: var(--c-dark); }
+  .hdr-cta { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 11px 24px; border: 1px solid var(--c-dark); color: var(--c-dark); border-radius: 8px; transition: background 0.2s, color 0.2s; white-space: nowrap; }
+  .hdr-cta:hover { background: #000; color: #fff; }
+  .hdr-spacer { height: 0; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ SCROLL REVEAL ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .r       { opacity: 0; transform: translateY(32px); transition: opacity 0.85s cubic-bezier(0.22,1,0.36,1), transform 0.85s cubic-bezier(0.22,1,0.36,1); }
+  .r.in    { opacity: 1; transform: none; }
+  .r-sm    { opacity: 0; transform: translateY(16px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
+  .r-sm.in { opacity: 1; transform: none; }
+  .d1 { transition-delay: 0.08s; } .d2 { transition-delay: 0.16s; } .d3 { transition-delay: 0.24s; }
+  .d4 { transition-delay: 0.32s; } .d5 { transition-delay: 0.40s; } .d6 { transition-delay: 0.48s; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ UTILITIES ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .eyebrow { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: #bbb; margin-bottom: 14px; display: block; }
+  .eyebrow.gold { color: var(--c-brand); }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ PAGE HERO ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #page-hero { padding: 60px 48px; background: #fff; }
+  .page-hero-card { max-width: 1300px; margin: 0 auto; background: var(--c-darker); border-radius: 22px; padding: 80px 72px; }
+  .page-hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; }
+  .page-tag { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: var(--c-brand); margin-bottom: 20px; display: block; }
+  .page-hero-title { font-weight: 900; font-size: clamp(3rem, 6vw, 6rem); line-height: 0.9; letter-spacing: -0.04em; text-transform: uppercase; color: #fff; }
+  .page-hero-desc { font-size: 1.05rem; font-weight: 300; color: rgba(255,255,255,0.55); line-height: 1.75; max-width: 440px; margin-bottom: 32px; }
+  .page-hero-links { display: flex; gap: 8px; flex-wrap: wrap; }
+  .page-link { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; padding: 9px 16px; border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.6); border-radius: 100px; transition: border-color 0.2s, color 0.2s; }
+  .page-link:hover { border-color: rgba(255,255,255,0.6); color: #fff; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ INTRO ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #intro { padding: 100px 80px; }
+  .intro-inner { max-width: 1240px; margin: 0 auto; }
+  .intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; margin-bottom: 72px; }
+  .intro-headline { font-weight: 900; font-size: clamp(2.2rem, 4vw, 3.6rem); line-height: 1.0; letter-spacing: -0.03em; text-transform: uppercase; color: var(--c-dark); }
+  .intro-body p { font-size: 0.93rem; font-weight: 300; color: #666; line-height: 1.82; margin-bottom: 20px; }
+  .intro-body p:last-child { margin-bottom: 0; }
+  .intro-pillars { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; }
+  .intro-pillar { padding: 36px 28px; border-right: 1px solid #f0f0f0; }
+  .intro-pillar:last-child { border-right: none; }
+  .pillar-icon { width: 40px; height: 40px; background: var(--c-surface); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+  .pillar-icon svg { width: 18px; height: 18px; stroke: var(--c-brand); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .pillar-name { font-weight: 800; font-size: 0.82rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--c-dark); margin-bottom: 8px; }
+  .pillar-body { font-size: 0.75rem; font-weight: 300; color: #999; line-height: 1.7; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ PROGRAMS ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #programs { padding: 0 48px 80px; }
+  .prog-grid { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .prog-card {
+    border-radius: 22px; padding: 60px 56px; position: relative; overflow: hidden;
+  }
+  .prog-card.light { background: var(--c-surface); }
+  .prog-card.dark { background: var(--c-darker); }
+  .prog-badge {
+    display: inline-block; padding: 6px 14px; border-radius: 100px;
+    font-size: 0.52rem; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .prog-card.light .prog-badge { background: #e8e5e0; color: var(--c-muted); }
+  .prog-card.dark .prog-badge { background: rgba(201,169,110,0.15); color: var(--c-brand); }
+  .prog-name { font-weight: 900; font-size: clamp(1.8rem, 3vw, 2.6rem); letter-spacing: -0.03em; text-transform: uppercase; color: var(--c-dark); line-height: 1; margin-bottom: 8px; }
+  .prog-card.dark .prog-name { color: #fff; }
+  .prog-ages { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-brand); margin-bottom: 20px; display: block; }
+  .prog-body { font-size: 0.88rem; font-weight: 300; color: #777; line-height: 1.78; margin-bottom: 32px; }
+  .prog-card.dark .prog-body { color: rgba(255,255,255,0.5); }
+  .prog-details { border-top: 1px solid #e0ddd8; padding-top: 24px; }
+  .prog-card.dark .prog-details { border-color: rgba(255,255,255,0.08); }
+  .prog-detail { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 12px; }
+  .prog-detail svg { width: 14px; height: 14px; stroke: var(--c-brand); fill: none; stroke-width: 2; flex-shrink: 0; margin-top: 2px; }
+  .prog-detail-text { font-size: 0.78rem; font-weight: 400; color: var(--c-muted); line-height: 1.5; }
+  .prog-card.dark .prog-detail-text { color: rgba(255,255,255,0.45); }
+  .prog-detail-text strong { color: var(--c-dark); font-weight: 600; }
+  .prog-card.dark .prog-detail-text strong { color: rgba(255,255,255,0.8); }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ REDIRECT CTA ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #school-cta { padding: 72px 48px; }
+  .school-cta-card {
+    max-width: 1300px; margin: 0 auto;
+    border-radius: 22px; padding: 80px 72px;
+    background: var(--c-brand);
+    display: grid; grid-template-columns: 1fr auto; gap: 60px; align-items: center;
+  }
+  .school-cta-eyebrow { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 12px; display: block; }
+  .school-cta-headline { font-weight: 900; font-size: clamp(2rem, 4vw, 3.4rem); letter-spacing: -0.03em; text-transform: uppercase; color: #fff; line-height: 1; margin-bottom: 20px; }
+  .school-cta-body { font-size: 0.93rem; font-weight: 300; color: rgba(255,255,255,0.8); line-height: 1.75; max-width: 500px; }
+  .school-cta-action { flex-shrink: 0; text-align: center; }
+  .school-cta-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: #fff; color: var(--c-dark);
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 16px 36px; white-space: nowrap;
+    border-radius: 8px;
+    transition: opacity 0.2s;
+  }
+  .school-cta-btn:hover { opacity: 0.88; }
+  .school-cta-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+  .school-cta-note { font-size: 0.65rem; font-weight: 400; color: rgba(255,255,255,0.5); margin-top: 14px; line-height: 1.5; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ NEWSLETTER + FOOTER ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .newsletter-sec { padding: 0 48px 60px; }
+  .newsletter-card { max-width: 1300px; margin: 0 auto; background: var(--c-surface); border-radius: 22px; padding: 56px 64px; display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+  .nl-eyebrow { font-size: 0.56rem; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; color: var(--c-brand); margin-bottom: 6px; display: block; }
+  .nl-title { font-weight: 900; font-size: clamp(1.4rem, 2.5vw, 2rem); letter-spacing: -0.03em; text-transform: uppercase; color: var(--c-dark); line-height: 1.05; }
+  .nl-sub { font-size: 0.78rem; font-weight: 300; color: var(--c-muted); margin-top: 8px; }
+  .nl-form { display: flex; gap: 0; flex-shrink: 0; }
+  .nl-input { padding: 13px 20px; border: 1px solid #ddd; border-right: none; font-family: 'Montserrat', sans-serif; font-size: 0.78rem; color: var(--c-dark); background: #fff; min-width: 260px; outline: none; border-radius: 8px 0 0 8px; }
+  .nl-input::placeholder { color: #bbb; }
+  .nl-btn { padding: 13px 24px; background: var(--c-dark); color: #fff; border: none; font-family: 'Montserrat', sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; transition: opacity 0.2s; }
+  .nl-btn:hover { opacity: 0.78; }
+  footer { background: #000; border-top: 1px solid rgba(255,255,255,0.06); padding: 72px 68px 40px; }
+  .ft-grid { max-width: 1260px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 52px; margin-bottom: 56px; }
+  .ft-logo { height: 44px; width: auto; margin-bottom: 14px; object-fit: contain; }
+  .ft-name { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 14px; line-height: 1.4; max-width: 190px; }
+  .ft-tag { font-size: 0.78rem; font-weight: 300; color: rgba(255,255,255,0.28); line-height: 1.75; max-width: 230px; margin-bottom: 26px; }
+  .ft-soc { display: flex; gap: 9px; }
+  .ft-s { width: 33px; height: 33px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 0.62rem; font-weight: 700; color: rgba(255,255,255,0.4); transition: border-color 0.2s, color 0.2s; }
+  .ft-s:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
+  .ft-col h5 { font-size: 0.56rem; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(255,255,255,0.2); margin-bottom: 17px; }
+  .ft-col ul { list-style: none; }
+  .ft-col li { margin-bottom: 8px; }
+  .ft-col a { font-size: 0.8rem; font-weight: 300; color: rgba(255,255,255,0.42); transition: color 0.2s; }
+  .ft-col a:hover { color: #fff; }
+  .ft-bot { max-width: 1260px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.06); flex-wrap: wrap; gap: 10px; }
+  .ft-copy { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.16); }
+  .ft-addr { font-size: 0.7rem; font-weight: 300; color: rgba(255,255,255,0.18); }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ RESPONSIVE ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  @media(max-width:1024px) {
+    .hdr-nav { padding: 12px 28px; gap: 24px; }
+    .hdr-brand { padding: 13px 28px; }
+    #page-hero { padding: 40px 24px; }
+    .page-hero-card { padding: 60px 44px; }
+    .page-hero-inner { gap: 48px; }
+    #intro { padding: 72px 36px; }
+    .intro-grid { grid-template-columns: 1fr; gap: 36px; }
+    .intro-pillars { grid-template-columns: 1fr 1fr; }
+    #programs { padding: 0 24px 60px; }
+    .prog-grid { grid-template-columns: 1fr; }
+    .prog-card { padding: 48px 40px; }
+    #school-cta { padding: 56px 24px; }
+    .school-cta-card { grid-template-columns: 1fr; gap: 36px; padding: 60px 44px; }
+    .school-cta-action { text-align: left; }
+    .newsletter-sec { padding: 0 24px 48px; }
+    .newsletter-card { padding: 44px 40px; }
+    footer { padding: 60px 36px 36px; }
+    .ft-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+  }
+  /* ── Skip Link ── */
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 1rem;
+    background: var(--c-brand);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-radius: 0 0 6px 6px;
+    z-index: 9999;
+    transition: top 0.2s ease;
+  }
+  .skip-link:focus { top: 0; }
+
+  /* ── Focus Visible ── */
+  :focus-visible {
+    outline: 2px solid var(--c-brand);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* ── Mobile Nav Toggle ── */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 1100;
+    position: relative;
+  }
+  .nav-toggle-bar {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--c-dark);
+    border-radius: 2px;
+    transition: transform 0.3s cubic-bezier(0.42,0,0.58,1), opacity 0.2s ease;
+  }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  @media (max-width: 768px) {
+    .nav-toggle { display: flex; }
+    .hdr-nav {
+      display: none !important;
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      z-index: 1050;
+      padding: 2rem;
+    }
+    .hdr-nav.nav-open { display: flex !important; }
+    .hdr-nav a {
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--c-dark);
+      text-transform: uppercase;
+    }
+    .hdr-nav a.active { color: var(--c-brand); }
+  }
+
+  /* ── Prefers Reduced Motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  @media(max-width:768px) {
+    .hdr-spacer { height: 70px; }
+    #page-hero { padding: 20px 16px; }
+    .page-hero-card { padding: 44px 28px; border-radius: 16px; }
+    .page-hero-inner { grid-template-columns: 1fr; gap: 28px; }
+    #intro { padding: 48px 20px; }
+    .intro-pillars { grid-template-columns: 1fr 1fr; }
+    #programs { padding: 0 16px 48px; }
+    .prog-card { padding: 40px 32px; border-radius: 16px; }
+    #school-cta { padding: 40px 16px; }
+    .school-cta-card { padding: 44px 32px; border-radius: 16px; }
+    .newsletter-sec { padding: 0 16px 40px; }
+    .newsletter-card { padding: 36px 28px; flex-direction: column; align-items: flex-start; }
+    .nl-form { flex-direction: column; width: 100%; }
+    .nl-input { min-width: 100%; border-right: 1px solid #ddd; border-bottom: none; }
+    footer { padding: 48px 20px 28px; }
+    .ft-grid { grid-template-columns: 1fr; }
+  }
+  @view-transition { navigation: auto; }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<header id="header">
+  <button class="nav-toggle" id="navToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mainNav">
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+  </button>
+  <div class="hdr-nav" id="mainNav" aria-label="Main navigation">
+    <a href="gbfpc-about.html">About</a>
+    <a href="gbfpc-ministries.html">Ministries</a>
+    <a href="gbfpc-academy.html" class="active">Academy</a>
+    <a href="gbfpc-events.html">Events</a>
+    <a href="gbfpc-give.html">Give</a>
+    <a href="gbfpc-connect.html">Connect</a>
+    <a href="gbfpc-livestream.html">Livestream</a>
+  </div>
+  <div class="hdr-brand">
+    <a href="/" class="hdr-left">
+      <img src="gbfpc-logo.svg" alt="GBFPC" class="hdr-logo"/>
+      <span class="hdr-name">Greater Bakersfield's<br>First Pentecostal Church</span>
+    </a>
+    <a href="gbfpc-visit.html" class="hdr-cta">Plan Your Visit</a>
+  </div>
+</header>
+
+<div class="hdr-spacer"></div>
+
+<!-- ═══════ PAGE HERO ═══════ -->
+<span id="main-content" aria-hidden="true" style="position:absolute;top:0;"></span>
+<section id="page-hero">
+  <div class="page-hero-card">
+    <div class="page-hero-inner">
+      <div class="page-hero-left">
+        <span class="page-tag r">Education &amp; Childcare</span>
+        <h1 class="page-hero-title r d1">Bethel Academy<br>&amp; Kiddie Korral.</h1>
+      </div>
+      <div class="page-hero-right r d2">
+        <p class="page-hero-desc">Two programs, one mission — faith-rooted education and childcare for every age, from infants through 12th grade, right here at GBFPC.</p>
+        <div class="page-hero-links">
+          <a href="#programs" class="page-link">Our Programs</a>
+          <a href="#school-cta" class="page-link">Start the Journey →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ INTRO ═══════ -->
+<section id="intro">
+  <div class="intro-inner">
+    <div class="intro-grid">
+      <div>
+        <span class="eyebrow gold r">Our Mission</span>
+        <h2 class="intro-headline r d1">Raising the<br>Next<br>Generation.</h2>
+      </div>
+      <div class="intro-body">
+        <p class="r d2">Bethel Apostolic Academy (BAA) and Kiddie Korral (BKK) are the educational and childcare ministries of GBFPC — a place where academic excellence and Christian values come together to form the whole child. We believe that nurturing a child's mind, heart, and spirit is one of the highest callings we can answer.</p>
+        <p class="r d3">Whether your child is just starting life at Kiddie Korral or finishing their senior year at Bethel Academy, every child who walks through our doors receives the attention, love, and instruction they need to thrive — in the classroom and in life.</p>
+      </div>
+    </div>
+    <div class="intro-pillars">
+      <div class="intro-pillar r">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <div class="pillar-name">Academic Excellence</div>
+        <p class="pillar-body">Rigorous, age-appropriate curriculum that builds a strong academic foundation.</p>
+      </div>
+      <div class="intro-pillar r d1">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <div class="pillar-name">Faith Formation</div>
+        <p class="pillar-body">Biblical values and Christian character woven into every day of learning.</p>
+      </div>
+      <div class="intro-pillar r d2">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="pillar-name">Safe Community</div>
+        <p class="pillar-body">A nurturing environment where every child is known, valued, and protected.</p>
+      </div>
+      <div class="intro-pillar r d3">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <div class="pillar-name">Whole Child</div>
+        <p class="pillar-body">Developing mind, body, and spirit — preparing children for every season ahead.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ PROGRAMS ═══════ -->
+<section id="programs">
+  <div class="prog-grid">
+
+    <!-- Bethel Academy -->
+    <div class="prog-card light r">
+      <span class="prog-badge">K–12 Education</span>
+      <div class="prog-name">Bethel Apostolic<br>Academy</div>
+      <span class="prog-ages">Kindergarten through 12th Grade</span>
+      <p class="prog-body">BAA provides a complete Christian education — from Kindergarten through high school. With a strong academic curriculum, dedicated teachers, and a faith-centered environment, students are prepared for college, career, and life.</p>
+      <div class="prog-details">
+        <div class="prog-detail">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          <span class="prog-detail-text"><strong>Grades Served</strong> Kindergarten – 12th Grade</span>
+        </div>
+        <div class="prog-detail">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span class="prog-detail-text"><strong>Schedule</strong> Full school-year academic calendar</span>
+        </div>
+        <div class="prog-detail">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="none"/><circle cx="12" cy="9" r="2.5" fill="none"/></svg>
+          <span class="prog-detail-text"><strong>Location</strong> On-site at GBFPC, 1418 W Columbus St</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kiddie Korral -->
+    <div class="prog-card dark r d1">
+      <span class="prog-badge">Early Childhood</span>
+      <div class="prog-name">Kiddie<br>Korral</div>
+      <span class="prog-ages">Infant through Pre-K</span>
+      <p class="prog-body">BKK is GBFPC's daycare and Pre-K program — providing a warm, safe, and faith-filled environment for infants through Pre-Kindergarten. Parents can trust that their little ones are in loving, capable hands while they work, worship, or serve.</p>
+      <div class="prog-details">
+        <div class="prog-detail">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          <span class="prog-detail-text"><strong>Ages Served</strong> Infant – Pre-Kindergarten</span>
+        </div>
+        <div class="prog-detail">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span class="prog-detail-text"><strong>Hours</strong> Weekday childcare available — contact for schedule</span>
+        </div>
+        <div class="prog-detail">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="none"/><circle cx="12" cy="9" r="2.5" fill="none"/></svg>
+          <span class="prog-detail-text"><strong>Location</strong> On-site at GBFPC, 1418 W Columbus St</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════ REDIRECT CTA ═══════ -->
+<section id="school-cta">
+  <div class="school-cta-card r">
+    <div>
+      <span class="school-cta-eyebrow">Full Information &amp; Enrollment</span>
+      <div class="school-cta-headline">One Website.<br>Both Programs.</div>
+      <p class="school-cta-body">Bethel Apostolic Academy (K&ndash;12) and Kiddie Korral (Daycare &amp; Pre-K) both live at <strong>baabkk.org</strong>. Enrollment, tuition, academic calendars, staff, and more &mdash; everything you need is there.</p>
+    </div>
+    <div class="school-cta-action">
+      <a href="https://baabkk.org" class="school-cta-btn" target="_blank" rel="noopener">
+        Explore the Academy →
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+      <p class="school-cta-note">Bethel Apostolic Academy &amp; Kiddie Korral<br>official site &mdash; opens in a new tab.</p>
+      <p style="margin-top: 1rem; font-size: 0.85rem; color: rgba(255,255,255,0.6);">
+        Questions? Call the church office at <a href="tel:+16613232851" style="color: #fff; font-weight: 600;">(661) 323-2851</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ NEWSLETTER ═══════ -->
+<div class="newsletter-sec">
+  <div class="newsletter-card r">
+    <div>
+      <span class="nl-eyebrow">Stay Connected</span>
+      <div class="nl-title">Stay Up<br>To Date.</div>
+      <div class="nl-sub">Join our community and never miss a moment at GBFPC.</div>
+    </div>
+    <div class="nl-form">
+      <a href="https://gbfpc.org" class="btn-dark" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;padding:13px 24px;background:#111;color:#fff;font-family:'Montserrat',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;border-radius:0 8px 8px 0;white-space:nowrap;transition:opacity 0.2s;">Stay Connected →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer>
+  <div class="ft-grid">
+    <div>
+      <img src="gbfpc-logo.svg" alt="GBFPC" class="ft-logo"/>
+      <div class="ft-name">Greater Bakersfield's<br>First Pentecostal Church</div>
+      <p class="ft-tag">Rooted in truth, alive in the Spirit, and built for community in Bakersfield, California.</p>
+      <div class="ft-soc">
+        <a href="https://www.facebook.com/gbfpcmedia/" class="ft-s">f</a>
+        <a href="https://www.instagram.com/gbfpc/" class="ft-s">ig</a>
+        <a href="https://www.youtube.com/channel/UCO1PnTTAT_uOS4ZkMjdBzGg/videos" class="ft-s">▶</a>
+      </div>
+    </div>
+    <div class="ft-col"><h5>Our House</h5><ul>
+      <li><a href="gbfpc-about.html">About Us</a></li>
+      <li><a href="gbfpc-about.html#vision">Our Vision</a></li>
+      <li><a href="gbfpc-about.html#articles">Articles of Faith</a></li>
+      <li><a href="gbfpc-about.html#history">Church History</a></li>
+    </ul></div>
+    <div class="ft-col"><h5>Ministries</h5><ul>
+      <li><a href="gbfpc-ministries.html#youth">Amplified Youth</a></li>
+      <li><a href="gbfpc-ministries.html#children">K.I.C.K.</a></li>
+      <li><a href="gbfpc-ministries.html">Thrive</a></li>
+      <li><a href="gbfpc-academy.html">Bethel Academy</a></li>
+      <li><a href="gbfpc-ministries.html">Kiddie Korral</a></li>
+    </ul></div>
+    <div class="ft-col"><h5>Connect</h5><ul>
+      <li><a href="gbfpc-visit.html">Plan Your Visit</a></li>
+      <li><a href="gbfpc-give.html">Give Online</a></li>
+      <li><a href="gbfpc-events.html">Upcoming Events</a></li>
+      <li><a href="gbfpc-livestream.html">Livestream</a></li>
+      <li><a href="gbfpc-connect.html">Contact Us</a></li>
+    </ul></div>
+  </div>
+  <div class="ft-bot">
+    <div class="ft-copy">© 2026 GBFPC. All Rights Reserved.</div>
+    <div class="ft-addr">1418 W Columbus St, Bakersfield, CA 93301 · (661) 323-2851</div>
+  </div>
+</footer>
+
+<script>
+(function() {
+  var toggle = document.getElementById('navToggle');
+  var nav = document.getElementById('mainNav');
+  if (!toggle || !nav) return;
+  toggle.addEventListener('click', function() {
+    var expanded = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!expanded));
+    toggle.setAttribute('aria-label', expanded ? 'Open navigation menu' : 'Close navigation menu');
+    nav.classList.toggle('nav-open', !expanded);
+    document.body.style.overflow = expanded ? '' : 'hidden';
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && nav.classList.contains('nav-open')) {
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open navigation menu');
+      nav.classList.remove('nav-open');
+      document.body.style.overflow = '';
+      toggle.focus();
+    }
+  });
+  nav.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open navigation menu');
+      nav.classList.remove('nav-open');
+      document.body.style.overflow = '';
+    });
+  });
+})();
+</script>
+
+<script>
+  const revObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); revObs.unobserve(e.target); } });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.r, .r-sm').forEach(el => revObs.observe(el));
+</script>
+
+<!-- PAGE TRANSITION -->
+<div id="pg-t"></div>
+<style>
+#pg-t{position:fixed;inset:0;z-index:9999;background:var(--c-darker);opacity:1;pointer-events:all;transition:opacity .5s ease}
+body:has(#intro-splash) #pg-t{opacity:0!important;pointer-events:none!important;transition:none!important}
+</style>
+<script>
+!function(){
+  var t=document.getElementById('pg-t');
+  document.addEventListener('DOMContentLoaded',function(){
+    if(document.getElementById('intro-splash')){
+      t.style.cssText='opacity:0;pointer-events:none;transition:none';
+    } else {
+      requestAnimationFrame(function(){requestAnimationFrame(function(){
+        t.style.opacity='0';t.style.pointerEvents='none';
+      });});
+    }
+    document.addEventListener('click',function(e){
+      var a=e.target.closest('a[href]');if(!a)return;
+      var h=a.getAttribute('href');
+      if(!h||h[0]==='#'||h.startsWith('http')||h.startsWith('mailto')||h.startsWith('tel')||a.target==='_blank')return;
+      e.preventDefault();
+      t.style.cssText='opacity:1;pointer-events:all;transition:opacity .5s ease';
+      setTimeout(function(){window.location.href=h},520);
+    });
+  });
+}();
+</script>
+</body>
+</html>

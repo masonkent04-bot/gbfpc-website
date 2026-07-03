@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About | GBFPC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+  :root {
+    --c-brand:   #c9a96e;
+    --c-dark:    #111111;
+    --c-darker:  #0f0f0f;
+    --c-surface: #f2f1ee;
+    --c-muted:   #888888;
+    --c-border:  #ebebeb;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: #fff; color: var(--c-dark); font-family: 'Montserrat', sans-serif; overflow-x: hidden; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     HEADER
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #header {
+    position: relative; z-index: 200;
+    background: rgba(255,255,255,0.97);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid #e8e8e8;
+  }
+  .hdr-nav {
+    display: flex; justify-content: center; align-items: center;
+    gap: 40px; padding: 12px 56px; border-bottom: 1px solid var(--c-border);
+  }
+  .hdr-nav a {
+    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.16em;
+    text-transform: uppercase; color: #555; transition: color 0.2s; white-space: nowrap;
+  }
+  .hdr-nav a:hover { color: #000; }
+  .hdr-nav a.active { color: #000; }
+  .hdr-brand { display: flex; align-items: center; justify-content: space-between; padding: 16px 56px; }
+  .hdr-left { display: flex; align-items: center; gap: 16px; }
+  .hdr-logo { height: 40px; width: auto; object-fit: contain; filter: brightness(0); }
+  .hdr-name { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; line-height: 1.35; color: var(--c-dark); }
+  .hdr-cta {
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 11px 24px; border: 1px solid var(--c-dark); color: var(--c-dark);
+    transition: background 0.2s, color 0.2s; white-space: nowrap;
+    border-radius: 8px;
+  }
+  .hdr-cta:hover { background: #000; color: #fff; } /* keep #000 — not a token */
+  .hdr-spacer { height: 0; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     SCROLL REVEAL
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .r       { opacity: 0; transform: translateY(32px); transition: opacity 0.85s cubic-bezier(0.22,1,0.36,1), transform 0.85s cubic-bezier(0.22,1,0.36,1); }
+  .r.in    { opacity: 1; transform: none; }
+  .r-sm    { opacity: 0; transform: translateY(16px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
+  .r-sm.in { opacity: 1; transform: none; }
+  .d1 { transition-delay: 0.08s; } .d2 { transition-delay: 0.16s; } .d3 { transition-delay: 0.24s; }
+  .d4 { transition-delay: 0.32s; } .d5 { transition-delay: 0.40s; } .d6 { transition-delay: 0.48s; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     SHARED UTILITIES
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .eyebrow {
+    font-size: 0.6rem; font-weight: 700; letter-spacing: 0.28em;
+    text-transform: uppercase; color: #bbb; margin-bottom: 14px; display: block;
+  }
+  .eyebrow.inv { color: rgba(255,255,255,0.35); }
+  .btn-dark {
+    display: inline-block; background: var(--c-dark); color: #fff;
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em;
+    text-transform: uppercase; padding: 14px 32px; border-radius: 8px; transition: opacity 0.2s;
+  }
+  .btn-dark:hover { opacity: 0.75; }
+  .btn-ghost {
+    display: inline-block; border: 1px solid #ddd; color: #555;
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em;
+    text-transform: uppercase; padding: 14px 32px; border-radius: 8px; transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--c-dark); color: var(--c-dark); }
+
+  /* Float card pattern */
+  .float-sec { background: #fff; padding: 0 48px; }
+  .float-card { max-width: 1300px; margin: 0 auto; background: var(--c-surface); border-radius: 22px; padding: 80px 72px; }
+  .float-card-dark { max-width: 1300px; margin: 0 auto; background: var(--c-darker); border-radius: 22px; padding: 80px 72px; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     PAGE HERO — Leadership-card style
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #page-hero {
+    background: #fff;
+    padding: 80px 48px 0;
+  }
+  .page-hero-inner {
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+  .page-hero-big {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: clamp(3.5rem, 8.5vw, 7.5rem);
+    letter-spacing: -0.03em;
+    color: var(--c-dark);
+    line-height: 0.95;
+    margin-bottom: -28px;
+    position: relative;
+    z-index: 2;
+    text-transform: uppercase;
+  }
+  .page-hero-card {
+    background: #e0ddd4;
+    border-radius: 20px;
+    padding: 52px 52px 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: center;
+    position: relative;
+  }
+  .page-tag {
+    font-size: 0.58rem; font-weight: 700; letter-spacing: 0.28em;
+    text-transform: uppercase; color: #999; margin-bottom: 12px; display: block;
+  }
+  .page-hero-tagline {
+    font-weight: 700;
+    font-size: clamp(1.3rem, 2vw, 1.75rem);
+    color: var(--c-dark);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 16px;
+  }
+  .page-hero-desc {
+    font-size: 0.88rem; font-weight: 400; color: #555;
+    line-height: 1.72; max-width: 380px; margin-bottom: 28px;
+  }
+  .page-hero-links { display: flex; gap: 8px; flex-wrap: wrap; }
+  .page-link {
+    font-size: 0.56rem; font-weight: 700; letter-spacing: 0.16em;
+    text-transform: uppercase; padding: 9px 16px;
+    border: 1px solid rgba(0,0,0,0.14); color: #777; border-radius: 100px;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+  .page-link:hover { border-color: var(--c-dark); color: var(--c-dark); }
+  .page-link.active { background: var(--c-dark); color: #fff; border-color: var(--c-dark); }
+  .page-hero-photo {
+    border-radius: 14px;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    background: #ccc;
+    min-width: 0;
+  }
+  .page-hero-photo img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center 25%;
+  }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     OUR VISION
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #vision { padding: 100px 80px; background: #fff; }
+  .vision-inner { max-width: 1240px; margin: 0 auto; }
+  .vision-top {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: start; margin-bottom: 80px;
+  }
+  .vision-statement {
+    font-weight: 900;
+    font-size: clamp(2.2rem, 4vw, 3.8rem);
+    line-height: 1.0; letter-spacing: -0.03em;
+    text-transform: uppercase; color: var(--c-dark);
+    border-left: 3px solid var(--c-brand); padding-left: 28px;
+  }
+  .vision-body { padding-top: 6px; }
+  .vision-body p {
+    font-size: 0.93rem; font-weight: 300; color: #666;
+    line-height: 1.82; margin-bottom: 20px;
+  }
+  .vision-body p:last-child { margin-bottom: 0; }
+  .vision-scripture {
+    font-size: 0.78rem; font-weight: 600; color: var(--c-brand);
+    letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px;
+    display: block;
+  }
+
+  /* Three pillars */
+  .vision-pillars {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 2px; border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0;
+  }
+  .pillar {
+    padding: 48px 40px;
+    border-right: 1px solid #f0f0f0;
+    position: relative;
+  }
+  .pillar:last-child { border-right: none; }
+  .pillar-num {
+    font-size: 0.52rem; font-weight: 800; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--c-brand); margin-bottom: 16px; display: block;
+  }
+  .pillar-title {
+    font-weight: 900; font-size: 1.5rem; letter-spacing: -0.02em;
+    text-transform: uppercase; color: var(--c-dark); line-height: 1.1; margin-bottom: 14px;
+  }
+  .pillar-body { font-size: 0.82rem; font-weight: 300; color: var(--c-muted); line-height: 1.72; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     CHURCH HISTORY
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #history { padding: 60px 48px; }
+  .history-card {
+    max-width: 1300px; margin: 0 auto;
+    background: var(--c-surface); border-radius: 22px; padding: 80px 72px;
+  }
+  .history-head { margin-bottom: 64px; }
+  .history-title {
+    font-weight: 900; font-size: clamp(2.2rem, 4vw, 3.6rem);
+    line-height: 0.95; letter-spacing: -0.03em;
+    text-transform: uppercase; color: var(--c-dark); margin-top: 12px;
+    max-width: 700px;
+  }
+
+  /* Timeline */
+  .timeline { position: relative; padding-left: 120px; }
+  .timeline::before {
+    content: ''; position: absolute;
+    /* Line at 108px — clears the 100px-wide year label by 8px */
+    left: 108px; top: 12px; bottom: 12px;
+    width: 1px; background: #d8d4cc;
+  }
+  .tl-item {
+    position: relative; margin-bottom: 56px;
+  }
+  .tl-item:last-child { margin-bottom: 0; }
+  .tl-year {
+    position: absolute; left: -120px; top: 2px;
+    width: 100px; text-align: right;
+    font-size: 0.62rem; font-weight: 800; letter-spacing: 0.12em;
+    color: var(--c-brand);
+    padding-top: 2px;
+  }
+  .tl-dot {
+    /* Centered on the line (108px from timeline, tl-item at 120px):
+       dot left = 108 - 5 - 120 = -17px from tl-item */
+    position: absolute; left: -17px; top: 5px;
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--c-brand);
+    border: 2px solid var(--c-surface);
+    box-shadow: 0 0 0 2px var(--c-brand);
+  }
+  .tl-content-title {
+    font-weight: 800; font-size: 1.0rem; letter-spacing: -0.01em;
+    text-transform: uppercase; color: var(--c-dark); margin-bottom: 10px;
+  }
+  .tl-content-body {
+    font-size: 0.86rem; font-weight: 300; color: #777; line-height: 1.78;
+    max-width: 640px;
+  }
+  .tl-photo {
+    margin-top: 24px;
+    max-width: 480px;
+    border-radius: 14px;
+    overflow: hidden;
+    position: relative;
+  }
+  .tl-photo img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    aspect-ratio: 4/3;
+    object-position: center top;
+  }
+  .tl-photo-caption {
+    display: block;
+    font-size: 0.58rem; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: #aaa; margin-top: 10px;
+  }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     ARTICLES OF FAITH
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #articles { padding: 60px 48px 60px; }
+  .articles-card {
+    max-width: 1300px; margin: 0 auto;
+    background: var(--c-darker); border-radius: 22px; padding: 80px 72px;
+  }
+  .articles-head { margin-bottom: 56px; }
+  .articles-title {
+    font-weight: 900; font-size: clamp(2.2rem, 4vw, 3.6rem);
+    line-height: 0.95; letter-spacing: -0.03em;
+    text-transform: uppercase; color: #fff; margin-top: 12px;
+  }
+
+  /* Accordion */
+  .aof-list { border-top: 1px solid rgba(255,255,255,0.08); }
+  .aof-item { border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .aof-trigger {
+    width: 100%; display: flex; align-items: center; justify-content: space-between;
+    padding: 26px 0; cursor: pointer; background: none; border: none;
+    font-family: 'Montserrat', sans-serif; text-align: left;
+    gap: 24px;
+    border-radius: 8px;
+  }
+  .aof-trigger-left { display: flex; align-items: center; gap: 20px; }
+  .aof-num {
+    font-size: 0.52rem; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--c-brand); flex-shrink: 0; width: 24px;
+  }
+  .aof-name {
+    font-size: 0.88rem; font-weight: 700; letter-spacing: 0.04em;
+    text-transform: uppercase; color: #fff;
+  }
+  .aof-icon {
+    width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+    border: 1px solid rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.3s, border-color 0.2s;
+  }
+  .aof-icon svg { width: 10px; height: 10px; stroke: rgba(255,255,255,0.4); fill: none; stroke-width: 2; stroke-linecap: round; }
+  .aof-item.open .aof-icon { transform: rotate(45deg); border-color: rgba(255,255,255,0.35); }
+  .aof-item.open .aof-icon svg { stroke: #fff; }
+  .aof-body {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.45s cubic-bezier(0.22,1,0.36,1), padding 0.3s;
+    padding: 0 0 0 44px;
+  }
+  .aof-item.open .aof-body { max-height: 600px; padding: 0 0 28px 44px; }
+  .aof-body p {
+    font-size: 0.84rem; font-weight: 300; color: rgba(255,255,255,0.5);
+    line-height: 1.85; margin-bottom: 14px;
+  }
+  .aof-body p:last-child { margin-bottom: 0; }
+  .aof-body strong { color: rgba(255,255,255,0.75); font-weight: 600; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     BOTTOM CTA
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #page-cta {
+    padding: 100px 80px;
+    text-align: center;
+  }
+  .page-cta-inner { max-width: 680px; margin: 0 auto; }
+  .page-cta-eyebrow {
+    font-size: 0.58rem; font-weight: 700; letter-spacing: 0.28em;
+    text-transform: uppercase; color: #bbb; margin-bottom: 20px; display: block;
+  }
+  .page-cta-title {
+    font-weight: 900; font-size: clamp(2.4rem, 4.5vw, 4rem);
+    line-height: 0.95; letter-spacing: -0.03em;
+    text-transform: uppercase; color: var(--c-dark); margin-bottom: 24px;
+  }
+  .page-cta-body {
+    font-size: 0.93rem; font-weight: 300; color: #777;
+    line-height: 1.75; margin-bottom: 40px;
+  }
+  .page-cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     FOOTER
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  footer { background: #000; border-top: 1px solid rgba(255,255,255,0.06); padding: 72px 68px 40px; }
+  .ft-grid { max-width: 1260px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 52px; margin-bottom: 56px; }
+  .ft-logo { height: 44px; width: auto; margin-bottom: 14px; object-fit: contain; }
+  .ft-name { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 14px; line-height: 1.4; max-width: 190px; }
+  .ft-tag { font-size: 0.78rem; font-weight: 300; color: rgba(255,255,255,0.28); line-height: 1.75; max-width: 230px; margin-bottom: 26px; }
+  .ft-soc { display: flex; gap: 9px; }
+  .ft-s { width: 33px; height: 33px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 0.62rem; font-weight: 700; color: rgba(255,255,255,0.3); transition: border-color 0.2s, color 0.2s; }
+  .ft-s:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
+  .ft-col h5 { font-size: 0.56rem; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(255,255,255,0.2); margin-bottom: 17px; }
+  .ft-col ul { list-style: none; }
+  .ft-col li { margin-bottom: 8px; }
+  .ft-col a { font-size: 0.8rem; font-weight: 300; color: rgba(255,255,255,0.42); transition: color 0.2s; }
+  .ft-col a:hover { color: #fff; }
+  .ft-bot { max-width: 1260px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.06); flex-wrap: wrap; gap: 10px; }
+  .ft-copy { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.16); }
+  .ft-addr { font-size: 0.7rem; font-weight: 300; color: rgba(255,255,255,0.18); }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     RESPONSIVE
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  @media(max-width:1024px) {
+    #page-hero { padding: 48px 36px 0; }
+    .page-hero-card { grid-template-columns: 1fr; gap: 32px; padding: 40px 36px; }
+    #vision { padding: 80px 40px; }
+    .vision-top { grid-template-columns: 1fr; gap: 44px; }
+    .vision-pillars { grid-template-columns: 1fr; }
+    .pillar { border-right: none; border-bottom: 1px solid #f0f0f0; }
+    .pillar:last-child { border-bottom: none; }
+    .float-sec { padding: 0 24px; }
+    .float-card, .float-card-dark, .history-card, .articles-card { padding: 56px 40px; }
+    #history, #articles { padding: 60px 24px; }
+    .timeline { padding-left: 100px; }
+    .timeline::before { left: 88px; }
+    .tl-year { left: -100px; width: 80px; }
+    .tl-dot { left: -17px; }
+    footer { padding: 60px 36px 36px; }
+    .ft-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+    .hdr-nav { padding: 12px 28px; gap: 24px; }
+    .hdr-brand { padding: 13px 28px; }
+    #page-cta { padding: 80px 40px; }
+  }
+  /* ── Mobile Nav Toggle ── */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 1100;
+    position: relative;
+  }
+  .nav-toggle-bar {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--c-dark);
+    border-radius: 2px;
+    transition: transform 0.3s cubic-bezier(0.42,0,0.58,1), opacity 0.2s ease;
+  }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  @media (max-width: 768px) {
+    .nav-toggle { display: flex; }
+    .hdr-nav {
+      display: none !important;
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      z-index: 1050;
+      padding: 2rem;
+    }
+    .hdr-nav.nav-open { display: flex !important; }
+    .hdr-nav a {
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--c-dark);
+      text-transform: uppercase;
+    }
+    .hdr-nav a.active { color: var(--c-brand); }
+  }
+
+  /* ── Skip Link ── */
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 1rem;
+    background: var(--c-brand);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-radius: 0 0 6px 6px;
+    z-index: 9999;
+    transition: top 0.2s ease;
+  }
+  .skip-link:focus { top: 0; }
+
+  /* ── Focus Visible ── */
+  :focus-visible {
+    outline: 2px solid var(--c-brand);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  @media(max-width:768px) {
+    .hdr-spacer { height: 70px; }
+    #page-hero { padding: 32px 20px 0; }
+    .page-hero-big { font-size: clamp(2.5rem, 10vw, 4rem); }
+    .page-hero-card { padding: 28px 24px; }
+    #vision { padding: 60px 24px; }
+    .vision-statement { font-size: clamp(1.8rem, 6vw, 2.6rem); }
+    .history-card, .articles-card { padding: 44px 28px; border-radius: 16px; }
+    .timeline { padding-left: 80px; }
+    .tl-year { left: -80px; width: 64px; font-size: 0.52rem; }
+    /* year right edge = 64px; line at 72px → 8px gap */
+    .timeline::before { left: 72px; }
+    .tl-dot { left: -13px; }
+    .ft-grid { grid-template-columns: 1fr; }
+    .ft-bot { flex-direction: column; }
+    #page-cta { padding: 60px 24px; }
+    .page-cta-btns { flex-direction: column; align-items: center; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+  @view-transition { navigation: auto; }
+  </style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- ═══════ HEADER ═══════ -->
+<header id="header">
+  <button class="nav-toggle" id="navToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mainNav">
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+  </button>
+  <nav class="hdr-nav" id="mainNav" aria-label="Main navigation">
+    <a href="gbfpc-about.html" class="active">About</a>
+    <a href="gbfpc-ministries.html">Ministries</a>
+    <a href="gbfpc-academy.html">Academy</a>
+    <a href="gbfpc-events.html">Events</a>
+    <a href="gbfpc-give.html">Give</a>
+    <a href="gbfpc-connect.html">Connect</a>
+    <a href="gbfpc-livestream.html">Livestream</a>
+  </nav>
+  <div class="hdr-brand">
+    <a href="/" class="hdr-left">
+      <img src="gbfpc-logo.svg" alt="GBFPC" class="hdr-logo"/>
+      <span class="hdr-name">Greater Bakersfield's<br>First Pentecostal Church</span>
+    </a>
+    <a href="gbfpc-visit.html" class="hdr-cta">Plan Your Visit</a>
+  </div>
+</header>
+
+<div class="hdr-spacer"></div>
+
+<!-- ═══════ PAGE HERO ═══════ -->
+<div id="main-content"></div>
+<section id="page-hero">
+  <div class="page-hero-inner">
+    <h1 class="page-hero-big">About Us.</h1>
+    <div class="page-hero-card">
+      <!-- Left: text -->
+      <div>
+        <span class="page-tag">Greater Bakersfield's First Pentecostal Church</span>
+        <p class="page-hero-tagline">Following Truth.<br>Filled with Spirit.<br>Built for Community.</p>
+        <p class="page-hero-desc">Rooted in Bakersfield since 1943 — a church that has followed, proclaimed, and celebrated truth for over 80 years.</p>
+        <div class="page-hero-links">
+          <a href="#vision" class="page-link active">Our Vision</a>
+          <a href="#history" class="page-link">Our History</a>
+          <a href="#articles" class="page-link">Articles of Faith</a>
+        </div>
+      </div>
+      <!-- Right: worship photo -->
+      <div class="page-hero-photo">
+        <img src="MEDIA/connect1.jpg"
+             alt="GBFPC Worship Service"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ OUR VISION ═══════ -->
+<section id="vision">
+  <div class="vision-inner">
+
+    <div class="vision-top">
+      <div>
+        <span class="eyebrow r">Our Vision</span>
+        <h2 class="vision-statement r d1">Our Vision<br>Is to Reach<br>the World.</h2>
+      </div>
+      <div class="vision-body r d2">
+        <p>We believe in a lifestyle committed to loving God holistically — with all your heart, soul, mind, and strength. That lifestyle is centered in the Oneness of God and living out that revelation in completeness.</p>
+        <p>God calls individuals not only to know Him, but to proclaim His message. Prior to his ascension, Jesus instructed his disciples to wait in Jerusalem until they received power from on high — and they did.</p>
+        <span class="vision-scripture">Mark 12:30</span>
+        <p>"And thou shalt love the Lord thy God with all thy heart, and with all thy soul, and with all thy mind, and with all thy strength: this is the first commandment."</p>
+      </div>
+    </div>
+
+    <!-- Three pillars: Repent, Baptize, Holy Ghost -->
+    <div class="vision-pillars">
+      <div class="pillar r">
+        <span class="pillar-num">01 — Repent</span>
+        <div class="pillar-title">Turn &amp;<br>Transform.</div>
+        <p class="pillar-body">Repentance is a change of heart, mind, and life — a turning from sin and a turning toward God. Jesus said, "Except ye repent, ye shall all likewise perish." (Luke 13:3)</p>
+      </div>
+      <div class="pillar r d1">
+        <span class="pillar-num">02 — Be Baptized</span>
+        <div class="pillar-title">Buried &amp;<br>Raised.</div>
+        <p class="pillar-body">Water baptism by immersion in the name of Jesus Christ for the remission of sins — following the pattern of the early church in Acts 2:38, 8:16, 10:47, and 19:5.</p>
+      </div>
+      <div class="pillar r d2">
+        <span class="pillar-num">03 — Receive</span>
+        <div class="pillar-title">Filled with<br>the Spirit.</div>
+        <p class="pillar-body">The baptism of the Holy Ghost, evidenced by speaking in other tongues as the Spirit gives utterance — the same experience recorded in Acts 2:4 and promised to all who believe.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════ CHURCH HISTORY ═══════ -->
+<section id="history">
+  <div class="history-card">
+    <div class="history-head r">
+      <span class="eyebrow">Our Story</span>
+      <h2 class="history-title">80+ Years of Following, Proclaiming, and Celebrating Truth.</h2>
+    </div>
+
+    <div class="timeline">
+
+      <div class="tl-item r">
+        <span class="tl-year">1943</span>
+        <div class="tl-dot"></div>
+        <div class="tl-content-title">The Beginning</div>
+        <p class="tl-content-body">Rev. I.H. Terry and his wife arrived in Bakersfield on March 5th, 1943. Despite opposition and humble beginnings — no hot water, no song books, pews made from boards and washtubs — they held their first church service on November 13, 1943. The first pulpit was two orange boxes. The altar was Sister Terry's mother's wash bench.</p>
+      </div>
+
+      <div class="tl-item r d1">
+        <span class="tl-year">1950s–70s</span>
+        <div class="tl-dot"></div>
+        <div class="tl-content-title">36th &amp; O Street</div>
+        <p class="tl-content-body">The church moved through several locations before finding a home at 36th and O Street, where the foundation of the church family, ministries, and soul purpose was built through years of hard work and revival. The motto became: "The best place to go is 36th and O."</p>
+      </div>
+
+      <div class="tl-item r d2">
+        <span class="tl-year">1983</span>
+        <div class="tl-dot"></div>
+        <div class="tl-content-title">A New Chapter — Bishop Leon Frost</div>
+        <p class="tl-content-body">On the church's 40th anniversary, Rev. Terry retired after four decades of faithful leadership, passing the torch to Bishop Leon Frost — a man raised in the church under Brother Terry himself. Under Bishop Frost's leadership, the church moved to its current home at 1418 W. Columbus Street, debt free.</p>
+        <div class="tl-photo r d3">
+          <img src="MEDIA/bishop-frost.jpg" alt="Bishop Leon Frost" loading="lazy"/>
+        </div>
+        <span class="tl-photo-caption">Bishop Leon Frost — Greater Bakersfield's First Pentecostal Church</span>
+      </div>
+
+      <div class="tl-item r d3">
+        <span class="tl-year">2010</span>
+        <div class="tl-dot"></div>
+        <div class="tl-content-title">Pastor Kevin Bradford</div>
+        <p class="tl-content-body">In November 2010, Kevin Bradford became senior pastor of Greater Bakersfield's First Pentecostal Church. He holds a degree in Business Administration from CSUB and a Master's in Biblical Studies from Fuller Theological Seminary. He has exemplified a true servant's heart with a desire to uphold the church's rich heritage without compromise.</p>
+        <div class="tl-photo r d4">
+          <img src="MEDIA/pastor-bradford.jpg" alt="Pastor Kevin & Sister Bradford" loading="lazy"/>
+        </div>
+        <span class="tl-photo-caption">Pastor Kevin &amp; Sister Bradford — Downtown Bakersfield</span>
+      </div>
+
+      <div class="tl-item r d4">
+        <span class="tl-year">2013 &amp; Beyond</span>
+        <div class="tl-dot"></div>
+        <div class="tl-content-title">Three Generations of Leadership</div>
+        <p class="tl-content-body">November 2013 marked a momentous occasion — the church's 70th anniversary, Bishop Frost's 30th anniversary of leadership, and Pastor Bradford's 3rd anniversary. Three generations of faithful men, one unbroken foundation: Jesus Christ. Today, GBFPC continues to grow and serve the Bakersfield community.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ ARTICLES OF FAITH ═══════ -->
+<section id="articles">
+  <div class="articles-card">
+    <div class="articles-head r">
+      <span class="eyebrow inv">What We Believe</span>
+      <h2 class="articles-title">Articles<br>of Faith.</h2>
+    </div>
+
+    <div class="aof-list r d1">
+
+      <div class="aof-item">
+        <button class="aof-trigger" onclick="toggleAof(this)">
+          <div class="aof-trigger-left">
+            <span class="aof-num">01</span>
+            <span class="aof-name">Our Creed</span>
+          </div>
+          <div class="aof-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </button>
+        <div class="aof-body">
+          <p>Our creed, discipline, and doctrine is the Word of God as revealed by the Holy Ghost. We believe the Bible is the inspired and only infallible and authoritative written Word of God. <strong>(John 14:26; I Corinthians 2:9-13; II Timothy 3:16-17)</strong></p>
+        </div>
+      </div>
+
+      <div class="aof-item">
+        <button class="aof-trigger" onclick="toggleAof(this)">
+          <div class="aof-trigger-left">
+            <span class="aof-num">02</span>
+            <span class="aof-name">Fundamental Doctrine</span>
+          </div>
+          <div class="aof-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </button>
+        <div class="aof-body">
+          <p>The basic and fundamental doctrine of this organization is the Bible standard of full salvation: repentance, baptism in water by immersion in the name of the Lord Jesus Christ for the remission of sins, and the baptism of the Holy Ghost with the initial sign of speaking with other tongues as the Spirit gives utterance. <strong>(Acts 2:38; 8:15-17; 10:44-48; 19:2-6)</strong></p>
+        </div>
+      </div>
+
+      <div class="aof-item">
+        <button class="aof-trigger" onclick="toggleAof(this)">
+          <div class="aof-trigger-left">
+            <span class="aof-num">03</span>
+            <span class="aof-name">Water Baptism &amp; the Holy Ghost</span>
+          </div>
+          <div class="aof-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </button>
+        <div class="aof-body">
+          <p>Forgiveness of sins is received by obeying the gospel according to Acts 2:38. Water baptism by immersion is for believers who have fully repented, administered in the name of the Lord Jesus Christ. <strong>(Acts 2:38; 8:16; 10:47; 19:5; Matthew 28:19)</strong></p>
+          <p>We believe in the baptism of the Holy Ghost for believers, evidenced by speaking in other tongues as the Spirit gives utterance — the standard of normal Christian experience since Pentecost. <strong>(Acts 2:4; 10:46; 19:6)</strong></p>
+        </div>
+      </div>
+
+      <div class="aof-item">
+        <button class="aof-trigger" onclick="toggleAof(this)">
+          <div class="aof-trigger-left">
+            <span class="aof-num">04</span>
+            <span class="aof-name">The Oneness of God</span>
+          </div>
+          <div class="aof-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </button>
+        <div class="aof-body">
+          <p>God is One — manifest as the Father in Creation, as the Son in Redemption, and as the Holy Ghost in the believer individually and the Church collectively. Not three persons, but three simultaneous manifestations of One True God. <strong>(Deuteronomy 6:4; Isaiah 9:6; John 1:1-14; Mark 12:29; Ephesians 4:6)</strong></p>
+        </div>
+      </div>
+
+      <div class="aof-item">
+        <button class="aof-trigger" onclick="toggleAof(this)">
+          <div class="aof-trigger-left">
+            <span class="aof-num">05</span>
+            <span class="aof-name">The Grace of God</span>
+          </div>
+          <div class="aof-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </button>
+        <div class="aof-body">
+          <p>"For the grace of God that bringeth salvation hath appeared to all men, teaching us that, denying ungodliness and worldly lusts, we should live soberly, righteously, and Godly, in this present world." <strong>(Titus 2:11-12)</strong></p>
+          <p>Grace means both God's favor and His enablement to live the Christian life. We are saved by grace through faith — it is the gift of God. <strong>(Ephesians 2:8)</strong></p>
+        </div>
+      </div>
+
+      <div class="aof-item">
+        <button class="aof-trigger" onclick="toggleAof(this)">
+          <div class="aof-trigger-left">
+            <span class="aof-num">06</span>
+            <span class="aof-name">The Church</span>
+          </div>
+          <div class="aof-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </button>
+        <div class="aof-body">
+          <p>There is one Body, one Church, and one way to enter it — by faith, as evidenced by true repentance, water baptism in Jesus' name, and the baptism of the Holy Ghost, which constitutes the new birth. <strong>(Ephesians 4:4-6; Acts 2:38-39; John 3:1-11)</strong></p>
+        </div>
+      </div>
+
+      <div class="aof-item">
+        <button class="aof-trigger" onclick="toggleAof(this)">
+          <div class="aof-trigger-left">
+            <span class="aof-num">07</span>
+            <span class="aof-name">Evangelism</span>
+          </div>
+          <div class="aof-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </button>
+        <div class="aof-body">
+          <p>The work of the church is to evangelize — to reach the entire world with the Gospel of Jesus Christ. This was expressed by Jesus himself: "Go ye therefore…" <strong>(Matthew 28:19)</strong> and "…ye shall be witnesses…" <strong>(Acts 1:8)</strong></p>
+        </div>
+      </div>
+
+      <div class="aof-item">
+        <button class="aof-trigger" onclick="toggleAof(this)">
+          <div class="aof-trigger-left">
+            <span class="aof-num">08</span>
+            <span class="aof-name">Sanctification &amp; Holiness</span>
+          </div>
+          <div class="aof-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        </button>
+        <div class="aof-body">
+          <p>Sanctification means to be set apart unto God for a holy purpose — the result of the Blood, the Word, and the Holy Ghost. It begins with a work of grace and continues in a walk of grace. <strong>(Hebrews 13:12; Romans 15:16)</strong></p>
+          <p>Godly living should characterize every child of the Lord. "For the grace of God that bringeth salvation hath appeared to all men, teaching us that, denying ungodliness and worldly lusts, we should live soberly, righteously, and godly." <strong>(Titus 2:11-12)</strong></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ BOTTOM CTA ═══════ -->
+<section id="page-cta">
+  <div class="page-cta-inner">
+    <span class="page-cta-eyebrow r">Come As You Are</span>
+    <h2 class="page-cta-title r d1">You Belong<br>Here.</h2>
+    <p class="page-cta-body r d2">Whether you're visiting for the first time or returning home, we'd love to have you. Join us any Sunday or Tuesday and experience GBFPC for yourself.</p>
+    <div class="page-cta-btns r d3">
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfeTShxX-b3HMdneoQOEXa7uXsiu_fSJVFfwyXnLq5ljYfUMw/viewform" class="btn-dark">Plan Your Visit</a>
+      <a href="gbfpc-livestream.html" class="btn-ghost">Watch Online</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer>
+  <div class="ft-grid">
+    <div>
+      <img src="gbfpc-logo.svg" alt="GBFPC" class="ft-logo"/>
+      <div class="ft-name">Greater Bakersfield's<br>First Pentecostal Church</div>
+      <p class="ft-tag">Rooted in truth, alive in the Spirit, and built for community in Bakersfield, California.</p>
+      <div class="ft-soc">
+        <a href="https://www.facebook.com/gbfpcmedia/" class="ft-s">f</a>
+        <a href="https://www.instagram.com/gbfpc/" class="ft-s">ig</a>
+        <a href="https://www.youtube.com/channel/UCO1PnTTAT_uOS4ZkMjdBzGg/videos" class="ft-s">▶</a>
+      </div>
+    </div>
+    <div class="ft-col"><h5>Our House</h5><ul><li><a href="gbfpc-about.html">About Us</a></li><li><a href="gbfpc-about.html#vision">Our Vision</a></li><li><a href="gbfpc-about.html#articles">Articles of Faith</a></li><li><a href="gbfpc-about.html#history">Church History</a></li></ul></div>
+    <div class="ft-col"><h5>Ministries</h5><ul><li><a href="gbfpc-ministries.html#youth">Amplified Youth</a></li><li><a href="gbfpc-ministries.html#children">K.I.C.K.</a></li><li><a href="gbfpc-ministries.html">Thrive</a></li><li><a href="gbfpc-academy.html">Bethel Academy</a></li><li><a href="gbfpc-academy.html">Kiddie Korral</a></li></ul></div>
+    <div class="ft-col"><h5>Connect</h5><ul><li><a href="gbfpc-visit.html">Plan Your Visit</a></li><li><a href="gbfpc-give.html">Give Online</a></li><li><a href="gbfpc-events.html">Upcoming Events</a></li><li><a href="gbfpc-livestream.html">Livestream</a></li><li><a href="gbfpc-connect.html">Contact Us</a></li></ul></div>
+  </div>
+  <div class="ft-bot">
+    <div class="ft-copy">© 2026 GBFPC. All Rights Reserved.</div>
+    <div class="ft-addr">1418 W Columbus St, Bakersfield, CA 93301 · (661) 323-2851</div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const revObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); revObs.unobserve(e.target); } });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.r, .r-sm').forEach(el => revObs.observe(el));
+
+  // Smooth scroll for in-page anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if(target){ e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+
+  // Articles of Faith accordion
+  function toggleAof(btn) {
+    const item = btn.closest('.aof-item');
+    const isOpen = item.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.aof-item.open').forEach(i => i.classList.remove('open'));
+    // Open clicked if it was closed
+    if(!isOpen) item.classList.add('open');
+  }
+</script>
+
+<script>
+(function() {
+  var toggle = document.getElementById('navToggle');
+  var nav = document.getElementById('mainNav');
+  if (!toggle || !nav) return;
+  toggle.addEventListener('click', function() {
+    var expanded = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!expanded));
+    toggle.setAttribute('aria-label', expanded ? 'Open navigation menu' : 'Close navigation menu');
+    nav.classList.toggle('nav-open', !expanded);
+    document.body.style.overflow = expanded ? '' : 'hidden';
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && nav.classList.contains('nav-open')) {
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open navigation menu');
+      nav.classList.remove('nav-open');
+      document.body.style.overflow = '';
+      toggle.focus();
+    }
+  });
+  nav.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open navigation menu');
+      nav.classList.remove('nav-open');
+      document.body.style.overflow = '';
+    });
+  });
+})();
+</script>
+
+<!-- PAGE TRANSITION -->
+<div id="pg-t"></div>
+<style>
+#pg-t{position:fixed;inset:0;z-index:9999;background:var(--c-darker);opacity:1;pointer-events:all;transition:opacity .5s ease}
+body:has(#intro-splash) #pg-t{opacity:0!important;pointer-events:none!important;transition:none!important}
+</style>
+<script>
+!function(){
+  var t=document.getElementById('pg-t');
+  document.addEventListener('DOMContentLoaded',function(){
+    if(document.getElementById('intro-splash')){
+      t.style.cssText='opacity:0;pointer-events:none;transition:none';
+    } else {
+      requestAnimationFrame(function(){requestAnimationFrame(function(){
+        t.style.opacity='0';t.style.pointerEvents='none';
+      });});
+    }
+    document.addEventListener('click',function(e){
+      var a=e.target.closest('a[href]');if(!a)return;
+      var h=a.getAttribute('href');
+      if(!h||h[0]==='#'||h.startsWith('http')||h.startsWith('mailto')||h.startsWith('tel')||a.target==='_blank')return;
+      e.preventDefault();
+      t.style.cssText='opacity:1;pointer-events:all;transition:opacity .5s ease';
+      setTimeout(function(){window.location.href=h},520);
+    });
+  });
+}();
+</script>
+</body>
+</html>
