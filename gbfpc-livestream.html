@@ -54,11 +54,12 @@
     padding: 0 48px; height: 68px; gap: 0;
   }
   .hdr-logo-link {
-    flex-shrink: 0; display: flex; align-items: center; margin-right: 36px;
+    flex-shrink: 0; display: flex; align-items: center;
   }
   .hdr-logo { height: 36px; width: auto; object-fit: contain; filter: brightness(0); }
   .hdr-nav {
-    display: flex; align-items: center; gap: 32px; flex: 1;
+    position: absolute; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 32px;
   }
   .hdr-nav a {
     font-size: 0.67rem; font-weight: 600; letter-spacing: 0.14em;
@@ -799,95 +800,116 @@
 })();
 </script>
 
-<!-- YouTube recent videos -->
+<!-- YouTube recent livestreams -->
 <script>
 (function(){
   var CHANNEL = 'UCO1PnTTAT_uOS4ZkMjdBzGg';
-  var CHAN_URL = 'https://www.youtube.com/channel/' + CHANNEL + '/videos';
-  var RSS = 'https://www.youtube.com/feeds/videos.xml?channel_id=' + CHANNEL;
-  var API = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(RSS) + '&count=3';
+  var STREAMS_URL = 'https://www.youtube.com/@GBFPCLIVE/streams';
 
-  // Fallback — if fetch takes too long or returns nothing, clear "Loading…"
-  var fallbackTimer = setTimeout(function(){ showEmpty(); }, 6000);
+  // 6-second hard timeout — "Loading…" will never be the final state
+  var fallbackTimer = setTimeout(showEmpty, 6000);
 
   function showEmpty(){
     clearTimeout(fallbackTimer);
     for(var i = 0; i < 3; i++){
       var card = document.getElementById('sc' + i);
       if(!card) continue;
-      var dateEl = card.querySelector('.sermon-date');
+      var dateEl  = card.querySelector('.sermon-date');
       var titleEl = card.querySelector('.sermon-title');
-      var spkEl = card.querySelector('.sermon-speaker');
-      if(dateEl) dateEl.textContent = 'YouTube';
-      if(titleEl) titleEl.textContent = i === 0 ? 'Watch Recent Messages →' : 'View Channel →';
-      if(spkEl) spkEl.textContent = 'GBFPC';
-      card.href = CHAN_URL;
+      var spkEl   = card.querySelector('.sermon-speaker');
+      if(dateEl)  dateEl.textContent  = 'YouTube';
+      if(titleEl) titleEl.textContent = i === 0 ? 'Watch Past Services →' : 'View All Services →';
+      if(spkEl)   spkEl.textContent   = 'GBFPC';
+      card.href = STREAMS_URL;
     }
   }
 
-  fetch(API)
-    .then(function(r){ return r.json(); })
-    .then(function(data){
-      clearTimeout(fallbackTimer);
+  function fillCards(items){
+    /* items: array of { vid, title, date, url } */
+    clearTimeout(fallbackTimer);
+    items.slice(0, 3).forEach(function(item, i){
+      var card = document.getElementById('sc' + i);
+      if(!card) return;
 
-      // rss2json returns status:"ok" on success; anything else = failure
-      if(!data || data.status !== 'ok' || !data.items || !data.items.length){
-        console.warn('YouTube feed empty or error:', data && data.message);
-        showEmpty();
-        return;
+      if(item.url) card.href = item.url;
+
+      // Thumbnail — try maxresdefault, onerror → hqdefault
+      var img = card.querySelector('.st-img');
+      if(img && item.vid){
+        img.alt = item.title || '';
+        img.onload = function(){ img.classList.add('loaded'); };
+        img.onerror = function(){
+          img.onerror = null;
+          img.src = 'https://i.ytimg.com/vi/' + item.vid + '/hqdefault.jpg';
+        };
+        img.src = 'https://i.ytimg.com/vi/' + item.vid + '/maxresdefault.jpg';
+        var thumbEl = card.querySelector('.sermon-thumb');
+        if(thumbEl) thumbEl.classList.remove('sermon-thumb-dark');
       }
 
-      data.items.slice(0, 3).forEach(function(item, i){
-        var card = document.getElementById('sc' + i);
-        if(!card) return;
-
-        // Video ID — handle both ?v=ID and ?v=ID&extra params
-        var vidMatch = (item.link || '').match(/[?&]v=([^&]+)/);
-        var vid = vidMatch ? vidMatch[1] : '';
-        // Try maxresdefault first, hqdefault as fallback (set via onerror)
-        var thumb = vid ? 'https://i.ytimg.com/vi/' + vid + '/maxresdefault.jpg' : '';
-        var title = item.title || '';
-        var date = '';
-        if(item.pubDate){
-          var dt = new Date(item.pubDate);
-          date = dt.toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'});
-        }
-
-        // Link
-        if(item.link) card.href = item.link;
-
-        // Thumbnail
-        var img = card.querySelector('.st-img');
-        if(img && thumb){
-          img.alt = title;
-          img.onload = function(){ img.classList.add('loaded'); };
-          // maxresdefault sometimes 404s — fall back to hqdefault
-          img.onerror = function(){
-            img.onerror = null;
-            img.src = 'https://i.ytimg.com/vi/' + vid + '/hqdefault.jpg';
-          };
-          img.src = thumb;
-          var thumbEl = card.querySelector('.sermon-thumb');
-          if(thumbEl) thumbEl.classList.remove('sermon-thumb-dark');
-        }
-
-        // Date
-        var dateEl = card.querySelector('.sermon-date');
-        if(dateEl) dateEl.textContent = date || 'GBFPC';
-
-        // Title
-        var titleEl = card.querySelector('.sermon-title');
-        if(titleEl) titleEl.textContent = title || 'Recent Message';
-
-        // Speaker
-        var spkEl = card.querySelector('.sermon-speaker');
-        if(spkEl) spkEl.textContent = 'GBFPC';
-      });
-    })
-    .catch(function(e){
-      console.warn('YouTube feed fetch failed:', e);
-      showEmpty();
+      var dateEl  = card.querySelector('.sermon-date');
+      var titleEl = card.querySelector('.sermon-title');
+      var spkEl   = card.querySelector('.sermon-speaker');
+      if(dateEl)  dateEl.textContent  = item.date  || 'GBFPC';
+      if(titleEl) titleEl.textContent = item.title || 'Recent Service';
+      if(spkEl)   spkEl.textContent   = 'GBFPC';
     });
+  }
+
+  function vidFromUrl(url){
+    var m = (url || '').match(/[?&]v=([^&]+)/);
+    return m ? m[1] : '';
+  }
+
+  function fmtDate(ts){
+    /* ts can be ISO string or Unix seconds (Piped uses seconds) */
+    var d = typeof ts === 'number' ? new Date(ts * 1000) : new Date(ts);
+    if(isNaN(d)) return '';
+    return d.toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'});
+  }
+
+  /* ── Source 1: Piped API — returns channel uploads including livestream replays ── */
+  fetch('https://pipedapi.kavin.rocks/channel/' + CHANNEL)
+    .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function(data){
+      var streams = (data.relatedStreams || []).filter(function(s){
+        /* Piped marks livestream replays with isShort===false and duration > 0 */
+        return s && s.url;
+      });
+      if(!streams.length) throw new Error('empty');
+      fillCards(streams.map(function(s){
+        var vid = (s.url || '').replace('/watch?v=','');
+        return {
+          vid:   vid,
+          title: s.title || '',
+          date:  fmtDate(s.uploaded),
+          url:   'https://www.youtube.com/watch?v=' + vid
+        };
+      }));
+    })
+    .catch(function(){
+      /* ── Source 2: rss2json RSS proxy ── */
+      var RSS = 'https://www.youtube.com/feeds/videos.xml?channel_id=' + CHANNEL;
+      var API = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(RSS) + '&count=3';
+      fetch(API)
+        .then(function(r){ return r.json(); })
+        .then(function(d){
+          if(!d || d.status !== 'ok' || !d.items || !d.items.length) throw new Error('empty');
+          fillCards(d.items.map(function(item){
+            var vid = vidFromUrl(item.link);
+            return {
+              vid:   vid,
+              title: item.title || '',
+              date:  fmtDate(item.pubDate),
+              url:   item.link || STREAMS_URL
+            };
+          }));
+        })
+        .catch(function(e){
+          console.warn('YouTube feed fetch failed:', e);
+          showEmpty();
+        }); // end rss2json catch
+    }); // end piped catch
 })();
 </script>
 
