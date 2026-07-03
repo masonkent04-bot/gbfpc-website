@@ -106,10 +106,7 @@
     max-width: 1300px; margin: 0 auto;
     background: var(--c-surface); border-radius: 22px; padding: 80px 72px;
   }
-  .page-hero-inner {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 80px; align-items: end;
-  }
+  /* .page-hero-inner layout defined below alongside .hero-rot-card */
   .page-tag {
     font-size: 0.58rem; font-weight: 700; letter-spacing: 0.28em;
     text-transform: uppercase; color: var(--c-brand); margin-bottom: 20px; display: block;
@@ -345,7 +342,7 @@
     .hdr-nav { padding: 12px 28px; gap: 24px; }
     .hdr-brand { padding: 13px 28px; }
     .page-hero-card { padding: 60px 44px; }
-    .page-hero-inner { gap: 48px; }
+    .page-hero-inner { gap: 40px; }
     #min-intro { padding: 60px 36px 0; }
     .min-intro-grid { grid-template-columns: 1fr; gap: 32px; }
     .min-stat-row { grid-template-columns: repeat(3, 1fr); }
@@ -441,6 +438,7 @@
     #page-hero { padding: 20px 16px; }
     .page-hero-card { padding: 44px 28px; border-radius: 16px; }
     .page-hero-inner { grid-template-columns: 1fr; gap: 28px; }
+    .hero-rot-card { display: none; }
     .page-hero-title { font-size: clamp(3rem, 12vw, 5rem); }
     #min-intro { padding: 48px 20px 0; }
     .min-stat-row { grid-template-columns: 1fr 1fr; }
@@ -471,27 +469,29 @@
   /* ━━━━━━━━━━━━━━━━━━━━━━━━
      HERO IMAGE ROTATION
   ━━━━━━━━━━━━━━━━━━━━━━━━ */
-  .page-hero-card { position: relative; overflow: hidden; }
-  .hero-rot-wrap {
-    position: absolute;
-    right: 0; top: 0; bottom: 0;
-    width: 36%;
-    z-index: 0;
-    pointer-events: none;
+  /* Hero photo card — crossfading rounded image (matches leadership section style) */
+  .page-hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
   }
-  .hero-rot-img {
+  .hero-rot-card {
+    border-radius: 18px;
+    overflow: hidden;
+    aspect-ratio: 4/5;
+    position: relative;
+    background: var(--c-surface);
+    flex-shrink: 0;
+  }
+  .hero-rot-card img {
     position: absolute; inset: 0;
-    background-size: cover; background-position: center;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
     opacity: 0;
     transition: opacity 1.4s ease;
   }
-  .hero-rot-img.active { opacity: 1; }
-  .hero-rot-fade {
-    position: absolute; left: 0; top: 0; bottom: 0; width: 80%;
-    background: linear-gradient(to right, var(--c-surface), transparent);
-    z-index: 1;
-  }
-  .page-hero-inner { position: relative; z-index: 2; }
+  .hero-rot-card img.active { opacity: 1; }
 
   /* ━━━━━━━━━━━━━━━━━━━━━━━━
      MINISTRY PANELS (Passion City style)
@@ -684,15 +684,12 @@
 <div id="main-content"></div>
 <section id="page-hero">
   <div class="page-hero-card">
-    <div class="hero-rot-wrap" aria-hidden="true" id="heroImgRotate"><div class="hero-rot-fade"></div></div>
     <div class="page-hero-inner">
       <div class="page-hero-left">
         <span class="page-tag r">Get Involved</span>
         <h1 class="page-hero-title r d1">Minis&shy;tries.</h1>
-      </div>
-      <div class="page-hero-right r d2">
-        <p class="page-hero-desc">There is a place for everyone here. From youth to adults, worship to outreach — find your community and step into something greater.</p>
-        <div class="page-hero-links">
+        <p class="page-hero-desc r d2">There is a place for everyone here. From youth to adults, worship to outreach — find your community and step into something greater.</p>
+        <div class="page-hero-links r d3">
           <a href="#youth" class="page-link">Youth</a>
           <a href="#thrive" class="page-link">Thrive</a>
           <a href="#children" class="page-link">Children</a>
@@ -700,6 +697,7 @@
           <a href="#outreach" class="page-link">Outreach</a>
         </div>
       </div>
+      <div class="hero-rot-card" id="heroImgRotate" aria-hidden="true"></div>
     </div>
   </div>
 </section>
@@ -828,9 +826,9 @@
       </a>
 
       <!-- MEN OF GBFPC -->
-      <a href="gbfpc-connect.html#mens-ministry" class="min-sc-card r d3 dark-gold">
-        <div class="min-sc-ghost">MEN</div>
-        <div class="min-sc-overlay" style="background:linear-gradient(to top,rgba(0,0,0,0.9) 0%,rgba(0,0,0,0.4) 60%,transparent 100%)"></div>
+      <a href="gbfpc-connect.html#mens-ministry" class="min-sc-card r d3">
+        <div class="min-sc-bg" style="background-image:url('MEDIA/men1.jpg')"></div>
+        <div class="min-sc-overlay"></div>
         <div class="min-sc-body">
           <span class="min-sc-tag">Men's Ministry</span>
           <div class="min-sc-name">Men of<br>GBFPC</div>
@@ -880,12 +878,8 @@
   </div>
 </section>
 
-<!-- ═══════ NEWSLETTER ═══════ -->
-<div class="newsletter-sec">
-  <div class="newsletter-card r">
-    <div>
-      <span class="nl-eyebrow">Stay Connected</span>
-      <div class="nl-title">Stay Up<br>To Date.</div>
+<!-- newsletter archived —— app download coming -->
+<div style="padding-bottom:60px"></div>
       <div class="nl-sub">Join our community and never miss a moment at GBFPC.</div>
     </div>
     <form class="nl-form" action="https://gbfpc.org/newsletter" method="GET" target="_blank">
@@ -984,17 +978,19 @@
     'MEDIA/kick1.jpg',
     'MEDIA/SLJ03694-2.jpg',
     'MEDIA/t-rocket1.jpg',
-    'MEDIA/education1.jpg'
+    'MEDIA/education1.jpg',
+    'MEDIA/men1.jpg'
   ];
   var wrap = document.getElementById('heroImgRotate');
   if(!wrap) return;
-  var fade = wrap.querySelector('.hero-rot-fade');
-  var slides = imgs.map(function(src){
-    var d = document.createElement('div');
-    d.className = 'hero-rot-img';
-    d.style.backgroundImage = 'url(' + src + ')';
-    wrap.insertBefore(d, fade); // insert before fade overlay
-    return d;
+  // Build <img> elements — same rounded-card crossfade as leadership section
+  var slides = imgs.map(function(src, i){
+    var img = document.createElement('img');
+    img.src = src;
+    img.alt = '';
+    img.loading = i === 0 ? 'eager' : 'lazy';
+    wrap.appendChild(img);
+    return img;
   });
   var cur = 0;
   slides[0].classList.add('active');

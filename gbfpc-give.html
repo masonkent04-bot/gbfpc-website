@@ -422,12 +422,8 @@
   </div>
 </section>
 
-<!-- ═══════ NEWSLETTER ═══════ -->
-<div class="newsletter-sec">
-  <div class="newsletter-card r">
-    <div>
-      <span class="nl-eyebrow">Stay Connected</span>
-      <div class="nl-title">Stay Up<br>To Date.</div>
+<!-- newsletter archived —— app download coming -->
+<div style="padding-bottom:60px"></div>
       <div class="nl-sub">Join our community and never miss a moment at GBFPC.</div>
     </div>
     <div class="newsletter-wrap">
@@ -542,6 +538,7 @@ body:has(#intro-splash) #pg-t{opacity:0!important;pointer-events:none!important;
       setTimeout(function(){window.location.href=h},520);
     });
   });
+  window.addEventListener('pageshow',function(e){if(e.persisted){t.style.opacity='0';t.style.pointerEvents='none';}});
 }();
 </script>
 </body>
