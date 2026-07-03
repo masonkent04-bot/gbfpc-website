@@ -909,18 +909,53 @@
     .ft-grid{grid-template-columns:1fr 1fr;gap:36px;}
   }
   @media(max-width:768px){
-    .hdr-spacer{height:70px;}
-    .hero-content{padding:0 26px 44px;}
+    /* ── Header: single flex row (hamburger + logo) ── */
+    #header{display:flex;flex-direction:row;align-items:center;padding:0 16px;min-height:60px;gap:12px;}
+    .hdr-brand{padding:0;flex:1;}
+    .hdr-logo{height:30px;}
+    .hdr-name{font-size:0.6rem;}
+    .hdr-cta{display:none;} /* CTA in hero; save header space on mobile */
+    .hdr-spacer{height:60px;}
+
+    /* ── Hero ── */
+    .hero-content{padding:0 22px 40px;}
+    .hero-h1{font-size:clamp(2.4rem,10vw,3.2rem);}
+    .hero-box{border-radius:14px;}
+
+    /* ── Info strip: tighter cells ── */
     .info-strip{grid-template-columns:1fr 1fr;}
+    .info-cell{padding:16px 14px;gap:10px;}
     .info-cell:nth-child(2){border-right:none;}
     .info-cell:nth-child(1),.info-cell:nth-child(2){border-bottom:1px solid #eee;}
+    .info-val{font-size:0.72rem;white-space:normal;}
+    .info-icon-wrap{width:30px;height:30px;flex-shrink:0;}
+
+    /* ── Section padding ── */
+    .sec{padding-top:60px;padding-bottom:60px;padding-left:20px;padding-right:20px;}
+
+    /* ── Pastor ── */
+    #pastor{padding:52px 20px;}
+    .pastor-feat-title{font-size:clamp(2rem,9vw,3rem);}
+
+    /* ── Ministry cards: show desc on mobile (no hover) ── */
+    .mc-desc{max-height:80px;opacity:1;}
+    .mc-link{opacity:1;max-height:34px;}
+
+    /* ── Grid resets ── */
     .cards{grid-template-columns:1fr;}
     .sermon-cards{grid-template-columns:1fr;}
     .ft-grid{grid-template-columns:1fr;}
     .sec-head,.sermons-head{flex-direction:column;align-items:flex-start;}
     .ft-bot{flex-direction:column;}
-    .signup-inner{flex-direction:column;}
-    .signup-input{min-width:100%;}
+
+    /* ── Signup form ── */
+    .signup-inner{flex-direction:column;align-items:stretch;}
+    .signup-form{flex-direction:column;width:100%;}
+    .signup-input{min-width:100%;border-radius:8px;}
+    .signup-btn{border-radius:8px;width:100%;}
+
+    /* ── Footer ── */
+    footer{padding:48px 20px 32px;}
   }
   
   /* ── INTRO SPLASH ─────────────────────────── */
