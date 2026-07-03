@@ -309,6 +309,16 @@
     transition: color 0.2s;
   }
   .sermon-cta:hover { color: var(--c-dark); }
+  /* YouTube thumbnail fill */
+  .st-img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center;
+    opacity: 0; transition: opacity 0.5s ease;
+  }
+  .st-img.loaded { opacity: 1; }
+  /* keep play button above thumbnail */
+  .play-btn { position: relative; z-index: 1; }
 
   /* ━━━━━━━━━━━━━━━━━━━━━━━━
      WATCH ANYWHERE STRIP
@@ -512,42 +522,45 @@
 
     <div class="sermon-grid">
 
-      <a href="https://www.youtube.com/channel/UCO1PnTTAT_uOS4ZkMjdBzGg/videos" target="_blank" rel="noopener noreferrer" class="sermon-card r d1" aria-label="Watch recent sermons on YouTube">
+      <a href="https://www.youtube.com/channel/UCO1PnTTAT_uOS4ZkMjdBzGg/videos" target="_blank" rel="noopener noreferrer" class="sermon-card r d1" id="sc0">
         <div class="sermon-thumb sermon-thumb-dark">
+          <img class="st-img" src="" alt="" loading="eager"/>
           <div class="play-btn" aria-hidden="true">
             <svg viewBox="0 0 16 16"><polygon points="3 2 13 8 3 14"/></svg>
           </div>
         </div>
         <div class="sermon-body">
-          <span class="sermon-date">Latest Message</span>
-          <div class="sermon-title">Watch Our Most Recent Sermon</div>
-          <div class="sermon-speaker">Pastor Bradford · GBFPC</div>
+          <span class="sermon-date">Loading…</span>
+          <div class="sermon-title">Latest Message</div>
+          <div class="sermon-speaker">GBFPC</div>
         </div>
       </a>
 
-      <a href="https://www.youtube.com/channel/UCO1PnTTAT_uOS4ZkMjdBzGg/videos" target="_blank" rel="noopener noreferrer" class="sermon-card r d2" aria-label="Browse sermon archive on YouTube">
-        <div class="sermon-thumb">
+      <a href="https://www.youtube.com/channel/UCO1PnTTAT_uOS4ZkMjdBzGg/videos" target="_blank" rel="noopener noreferrer" class="sermon-card r d2" id="sc1">
+        <div class="sermon-thumb sermon-thumb-dark">
+          <img class="st-img" src="" alt="" loading="lazy"/>
           <div class="play-btn" aria-hidden="true">
             <svg viewBox="0 0 16 16"><polygon points="3 2 13 8 3 14"/></svg>
           </div>
         </div>
         <div class="sermon-body">
-          <span class="sermon-date">Sermon Archive</span>
-          <div class="sermon-title">Browse All Messages by Topic or Date</div>
-          <div class="sermon-speaker">Multiple speakers · GBFPC</div>
+          <span class="sermon-date">Loading…</span>
+          <div class="sermon-title">Recent Message</div>
+          <div class="sermon-speaker">GBFPC</div>
         </div>
       </a>
 
-      <a href="https://www.youtube.com/channel/UCO1PnTTAT_uOS4ZkMjdBzGg/videos" target="_blank" rel="noopener noreferrer" class="sermon-card r d3" aria-label="Wednesday Bible studies on YouTube">
+      <a href="https://www.youtube.com/channel/UCO1PnTTAT_uOS4ZkMjdBzGg/videos" target="_blank" rel="noopener noreferrer" class="sermon-card r d3" id="sc2">
         <div class="sermon-thumb sermon-thumb-dark">
+          <img class="st-img" src="" alt="" loading="lazy"/>
           <div class="play-btn" aria-hidden="true">
             <svg viewBox="0 0 16 16"><polygon points="3 2 13 8 3 14"/></svg>
           </div>
         </div>
         <div class="sermon-body">
-          <span class="sermon-date">Tuesday Studies</span>
-          <div class="sermon-title">Mid-Week Bible Study Recordings</div>
-          <div class="sermon-speaker">GBFPC · Tuesday 7:30 PM</div>
+          <span class="sermon-date">Loading…</span>
+          <div class="sermon-title">Recent Message</div>
+          <div class="sermon-speaker">GBFPC</div>
         </div>
       </a>
 
@@ -774,6 +787,61 @@
       toggle.focus();
     }
   });
+})();
+</script>
+
+<!-- YouTube recent videos -->
+<script>
+(function(){
+  var CHANNEL = 'UCO1PnTTAT_uOS4ZkMjdBzGg';
+  var RSS = 'https://www.youtube.com/feeds/videos.xml?channel_id=' + CHANNEL;
+  var API = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(RSS) + '&count=3';
+
+  fetch(API)
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if(!d.items || !d.items.length) return;
+      d.items.slice(0,3).forEach(function(item, i){
+        var card = document.getElementById('sc' + i);
+        if(!card) return;
+
+        // Extract video ID from link: https://www.youtube.com/watch?v=XXXX
+        var vid = (item.link || '').split('v=')[1] || '';
+        var thumb = vid ? 'https://i.ytimg.com/vi/' + vid + '/hqdefault.jpg' : '';
+        var title = item.title || '';
+        var date = '';
+        if(item.pubDate){
+          var d2 = new Date(item.pubDate);
+          date = d2.toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'});
+        }
+
+        // Link
+        if(item.link) card.href = item.link;
+
+        // Thumbnail
+        var img = card.querySelector('.st-img');
+        if(img && thumb){
+          img.alt = title;
+          img.onload = function(){ img.classList.add('loaded'); };
+          img.onerror = function(){ /* keep dark background */ };
+          img.src = thumb;
+          card.querySelector('.sermon-thumb').classList.remove('sermon-thumb-dark');
+        }
+
+        // Date
+        var dateEl = card.querySelector('.sermon-date');
+        if(dateEl && date) dateEl.textContent = date;
+
+        // Title
+        var titleEl = card.querySelector('.sermon-title');
+        if(titleEl && title) titleEl.textContent = title;
+
+        // Speaker
+        var spkEl = card.querySelector('.sermon-speaker');
+        if(spkEl) spkEl.textContent = 'GBFPC';
+      });
+    })
+    .catch(function(e){ console.warn('YouTube feed error:', e); });
 })();
 </script>
 
