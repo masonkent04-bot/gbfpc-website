@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Livestream | Greater Bakersfield's First Pentecostal Church</title>
-  <meta name="description" content="Watch GBFPC live online — Sunday at 10:30 AM and Wednesday at 7:00 PM. If we're not streaming right now, catch up on our latest sermon."/>
+  <meta name="description" content="Watch GBFPC live online — Sunday at 10:00 AM &amp; 6:00 PM and Tuesday at 7:30 PM. If we're not streaming right now, catch up on our latest sermon."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
@@ -438,7 +438,7 @@
 
     <h1 class="live-hero-h1 r" id="live-heading">Watch<br>Live.</h1>
     <p class="live-hero-sub r d1" id="liveSubtext">
-      We stream every Sunday at 10:30 AM and Wednesday at 7:00 PM (Pacific Time). If we're not live right now, catch up with our latest message below.
+      We stream every Sunday at 10:00 AM and 6:00 PM and Tuesday at 7:30 PM (Pacific Time). If we're not live right now, catch up with our latest message below.
     </p>
 
     <!-- VIDEO AREA — JS swaps iframe in when live, shows offline state otherwise -->
@@ -483,20 +483,20 @@
     <div class="st-grid r d3">
       <div class="st-item">
         <span class="st-day">Every Sunday</span>
-        <div class="st-name">Sunday School</div>
-        <div class="st-time"><time datetime="09:00">9:00 AM</time></div>
-        <p class="st-desc">All ages · In-person only</p>
-      </div>
-      <div class="st-item">
-        <span class="st-day">Every Sunday</span>
         <div class="st-name">Morning Worship</div>
-        <div class="st-time"><time datetime="10:30">10:30 AM</time></div>
+        <div class="st-time"><time datetime="10:00">10:00 AM</time></div>
         <p class="st-desc">In-person + livestream · Children's church ages 3–11</p>
       </div>
       <div class="st-item">
-        <span class="st-day">Every Wednesday</span>
+        <span class="st-day">Every Sunday</span>
+        <div class="st-name">Evening Service</div>
+        <div class="st-time"><time datetime="18:00">6:00 PM</time></div>
+        <p class="st-desc">In-person + livestream · All are welcome</p>
+      </div>
+      <div class="st-item">
+        <span class="st-day">Every Tuesday</span>
         <div class="st-name">Bible Study</div>
-        <div class="st-time"><time datetime="19:00">7:00 PM</time></div>
+        <div class="st-time"><time datetime="19:30">7:30 PM</time></div>
         <p class="st-desc">In-person + livestream · ~75 minutes</p>
       </div>
     </div>
@@ -545,9 +545,9 @@
           </div>
         </div>
         <div class="sermon-body">
-          <span class="sermon-date">Wednesday Studies</span>
+          <span class="sermon-date">Tuesday Studies</span>
           <div class="sermon-title">Mid-Week Bible Study Recordings</div>
-          <div class="sermon-speaker">GBFPC · Wednesday 7:00 PM</div>
+          <div class="sermon-speaker">GBFPC · Tuesday 7:30 PM</div>
         </div>
       </a>
 
@@ -643,9 +643,10 @@
 
   // ── Live/offline toggle ──
   // Service windows (Pacific Time):
-  //   Sunday 10:30 AM – 12:00 PM   (day=0, hour 10-11)
-  //   Wednesday 7:00 PM – 9:00 PM  (day=3, hour 19-20)
-  // Adds a 10-minute early window so viewers can tune in early.
+  //   Sunday   10:00 AM – ~11:30 AM  (day=0)
+  //   Sunday    6:00 PM – ~7:30 PM   (day=0)
+  //   Tuesday   7:30 PM – ~9:00 PM   (day=2)
+  // 10-minute early window so viewers can tune in before the service starts.
   (function() {
     const YT_CHANNEL_ID = 'UCO1PnTTAT_uOS4ZkMjdBzGg'; // GBFPC YouTube channel
     // YouTube live embed — uses the channel's live stream
@@ -662,38 +663,27 @@
     const ctaEl       = document.getElementById('ctaPrimary');
     const subtext     = document.getElementById('liveSubtext');
 
-    function getNextService(now) {
-      const day  = now.getDay();
-      const hour = now.getHours();
-      const min  = now.getMinutes();
-      const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-
-      // How many days until target day?
-      function daysUntil(target) {
-        return ((target - day + 7) % 7) || 7;
-      }
-
-      // Sunday next?
-      const daysTilSun = day === 0 && (hour < 10) ? 0 : daysUntil(0);
-      // Wednesday next?
-      const daysTilWed = day === 3 && (hour < 19) ? 0 : daysUntil(3);
-
-      if (daysTilSun <= daysTilWed || (daysTilSun === daysTilWed && day === 0)) {
-        if (daysTilSun === 0) return 'Today · Sunday at <strong>10:30 AM</strong>';
-        if (daysTilSun === 1) return 'Tomorrow · Sunday at <strong>10:30 AM</strong>';
-        return 'This ' + days[0] + ' at <strong>10:30 AM</strong>';
-      } else {
-        if (daysTilWed === 0) return 'Today · Wednesday at <strong>7:00 PM</strong>';
-        if (daysTilWed === 1) return 'Tomorrow · Wednesday at <strong>7:00 PM</strong>';
-        return 'This ' + days[3] + ' at <strong>7:00 PM</strong>';
-      }
+    // Returns a human label for the next upcoming service (in PT)
+    function getNextService(d, h, m) {
+      // d = PT day (0=Sun … 6=Sat), h = PT hour (24h), m = PT minute
+      const mins = h * 60 + m;
+      // Sunday: services at 10:00 AM (600) and 6:00 PM (1080)
+      if (d === 0 && mins < 600)  return 'Today · Sunday at <strong>10:00 AM</strong>';
+      if (d === 0 && mins < 1080) return 'Today · Sunday at <strong>6:00 PM</strong>';
+      if (d === 0)                return 'This Tuesday at <strong>7:30 PM</strong>';
+      // Monday: next is Tuesday
+      if (d === 1)                return 'Tomorrow · Tuesday at <strong>7:30 PM</strong>';
+      // Tuesday: service at 7:30 PM (1170)
+      if (d === 2 && mins < 1170) return 'Today · Tuesday at <strong>7:30 PM</strong>';
+      // Wed–Sat (or Tue after 7:30 PM): next is Sunday morning
+      const daysToSun = ((0 - d + 7) % 7) || 7;
+      if (daysToSun === 1)        return 'Tomorrow · Sunday at <strong>10:00 AM</strong>';
+      return 'This Sunday at <strong>10:00 AM</strong>';
     }
 
     function update() {
-      // Get current Pacific time
+      // Get current Pacific time via Intl API
       const nowUTC = new Date();
-      // Convert to PT (UTC-7 PDT / UTC-8 PST)
-      // Using Intl API for accuracy
       const ptFormatter = new Intl.DateTimeFormat('en-US', {
         timeZone: 'America/Los_Angeles',
         weekday: 'short', hour: 'numeric', minute: 'numeric', hour12: false,
@@ -704,13 +694,14 @@
       const ptHour = parseInt(parts.hour, 10);
       const ptMin  = parseInt(parts.minute, 10);
 
-      // Early window: start streaming 10 min before service
-      const isSunday    = ptDay === 0 && (ptHour === 10 && ptMin >= 20 || ptHour === 11);
-      const isWednesday = ptDay === 3 && (ptHour === 19 && ptMin >= 50 || ptHour === 20 || (ptHour === 21 && ptMin === 0));
-      // Actually let's simplify: Sun 10:20am-12:00pm, Wed 6:50pm-9:00pm
-      const isSunLive    = ptDay === 0 && (ptHour === 10 && ptMin >= 20 || ptHour === 11);
-      const isWedLive    = ptDay === 3 && ((ptHour === 18 && ptMin >= 50) || ptHour === 19 || ptHour === 20);
-      const isLive       = isSunLive || isWedLive;
+      // Live windows (10-min early entry):
+      //   Sun morning:  9:50 AM – 11:30 AM
+      //   Sun evening:  5:50 PM – 7:30 PM
+      //   Tue evening:  7:20 PM – 9:00 PM
+      const isSunAM  = ptDay === 0 && (ptHour === 9 && ptMin >= 50 || ptHour === 10 || ptHour === 11);
+      const isSunPM  = ptDay === 0 && (ptHour === 17 && ptMin >= 50 || ptHour === 18 || (ptHour === 19 && ptMin <= 30));
+      const isTueLive= ptDay === 2 && (ptHour === 19 && ptMin >= 20 || ptHour === 20 || (ptHour === 21 && ptMin === 0));
+      const isLive   = isSunAM || isSunPM || isTueLive;
 
       if (isLive) {
         // LIVE STATE
@@ -748,7 +739,7 @@
         offlineLabel.textContent = 'We\'re not live right now. Watch our latest sermon on YouTube.';
 
         const ptNow = new Date(nowUTC.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }));
-        nextEl.innerHTML = getNextService(ptNow);
+        nextEl.innerHTML = getNextService(ptDay, ptHour, ptMin);
 
         ctaEl.href = 'https://www.youtube.com/channel/' + YT_CHANNEL_ID + '/videos';
         ctaEl.innerHTML = '<svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><polygon points="5 3 19 12 5 21 5 3"/></svg> Watch Latest Sermon';
