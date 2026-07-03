@@ -1367,7 +1367,10 @@
     var hActive = hVA, hStandby = hVB, hFading = false;
     hActive.style.opacity = '1';
 
-    hActive.play().catch(function(){
+    hActive.play().catch(function(){}); // silence autoplay rejection
+  })();
+
+(function(){
   var toggle = document.getElementById('navToggle');
   var nav = document.getElementById('mainNav');
   var closeBtn = document.getElementById('navClose');

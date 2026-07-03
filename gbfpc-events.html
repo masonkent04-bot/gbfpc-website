@@ -666,7 +666,7 @@
     var catLabel = CAT_LABELS[ev.category] || ev.category || '';
 
     var imgHtml = ev.image_url
-      ? '<img src="'+escHtml(ev.image_url)+'" alt="'+escHtml(ev.title)+'" loading="lazy" onload="this.classList.add('ev-loaded')" onerror="this.style.display='none'">'
+      ? '<img src="'+escHtml(ev.image_url)+'" alt="'+escHtml(ev.title)+'" loading="lazy" onload="this.classList.add(\'ev-loaded\')" onerror="this.style.display=\'none\'">'
       : '';
 
     var descHtml = featured && ev.description
