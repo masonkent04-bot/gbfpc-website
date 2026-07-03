@@ -338,6 +338,53 @@
       transition-duration: 0.01ms !important;
     }
   }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ GIVE MEDIA SECTIONS ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  /* Editorial photo strip — worship moment after hero */
+  .give-photo-hero { padding: 0 48px 80px; }
+  .give-photo-inner { max-width: 1300px; margin: 0 auto; border-radius: 22px; overflow: hidden; height: 520px; }
+  .give-photo-inner img { width: 100%; height: 100%; object-fit: cover; object-position: center 42%; display: block; }
+
+  /* Community photo inside Why We Give section */
+  .why-photo { margin-top: 64px; border-radius: 18px; overflow: hidden; height: 400px; }
+  .why-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 22%; display: block; }
+
+  /* Closing photo + CTA strip (replaces empty spacer before footer) */
+  .give-cta-strip { padding: 0 48px 80px; }
+  .give-cta-inner {
+    max-width: 1300px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    border: 1px solid var(--c-border); border-radius: 22px; overflow: hidden;
+  }
+  .give-cta-photo { height: 480px; }
+  .give-cta-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 18%; display: block; }
+  .give-cta-text {
+    padding: 64px 60px; display: flex; flex-direction: column; justify-content: center;
+    background: #fff;
+  }
+  .give-cta-headline {
+    font-weight: 900; font-size: clamp(2.4rem, 4vw, 3.8rem);
+    letter-spacing: -0.04em; text-transform: uppercase; line-height: 0.95;
+    margin-bottom: 20px; color: var(--c-dark);
+  }
+  .give-cta-body {
+    font-size: 0.9rem; font-weight: 300; color: #666; line-height: 1.78;
+    margin-bottom: 32px; max-width: 360px;
+  }
+
+  @media (max-width: 1024px) {
+    .give-photo-hero { padding: 0 24px 60px; }
+    .give-cta-strip { padding: 0 24px 60px; }
+  }
+  @media (max-width: 768px) {
+    .give-photo-hero { padding: 0 16px 48px; }
+    .give-photo-inner { height: 280px; border-radius: 16px; }
+    .why-photo { height: 260px; margin-top: 40px; }
+    .give-cta-strip { padding: 0 16px 60px; }
+    .give-cta-inner { grid-template-columns: 1fr; }
+    .give-cta-photo { height: 320px; }
+    .give-cta-text { padding: 40px 28px; }
+  }
   </style>
 </head>
 <body>
@@ -388,6 +435,17 @@
   </div>
 </section>
 
+<!-- ═══════ WORSHIP PHOTO STRIP ═══════ -->
+<section class="give-photo-hero">
+  <div class="give-photo-inner r">
+    <img
+      src="MEDIA/SLJ03750-3.jpg"
+      alt="Congregation worshipping together at GBFPC"
+      loading="lazy"
+    />
+  </div>
+</section>
+
 <!-- ═══════ WHY WE GIVE ═══════ -->
 <section id="why">
   <div class="why-inner">
@@ -401,6 +459,15 @@
         <p class="r d3">Your tithe and offering support everything from ministry programs and community outreach to the operations that keep the doors open. Every dollar given is stewarded with integrity and purpose.</p>
         <p class="r d4">We never want finances to be a barrier to giving. Whether you give weekly or for the very first time, every act of generosity matters.</p>
       </div>
+    </div>
+
+    <!-- Community photo — your giving fuels these moments -->
+    <div class="why-photo r d2">
+      <img
+        src="MEDIA/SLJ03838-2.jpg"
+        alt="Members of GBFPC embracing and connecting"
+        loading="lazy"
+      />
     </div>
   </div>
 </section>
@@ -488,8 +555,24 @@
   </div>
 </section>
 
-<!-- newsletter archived —— app download coming -->
-<div style="padding-bottom:60px"></div>
+<!-- ═══════ CLOSING PHOTO + CTA ═══════ -->
+<section class="give-cta-strip">
+  <div class="give-cta-inner r">
+    <div class="give-cta-photo">
+      <img
+        src="MEDIA/SLJ03746.jpg"
+        alt="Worship team leading the congregation at GBFPC"
+        loading="lazy"
+      />
+    </div>
+    <div class="give-cta-text">
+      <span class="eyebrow gold">Take the Next Step</span>
+      <h2 class="give-cta-headline">Ready<br>to Give?</h2>
+      <p class="give-cta-body">Every gift — large or small — partners you with what God is doing through GBFPC. Give online in minutes, text to give instantly, or bring your offering on Sunday.</p>
+      <a href="https://gbfpc.org/give" class="btn-dark" target="_blank" rel="noopener">Give Online →</a>
+    </div>
+  </div>
+</section>
 
 <!-- ═══════ FOOTER ═══════ -->
 <footer>
