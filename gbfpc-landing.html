@@ -597,7 +597,10 @@
     overflow-y: hidden;
     overscroll-behavior-x: contain;
     touch-action: pan-x;
+    scroll-behavior: auto;
     scrollbar-width: none; -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    will-change: scroll-position;
     cursor: grab;
     padding-bottom: 4px;
   }
@@ -1312,19 +1315,7 @@
 
 
 <!-- ═══════ NEWSLETTER ═══════ -->
-<div class="float-sec" style="padding-top:60px;padding-bottom:60px;">
-  <div class="float-card" id="signup" style="display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap;padding:56px 64px;">
-    <div class="r">
-      <div class="signup-eyebrow">Sign Up</div>
-      <div class="signup-title">Stay Up<br>To Date.</div>
-      <div class="signup-sub">Join our community and never miss a moment at GBFPC.</div>
-    </div>
-    <form class="signup-form r d2" onsubmit="return false;">
-      <input class="signup-input" type="email" placeholder="Email address"/>
-      <button class="signup-btn" type="submit">Stay Connected →</button>
-    </form>
-  </div>
-</div>
+<!-- archived — will replace with church app download section -->
 
 </main>
 
@@ -1441,35 +1432,47 @@
 (function(){
   var track = document.getElementById('ldScrollTrack');
   if(!track) return;
-  var cardW = 244; // card width + gap
+  var cardW = 244;
   var prev = document.getElementById('ldPrev');
   var next = document.getElementById('ldNext');
   if(prev) prev.addEventListener('click', function(){ track.scrollBy({left: -cardW, behavior:'smooth'}); });
   if(next) next.addEventListener('click', function(){ track.scrollBy({left: cardW, behavior:'smooth'}); });
-  // Wheel: vertical stays on page, horizontal scrolls track
+  // Wheel: vertical stays on page
   track.addEventListener('wheel', function(e){
     if(Math.abs(e.deltaY) > Math.abs(e.deltaX) && !e.shiftKey){ return; }
     e.preventDefault();
     track.scrollLeft += e.deltaX || e.deltaY;
   }, {passive: false});
-  // Drag to scroll
-  var isDragging = false, startX = 0, scrollLeft = 0, moved = false;
+  // Drag with momentum
+  var isDragging = false, startX = 0, scrollLeft0 = 0;
+  var velX = 0, prevClientX = 0, prevTime = 0, rafId, moved = false;
+  function momentum(){
+    velX *= 0.88;
+    track.scrollLeft += velX;
+    if(Math.abs(velX) > 0.5){ rafId = requestAnimationFrame(momentum); }
+  }
   track.addEventListener('mousedown', function(e){
-    isDragging = true; moved = false;
-    startX = e.pageX - track.offsetLeft;
-    scrollLeft = track.scrollLeft;
+    isDragging = true; moved = false; velX = 0;
+    cancelAnimationFrame(rafId);
+    startX = e.clientX;
+    scrollLeft0 = track.scrollLeft;
+    prevClientX = e.clientX; prevTime = Date.now();
     track.style.cursor = 'grabbing';
   });
   document.addEventListener('mouseup', function(){
+    if(!isDragging) return;
     isDragging = false;
     track.style.cursor = 'grab';
+    rafId = requestAnimationFrame(momentum);
   });
   track.addEventListener('mousemove', function(e){
     if(!isDragging) return;
     e.preventDefault();
     moved = true;
-    var x = e.pageX - track.offsetLeft;
-    track.scrollLeft = scrollLeft - (x - startX) * 1.4;
+    var now = Date.now(), dt = Math.max(now - prevTime, 1);
+    velX = (prevClientX - e.clientX) / dt * 10;
+    prevClientX = e.clientX; prevTime = now;
+    track.scrollLeft = scrollLeft0 - (e.clientX - startX);
   });
   track.addEventListener('click', function(e){
     if(moved){ e.preventDefault(); moved = false; }

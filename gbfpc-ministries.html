@@ -581,9 +581,10 @@
     overflow-y: hidden;
     overscroll-behavior-x: contain;
     touch-action: pan-x;
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
     scrollbar-width: none; -ms-overflow-style: none;
     -webkit-overflow-scrolling: touch;
+    will-change: scroll-position;
     cursor: grab;
     padding-bottom: 4px;
   }
@@ -1022,26 +1023,37 @@
     e.preventDefault();
     track.scrollLeft += e.deltaX || e.deltaY;
   }, {passive: false});
-  // Drag to scroll
-  var isDragging = false, startX = 0, scrollLeft = 0, moved = false;
+  // Drag with momentum
+  var isDragging = false, startX = 0, scrollLeft0 = 0;
+  var velX = 0, prevClientX = 0, prevTime = 0, rafId, moved = false;
+  function momentum(){
+    velX *= 0.88;
+    track.scrollLeft += velX;
+    if(Math.abs(velX) > 0.5){ rafId = requestAnimationFrame(momentum); }
+  }
   track.addEventListener('mousedown', function(e){
-    isDragging = true; moved = false;
-    startX = e.pageX - track.offsetLeft;
-    scrollLeft = track.scrollLeft;
+    isDragging = true; moved = false; velX = 0;
+    cancelAnimationFrame(rafId);
+    startX = e.clientX;
+    scrollLeft0 = track.scrollLeft;
+    prevClientX = e.clientX; prevTime = Date.now();
     track.style.cursor = 'grabbing';
   });
   document.addEventListener('mouseup', function(){
+    if(!isDragging) return;
     isDragging = false;
     track.style.cursor = 'grab';
+    rafId = requestAnimationFrame(momentum);
   });
   track.addEventListener('mousemove', function(e){
     if(!isDragging) return;
     e.preventDefault();
     moved = true;
-    var x = e.pageX - track.offsetLeft;
-    track.scrollLeft = scrollLeft - (x - startX) * 1.4;
+    var now = Date.now(), dt = Math.max(now - prevTime, 1);
+    velX = (prevClientX - e.clientX) / dt * 10;
+    prevClientX = e.clientX; prevTime = now;
+    track.scrollLeft = scrollLeft0 - (e.clientX - startX);
   });
-  // Prevent link click when dragging
   track.addEventListener('click', function(e){
     if(moved){ e.preventDefault(); moved = false; }
   });
