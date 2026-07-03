@@ -601,6 +601,9 @@
     link.addEventListener('click', closeMenu);
   });
 })();
+
+// Fallback: guarantee static .r elements visible within 900ms
+setTimeout(function(){document.querySelectorAll('.r:not(.in),.r-sm:not(.in)').forEach(function(el){el.classList.add('in');});},900);
 </script>
 
 <!-- ═══════ EVENTS FETCH ═══════ -->

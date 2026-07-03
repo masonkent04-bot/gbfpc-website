@@ -692,6 +692,8 @@
     entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); revObs.unobserve(e.target); } });
   }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.r, .r-sm').forEach(el => revObs.observe(el));
+  // Fallback: guarantee content visible within 900ms if observer hasn't fired
+  setTimeout(function(){document.querySelectorAll('.r:not(.in),.r-sm:not(.in)').forEach(function(el){el.classList.add('in');});},900);
 
   // FAQ accordion
   document.querySelectorAll('.faq-trigger').forEach(btn => {
