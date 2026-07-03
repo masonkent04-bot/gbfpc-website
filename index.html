@@ -591,15 +591,37 @@
      MINISTRIES — cards
   ━━━━━━━━━━━━━━━━━━━━━━━━ */
   .cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
     gap: 14px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    touch-action: pan-x;
+    scrollbar-width: none; -ms-overflow-style: none;
+    cursor: grab;
+    padding-bottom: 4px;
   }
+  .cards::-webkit-scrollbar { display: none; }
   .mc {
+    flex: 0 0 230px;
     border-radius: 14px; overflow: hidden;
     position: relative; aspect-ratio: 3/4;
     cursor: pointer; background: #ddd;
   }
+  /* Landing carousel arrows */
+  .ld-arr-wrap {
+    display: flex; gap: 8px; align-items: center;
+  }
+  .ld-arr {
+    width: 38px; height: 38px; border-radius: 50%;
+    border: 1.5px solid rgba(0,0,0,0.14);
+    background: #fff;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: background 0.18s, border-color 0.18s;
+    color: #111;
+  }
+  .ld-arr:hover { background: #111; color: #fff; border-color: #111; }
+  .ld-arr svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
   .mc-bg {
     position:absolute;inset:0;
     background-size:cover;background-position:center;
@@ -904,7 +926,6 @@
     .pastor-body { grid-template-columns: 1fr; gap: 44px; }
     .pastor-vbox { max-width: 280px; margin: 0 auto; }
     .give-grid,.connect-dark-inner{grid-template-columns:1fr;gap:44px;}
-    .cards{grid-template-columns:repeat(2,1fr);}
     .sermon-cards{grid-template-columns:repeat(2,1fr);}
     .ft-grid{grid-template-columns:1fr 1fr;gap:36px;}
   }
@@ -942,7 +963,6 @@
     .mc-link{opacity:1;max-height:34px;}
 
     /* ── Grid resets ── */
-    .cards{grid-template-columns:1fr;}
     .sermon-cards{grid-template-columns:1fr;}
     .ft-grid{grid-template-columns:1fr;}
     .sec-head,.sermons-head{flex-direction:column;align-items:flex-start;}
@@ -1056,7 +1076,7 @@
     <a href="gbfpc-livestream.html">Livestream</a>
   </nav>
   <div class="hdr-brand">
-    <a href="/" class="hdr-left">
+    <a href="gbfpc-landing.html" class="hdr-left">
       <img src="gbfpc-logo.svg" alt="GBFPC" class="hdr-logo"/>
       <span class="hdr-name">Greater Bakersfield's<br>First Pentecostal Church</span>
     </a>
@@ -1186,13 +1206,19 @@
         <div class="eyebrow r">Our Ministries</div>
         <h2 class="h2 r d1">A Place for<br>Everyone.</h2>
       </div>
-      <a href="gbfpc-ministries.html" class="view-all r d2">View All Ministries →</a>
+      <div style="display:flex;align-items:center;gap:16px;" class="r d2">
+        <div class="ld-arr-wrap">
+          <button class="ld-arr" id="ldPrev" aria-label="Previous"><svg viewBox="0 0 12 12"><path d="M8 1L3 6l5 5"/></svg></button>
+          <button class="ld-arr" id="ldNext" aria-label="Next"><svg viewBox="0 0 12 12"><path d="M4 1l5 5-5 5"/></svg></button>
+        </div>
+        <a href="gbfpc-ministries.html" class="view-all">View All →</a>
+      </div>
     </div>
-    <div class="cards">
+    <div class="cards" id="ldScrollTrack">
       <div class="mc r"><div class="mc-bg" style="background-image:url('MEDIA/t-rocket1.jpg')"></div><div class="mc-ov"></div><div class="mc-body"><div class="mc-tag">Youth</div><div class="mc-name">Amplified Youth</div><div class="mc-desc">Fostering an environment for young people to be filled with Holy Ghost energy and sent out as a voice of truth.</div><a href="gbfpc-ministries.html#youth" class="mc-link">Explore ↗</a></div></div>
       <div class="mc r d1"><div class="mc-bg" style="background-image:url('MEDIA/kick1.jpg')"></div><div class="mc-ov"></div><div class="mc-body"><div class="mc-tag">Children</div><div class="mc-name">K.I.C.K.</div><div class="mc-desc">Kids In Christ's Kingdom — teaching children God's Word through fun, community, and the power of His Spirit.</div><a href="gbfpc-ministries.html#children" class="mc-link">Explore ↗</a></div></div>
       <div class="mc r d2"><div class="mc-bg" style="background-image:url('MEDIA/SLJ03694-2.jpg')"></div><div class="mc-ov"></div><div class="mc-body"><div class="mc-tag">Family</div><div class="mc-name">Thrive</div><div class="mc-desc">Helping families and marriages thrive through prayer, fellowship, relationships, and unity.</div><a href="gbfpc-ministries.html" class="mc-link">Explore ↗</a></div></div>
-      <div class="mc r d1"><div class="mc-bg" style="background-image:url('MEDIA/IMG_6615.jpg')"></div><div class="mc-ov"></div><div class="mc-body"><div class="mc-tag">Education</div><div class="mc-name">Education</div><div class="mc-desc">Bethel Apostolic Academy (K–12) and Kiddie Korral — academic excellence in a Christian environment since 1972.</div><a href="gbfpc-education.html" class="mc-link">Explore ↗</a></div></div>
+      <div class="mc r d1"><div class="mc-bg" style="background-image:url('MEDIA/education1.jpg')"></div><div class="mc-ov"></div><div class="mc-body"><div class="mc-tag">Education</div><div class="mc-name">Education</div><div class="mc-desc">Bethel Apostolic Academy (K–12) and Kiddie Korral — academic excellence in a Christian environment since 1972.</div><a href="gbfpc-education.html" class="mc-link">Explore ↗</a></div></div>
 
     </div>
   </div>
@@ -1410,6 +1436,47 @@
   })();
 </script>
 
+<!-- LANDING MINISTRIES CAROUSEL -->
+<script>
+(function(){
+  var track = document.getElementById('ldScrollTrack');
+  if(!track) return;
+  var cardW = 244; // card width + gap
+  var prev = document.getElementById('ldPrev');
+  var next = document.getElementById('ldNext');
+  if(prev) prev.addEventListener('click', function(){ track.scrollBy({left: -cardW, behavior:'smooth'}); });
+  if(next) next.addEventListener('click', function(){ track.scrollBy({left: cardW, behavior:'smooth'}); });
+  // Wheel: vertical stays on page, horizontal scrolls track
+  track.addEventListener('wheel', function(e){
+    if(Math.abs(e.deltaY) > Math.abs(e.deltaX) && !e.shiftKey){ return; }
+    e.preventDefault();
+    track.scrollLeft += e.deltaX || e.deltaY;
+  }, {passive: false});
+  // Drag to scroll
+  var isDragging = false, startX = 0, scrollLeft = 0, moved = false;
+  track.addEventListener('mousedown', function(e){
+    isDragging = true; moved = false;
+    startX = e.pageX - track.offsetLeft;
+    scrollLeft = track.scrollLeft;
+    track.style.cursor = 'grabbing';
+  });
+  document.addEventListener('mouseup', function(){
+    isDragging = false;
+    track.style.cursor = 'grab';
+  });
+  track.addEventListener('mousemove', function(e){
+    if(!isDragging) return;
+    e.preventDefault();
+    moved = true;
+    var x = e.pageX - track.offsetLeft;
+    track.scrollLeft = scrollLeft - (x - startX) * 1.4;
+  });
+  track.addEventListener('click', function(e){
+    if(moved){ e.preventDefault(); moved = false; }
+  });
+})();
+</script>
+
 <!-- PAGE TRANSITION -->
 <div id="pg-t"></div>
 <style>
@@ -1436,6 +1503,7 @@ body:has(#intro-splash) #pg-t{opacity:0!important;pointer-events:none!important;
       setTimeout(function(){window.location.href=h},520);
     });
   });
+  window.addEventListener('pageshow',function(e){if(e.persisted){t.style.opacity='0';t.style.pointerEvents='none';}});
 }();
 </script>
 

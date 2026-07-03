@@ -577,7 +577,11 @@
 
   .min-scroll-track {
     display: flex; gap: 16px;
-    overflow-x: auto; scroll-behavior: smooth;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    touch-action: pan-x;
+    scroll-behavior: smooth;
     scrollbar-width: none; -ms-overflow-style: none;
     -webkit-overflow-scrolling: touch;
     cursor: grab;
@@ -802,7 +806,7 @@
 
       <!-- EDUCATION -->
       <a href="gbfpc-education.html" class="min-sc-card r d1" id="education">
-        <div class="min-sc-bg" style="background-image:url('MEDIA/IMG_6615.jpg')"></div>
+        <div class="min-sc-bg" style="background-image:url('MEDIA/education1.jpg')"></div>
         <div class="min-sc-overlay"></div>
         <div class="min-sc-body">
           <span class="min-sc-tag">Education &amp; Early Childhood</span>
@@ -813,7 +817,7 @@
 
       <!-- PRAISE TEAM -->
       <a href="gbfpc-connect.html#praise-team" class="min-sc-card r d2" id="worship">
-        <div class="min-sc-bg" style="background-image:url('MEDIA/connect1.jpg')"></div>
+        <div class="min-sc-bg" style="background-image:url('MEDIA/SLJ03746.jpg')"></div>
         <div class="min-sc-overlay"></div>
         <div class="min-sc-body">
           <span class="min-sc-tag">Worship &amp; Arts</span>
@@ -834,9 +838,9 @@
       </a>
 
       <!-- PRAYER MINISTRY -->
-      <a href="gbfpc-connect.html#prayer-ministry" class="min-sc-card r d4 dark-deep">
-        <div class="min-sc-ghost">PRAY</div>
-        <div class="min-sc-overlay" style="background:linear-gradient(to top,rgba(0,0,0,0.9) 0%,rgba(0,0,0,0.4) 60%,transparent 100%)"></div>
+      <a href="gbfpc-connect.html#prayer-ministry" class="min-sc-card r d4">
+        <div class="min-sc-bg" style="background-image:url('MEDIA/prayer1.jpg')"></div>
+        <div class="min-sc-overlay"></div>
         <div class="min-sc-body">
           <span class="min-sc-tag">Intercession</span>
           <div class="min-sc-name">Prayer<br>Ministry</div>
@@ -974,12 +978,12 @@
 (function(){
   var imgs = [
     'MEDIA/landing-placeholder.jpg',
-    'MEDIA/connect1.jpg',
+    'MEDIA/prayer1.jpg',
     'MEDIA/SLJ03746.jpg',
     'MEDIA/kick1.jpg',
     'MEDIA/SLJ03694-2.jpg',
     'MEDIA/t-rocket1.jpg',
-    'MEDIA/IMG_6615.jpg'
+    'MEDIA/education1.jpg'
   ];
   var wrap = document.getElementById('heroImgRotate');
   if(!wrap) return;
@@ -1012,6 +1016,12 @@
   var next = document.getElementById('scNext');
   if(prev) prev.addEventListener('click', function(){ track.scrollBy({left: -cardW, behavior:'smooth'}); });
   if(next) next.addEventListener('click', function(){ track.scrollBy({left: cardW, behavior:'smooth'}); });
+  // Wheel: vertical = let page scroll; horizontal = scroll track
+  track.addEventListener('wheel', function(e){
+    if(Math.abs(e.deltaY) > Math.abs(e.deltaX) && !e.shiftKey){ return; }
+    e.preventDefault();
+    track.scrollLeft += e.deltaX || e.deltaY;
+  }, {passive: false});
   // Drag to scroll
   var isDragging = false, startX = 0, scrollLeft = 0, moved = false;
   track.addEventListener('mousedown', function(e){
@@ -1064,6 +1074,7 @@ body:has(#intro-splash) #pg-t{opacity:0!important;pointer-events:none!important;
       setTimeout(function(){window.location.href=h},520);
     });
   });
+  window.addEventListener('pageshow',function(e){if(e.persisted){t.style.opacity='0';t.style.pointerEvents='none';}});
 }();
 </script>
 </body>
