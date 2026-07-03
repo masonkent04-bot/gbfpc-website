@@ -259,50 +259,63 @@
   /* ━━━━━━━━━━━━━━━━━━━━━━━━
      INFO STRIP — Apple/Passion clean style
   ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  /* ── Info tile strip ── */
   .info-strip {
-    max-width: 1380px;
-    margin: 0 auto;
+    max-width: 1240px;
+    margin: 28px auto 0;
     background: #fff;
-    border-radius: 0 0 14px 14px;
+    border: 1px solid var(--c-border);
+    border-radius: 18px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    box-shadow: 0 1px 0 0 #eee, 1px 0 0 0 #eee, -1px 0 0 0 #eee, 0 4px 20px rgba(0,0,0,0.04);
+    overflow: hidden;
+    box-shadow: 0 4px 28px rgba(0,0,0,0.06);
   }
   .info-cell {
     display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 26px 28px;
-    border-right: 1px solid #f0f0f0;
+    flex-direction: column;
+    padding: 26px 26px 22px;
+    border-right: 1px solid var(--c-border);
     transition: background 0.2s;
-    cursor: pointer;
     text-decoration: none;
+    position: relative;
   }
   .info-cell:last-child { border-right: none; }
-  .info-cell:hover { background: rgba(0,0,0,0.02); }
-  /* Clean SVG icon container */
+  .info-cell:hover { background: #fafafa; }
+  /* Gold-tinted icon tile */
   .info-icon-wrap {
-    width: 36px; height: 36px;
-    border-radius: 50%;
-    background: #f5f5f5;
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: rgba(201,169,110,0.12);
     display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
+    margin-bottom: 18px;
     transition: background 0.2s;
+    flex-shrink: 0;
   }
-  .info-cell:hover .info-icon-wrap { background: #efefef; }
-  .info-icon-wrap svg { width: 16px; height: 16px; stroke: #555; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-  .info-text {}
+  .info-cell:hover .info-icon-wrap { background: rgba(201,169,110,0.22); }
+  .info-icon-wrap svg { width: 17px; height: 17px; stroke: var(--c-brand); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  /* Uppercase micro-label above the value */
   .info-label {
-    font-size: 0.56rem; font-weight: 600;
-    letter-spacing: 0.18em; text-transform: uppercase;
-    color: #bbb; margin-bottom: 4px;
+    font-size: 0.5rem; font-weight: 700;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: #c0c0c0; margin-bottom: 5px;
     display: block;
   }
+  /* Bold value — the hero of each tile */
   .info-val {
-    font-size: 0.8rem; font-weight: 600;
+    font-size: 0.85rem; font-weight: 700;
     color: var(--c-dark); display: block;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.01em; line-height: 1.3;
+    padding-right: 24px; /* room for arrow */
   }
+  /* Arrow indicator — appears on hover */
+  .info-cell::after {
+    content: '→';
+    position: absolute; bottom: 22px; right: 20px;
+    font-size: 0.7rem; color: #d8d8d8;
+    transition: color 0.2s, transform 0.2s;
+  }
+  .info-cell:hover::after { color: var(--c-brand); transform: translateX(3px); }
 
   /* ━━━━━━━━━━━━━━━━━━━━━━━━
      FLOATING CARD SECTIONS
@@ -907,13 +920,14 @@
     .hero-h1{font-size:clamp(2.4rem,10vw,3.2rem);}
     .hero-box{border-radius:14px;}
 
-    /* ── Info strip: tighter cells ── */
-    .info-strip{grid-template-columns:1fr 1fr;}
-    .info-cell{padding:16px 14px;gap:10px;}
+    /* ── Info strip: 2×2 grid on tablet ── */
+    .info-strip{grid-template-columns:1fr 1fr;margin-top:20px;}
+    .info-cell{padding:20px 18px 16px;}
     .info-cell:nth-child(2){border-right:none;}
-    .info-cell:nth-child(1),.info-cell:nth-child(2){border-bottom:1px solid #eee;}
-    .info-val{font-size:0.72rem;white-space:normal;}
-    .info-icon-wrap{width:30px;height:30px;flex-shrink:0;}
+    .info-cell:nth-child(1),.info-cell:nth-child(2){border-bottom:1px solid var(--c-border);}
+    .info-icon-wrap{width:34px;height:34px;margin-bottom:12px;}
+    .info-val{font-size:0.78rem;}
+    .info-cell::after{bottom:14px;right:14px;}
 
     /* ── Section padding ── */
     .sec{padding-top:60px;padding-bottom:60px;padding-left:20px;padding-right:20px;}
@@ -1117,7 +1131,7 @@
 <div class="info-strip">
   <a href="https://goo.gl/maps/EHDMwXpDuT59PkRHA" class="info-cell">
     <div class="info-icon-wrap">
-      <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" stroke="none" fill="#555"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
     </div>
     <div class="info-text"><span class="info-label">Location</span><span class="info-val">1418 W Columbus St, Bakersfield</span></div>
   </a>
