@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Connect | GBFPC</title>
+  <title>Education | GBFPC</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
@@ -50,85 +50,82 @@
 
   /* ━━━━━━━━━━━━━━━━━━━━━━━━ PAGE HERO ━━━━━━━━━━━━━━━━━━━━━━━━ */
   #page-hero { padding: 60px 48px; background: #fff; }
-  .page-hero-card { max-width: 1300px; margin: 0 auto; background: var(--c-surface); border-radius: 22px; padding: 80px 72px; }
+  .page-hero-card { max-width: 1300px; margin: 0 auto; background: var(--c-darker); border-radius: 22px; padding: 80px 72px; }
   .page-hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; }
   .page-tag { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: var(--c-brand); margin-bottom: 20px; display: block; }
-  .page-hero-title { font-weight: 900; font-size: clamp(4rem, 8vw, 8rem); line-height: 0.9; letter-spacing: -0.04em; text-transform: uppercase; color: var(--c-dark); }
-  .page-hero-desc { font-size: 1.05rem; font-weight: 300; color: #666; line-height: 1.75; max-width: 440px; margin-bottom: 32px; }
+  .page-hero-title { font-weight: 900; font-size: clamp(3rem, 6vw, 6rem); line-height: 0.9; letter-spacing: -0.04em; text-transform: uppercase; color: #fff; }
+  .page-hero-desc { font-size: 1.05rem; font-weight: 300; color: rgba(255,255,255,0.55); line-height: 1.75; max-width: 440px; margin-bottom: 32px; }
   .page-hero-links { display: flex; gap: 8px; flex-wrap: wrap; }
-  .page-link { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; padding: 9px 16px; border: 1px solid rgba(0,0,0,0.12); color: #777; border-radius: 100px; background: rgba(255,255,255,0.82); backdrop-filter: blur(6px); transition: border-color 0.2s, color 0.2s; }
-  .page-link:hover { border-color: var(--c-dark); color: var(--c-dark); }
+  .page-link { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; padding: 9px 16px; border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.6); border-radius: 100px; transition: border-color 0.2s, color 0.2s; }
+  .page-link:hover { border-color: rgba(255,255,255,0.6); color: #fff; }
 
-  /* ━━━━━━━━━━━━━━━━━━━━━━━━ CONTACT INFO STRIP ━━━━━━━━━━━━━━━━━━━━━━━━ */
-  #contact-strip { padding: 80px 80px 0; }
-  .contact-strip-inner { max-width: 1240px; margin: 0 auto; }
-  .contact-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 80px; }
-  .contact-card {
-    border: 1px solid var(--c-border); border-radius: 18px; padding: 40px 36px;
-    transition: border-color 0.2s;
-  }
-  .contact-card:hover { border-color: #ccc; }
-  .contact-card-icon { width: 44px; height: 44px; background: var(--c-surface); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
-  .contact-card-icon svg { width: 20px; height: 20px; stroke: var(--c-brand); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-  .contact-card-label { font-size: 0.52rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #bbb; margin-bottom: 8px; display: block; }
-  .contact-card-value { font-weight: 700; font-size: 1rem; color: var(--c-dark); line-height: 1.35; }
-  .contact-card-value a { transition: color 0.2s; }
-  .contact-card-value a:hover { color: var(--c-brand); }
-  .contact-card-sub { font-size: 0.78rem; font-weight: 300; color: #999; margin-top: 6px; line-height: 1.5; }
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ INTRO ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #intro { padding: 100px 80px; }
+  .intro-inner { max-width: 1240px; margin: 0 auto; }
+  .intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; margin-bottom: 72px; }
+  .intro-headline { font-weight: 900; font-size: clamp(2.2rem, 4vw, 3.6rem); line-height: 1.0; letter-spacing: -0.03em; text-transform: uppercase; color: var(--c-dark); }
+  .intro-body p { font-size: 0.93rem; font-weight: 300; color: #666; line-height: 1.82; margin-bottom: 20px; }
+  .intro-body p:last-child { margin-bottom: 0; }
+  .intro-pillars { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; }
+  .intro-pillar { padding: 36px 28px; border-right: 1px solid #f0f0f0; }
+  .intro-pillar:last-child { border-right: none; }
+  .pillar-icon { width: 40px; height: 40px; background: var(--c-surface); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+  .pillar-icon svg { width: 18px; height: 18px; stroke: var(--c-brand); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .pillar-name { font-weight: 800; font-size: 0.82rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--c-dark); margin-bottom: 8px; }
+  .pillar-body { font-size: 0.75rem; font-weight: 300; color: #999; line-height: 1.7; }
 
-  /* ━━━━━━━━━━━━━━━━━━━━━━━━ CONTACT FORM + MAP ━━━━━━━━━━━━━━━━━━━━━━━━ */
-  #contact-main { padding: 0 80px 80px; }
-  .contact-main-inner { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
-  .contact-form-wrap {}
-  .form-title { font-weight: 900; font-size: clamp(1.4rem, 2.5vw, 2rem); letter-spacing: -0.03em; text-transform: uppercase; color: var(--c-dark); margin-bottom: 32px; }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .form-group { margin-bottom: 20px; }
-  .form-label { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--c-muted); margin-bottom: 8px; display: block; }
-  .form-input, .form-select, .form-textarea {
-    width: 100%; padding: 13px 16px;
-    border: 1px solid #e0e0e0; border-radius: 8px;
-    font-family: 'Montserrat', sans-serif; font-size: 0.82rem; color: var(--c-dark);
-    background: #fff; outline: none;
-    transition: border-color 0.2s;
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ PROGRAMS ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #programs { padding: 0 48px 80px; }
+  .prog-grid { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .prog-card {
+    border-radius: 22px; padding: 60px 56px; position: relative; overflow: hidden;
   }
-  .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--c-brand); }
-  .form-textarea { min-height: 120px; resize: vertical; }
-  .form-select { appearance: none; -webkit-appearance: none; cursor: pointer; }
-  .form-submit {
-    width: 100%; padding: 15px; background: var(--c-dark); color: #fff; border: none;
-    font-family: 'Montserrat', sans-serif; font-size: 0.65rem; font-weight: 700;
-    letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; transition: opacity 0.2s;
-    border-radius: 8px;
+  .prog-card.light { background: var(--c-surface); }
+  .prog-card.dark { background: var(--c-darker); }
+  .prog-badge {
+    display: inline-block; padding: 6px 14px; border-radius: 100px;
+    font-size: 0.52rem; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 28px;
   }
-  .form-submit:hover { opacity: 0.78; }
-  .contact-map-wrap {}
-  .map-title { font-weight: 900; font-size: clamp(1.4rem, 2.5vw, 2rem); letter-spacing: -0.03em; text-transform: uppercase; color: var(--c-dark); margin-bottom: 32px; }
-  .map-embed { border-radius: 18px; overflow: hidden; height: 340px; margin-bottom: 28px; }
-  .map-embed iframe { width: 100%; height: 100%; border: none; }
-  .map-address { font-size: 0.88rem; font-weight: 300; color: #666; line-height: 1.7; }
-  .map-address strong { display: block; font-weight: 700; color: var(--c-dark); margin-bottom: 4px; }
-  .map-address a { color: var(--c-brand); font-weight: 600; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; display: inline-block; margin-top: 12px; border-bottom: 1px solid rgba(201,169,110,0.3); padding-bottom: 2px; transition: border-color 0.2s; }
-  .map-address a:hover { border-color: var(--c-brand); }
+  .prog-card.light .prog-badge { background: #e8e5e0; color: var(--c-muted); }
+  .prog-card.dark .prog-badge { background: rgba(201,169,110,0.15); color: var(--c-brand); }
+  .prog-name { font-weight: 900; font-size: clamp(1.8rem, 3vw, 2.6rem); letter-spacing: -0.03em; text-transform: uppercase; color: var(--c-dark); line-height: 1; margin-bottom: 8px; }
+  .prog-card.dark .prog-name { color: #fff; }
+  .prog-ages { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-brand); margin-bottom: 20px; display: block; }
+  .prog-body { font-size: 0.88rem; font-weight: 300; color: #777; line-height: 1.78; margin-bottom: 32px; }
+  .prog-card.dark .prog-body { color: rgba(255,255,255,0.5); }
+  .prog-details { border-top: 1px solid #e0ddd8; padding-top: 24px; }
+  .prog-card.dark .prog-details { border-color: rgba(255,255,255,0.08); }
+  .prog-detail { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 12px; }
+  .prog-detail svg { width: 14px; height: 14px; stroke: var(--c-brand); fill: none; stroke-width: 2; flex-shrink: 0; margin-top: 2px; }
+  .prog-detail-text { font-size: 0.78rem; font-weight: 400; color: var(--c-muted); line-height: 1.5; }
+  .prog-card.dark .prog-detail-text { color: rgba(255,255,255,0.45); }
+  .prog-detail-text strong { color: var(--c-dark); font-weight: 600; }
+  .prog-card.dark .prog-detail-text strong { color: rgba(255,255,255,0.8); }
 
-  /* ━━━━━━━━━━━━━━━━━━━━━━━━ SOCIAL SECTION ━━━━━━━━━━━━━━━━━━━━━━━━ */
-  #social { padding: 0 48px 72px; }
-  .social-card {
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ REDIRECT CTA ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #school-cta { padding: 72px 48px; }
+  .school-cta-card {
     max-width: 1300px; margin: 0 auto;
-    background: var(--c-darker); border-radius: 22px; padding: 72px;
-    display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap;
+    border-radius: 22px; padding: 80px 72px;
+    background: var(--c-brand);
+    display: grid; grid-template-columns: 1fr auto; gap: 60px; align-items: center;
   }
-  .social-text {}
-  .social-eyebrow { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-bottom: 12px; display: block; }
-  .social-headline { font-weight: 900; font-size: clamp(1.8rem, 3vw, 2.8rem); letter-spacing: -0.03em; text-transform: uppercase; color: #fff; line-height: 1; }
-  .social-sub { font-size: 0.88rem; font-weight: 300; color: rgba(255,255,255,0.45); line-height: 1.7; margin-top: 14px; max-width: 400px; }
-  .social-links { display: flex; gap: 16px; flex-shrink: 0; flex-wrap: wrap; }
-  .social-link {
-    display: flex; align-items: center; gap: 10px;
-    padding: 14px 24px; border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.7);
+  .school-cta-eyebrow { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 12px; display: block; }
+  .school-cta-headline { font-weight: 900; font-size: clamp(2rem, 4vw, 3.4rem); letter-spacing: -0.03em; text-transform: uppercase; color: #fff; line-height: 1; margin-bottom: 20px; }
+  .school-cta-body { font-size: 0.93rem; font-weight: 300; color: rgba(255,255,255,0.8); line-height: 1.75; max-width: 500px; }
+  .school-cta-action { flex-shrink: 0; text-align: center; }
+  .school-cta-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: #fff; color: var(--c-dark);
     font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
-    border-radius: 100px; transition: border-color 0.2s, color 0.2s, background 0.2s;
+    padding: 16px 36px; white-space: nowrap;
+    border-radius: 8px;
+    transition: opacity 0.2s;
   }
-  .social-link:hover { border-color: var(--c-brand); color: var(--c-brand); background: rgba(201,169,110,0.06); }
+  .school-cta-btn:hover { opacity: 0.88; }
+  .school-cta-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+  .school-cta-note { font-size: 0.65rem; font-weight: 400; color: rgba(255,255,255,0.5); margin-top: 14px; line-height: 1.5; }
 
   /* ━━━━━━━━━━━━━━━━━━━━━━━━ NEWSLETTER + FOOTER ━━━━━━━━━━━━━━━━━━━━━━━━ */
   .newsletter-sec { padding: 0 48px 60px; }
@@ -165,12 +162,15 @@
     #page-hero { padding: 40px 24px; }
     .page-hero-card { padding: 60px 44px; }
     .page-hero-inner { gap: 48px; }
-    #contact-strip { padding: 60px 36px 0; }
-    .contact-cards { grid-template-columns: 1fr 1fr; }
-    #contact-main { padding: 0 36px 60px; }
-    .contact-main-inner { grid-template-columns: 1fr; gap: 56px; }
-    #social { padding: 0 24px 56px; }
-    .social-card { padding: 60px 44px; }
+    #intro { padding: 72px 36px; }
+    .intro-grid { grid-template-columns: 1fr; gap: 36px; }
+    .intro-pillars { grid-template-columns: 1fr 1fr; }
+    #programs { padding: 0 24px 60px; }
+    .prog-grid { grid-template-columns: 1fr; }
+    .prog-card { padding: 48px 40px; }
+    #school-cta { padding: 56px 24px; }
+    .school-cta-card { grid-template-columns: 1fr; gap: 36px; padding: 60px 44px; }
+    .school-cta-action { text-align: left; }
     .newsletter-sec { padding: 0 24px 48px; }
     .newsletter-card { padding: 44px 40px; }
     footer { padding: 60px 36px 36px; }
@@ -265,14 +265,12 @@
     #page-hero { padding: 20px 16px; }
     .page-hero-card { padding: 44px 28px; border-radius: 16px; }
     .page-hero-inner { grid-template-columns: 1fr; gap: 28px; }
-    #contact-strip { padding: 48px 20px 0; }
-    .contact-cards { grid-template-columns: 1fr; }
-    #contact-main { padding: 0 20px 48px; }
-    .form-row { grid-template-columns: 1fr; }
-    #social { padding: 0 16px 48px; }
-    .social-card { padding: 44px 32px; flex-direction: column; align-items: flex-start; border-radius: 16px; }
-    .social-links { flex-direction: column; width: 100%; }
-    .social-link { justify-content: center; }
+    #intro { padding: 48px 20px; }
+    .intro-pillars { grid-template-columns: 1fr 1fr; }
+    #programs { padding: 0 16px 48px; }
+    .prog-card { padding: 40px 32px; border-radius: 16px; }
+    #school-cta { padding: 40px 16px; }
+    .school-cta-card { padding: 44px 32px; border-radius: 16px; }
     .newsletter-sec { padding: 0 16px 40px; }
     .newsletter-card { padding: 36px 28px; flex-direction: column; align-items: flex-start; }
     .nl-form { flex-direction: column; width: 100%; }
@@ -295,10 +293,10 @@
   <div class="hdr-nav" id="mainNav" aria-label="Main navigation">
     <a href="gbfpc-about.html">About</a>
     <a href="gbfpc-ministries.html">Ministries</a>
-    <a href="gbfpc-education.html">Education</a>
+    <a href="gbfpc-education.html" class="active">Education</a>
     <a href="gbfpc-events.html">Events</a>
     <a href="gbfpc-give.html">Give</a>
-    <a href="gbfpc-connect.html" class="active">Connect</a>
+    <a href="gbfpc-connect.html">Connect</a>
     <a href="gbfpc-livestream.html">Livestream</a>
   </div>
   <div class="hdr-brand">
@@ -318,149 +316,134 @@
   <div class="page-hero-card">
     <div class="page-hero-inner">
       <div class="page-hero-left">
-        <span class="page-tag r">Get in Touch</span>
-        <h1 class="page-hero-title r d1">Con&shy;nect.</h1>
+        <span class="page-tag r">Education &amp; Childcare</span>
+        <h1 class="page-hero-title r d1">Education.</h1>
       </div>
       <div class="page-hero-right r d2">
-        <p class="page-hero-desc">Have a question, prayer request, or just want to know more about GBFPC? We'd love to hear from you — our team is here and ready.</p>
+        <p class="page-hero-desc">Two programs, one mission — faith-rooted education and childcare for every age, from infants through 12th grade, right here at GBFPC.</p>
         <div class="page-hero-links">
-          <a href="#contact-main" class="page-link">Send a Message</a>
-          <a href="#social" class="page-link">Follow Us</a>
+          <a href="#programs" class="page-link">Our Programs</a>
+          <a href="#school-cta" class="page-link">Start the Journey →</a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════ CONTACT INFO CARDS ═══════ -->
-<section id="contact-strip">
-  <!-- Ministry anchors for deep linking from Ministries page -->
-  <span id="amplified-youth"></span>
-  <span id="kick"></span>
-  <span id="bible-quizzing"></span>
-  <span id="praise-team"></span>
-  <span id="mens-ministry"></span>
-  <span id="prayer-ministry"></span>
-  <span id="thrive"></span>
-  <span id="outreach"></span>
-  <div class="contact-strip-inner">
-    <div class="contact-cards">
-      <div class="contact-card r">
-        <div class="contact-card-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" stroke="none" fill="#c9a96e"/></svg>
-        </div>
-        <span class="contact-card-label">Address</span>
-        <div class="contact-card-value"><a href="https://goo.gl/maps/EHDMwXpDuT59PkRHA" target="_blank" rel="noopener">1418 W Columbus St<br>Bakersfield, CA 93301</a></div>
-        <div class="contact-card-sub">Free parking available on-site.</div>
+<!-- ═══════ INTRO ═══════ -->
+<section id="intro">
+  <div class="intro-inner">
+    <div class="intro-grid">
+      <div>
+        <span class="eyebrow gold r">Our Mission</span>
+        <h2 class="intro-headline r d1">Raising the<br>Next<br>Generation.</h2>
       </div>
-      <div class="contact-card r d1">
-        <div class="contact-card-icon">
-          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        </div>
-        <span class="contact-card-label">Phone</span>
-        <div class="contact-card-value"><a href="tel:+16613232851">(661) 323-2851</a></div>
-        <div class="contact-card-sub">Monday – Friday, 9am – 5pm PT</div>
+      <div class="intro-body">
+        <p class="r d2">Bethel Apostolic Academy (BAA) and Kiddie Korral (BKK) are the educational and childcare ministries of GBFPC — a place where academic excellence and Christian values come together to form the whole child. We believe that nurturing a child's mind, heart, and spirit is one of the highest callings we can answer.</p>
+        <p class="r d3">Whether your child is just starting life at Kiddie Korral or finishing their senior year at Bethel Academy, every child who walks through our doors receives the attention, love, and instruction they need to thrive — in the classroom and in life.</p>
       </div>
-      <div class="contact-card r d2">
-        <div class="contact-card-icon">
+    </div>
+    <div class="intro-pillars">
+      <div class="intro-pillar r">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <div class="pillar-name">Academic Excellence</div>
+        <p class="pillar-body">Rigorous, age-appropriate curriculum that builds a strong academic foundation.</p>
+      </div>
+      <div class="intro-pillar r d1">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <div class="pillar-name">Faith Formation</div>
+        <p class="pillar-body">Biblical values and Christian character woven into every day of learning.</p>
+      </div>
+      <div class="intro-pillar r d2">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="pillar-name">Safe Community</div>
+        <p class="pillar-body">A nurturing environment where every child is known, valued, and protected.</p>
+      </div>
+      <div class="intro-pillar r d3">
+        <div class="pillar-icon">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <div class="pillar-name">Whole Child</div>
+        <p class="pillar-body">Developing mind, body, and spirit — preparing children for every season ahead.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ PROGRAMS ═══════ -->
+<section id="programs">
+  <div class="prog-grid">
+
+    <!-- Bethel Academy -->
+    <div class="prog-card light r">
+      <span class="prog-badge">K–12 Education</span>
+      <div class="prog-name">Bethel Apostolic<br>Academy</div>
+      <span class="prog-ages">Kindergarten through 12th Grade</span>
+      <p class="prog-body">BAA provides a complete Christian education — from Kindergarten through high school. With a strong academic curriculum, dedicated teachers, and a faith-centered environment, students are prepared for college, career, and life.</p>
+      <div class="prog-details">
+        <div class="prog-detail">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          <span class="prog-detail-text"><strong>Grades Served</strong> Kindergarten – 12th Grade</span>
+        </div>
+        <div class="prog-detail">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span class="prog-detail-text"><strong>Schedule</strong> Full school-year academic calendar</span>
         </div>
-        <span class="contact-card-label">Service Times</span>
-        <div class="contact-card-value">Sunday &amp; Tuesday</div>
-        <div class="contact-card-sub">Sun 10:00 AM &amp; 6:00 PM<br>Tue 7:30 PM</div>
+        <div class="prog-detail">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="none"/><circle cx="12" cy="9" r="2.5" fill="none"/></svg>
+          <span class="prog-detail-text"><strong>Location</strong> On-site at GBFPC, 1418 W Columbus St</span>
+        </div>
       </div>
     </div>
+
+    <!-- Kiddie Korral -->
+    <div class="prog-card dark r d1">
+      <span class="prog-badge">Early Childhood</span>
+      <div class="prog-name">Kiddie<br>Korral</div>
+      <span class="prog-ages">Infant through Pre-K</span>
+      <p class="prog-body">BKK is GBFPC's daycare and Pre-K program — providing a warm, safe, and faith-filled environment for infants through Pre-Kindergarten. Parents can trust that their little ones are in loving, capable hands while they work, worship, or serve.</p>
+      <div class="prog-details">
+        <div class="prog-detail">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          <span class="prog-detail-text"><strong>Ages Served</strong> Infant – Pre-Kindergarten</span>
+        </div>
+        <div class="prog-detail">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span class="prog-detail-text"><strong>Hours</strong> Weekday childcare available — contact for schedule</span>
+        </div>
+        <div class="prog-detail">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="none"/><circle cx="12" cy="9" r="2.5" fill="none"/></svg>
+          <span class="prog-detail-text"><strong>Location</strong> On-site at GBFPC, 1418 W Columbus St</span>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
-<!-- ═══════ CONTACT FORM + MAP ═══════ -->
-<section id="contact-main">
-  <div class="contact-main-inner">
-    <div class="contact-form-wrap r">
-      <div class="form-title">Send Us<br>a Message</div>
-      <form id="contactForm" action="mailto:info@gbfpc.org" method="POST" enctype="text/plain" novalidate>
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">First Name</label>
-            <input class="form-input" type="text" placeholder="John"/>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Last Name</label>
-            <input class="form-input" type="text" placeholder="Smith"/>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Email Address</label>
-          <input class="form-input" type="email" placeholder="john@example.com"/>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Phone (optional)</label>
-          <input class="form-input" type="tel" placeholder="(661) 000-0000"/>
-        </div>
-        <div class="form-group">
-          <label class="form-label">I'm reaching out about</label>
-          <select class="form-select form-input">
-            <option value="">Select a topic</option>
-            <option>General Question</option>
-            <option>Prayer Request</option>
-            <option>Plan My Visit</option>
-            <option>Ministries &amp; Get Involved</option>
-            <option>Giving &amp; Stewardship</option>
-            <option>Pastoral Support</option>
-            <option>Academy / School Inquiry</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Message</label>
-          <textarea class="form-textarea" placeholder="Tell us how we can help…"></textarea>
-        </div>
-        <button class="form-submit" type="submit" aria-label="Send message to GBFPC">Send Message →</button>
-      </form>
-      <p class="form-note" style="font-size:0.78rem;color:#888;margin-top:1rem;text-align:center;">
-        Your message will open in your email client. Alternatively, call us at <a href="tel:+16613232851" style="color:#c9a96e;">(661) 323-2851</a>.
+<!-- ═══════ REDIRECT CTA ═══════ -->
+<section id="school-cta">
+  <div class="school-cta-card r">
+    <div>
+      <span class="school-cta-eyebrow">Full Information &amp; Enrollment</span>
+      <div class="school-cta-headline">One Website.<br>Both Programs.</div>
+      <p class="school-cta-body">Bethel Apostolic Academy (K&ndash;12) and Kiddie Korral (Daycare &amp; Pre-K) both live at <strong>baabkk.org</strong>. Enrollment, tuition, academic calendars, staff, and more &mdash; everything you need is there.</p>
+    </div>
+    <div class="school-cta-action">
+      <a href="https://baabkk.org" class="school-cta-btn" target="_blank" rel="noopener">
+        Explore the Academy →
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+      <p class="school-cta-note">Bethel Apostolic Academy &amp; Kiddie Korral<br>official site &mdash; opens in a new tab.</p>
+      <p style="margin-top: 1rem; font-size: 0.85rem; color: rgba(255,255,255,0.6);">
+        Questions? Call the church office at <a href="tel:+16613232851" style="color: #fff; font-weight: 600;">(661) 323-2851</a>
       </p>
-    </div>
-    <div class="contact-map-wrap r d1">
-      <div class="map-title">Find<br>Us Here</div>
-      <div class="map-embed">
-        <iframe
-          src="https://maps.google.com/maps?q=1418+W+Columbus+St,+Bakersfield,+CA+93301&output=embed"
-          allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-          title="Church location map">
-        </iframe>
-      </div>
-      <div class="map-address">
-        <strong>Greater Bakersfield's First Pentecostal Church</strong>
-        1418 W Columbus St, Bakersfield, CA 93301<br>
-        (661) 323-2851
-        <a href="https://goo.gl/maps/EHDMwXpDuT59PkRHA" target="_blank" rel="noopener">Get Directions →</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════ SOCIAL ═══════ -->
-<section id="social">
-  <div class="social-card r">
-    <div class="social-text">
-      <span class="social-eyebrow">Stay Connected</span>
-      <div class="social-headline">Follow<br>Along.</div>
-      <p class="social-sub">Sermons, updates, events, and more — stay connected with GBFPC on social media wherever you are.</p>
-    </div>
-    <div class="social-links">
-      <a href="https://www.facebook.com/gbfpcmedia/" class="social-link" target="_blank" rel="noopener">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-        Facebook
-      </a>
-      <a href="https://www.instagram.com/gbfpc/" class="social-link" target="_blank" rel="noopener">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        Instagram
-      </a>
-      <a href="https://www.youtube.com/channel/UCO1PnTTAT_uOS4ZkMjdBzGg/videos" class="social-link" target="_blank" rel="noopener">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20.06 12 20.06 12 20.06s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
-        YouTube
-      </a>
     </div>
   </div>
 </section>
@@ -469,7 +452,7 @@
 <div class="newsletter-sec">
   <div class="newsletter-card r">
     <div>
-      <span class="nl-eyebrow">Email Updates</span>
+      <span class="nl-eyebrow">Stay Connected</span>
       <div class="nl-title">Stay Up<br>To Date.</div>
       <div class="nl-sub">Join our community and never miss a moment at GBFPC.</div>
     </div>

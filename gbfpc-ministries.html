@@ -467,6 +467,88 @@
       transition-duration: 0.01ms !important;
     }
   }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     HERO IMAGE ROTATION
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  .page-hero-card { position: relative; overflow: hidden; }
+  .hero-rot-wrap {
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 36%;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .hero-rot-img {
+    position: absolute; inset: 0;
+    background-size: cover; background-position: center;
+    opacity: 0;
+    transition: opacity 1.4s ease;
+  }
+  .hero-rot-img.active { opacity: 1; }
+  .hero-rot-fade {
+    position: absolute; left: 0; top: 0; bottom: 0; width: 80%;
+    background: linear-gradient(to right, var(--c-surface), transparent);
+    z-index: 1;
+  }
+  .page-hero-inner { position: relative; z-index: 2; }
+
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     MINISTRY PANELS (Passion City style)
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #ministry-panels { padding: 72px 80px; background: #fff; }
+  .min-panels-wrap { max-width: 1240px; margin: 0 auto; }
+  .min-panels-header { margin-bottom: 48px; }
+  .min-panels-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+  .min-panel { }
+  .min-panel-photo {
+    border-radius: 18px;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    margin-bottom: 26px;
+    background: var(--c-surface);
+    cursor: default;
+  }
+  .min-panel-photo img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    transition: transform 0.8s cubic-bezier(0.22,1,0.36,1);
+  }
+  .min-panel:hover .min-panel-photo img { transform: scale(1.04); }
+  .min-panel-tag {
+    font-size: 0.52rem; font-weight: 700; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--c-brand); margin-bottom: 10px; display: block;
+  }
+  .min-panel-name {
+    font-weight: 900; font-size: clamp(1.6rem, 2.5vw, 2.4rem);
+    letter-spacing: -0.03em; text-transform: uppercase; color: var(--c-dark);
+    line-height: 1; margin-bottom: 12px;
+  }
+  .min-panel-desc {
+    font-size: 0.84rem; font-weight: 300; color: #777;
+    line-height: 1.72; margin-bottom: 22px; max-width: 460px;
+  }
+  .min-panel-link {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 0.58rem; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--c-dark);
+    border-bottom: 1px solid #ddd; padding-bottom: 3px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .min-panel-link:hover { color: var(--c-brand); border-color: var(--c-brand); }
+
+  @media(max-width:1024px) {
+    #ministry-panels { padding: 60px 36px; }
+  }
+  @media(max-width:768px) {
+    #ministry-panels { padding: 48px 20px; }
+    .min-panels-grid { grid-template-columns: 1fr; gap: 40px; }
+    .hero-rot-wrap { display: none; }
+  }
   </style>
 </head>
 <body>
@@ -482,7 +564,7 @@
   <nav class="hdr-nav" id="mainNav" aria-label="Main navigation">
     <a href="gbfpc-about.html">About</a>
     <a href="gbfpc-ministries.html" class="active">Ministries</a>
-    <a href="gbfpc-academy.html">Academy</a>
+    <a href="gbfpc-education.html">Education</a>
     <a href="gbfpc-events.html">Events</a>
     <a href="gbfpc-give.html">Give</a>
     <a href="gbfpc-connect.html">Connect</a>
@@ -503,6 +585,7 @@
 <div id="main-content"></div>
 <section id="page-hero">
   <div class="page-hero-card">
+    <div class="hero-rot-wrap" aria-hidden="true" id="heroImgRotate"><div class="hero-rot-fade"></div></div>
     <div class="page-hero-inner">
       <div class="page-hero-left">
         <span class="page-tag r">Get Involved</span>
@@ -512,6 +595,7 @@
         <p class="page-hero-desc">There is a place for everyone here. From youth to adults, worship to outreach — find your community and step into something greater.</p>
         <div class="page-hero-links">
           <a href="#youth" class="page-link">Youth</a>
+          <a href="#thrive" class="page-link">Thrive</a>
           <a href="#children" class="page-link">Children</a>
           <a href="#worship" class="page-link">Worship</a>
           <a href="#outreach" class="page-link">Outreach</a>
@@ -536,16 +620,16 @@
     </div>
     <div class="min-stat-row">
       <div class="min-stat r">
-        <span class="min-stat-num">8+</span>
-        <span class="min-stat-label">Active Ministries</span>
+        <span class="min-stat-num">Many</span>
+        <span class="min-stat-label">Spirit-Led Ministries</span>
       </div>
       <div class="min-stat r d1">
         <span class="min-stat-num">80+</span>
         <span class="min-stat-label">Years of Ministry</span>
       </div>
       <div class="min-stat r d2">
-        <span class="min-stat-num">1</span>
-        <span class="min-stat-label">Community. One Church.</span>
+        <span class="min-stat-num">3</span>
+        <span class="min-stat-label">Generations of Leadership</span>
       </div>
     </div>
   </div>
@@ -557,24 +641,54 @@
 
     <div class="min-grid">
 
-      <!-- AMPLIFIED YOUTH — Featured full-width -->
-      <div class="min-card featured r" id="youth">
-        <div class="min-card-content">
-          <div class="min-card-icon">
-            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </div>
-          <span class="min-card-tag">Youth · Ages 13–18</span>
-          <div class="min-card-name">Amplified Youth</div>
-          <p class="min-card-body">High-energy, Spirit-filled youth ministry for teens in middle and high school. Wednesday nights are where faith gets real — worship, the Word, and a community that genuinely does life together. Special events, camps, and outings happen throughout the year.</p>
-          <a href="gbfpc-connect.html#amplified-youth" class="min-card-link">
-            Join This Ministry →
-            <svg viewBox="0 0 12 12"><path d="M1 6h10M7 2l4 4-4 4"/></svg>
-          </a>
+    </div><!-- /min-grid -->
+  </div>
+</section>
+
+<!-- ═══════ MINISTRY PANELS — Amplified Youth + Thrive ═══════ -->
+<section id="ministry-panels" aria-label="Featured Ministries">
+  <div class="min-panels-wrap">
+    <div class="min-panels-header r">
+      <span class="eyebrow gold">Featured Ministries</span>
+    </div>
+    <div class="min-panels-grid">
+
+      <!-- AMPLIFIED YOUTH -->
+      <div class="min-panel r" id="youth">
+        <div class="min-panel-photo">
+          <img src="MEDIA/t-rocket1.jpg" alt="Amplified Youth ministry" loading="lazy"/>
         </div>
-        <div class="min-card-img">
-          <span class="min-card-img-placeholder">AY</span>
-        </div>
+        <span class="min-panel-tag">Youth · Ages 13–18</span>
+        <div class="min-panel-name">Amplified Youth</div>
+        <p class="min-panel-desc">High-energy, Spirit-filled ministry for teens. Tuesday nights are where faith gets real — worship, the Word, and a community that genuinely does life together. Special events, camps, and outings throughout the year.</p>
+        <a href="gbfpc-connect.html#amplified-youth" class="min-panel-link">
+          Join This Ministry
+          <svg viewBox="0 0 12 12" style="width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round"><path d="M1 6h10M7 2l4 4-4 4"/></svg>
+        </a>
       </div>
+
+      <!-- THRIVE -->
+      <div class="min-panel r d2" id="thrive">
+        <div class="min-panel-photo">
+          <img src="MEDIA/SLJ03694-2.jpg" alt="Thrive Women and Family Ministry" loading="lazy"/>
+        </div>
+        <span class="min-panel-tag">Women & Family Ministry</span>
+        <div class="min-panel-name">Thrive</div>
+        <p class="min-panel-desc">Helping women, families, and marriages thrive through prayer, fellowship, and authentic community. A place to grow deeper in faith and find your people.</p>
+        <a href="gbfpc-connect.html#thrive" class="min-panel-link">
+          Join This Ministry
+          <svg viewBox="0 0 12 12" style="width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round"><path d="M1 6h10M7 2l4 4-4 4"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ MINISTRIES GRID ═══════ -->
+<section id="ministries-grid">
+  <div class="min-grid-inner">
+    <div class="min-grid">
 
       <!-- K.I.C.K. -->
       <div class="min-card r d1" id="children">
@@ -590,21 +704,22 @@
         </a>
       </div>
 
-      <!-- THRIVE -->
-      <div class="min-card r d2">
+      <!-- EDUCATION -->
+      <div class="min-card r d2" id="education">
         <div class="min-card-icon">
-          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
         </div>
-        <span class="min-card-tag">Women & Family Ministry</span>
-        <div class="min-card-name">Thrive</div>
-        <p class="min-card-body">Helping women, families, and marriages thrive through prayer, fellowship, and authentic community.</p>
-        <a href="gbfpc-connect.html#thrive" class="min-card-link">
-          Join This Ministry →
+        <span class="min-card-tag">Education & Early Childhood</span>
+        <div class="min-card-name">Education</div>
+        <p class="min-card-body">Bethel Apostolic Academy (K–12) and Kiddie Korral (daycare & Pre-K) — academic excellence grounded in Christian values. Training young people in faith, character, and knowledge from their earliest years through graduation.</p>
+        <a href="gbfpc-education.html" class="min-card-link">
+          Learn More →
           <svg viewBox="0 0 12 12"><path d="M1 6h10M7 2l4 4-4 4"/></svg>
         </a>
       </div>
 
-      <!-- BIBLE QUIZZING -->
+      <!-- BIBLE QUIZZING — archived
+
       <div class="min-card r d1">
         <div class="min-card-icon">
           <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
@@ -730,9 +845,9 @@
     <div class="ft-col"><h5>Ministries</h5><ul>
       <li><a href="gbfpc-ministries.html#youth">Amplified Youth</a></li>
       <li><a href="gbfpc-ministries.html#children">K.I.C.K.</a></li>
-      <li><a href="gbfpc-ministries.html#kiddie-korral">Kiddie Korral</a></li>
-      <li><a href="gbfpc-ministries.html">Thrive</a></li>
-      <li><a href="gbfpc-academy.html">Bethel Academy</a></li>
+      <li><a href="gbfpc-ministries.html#thrive">Thrive</a></li>
+      <li><a href="gbfpc-education.html">Education</a></li>
+      <li><a href="gbfpc-ministries.html#outreach">Outreach</a></li>
     </ul></div>
     <div class="ft-col"><h5>Connect</h5><ul>
       <li><a href="gbfpc-visit.html">Plan Your Visit</a></li>
@@ -784,6 +899,38 @@
       document.body.style.overflow = '';
     });
   });
+})();
+</script>
+
+
+<script>
+(function(){
+  var imgs = [
+    'MEDIA/landing-placeholder.jpg',
+    'MEDIA/connect1.jpg',
+    'MEDIA/SLJ03746.jpg',
+    'MEDIA/kick1.jpg',
+    'MEDIA/SLJ03694-2.jpg',
+    'MEDIA/t-rocket1.jpg',
+    'MEDIA/IMG_6615.jpg'
+  ];
+  var wrap = document.getElementById('heroImgRotate');
+  if(!wrap) return;
+  var fade = wrap.querySelector('.hero-rot-fade');
+  var slides = imgs.map(function(src){
+    var d = document.createElement('div');
+    d.className = 'hero-rot-img';
+    d.style.backgroundImage = 'url(' + src + ')';
+    wrap.insertBefore(d, fade); // insert before fade overlay
+    return d;
+  });
+  var cur = 0;
+  slides[0].classList.add('active');
+  setInterval(function(){
+    slides[cur].classList.remove('active');
+    cur = (cur + 1) % slides.length;
+    slides[cur].classList.add('active');
+  }, 3800);
 })();
 </script>
 
