@@ -127,6 +127,8 @@
     .hdr-nav {
       display: none;
       position: fixed; inset: 0;
+      /* reset desktop transform that shifts nav left 50% of its own width */
+      transform: none; left: 0;
       background: #fff; z-index: 1050;
       flex-direction: column; align-items: center; justify-content: center;
       gap: 2.5rem;
@@ -940,6 +942,9 @@
     /* ── Pastor ── */
     #pastor{padding:52px 20px;}
     .pastor-feat-title{font-size:clamp(2rem,9vw,3rem);}
+    /* Explicit height on mobile — aspect-ratio:9/16 collapses to 0 when
+       all children are absolutely positioned (iOS Safari grid context bug) */
+    .pastor-vbox { max-width:100%; width:100%; height:460px; aspect-ratio:auto; }
 
     /* ── Ministry cards: show desc on mobile (no hover) ── */
     .mc-desc{max-height:80px;opacity:1;}
