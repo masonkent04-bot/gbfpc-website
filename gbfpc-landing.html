@@ -1409,6 +1409,8 @@ window.scrollTo(0, 0);
     toggle.setAttribute('aria-label','Close menu');
     toggle.classList.add('nav-toggle-open');
     document.body.style.overflow = 'hidden';
+    // iOS Safari: fixed inside sticky = broken; switch header to relative while nav is open
+    var hdr=document.getElementById('header');if(hdr)hdr.style.position='relative';
   }
   function closeMenu(){
     nav.classList.remove('nav-open');
@@ -1416,6 +1418,7 @@ window.scrollTo(0, 0);
     toggle.setAttribute('aria-label','Open menu');
     toggle.classList.remove('nav-toggle-open');
     document.body.style.overflow = '';
+    var hdr=document.getElementById('header');if(hdr)hdr.style.position='';
   }
   toggle.addEventListener('click', function(){
     if(toggle.getAttribute('aria-expanded')==='true'){ closeMenu(); } else { openMenu(); }
