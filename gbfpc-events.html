@@ -595,21 +595,25 @@
   var closeBtn = document.getElementById('navClose');
   if(!toggle || !nav) return;
   function openMenu(){
+    // Teleport nav to body so position:fixed works on iOS Safari
+    // (fixed inside sticky is broken on iOS — nav only covers header height)
+    nav.__origParent = nav.parentNode; nav.__origNext = nav.nextSibling;
+    document.body.appendChild(nav);
     nav.classList.add('nav-open');
     toggle.setAttribute('aria-expanded','true');
     toggle.setAttribute('aria-label','Close menu');
     toggle.classList.add('nav-toggle-open');
     document.body.style.overflow = 'hidden';
-    // iOS Safari: fixed inside sticky = broken; switch header to relative while nav is open
-    var hdr=document.getElementById('header');if(hdr)hdr.style.position='relative';
   }
   function closeMenu(){
     nav.classList.remove('nav-open');
+    // Move nav back into header
+    if(nav.__origNext){ nav.__origParent.insertBefore(nav,nav.__origNext); }
+    else { nav.__origParent.appendChild(nav); }
     toggle.setAttribute('aria-expanded','false');
     toggle.setAttribute('aria-label','Open menu');
     toggle.classList.remove('nav-toggle-open');
     document.body.style.overflow = '';
-    var hdr=document.getElementById('header');if(hdr)hdr.style.position='';
   }
   toggle.addEventListener('click', function(){
     if(toggle.getAttribute('aria-expanded')==='true'){ closeMenu(); } else { openMenu(); }
