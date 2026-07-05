@@ -17,7 +17,9 @@
   --c-border:  #ebebeb;
 }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+  /* scroll-behavior intentionally NOT set globally — prevents browser-triggered
+     scroll events (video loop, focus management) from smooth-scrolling
+     to unexpected positions. User-initiated anchor scrolls work fine. */
 
   /* ── Skip to main content ── */
   .skip-link {
@@ -165,6 +167,9 @@
     position: absolute; inset: 0;
     overflow: hidden;
   }
+  /* Block pointer events on the hero video — prevents iOS from
+     "scroll to video" behavior on loop/play and blocks accidental taps */
+  .hero-bg video { pointer-events: none; }
   /* Shared layer base — canvas fallback + video elements */
   .hero-layer {
     position: absolute; inset: 0;
@@ -1052,6 +1057,11 @@
   <div class="is-loc">Bakersfield &nbsp;&middot;&nbsp; California</div>
   <div class="is-line-wrap"><div class="is-line"></div></div>
 </div>
+<script>
+// Prevent browser from restoring a previous scroll position on load
+if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+window.scrollTo(0, 0);
+</script>
 <script>
 !function(){
   var s=document.getElementById('intro-splash');
