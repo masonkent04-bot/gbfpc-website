@@ -741,7 +741,7 @@ setTimeout(function(){document.querySelectorAll('.r:not(.in),.r-sm:not(.in)').fo
   var today = new Date().toISOString().slice(0,10);
   var endpoint = SUPABASE_URL + '/rest/v1/events'
     + '?is_published=eq.true'
-    + '&event_date=gte.' + today
+    + '&or=(event_date.gte.' + today + ',date_end.gte.' + today + ')'
     + '&order=is_featured.desc,event_date.asc'
     + '&limit=20'
     + '&select=*';
