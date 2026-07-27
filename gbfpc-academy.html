@@ -18,7 +18,7 @@
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body { background: #fff; color: var(--c-dark); font-family: 'Montserrat', sans-serif; overflow-x: hidden; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+  body { background: #fff; color: var(--c-dark); font-family: 'Montserrat', sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
   a { color: inherit; text-decoration: none; }
   img { display: block; }
 
@@ -497,7 +497,7 @@
     </ul></div>
   </div>
   <div class="ft-bot">
-    <div class="ft-copy">© 2026 GBFPC. All Rights Reserved.</div>
+    <div class="ft-copy">© 2026 GBFPC. All Rights Reserved. <a href="https://gbfpc-admin.vercel.app" style="color:inherit;opacity:0.3;text-decoration:none;margin-left:8px;">Staff</a></div>
     <div class="ft-addr">1418 W Columbus St, Bakersfield, CA 93301 · (661) 323-2851</div>
   </div>
 </footer>
@@ -539,6 +539,8 @@
     entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); revObs.unobserve(e.target); } });
   }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.r, .r-sm').forEach(el => revObs.observe(el));
+  // Fallback: guarantee content visible within 900ms if observer hasn't fired
+  setTimeout(function(){document.querySelectorAll('.r:not(.in),.r-sm:not(.in)').forEach(function(el){el.classList.add('in');});},900);
 </script>
 
 <!-- PAGE TRANSITION -->
