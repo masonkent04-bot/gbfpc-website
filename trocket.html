@@ -8,83 +8,63 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <style>
-  :root {
-    --brand:   #c9a96e;
-    --dark:    #111111;
-    --surface: #f7f6f3;
-    --muted:   #888888;
-    --border:  #e8e8e8;
-    --red:     #d94f4f;
-    --green:   #2e9e6b;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body {
-    background: #fff;
-    color: var(--dark);
-    font-family: 'Montserrat', sans-serif;
-    -webkit-font-smoothing: antialiased;
-    min-height: 100vh;
-  }
-  .top-bar { display: flex; align-items: center; justify-content: center; padding: 20px 24px; border-bottom: 1px solid var(--border); }
-  .top-bar img { height: 36px; }
-  .form-hero { background: var(--surface); padding: 40px 24px 36px; text-align: center; border-bottom: 1px solid var(--border); }
-  .form-eyebrow { font-size: 0.55rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: var(--brand); margin-bottom: 10px; display: block; }
-  .form-title { font-weight: 900; font-size: clamp(2rem, 8vw, 3rem); letter-spacing: -0.03em; line-height: 1; text-transform: uppercase; color: var(--dark); margin-bottom: 14px; }
-  .form-sub { font-size: 0.8rem; color: var(--muted); line-height: 1.65; max-width: 480px; margin: 0 auto; }
-  .form-wrap { max-width: 600px; margin: 0 auto; padding: 40px 24px 80px; }
-  .section-head { font-size: 0.6rem; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase; color: var(--dark); padding-bottom: 12px; margin: 36px 0 20px; border-bottom: 1px solid var(--border); }
-  .section-head:first-child { margin-top: 0; }
-  .field { margin-bottom: 18px; }
-  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
-  .field-row-3 { display: grid; grid-template-columns: 1fr 80px 90px; gap: 10px; margin-bottom: 18px; }
-  label { display: block; font-size: 0.52rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
-  label .req { color: var(--red); margin-left: 2px; }
-  input[type="text"], input[type="email"], input[type="tel"], input[type="date"], textarea, select { width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: 10px; font-family: 'Montserrat', sans-serif; font-size: 0.85rem; font-weight: 500; color: var(--dark); background: #fff; outline: none; transition: border-color 0.2s; -webkit-appearance: none; appearance: none; }
-  input:focus, textarea:focus, select:focus { border-color: var(--brand); }
-  input::placeholder, textarea::placeholder { color: #ccc; font-weight: 400; }
-  textarea { min-height: 88px; resize: vertical; }
-  .children-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 16px; }
-  .child-row { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; align-items: end; padding: 16px; background: var(--surface); border-radius: 12px; border: 1px solid var(--border); }
-  .child-row .child-num { grid-column: 1 / -1; font-size: 0.52rem; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: var(--brand); margin-bottom: 4px; }
-  .child-remove { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border); background: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 1rem; line-height: 1; transition: border-color 0.2s, color 0.2s; flex-shrink: 0; margin-bottom: 1px; }
-  .child-remove:hover { border-color: var(--red); color: var(--red); }
-  .add-child-btn { width: 100%; padding: 12px; border: 1.5px dashed var(--border); border-radius: 10px; background: none; cursor: pointer; font-family: 'Montserrat', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); transition: border-color 0.2s, color 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
-  .add-child-btn:hover { border-color: var(--brand); color: var(--brand); }
-  .add-child-btn svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2.5; fill: none; }
-  .ack-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
-  .ack-title { font-size: 0.65rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: var(--dark); margin-bottom: 12px; }
-  .ack-text { font-size: 0.78rem; line-height: 1.7; color: #555; margin-bottom: 16px; }
-  .ack-text p { margin-bottom: 10px; }
-  .ack-text p:last-child { margin-bottom: 0; }
-  .ack-check-row { display: flex; gap: 12px; align-items: flex-start; margin-top: 16px; }
-  .ack-check-row input[type="checkbox"] { width: 18px; height: 18px; flex-shrink: 0; accent-color: var(--brand); cursor: pointer; margin-top: 2px; }
-  .ack-check-label { font-size: 0.75rem; font-weight: 600; color: var(--dark); line-height: 1.5; cursor: pointer; }
-  .submit-btn { width: 100%; padding: 16px; background: var(--dark); color: #fff; border: none; border-radius: 12px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; transition: background 0.2s, transform 0.1s; margin-top: 8px; }
-  .submit-btn:hover { background: #222; }
-  .submit-btn:active { transform: scale(0.99); }
-  .submit-btn:disabled { background: #bbb; cursor: not-allowed; }
-  .msg { display: none; padding: 14px 16px; border-radius: 10px; font-size: 0.78rem; font-weight: 600; margin-top: 16px; line-height: 1.5; }
-  .msg.error { background: #fdf0f0; color: var(--red); border: 1px solid #f5c6c6; display: block; }
-  .msg.success { background: #f0fdf6; color: var(--green); border: 1px solid #a7e8c8; display: block; }
-  #success-screen { display: none; max-width: 600px; margin: 0 auto; padding: 60px 24px 80px; text-align: center; }
-  .success-icon { width: 64px; height: 64px; background: #f0fdf6; border-radius: 50%; margin: 0 auto 24px; display: flex; align-items: center; justify-content: center; }
-  .success-icon svg { width: 28px; height: 28px; stroke: var(--green); stroke-width: 2.5; fill: none; }
-  .success-title { font-weight: 900; font-size: 1.8rem; letter-spacing: -0.03em; text-transform: uppercase; margin-bottom: 12px; }
-  .success-body { font-size: 0.85rem; color: var(--muted); line-height: 1.65; max-width: 380px; margin: 0 auto; }
-  .success-link { display: inline-block; margin-top: 18px; font-size: 0.85rem; color: var(--green); text-decoration: none; font-weight: 600; }
-  .success-link:hover { text-decoration: underline; }
-  .required-note { font-size: 0.7rem; color: var(--muted); margin-bottom: 28px; }
-  .required-note span { color: var(--red); }
-  @media (max-width: 480px) {
-    .field-row { grid-template-columns: 1fr; }
-    .field-row-3 { grid-template-columns: 1fr 1fr; }
-    .field-row-3 .field:last-child { grid-column: 1 / -1; }
-    .child-row { grid-template-columns: 1fr 1fr; }
-    .child-row .child-remove { grid-column: 2; grid-row: 1; justify-self: end; }
-    .child-row .child-num { grid-column: 1; }
-    .child-row .field:nth-child(3), .child-row .field:nth-child(4) { grid-column: span 1; }
-  }
+  :root { --brand:#c9a96e; --dark:#111111; --surface:#f7f6f3; --muted:#888888; --border:#e8e8e8; --red:#d94f4f; --green:#2e9e6b; }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:#fff;color:var(--dark);font-family:'Montserrat',sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+  .top-bar{display:flex;align-items:center;justify-content:center;padding:20px 24px;border-bottom:1px solid var(--border)}
+  .top-bar img{height:36px}
+  .form-hero{background:var(--surface);padding:40px 24px 36px;text-align:center;border-bottom:1px solid var(--border)}
+  .form-eyebrow{font-size:.55rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--brand);margin-bottom:10px;display:block}
+  .form-title{font-weight:900;font-size:clamp(2rem,8vw,3rem);letter-spacing:-.03em;line-height:1;text-transform:uppercase;color:var(--dark);margin-bottom:14px}
+  .form-sub{font-size:.8rem;color:var(--muted);line-height:1.65;max-width:480px;margin:0 auto}
+  .form-wrap{max-width:600px;margin:0 auto;padding:40px 24px 80px}
+  .section-head{font-size:.6rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--dark);padding-bottom:12px;margin:36px 0 20px;border-bottom:1px solid var(--border)}
+  .section-head:first-child{margin-top:0}
+  .field{margin-bottom:18px}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+  label{display:block;font-size:.52rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  label .req{color:var(--red);margin-left:2px}
+  input[type=text],input[type=email],input[type=tel],input[type=date],textarea,select{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:10px;font-family:'Montserrat',sans-serif;font-size:.85rem;font-weight:500;color:var(--dark);background:#fff;outline:none;transition:border-color .2s;-webkit-appearance:none;appearance:none}
+  input:focus,textarea:focus,select:focus{border-color:var(--brand)}
+  input::placeholder,textarea::placeholder{color:#ccc;font-weight:400}
+  textarea{min-height:88px;resize:vertical}
+  .children-list{display:flex;flex-direction:column;gap:14px;margin-bottom:16px}
+  .child-row{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:end;padding:16px;background:var(--surface);border-radius:12px;border:1px solid var(--border)}
+  .child-row .child-num{grid-column:1/-1;font-size:.52rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--brand);margin-bottom:4px}
+  .child-remove{width:32px;height:32px;border-radius:50%;border:1px solid var(--border);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:1rem;line-height:1;transition:border-color .2s,color .2s;flex-shrink:0;margin-bottom:1px}
+  .child-remove:hover{border-color:var(--red);color:var(--red)}
+  .add-child-btn{width:100%;padding:12px;border:1.5px dashed var(--border);border-radius:10px;background:none;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);transition:border-color .2s,color .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+  .add-child-btn:hover{border-color:var(--brand);color:var(--brand)}
+  .add-child-btn svg{width:14px;height:14px;stroke:currentColor;stroke-width:2.5;fill:none}
+  .ack-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px}
+  .ack-title{font-size:.65rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--dark);margin-bottom:12px}
+  .ack-text{font-size:.78rem;line-height:1.7;color:#555;margin-bottom:16px}
+  .ack-text p{margin-bottom:8px}
+  .ack-text ul{margin:0 0 14px 0;padding-left:16px}
+  .ack-text ul li{margin-bottom:6px}
+  .ack-text ul:last-child{margin-bottom:0}
+  .ack-sub-head{font-size:.65rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--dark);margin:14px 0 8px!important}
+  .ack-check-row{display:flex;gap:12px;align-items:flex-start;margin-top:16px}
+  .ack-check-row input[type=checkbox]{width:18px;height:18px;flex-shrink:0;accent-color:var(--brand);cursor:pointer;margin-top:2px}
+  .ack-check-label{font-size:.75rem;font-weight:600;color:var(--dark);line-height:1.5;cursor:pointer}
+  .submit-btn{width:100%;padding:16px;background:var(--dark);color:#fff;border:none;border-radius:12px;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;transition:background .2s,transform .1s;margin-top:8px}
+  .submit-btn:hover{background:#222}
+  .submit-btn:active{transform:scale(.99)}
+  .submit-btn:disabled{background:#bbb;cursor:not-allowed}
+  .msg{display:none;padding:14px 16px;border-radius:10px;font-size:.78rem;font-weight:600;margin-top:16px;line-height:1.5}
+  .msg.error{background:#fdf0f0;color:var(--red);border:1px solid #f5c6c6;display:block}
+  .msg.success{background:#f0fdf6;color:var(--green);border:1px solid #a7e8c8;display:block}
+  #success-screen{display:none;max-width:600px;margin:0 auto;padding:60px 24px 80px;text-align:center}
+  .success-icon{width:64px;height:64px;background:#f0fdf6;border-radius:50%;margin:0 auto 24px;display:flex;align-items:center;justify-content:center}
+  .success-icon svg{width:28px;height:28px;stroke:var(--green);stroke-width:2.5;fill:none}
+  .success-title{font-weight:900;font-size:1.8rem;letter-spacing:-.03em;text-transform:uppercase;margin-bottom:12px}
+  .success-body{font-size:.85rem;color:var(--muted);line-height:1.65;max-width:380px;margin:0 auto}
+  .success-link{display:inline-block;margin-top:18px;font-size:.85rem;color:var(--green);text-decoration:none;font-weight:600}
+  .success-link:hover{text-decoration:underline}
+  .required-note{font-size:.7rem;color:var(--muted);margin-bottom:28px}
+  .required-note span{color:var(--red)}
+  @media(max-width:480px){.field-row{grid-template-columns:1fr}.child-row{grid-template-columns:1fr 1fr}.child-row .child-remove{grid-column:2;grid-row:1;justify-self:end}.child-row .child-num{grid-column:1}}
   </style>
 </head>
 <body>
@@ -110,7 +90,7 @@
       <div class="field"><label>City <span class="req">*</span></label><input type="text" id="address_city" placeholder="Bakersfield" required/></div>
       <div class="field"><label>State <span class="req">*</span></label><input type="text" id="address_state" placeholder="CA" maxlength="2" required/></div>
     </div>
-    <div class="field" style="max-width:160px;"><label>Zip Code <span class="req">*</span></label><input type="text" id="address_zip" placeholder="93301" maxlength="10" required/></div>
+    <div class="field" style="max-width:160px"><label>Zip Code <span class="req">*</span></label><input type="text" id="address_zip" placeholder="93301" maxlength="10" required/></div>
     <div class="section-head">Children Riding</div>
     <div class="children-list" id="children-list"></div>
     <button type="button" class="add-child-btn" id="add-child-btn">
@@ -122,14 +102,34 @@
     <div class="field"><label>Additional Notes</label><textarea id="notes" placeholder="Anything else we should know…"></textarea></div>
     <div class="section-head">Acknowledgment</div>
     <div class="ack-box">
-      <div class="ack-title">Permission &amp; Release</div>
+      <div class="ack-title">Parent/Guardian Consent — GBFPC</div>
       <div class="ack-text">
-        <p>By submitting this form, I give permission for my child(ren) listed above to ride the T-Rocket van with Greater Bakersfield's First Pentecostal Church. I understand that church staff will accompany all riders and that every reasonable precaution will be taken for their safety.</p>
-        <p>I acknowledge that I have read and agree to the terms outlined by the church regarding transportation, conduct, and emergency procedures.</p>
+        <p>I hereby give permission for my child(ren) to:</p>
+        <ul>
+          <li>Ride the bus to and from GBFPC and its events.</li>
+          <li>Participate in church-related activities and programs.</li>
+          <li>Be under the supervision of adult staff and volunteers.</li>
+        </ul>
+        <p class="ack-sub-head">Liability &amp; Supervision</p>
+        <ul>
+          <li>I release GBFPC, its staff, trustees, volunteers, etc., from any and all liability for injuries, sickness, death, or property damage that may occur during participation.</li>
+          <li>Staff and volunteers will make every reasonable effort to keep children safe, but they are not responsible if a child leaves the program or event without permission. GBFPC is not responsible for any consequences.</li>
+          <li>I give permission for medical professionals or staff to provide emergency care to my child if needed.</li>
+        </ul>
+        <p class="ack-sub-head">Photos &amp; Videos</p>
+        <ul>
+          <li>I allow GBFPC to take &amp; use photos/videos of my child for promotion (e.g., Facebook, Instagram).</li>
+          <li>My child's name may be used in captions unless I request otherwise.</li>
+          <li>GBFPC owns all rights to the media; no compensation will be provided for these images.</li>
+        </ul>
+        <p class="ack-sub-head">Behavior &amp; Discipline</p>
+        <ul>
+          <li>If my child receives 3 behavior warnings, they may be sent home or suspended from the program at the discretion of Sunday School leadership.</li>
+        </ul>
       </div>
       <div class="ack-check-row">
         <input type="checkbox" id="ack_check"/>
-        <label class="ack-check-label" for="ack_check">I have read the above and give my consent for my child(ren) to participate in the T-Rocket program. <span class="req">*</span></label>
+        <label class="ack-check-label" for="ack_check">I have read and agree to all of the above terms on behalf of my child(ren). <span class="req">*</span></label>
       </div>
     </div>
     <input type="hidden" id="submission_date"/>
@@ -144,91 +144,82 @@
   <a href="/gbfpc-index.html" class="success-link">Visit our website to see what's going on at the church →</a>
 </div>
 <script>
-(function () {
-  var SUPABASE_URL = 'https://keuecvwaailuvouwegod.supabase.co';
-  var ANON_KEY = 'sb_publishable_LRE10Uf2omW1sP2qqKsbEQ_gvPLaKVC';
-  var dateEl = document.getElementById('submission_date');
-  dateEl.value = new Date().toISOString().slice(0, 10);
-  var childCount = 0;
-  var list = document.getElementById('children-list');
-  function addChild() {
+(function(){
+  var SUPABASE_URL='https://keuecvwaailuvouwegod.supabase.co';
+  var ANON_KEY='sb_publishable_LRE10Uf2omW1sP2qqKsbEQ_gvPLaKVC';
+  var dateEl=document.getElementById('submission_date');
+  dateEl.value=new Date().toISOString().slice(0,10);
+  var childCount=0,list=document.getElementById('children-list');
+  function addChild(){
     childCount++;
-    var idx = childCount;
-    var row = document.createElement('div');
-    row.className = 'child-row';
-    row.dataset.idx = idx;
-    row.innerHTML = '<span class="child-num">Child ' + idx + '</span>' +
-      '<div class="field"><label>First Name <span class="req">*</span></label><input type="text" class="child-first" placeholder="First" required/></div>' +
-      '<div class="field"><label>Last Name <span class="req">*</span></label><input type="text" class="child-last" placeholder="Last" required/></div>' +
+    var idx=childCount,row=document.createElement('div');
+    row.className='child-row';row.dataset.idx=idx;
+    row.innerHTML='<span class="child-num">Child '+idx+'</span>'+
+      '<div class="field"><label>First Name <span class="req">*</span></label><input type="text" class="child-first" placeholder="First" required/></div>'+
+      '<div class="field"><label>Last Name <span class="req">*</span></label><input type="text" class="child-last" placeholder="Last" required/></div>'+
       '<button type="button" class="child-remove" title="Remove child" onclick="removeChild(this)">×</button>';
-    list.appendChild(row);
-    updateRemoveButtons();
-    row.querySelector('.child-first').focus();
+    list.appendChild(row);updateRemoveButtons();row.querySelector('.child-first').focus();
   }
-  window.removeChild = function (btn) { btn.closest('.child-row').remove(); renumberChildren(); updateRemoveButtons(); };
-  function renumberChildren() {
-    var rows = list.querySelectorAll('.child-row');
-    rows.forEach(function (row, i) { row.querySelector('.child-num').textContent = 'Child ' + (i + 1); });
-    childCount = rows.length;
+  window.removeChild=function(btn){btn.closest('.child-row').remove();renumberChildren();updateRemoveButtons();};
+  function renumberChildren(){
+    var rows=list.querySelectorAll('.child-row');
+    rows.forEach(function(row,i){row.querySelector('.child-num').textContent='Child '+(i+1);});
+    childCount=rows.length;
   }
-  function updateRemoveButtons() {
-    var rows = list.querySelectorAll('.child-row');
-    rows.forEach(function (row) { row.querySelector('.child-remove').style.visibility = rows.length > 1 ? 'visible' : 'hidden'; });
+  function updateRemoveButtons(){
+    var rows=list.querySelectorAll('.child-row');
+    rows.forEach(function(row){row.querySelector('.child-remove').style.visibility=rows.length>1?'visible':'hidden';});
   }
-  document.getElementById('add-child-btn').addEventListener('click', addChild);
+  document.getElementById('add-child-btn').addEventListener('click',addChild);
   addChild();
-  document.getElementById('trocket-form').addEventListener('submit', function (e) {
+  document.getElementById('trocket-form').addEventListener('submit',function(e){
     e.preventDefault();
-    var msg = document.getElementById('form-msg');
-    msg.className = 'msg';
-    msg.style.display = 'none';
-    var children = [];
-    list.querySelectorAll('.child-row').forEach(function (row) {
-      children.push({ first: row.querySelector('.child-first').value.trim(), last: row.querySelector('.child-last').value.trim() });
+    var msg=document.getElementById('form-msg');
+    msg.className='msg';msg.style.display='none';
+    var children=[];
+    list.querySelectorAll('.child-row').forEach(function(row){
+      children.push({first:row.querySelector('.child-first').value.trim(),last:row.querySelector('.child-last').value.trim()});
     });
-    var errors = [];
-    if (!val('guardian_first')) errors.push('Guardian first name is required.');
-    if (!val('guardian_last')) errors.push('Guardian last name is required.');
-    if (!val('phone')) errors.push('Phone number is required.');
-    if (!val('address_street')) errors.push('Street address is required.');
-    if (!val('address_city')) errors.push('City is required.');
-    if (!val('address_state')) errors.push('State is required.');
-    if (!val('address_zip')) errors.push('Zip code is required.');
-    if (!val('allergies')) errors.push('Allergies/medical field is required.');
-    children.forEach(function (c, i) { if (!c.first || !c.last) errors.push('Child ' + (i+1) + ' needs both first and last name.'); });
-    if (!document.getElementById('ack_check').checked) errors.push('Please read and check the acknowledgment to continue.');
-    if (errors.length) { msg.textContent = errors[0]; msg.className = 'msg error'; return; }
-    var btn = document.getElementById('submit-btn');
-    btn.disabled = true;
-    btn.textContent = 'Submitting…';
-    var payload = {
-      guardian_first: val('guardian_first'), guardian_last: val('guardian_last'),
-      email: val('email') || null, phone: val('phone'),
-      address_street: val('address_street'), address_city: val('address_city'),
-      address_state: val('address_state'), address_zip: val('address_zip'),
-      children: children, allergies: val('allergies'),
-      notes: val('notes') || null, submission_date: dateEl.value
+    var errors=[];
+    if(!val('guardian_first'))errors.push('Guardian first name is required.');
+    if(!val('guardian_last'))errors.push('Guardian last name is required.');
+    if(!val('phone'))errors.push('Phone number is required.');
+    if(!val('address_street'))errors.push('Street address is required.');
+    if(!val('address_city'))errors.push('City is required.');
+    if(!val('address_state'))errors.push('State is required.');
+    if(!val('address_zip'))errors.push('Zip code is required.');
+    if(!val('allergies'))errors.push('Allergies/medical field is required.');
+    children.forEach(function(c,i){if(!c.first||!c.last)errors.push('Child '+(i+1)+' needs both first and last name.');});
+    if(!document.getElementById('ack_check').checked)errors.push('Please read and check the acknowledgment to continue.');
+    if(errors.length){msg.textContent=errors[0];msg.className='msg error';return;}
+    var btn=document.getElementById('submit-btn');
+    btn.disabled=true;btn.textContent='Submitting…';
+    var payload={
+      guardian_first:val('guardian_first'),guardian_last:val('guardian_last'),
+      email:val('email')||null,phone:val('phone'),
+      address_street:val('address_street'),address_city:val('address_city'),
+      address_state:val('address_state'),address_zip:val('address_zip'),
+      children:children,allergies:val('allergies'),
+      notes:val('notes')||null,submission_date:dateEl.value
     };
-    fetch(SUPABASE_URL + '/rest/v1/trocket_submissions', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY, 'Prefer': 'return=minimal' },
-      body: JSON.stringify(payload)
+    fetch(SUPABASE_URL+'/rest/v1/trocket_submissions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':ANON_KEY,'Authorization':'Bearer '+ANON_KEY,'Prefer':'return=minimal'},
+      body:JSON.stringify(payload)
     })
-    .then(function (res) {
-      if (!res.ok) return res.text().then(function(t){ throw new Error(t); });
-      document.getElementById('form-wrap').style.display = 'none';
-      document.getElementById('success-screen').style.display = 'block';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    .then(function(res){
+      if(!res.ok)return res.text().then(function(t){throw new Error(t);});
+      document.getElementById('form-wrap').style.display='none';
+      document.getElementById('success-screen').style.display='block';
+      window.scrollTo({top:0,behavior:'smooth'});
     })
-    .catch(function (err) {
+    .catch(function(err){
       console.error(err);
-      msg.textContent = 'Something went wrong — please try again or contact the church office.';
-      msg.className = 'msg error';
-      btn.disabled = false;
-      btn.textContent = 'Submit Permission Slip';
+      msg.textContent='Something went wrong — please try again or contact the church office.';
+      msg.className='msg error';btn.disabled=false;btn.textContent='Submit Permission Slip';
     });
   });
-  function val(id) { return document.getElementById(id).value.trim(); }
+  function val(id){return document.getElementById(id).value.trim();}
 })();
 </script>
 </body>
