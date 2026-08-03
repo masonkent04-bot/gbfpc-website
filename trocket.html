@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <style>
-  :root { --brand:#c9a96e; --dark:#111111; --surface:#f7f6f3; --muted:#888888; --border:#e8e8e8; --red:#d94f4f; --green:#2e9e6b; }
+  :root{--brand:#c9a96e;--dark:#111111;--surface:#f7f6f3;--muted:#888888;--border:#e8e8e8;--red:#d94f4f;--green:#2e9e6b}
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
   body{background:#fff;color:var(--dark);font-family:'Montserrat',sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
@@ -48,6 +48,11 @@
   .ack-check-row{display:flex;gap:12px;align-items:flex-start;margin-top:16px}
   .ack-check-row input[type=checkbox]{width:18px;height:18px;flex-shrink:0;accent-color:var(--brand);cursor:pointer;margin-top:2px}
   .ack-check-label{font-size:.75rem;font-weight:600;color:var(--dark);line-height:1.5;cursor:pointer}
+  .sig-wrap{position:relative;border:1px solid var(--border);border-radius:10px;background:#fff;overflow:hidden}
+  .sig-canvas{display:block;width:100%;height:160px;cursor:crosshair;touch-action:none}
+  .sig-clear{position:absolute;top:8px;right:8px;padding:5px 12px;border:1px solid var(--border);border-radius:6px;background:#fff;font-family:'Montserrat',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:border-color .2s,color .2s}
+  .sig-clear:hover{border-color:var(--red);color:var(--red)}
+  .sig-note{font-size:.65rem;color:var(--muted);margin-top:6px}
   .submit-btn{width:100%;padding:16px;background:var(--dark);color:#fff;border:none;border-radius:12px;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;transition:background .2s,transform .1s;margin-top:8px}
   .submit-btn:hover{background:#222}
   .submit-btn:active{transform:scale(.99)}
@@ -132,6 +137,15 @@
         <label class="ack-check-label" for="ack_check">I have read and agree to all of the above terms on behalf of my child(ren). <span class="req">*</span></label>
       </div>
     </div>
+    <div class="section-head">Signature</div>
+    <div class="field">
+      <label>Sign Below <span class="req">*</span></label>
+      <div class="sig-wrap">
+        <canvas id="sig-canvas" class="sig-canvas"></canvas>
+        <button type="button" class="sig-clear" id="sig-clear">Clear</button>
+      </div>
+      <p class="sig-note">Sign with your finger or mouse. By signing you confirm your agreement to the terms above.</p>
+    </div>
     <input type="hidden" id="submission_date"/>
     <button type="submit" class="submit-btn" id="submit-btn">Submit Permission Slip</button>
     <div class="msg" id="form-msg"></div>
@@ -151,8 +165,7 @@
   dateEl.value=new Date().toISOString().slice(0,10);
   var childCount=0,list=document.getElementById('children-list');
   function addChild(){
-    childCount++;
-    var idx=childCount,row=document.createElement('div');
+    childCount++;var idx=childCount,row=document.createElement('div');
     row.className='child-row';row.dataset.idx=idx;
     row.innerHTML='<span class="child-num">Child '+idx+'</span>'+
       '<div class="field"><label>First Name <span class="req">*</span></label><input type="text" class="child-first" placeholder="First" required/></div>'+
@@ -172,14 +185,34 @@
   }
   document.getElementById('add-child-btn').addEventListener('click',addChild);
   addChild();
+
+  // Signature pad
+  var sigCanvas=document.getElementById('sig-canvas');
+  var sigCtx=sigCanvas.getContext('2d');
+  var sigDrawing=false,sigHasContent=false;
+  function initSig(){
+    var dpr=window.devicePixelRatio||1;
+    var rect=sigCanvas.getBoundingClientRect();
+    sigCanvas.width=rect.width*dpr;sigCanvas.height=rect.height*dpr;
+    sigCtx.scale(dpr,dpr);
+    sigCtx.strokeStyle='#111111';sigCtx.lineWidth=2.2;sigCtx.lineCap='round';sigCtx.lineJoin='round';
+  }
+  initSig();
+  function sigPos(e){var rect=sigCanvas.getBoundingClientRect(),src=e.touches?e.touches[0]:e;return{x:src.clientX-rect.left,y:src.clientY-rect.top};}
+  sigCanvas.addEventListener('mousedown', function(e){sigDrawing=true;var p=sigPos(e);sigCtx.beginPath();sigCtx.moveTo(p.x,p.y);});
+  sigCanvas.addEventListener('mousemove', function(e){if(!sigDrawing)return;var p=sigPos(e);sigCtx.lineTo(p.x,p.y);sigCtx.stroke();sigHasContent=true;});
+  sigCanvas.addEventListener('mouseup',   function(){sigDrawing=false;});
+  sigCanvas.addEventListener('mouseleave',function(){sigDrawing=false;});
+  sigCanvas.addEventListener('touchstart',function(e){e.preventDefault();sigDrawing=true;var p=sigPos(e);sigCtx.beginPath();sigCtx.moveTo(p.x,p.y);},{passive:false});
+  sigCanvas.addEventListener('touchmove', function(e){e.preventDefault();if(!sigDrawing)return;var p=sigPos(e);sigCtx.lineTo(p.x,p.y);sigCtx.stroke();sigHasContent=true;},{passive:false});
+  sigCanvas.addEventListener('touchend',  function(){sigDrawing=false;});
+  document.getElementById('sig-clear').addEventListener('click',function(){initSig();sigHasContent=false;});
+
   document.getElementById('trocket-form').addEventListener('submit',function(e){
     e.preventDefault();
-    var msg=document.getElementById('form-msg');
-    msg.className='msg';msg.style.display='none';
+    var msg=document.getElementById('form-msg');msg.className='msg';msg.style.display='none';
     var children=[];
-    list.querySelectorAll('.child-row').forEach(function(row){
-      children.push({first:row.querySelector('.child-first').value.trim(),last:row.querySelector('.child-last').value.trim()});
-    });
+    list.querySelectorAll('.child-row').forEach(function(row){children.push({first:row.querySelector('.child-first').value.trim(),last:row.querySelector('.child-last').value.trim()});});
     var errors=[];
     if(!val('guardian_first'))errors.push('Guardian first name is required.');
     if(!val('guardian_last'))errors.push('Guardian last name is required.');
@@ -191,16 +224,17 @@
     if(!val('allergies'))errors.push('Allergies/medical field is required.');
     children.forEach(function(c,i){if(!c.first||!c.last)errors.push('Child '+(i+1)+' needs both first and last name.');});
     if(!document.getElementById('ack_check').checked)errors.push('Please read and check the acknowledgment to continue.');
+    if(!sigHasContent)errors.push('Please sign the form before submitting.');
     if(errors.length){msg.textContent=errors[0];msg.className='msg error';return;}
-    var btn=document.getElementById('submit-btn');
-    btn.disabled=true;btn.textContent='Submitting…';
+    var btn=document.getElementById('submit-btn');btn.disabled=true;btn.textContent='Submitting…';
     var payload={
       guardian_first:val('guardian_first'),guardian_last:val('guardian_last'),
       email:val('email')||null,phone:val('phone'),
       address_street:val('address_street'),address_city:val('address_city'),
       address_state:val('address_state'),address_zip:val('address_zip'),
       children:children,allergies:val('allergies'),
-      notes:val('notes')||null,submission_date:dateEl.value
+      notes:val('notes')||null,submission_date:dateEl.value,
+      signature:sigCanvas.toDataURL('image/png')
     };
     fetch(SUPABASE_URL+'/rest/v1/trocket_submissions',{
       method:'POST',
