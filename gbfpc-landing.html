@@ -8,10 +8,10 @@
   <meta property="og:type" content="website"/>
   <meta property="og:title" content="Greater Bakersfield's First Pentecostal Church"/>
   <meta property="og:description" content="A church for every person, every age, and every season of life — in Bakersfield, California."/>
-  <meta property="og:image" content="https://gbfpc.vercel.app/MEDIA/landing-placeholder.jpg"/>
-  <meta property="og:url" content="https://gbfpc.vercel.app/"/>
+  <meta property="og:image" content="https://gbfpc-website.vercel.app/MEDIA/landing-placeholder.jpg"/>
+  <meta property="og:url" content="https://gbfpc-website.vercel.app/"/>
   <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:image" content="https://gbfpc.vercel.app/MEDIA/landing-placeholder.jpg"/>
+  <meta name="twitter:image" content="https://gbfpc-website.vercel.app/MEDIA/landing-placeholder.jpg"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
@@ -25,11 +25,11 @@
   --c-border:  #ebebeb;
 }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  /* scroll-behavior intentionally NOT set globally â prevents browser-triggered
+  /* scroll-behavior intentionally NOT set globally — prevents browser-triggered
      scroll events (video loop, focus management) from smooth-scrolling
      to unexpected positions. User-initiated anchor scrolls work fine. */
 
-  /* ââ Skip to main content ââ */
+  /* ── Skip to main content ── */
   .skip-link {
     position: absolute;
     top: -100%;
@@ -47,7 +47,7 @@
   }
   .skip-link:focus { top: 0; }
 
-  /* ââ Focus visible ââ */
+  /* ── Focus visible ── */
   :focus-visible {
     outline: 2px solid var(--c-brand);
     outline-offset: 3px;
@@ -65,7 +65,7 @@
   a { color: inherit; text-decoration: none; }
   img { display: block; }
 
-  /* ââ HEADER ââ */
+  /* ━━ HEADER ━━ */
   #header {
     position: sticky; top: 0;
     z-index: 200;
@@ -135,7 +135,7 @@
     .hdr-nav {
       display: none;
       position: fixed;
-      /* explicit TRBL instead of inset shorthand â older iOS Safari ignores inset */
+      /* explicit TRBL instead of inset shorthand — older iOS Safari ignores inset */
       top: 0; right: 0; bottom: 0; left: 0;
       transform: none; /* reset desktop translateX(-50%) */
       background: #fff; z-index: 1050;
@@ -153,9 +153,9 @@
     }
   }
 
-  /* ââââââââââââââââââââââââ
-     HERO â dark video box, rounded, slides in
-  ââââââââââââââââââââââââ */
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     HERO — dark video box, rounded, slides in
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
   #hero { padding: 18px 80px 0; background: #fff; }
 
   .hero-box {
@@ -179,7 +179,7 @@
     overflow: hidden;
   }
   .hero-bg video { pointer-events: none; }
-  /* Shared layer base â canvas fallback + video elements */
+  /* Shared layer base — canvas fallback + video elements */
   .hero-layer {
     position: absolute; inset: 0;
     width: 100%; height: 100%;
@@ -270,10 +270,10 @@
   }
   .btn-ghost-w:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.8); }
 
-  /* ââââââââââââââââââââââââ
-     INFO STRIP â Apple/Passion clean style
-  ââââââââââââââââââââââââ */
-  /* ââ Info tile strip ââ */
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     INFO STRIP — Apple/Passion clean style
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  /* ── Info tile strip ── */
   .info-strip {
     max-width: 1240px;
     margin: 28px auto 0;
@@ -315,27 +315,27 @@
     color: #c0c0c0; margin-bottom: 5px;
     display: block;
   }
-  /* Bold value â the hero of each tile */
+  /* Bold value — the hero of each tile */
   .info-val {
     font-size: 0.85rem; font-weight: 700;
     color: var(--c-dark); display: block;
     letter-spacing: -0.01em; line-height: 1.3;
     padding-right: 24px; /* room for arrow */
   }
-  /* Arrow indicator â appears on hover */
+  /* Arrow indicator — appears on hover */
   .info-cell::after {
-    content: 'â';
+    content: '→';
     position: absolute; bottom: 22px; right: 20px;
     font-size: 0.7rem; color: #d8d8d8;
     transition: color 0.2s, transform 0.2s;
   }
   .info-cell:hover::after { color: var(--c-brand); transform: translateX(3px); }
 
-  /* ââââââââââââââââââââââââ
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
      FLOATING CARD SECTIONS
-     â colored sections sit inside rounded cards
+     — colored sections sit inside rounded cards
        on the white page, not edge-to-edge
-  ââââââââââââââââââââââââ */
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
   .float-sec {
     background: #fff;
     padding: 0 48px;
@@ -365,9 +365,9 @@
     .float-sec { padding: 0 16px; }
   }
 
-  /* ââââââââââââââââââââââââ
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
      SCROLL REVEAL
-  ââââââââââââââââââââââââ */
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
   .r       { opacity: 0; transform: translateY(32px); transition: opacity 0.85s cubic-bezier(0.22,1,0.36,1), transform 0.85s cubic-bezier(0.22,1,0.36,1); }
   .r.in    { opacity: 1; transform: none; }
   .r-sm    { opacity: 0; transform: translateY(16px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
@@ -375,9 +375,9 @@
   .d1 { transition-delay: 0.08s; } .d2 { transition-delay: 0.16s; } .d3 { transition-delay: 0.24s; }
   .d4 { transition-delay: 0.32s; } .d5 { transition-delay: 0.40s; } .d6 { transition-delay: 0.48s; }
 
-  /* ââââââââââââââââââââââââ
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
      SHARED
-  ââââââââââââââââââââââââ */
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
   .sec { padding: 100px 68px; }
   .inner { max-width: 1260px; margin: 0 auto; }
 
@@ -430,11 +430,11 @@
   }
   .btn-dark:hover { opacity: 0.75; }
 
-  /* ââââââââââââââââââââââââ
-     PASTOR â clean Apple-style
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     PASTOR — clean Apple-style
      White page, video as contained dark block,
      generous side margins
-  ââââââââââââââââââââââââ */
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
   #pastor {
     background: #fff;
     padding: 100px 80px;
@@ -468,7 +468,7 @@
     gap: 72px;
     align-items: start;
   }
-  /* Left: vertical video â portrait 9:16, strict contained block */
+  /* Left: vertical video — portrait 9:16, strict contained block */
   .pastor-vbox {
     border-radius: 20px;
     overflow: hidden;
@@ -477,7 +477,7 @@
     background: #0d0d0d;
     box-shadow: 0 8px 48px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.08);
   }
-  /* Pastor video â fills vbox, sits above gradient, fades in when loaded */
+  /* Pastor video — fills vbox, sits above gradient, fades in when loaded */
   .pastor-vbox video {
     position: absolute; inset: 0;
     width: 100%; height: 100%;
@@ -575,9 +575,9 @@
   .min-arr  { color:#ccc;font-size:0.9rem;transition:color 0.2s,transform 0.2s; }
   .min-item:hover .min-arr { color:var(--c-dark);transform:translateX(5px); }
 
-  /* ââââââââââââââââââââââââ
-     MINISTRIES â cards
-  ââââââââââââââââââââââââ */
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     MINISTRIES — cards
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
   .cards {
     display: flex;
     gap: 14px;
@@ -643,9 +643,9 @@
   }
   .mc:hover .mc-link { opacity:1;max-height:34px; }
 
-  /* ââââââââââââââââââââââââ
-     LEADERSHIP â Passion City card style
-  ââââââââââââââââââââââââ */
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     LEADERSHIP — Passion City card style
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
   #leadership {
     background: #fff;
     padding: 80px 24px 80px;
@@ -672,7 +672,7 @@
     position: relative;
   }
 
-  /* Slides container â crossfade transition */
+  /* Slides container — crossfade transition */
   .lead-slides-wrap { position: relative; }
   .lead-slide {
     display: grid;
@@ -716,7 +716,7 @@
     margin-bottom: 28px;
     max-width: 380px;
   }
-  /* Teal pill button â matches Passion City exactly */
+  /* Teal pill button — matches Passion City exactly */
   .lead-btn {
     display: inline-block;
     background: var(--c-brand);
@@ -740,7 +740,7 @@
     position: relative; /* contain the absolutely-positioned img */
   }
   /* position: absolute guarantees the image fills the aspect-ratio box
-     exactly â no overflow that would clip the bottom border-radius */
+     exactly — no overflow that would clip the bottom border-radius */
   .lead-slide-img img {
     position: absolute; inset: 0;
     width: 100%; height: 100%;
@@ -755,7 +755,7 @@
   .lead-img-ph span { font-size:4rem;opacity:0.25; }
   .lead-img-ph p { font-size:0.56rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#999; }
 
-  /* Arrows â bottom right of card */
+  /* Arrows — bottom right of card */
   .lead-arrows {
     display: flex;
     justify-content: flex-end;
@@ -787,9 +787,9 @@
     .lead-card { padding: 36px 28px 28px; }
   }
 
-  /* ââââââââââââââââââââââââ
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
      GIVING
-  ââââââââââââââââââââââââ */
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
   .give-grid { display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center; }
   .give-img { border-radius:16px;overflow:hidden;aspect-ratio:4/3; }
   .give-img img { width:100%;height:100%;object-fit:cover; }
@@ -797,9 +797,9 @@
   .give-text .h2 { margin-bottom:20px; }
   .give-text .para { margin-bottom:36px; }
 
-  /* ââââââââââââââââââââââââ
-     SERMONS â white bg
-  ââââââââââââââââââââââââ */
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     SERMONS — white bg
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
   #sermons { background: #fff; border-top: 1px solid #eee; }
   .sermon-cards { display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:52px; }
   .sc {
@@ -826,10 +826,10 @@
     display:flex;align-items:center;justify-content:center;flex-shrink:0;
   }
 
-  /* ââââââââââââââââââââââââ
-     DARK SECTION â "Passion Equip" equivalent
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     DARK SECTION — "Passion Equip" equivalent
      One dark section mid-page like the original
-  ââââââââââââââââââââââââ */
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
   .connect-dark-inner {
     display:grid;grid-template-columns:1fr 1fr;
     gap:80px;align-items:center;
@@ -852,9 +852,9 @@
   }
   .btn-white-solid:hover { opacity:0.85; }
 
-  /* ââââââââââââââââââââââââ
-     SIGNUP â white bg (Passion City newsletter)
-  ââââââââââââââââââââââââ */
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     SIGNUP — white bg (Passion City newsletter)
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
   .signup-inner { max-width:1260px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap; }
   .signup-eyebrow { font-size:0.58rem;font-weight:700;letter-spacing:0.28em;text-transform:uppercase;color:#bbb;margin-bottom:7px; }
   .signup-title { font-weight:900;font-size:clamp(1.6rem,2.8vw,2.4rem);text-transform:uppercase;letter-spacing:-0.01em;color:var(--c-dark);line-height:1.0; }
@@ -878,9 +878,9 @@
   }
   .signup-btn:hover { opacity:0.75; }
 
-  /* ââââââââââââââââââââââââ
-     FOOTER â dark (Passion City footer is dark)
-  ââââââââââââââââââââââââ */
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
+     FOOTER — dark (Passion City footer is dark)
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
   footer { background:#000;border-top:1px solid rgba(255,255,255,0.06);padding:72px 68px 40px; }
   .ft-grid { max-width:1260px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:52px;margin-bottom:56px; }
   .ft-logo { height:44px;width:auto;margin-bottom:14px;object-fit:contain; }
@@ -904,9 +904,9 @@
   .ft-copy { font-size:0.6rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.16); }
   .ft-addr { font-size:0.7rem;font-weight:300;color:rgba(255,255,255,0.18); }
 
-  /* ââââââââââââââââââââââââ
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━
      RESPONSIVE
-  ââââââââââââââââââââââââ */
+  ━━━━━━━━━━━━━━━━━━━━━━━━ */
   @media(max-width:1024px){
     .sec{padding-left:36px;padding-right:36px;}
     footer{padding:60px 36px 36px;}
@@ -921,7 +921,7 @@
     .ft-grid{grid-template-columns:1fr 1fr;gap:36px;}
   }
   @media(max-width:768px){
-    /* ââ Header: single flex row (hamburger + logo) ââ */
+    /* ── Header: single flex row (hamburger + logo) ── */
     #header{display:flex;flex-direction:row;align-items:center;padding:0 16px;min-height:60px;gap:12px;}
     .hdr-brand{padding:0;flex:1;}
     .hdr-logo{height:30px;}
@@ -929,12 +929,12 @@
     .hdr-cta{display:none;} /* CTA in hero; save header space on mobile */
     .hdr-spacer{height:60px;}
 
-    /* ââ Hero ââ */
+    /* ── Hero ── */
     .hero-content{padding:0 22px 40px;}
     .hero-h1{font-size:clamp(2.4rem,10vw,3.2rem);}
     .hero-box{border-radius:14px;}
 
-    /* ââ Info strip: 2×2 grid on tablet ââ */
+    /* ── Info strip: 2×2 grid on tablet ── */
     .info-strip{grid-template-columns:1fr 1fr;margin-top:20px;}
     .info-cell{padding:20px 18px 16px;}
     .info-cell:nth-child(2){border-right:none;}
@@ -943,35 +943,35 @@
     .info-val{font-size:0.78rem;}
     .info-cell::after{bottom:14px;right:14px;}
 
-    /* ââ Section padding ââ */
+    /* ── Section padding ── */
     .sec{padding-top:60px;padding-bottom:60px;padding-left:20px;padding-right:20px;}
 
-    /* ââ Pastor ââ */
+    /* ── Pastor ── */
     #pastor{padding:52px 20px;}
     .pastor-feat-title{font-size:clamp(2rem,9vw,3rem);}
     .pastor-vbox { max-width:100%; width:100%; height:460px; aspect-ratio:auto; }
 
-    /* ââ Ministry cards: show desc on mobile (no hover) ââ */
+    /* ── Ministry cards: show desc on mobile (no hover) ── */
     .mc-desc{max-height:80px;opacity:1;}
     .mc-link{opacity:1;max-height:34px;}
 
-    /* ââ Grid resets ââ */
+    /* ── Grid resets ── */
     .sermon-cards{grid-template-columns:1fr;}
     .ft-grid{grid-template-columns:1fr;}
     .sec-head,.sermons-head{flex-direction:column;align-items:flex-start;}
     .ft-bot{flex-direction:column;}
 
-    /* ââ Signup form ââ */
+    /* ── Signup form ── */
     .signup-inner{flex-direction:column;align-items:stretch;}
     .signup-form{flex-direction:column;width:100%;}
     .signup-input{min-width:100%;border-radius:8px;}
     .signup-btn{border-radius:8px;width:100%;}
 
-    /* ââ Footer ââ */
+    /* ── Footer ── */
     footer{padding:48px 20px 32px;}
   }
   
-  /* ââ INTRO SPLASH âââââââââââââââââââââââââââ */
+  /* ── INTRO SPLASH ─────────────────────────── */
   #intro-splash{
     position:fixed;inset:0;z-index:10000;
     background:#080808;
@@ -1084,7 +1084,7 @@ window.scrollTo(0, 0);
 
 <a href="#main-content" class="skip-link">Skip to main content</a>
 
-<!-- âââââââ HEADER âââââââ -->
+<!-- ═══════ HEADER ═══════ -->
 <header id="header">
   <a href="gbfpc-landing.html" class="hdr-logo-link" aria-label="GBFPC Home">
     <img src="gbfpc-logo.svg" alt="GBFPC" class="hdr-logo"/>
@@ -1109,16 +1109,16 @@ window.scrollTo(0, 0);
 
 <div class="hdr-spacer"></div>
 
-<!-- âââââââ HERO âââââââ -->
+<!-- ═══════ HERO ═══════ -->
 <main id="main-content">
 <section id="hero">
   <div class="hero-box">
-    <!-- âââ HERO BACKGROUND âââ
+    <!-- ═══ HERO BACKGROUND ═══
          Collage video autoplays + soft crossfade loops here.
          To activate: set HERO_SRC in the script block below.
          Canvas shows as fallback while no video is loaded. -->
     <div class="hero-bg">
-      <!-- âââ HERO BACKGROUND âââ
+      <!-- ═══ HERO BACKGROUND ═══
            Placeholder image until hero video is ready.
            To activate video: remove the img tag, uncomment canvas/video elements,
            and set HERO_SRC = 'MEDIA/hero-collage.mp4' in the script below. -->
@@ -1176,7 +1176,7 @@ window.scrollTo(0, 0);
 </div>
 </section>
 
-<!-- âââââââ PASTOR / FEATURING âââââââ -->
+<!-- ═══════ PASTOR / FEATURING ═══════ -->
 <section id="pastor">
   <div class="pastor-inner">
 
@@ -1189,9 +1189,9 @@ window.scrollTo(0, 0);
     <!-- Content row: video left / text + list right -->
     <div class="pastor-body">
 
-      <!-- Left: vertical portrait â placeholder photo until video is ready -->
+      <!-- Left: vertical portrait — placeholder photo until video is ready -->
       <div class="pastor-vbox r d1">
-        <!-- âââ PASTOR VIDEO âââ
+        <!-- ═══ PASTOR VIDEO ═══
              To activate: replace the img below with:
              <video id="pastorVid" src="MEDIA/pastor-bradford.mp4" muted loop playsinline autoplay></video> -->
         <img
@@ -1210,10 +1210,10 @@ window.scrollTo(0, 0);
       <div class="pastor-text r d2">
         <p class="pastor-intro">Hear from Pastor Kevin Bradford and explore the ministries that make GBFPC a home for every person, every age, and every season of life.</p>
         <div class="min-list">
-          <a href="gbfpc-ministries.html#youth" class="min-item-dark"><div><div class="min-name">Amplified Youth</div><div class="min-sub">Energy, truth, and purpose for young people</div></div><span class="min-arr">â</span></a>
-          <a href="gbfpc-ministries.html#children" class="min-item-dark"><div><div class="min-name">K.I.C.K.</div><div class="min-sub">Kids In Christ's Kingdom â Pre-K through 6th grade</div></div><span class="min-arr">â</span></a>
-          <a href="gbfpc-ministries.html" class="min-item-dark"><div><div class="min-name">Thrive</div><div class="min-sub">Helping families, marriages, and women thrive through prayer and unity</div></div><span class="min-arr">â</span></a>
-          <a href="gbfpc-education.html" class="min-item-dark"><div><div class="min-name">Education</div><div class="min-sub">Bethel Academy &amp; Kiddie Korral â Kâ12 &amp; early childhood</div></div><span class="min-arr">â</span></a>
+          <a href="gbfpc-ministries.html#youth" class="min-item-dark"><div><div class="min-name">Amplified Youth</div><div class="min-sub">Energy, truth, and purpose for young people</div></div><span class="min-arr">→</span></a>
+          <a href="gbfpc-ministries.html#children" class="min-item-dark"><div><div class="min-name">K.I.C.K.</div><div class="min-sub">Kids In Christ's Kingdom — Pre-K through 6th grade</div></div><span class="min-arr">→</span></a>
+          <a href="gbfpc-ministries.html" class="min-item-dark"><div><div class="min-name">Thrive</div><div class="min-sub">Helping families, marriages, and women thrive through prayer and unity</div></div><span class="min-arr">→</span></a>
+          <a href="gbfpc-education.html" class="min-item-dark"><div><div class="min-name">Education</div><div class="min-sub">Bethel Academy &amp; Kiddie Korral — K–12 &amp; early childhood</div></div><span class="min-arr">→</span></a>
 
         </div>
       </div>
@@ -1222,7 +1222,7 @@ window.scrollTo(0, 0);
   </div>
 </section>
 
-<!-- âââââââ MINISTRIES CARDS âââââââ -->
+<!-- ═══════ MINISTRIES CARDS ═══════ -->
 <div class="float-sec" style="padding-top:60px;padding-bottom:0;">
   <div class="float-card" id="ministries">
     <div class="sec-head">
@@ -1235,20 +1235,20 @@ window.scrollTo(0, 0);
           <button class="ld-arr" id="ldPrev" aria-label="Previous"><svg viewBox="0 0 12 12"><path d="M8 1L3 6l5 5"/></svg></button>
           <button class="ld-arr" id="ldNext" aria-label="Next"><svg viewBox="0 0 12 12"><path d="M4 1l5 5-5 5"/></svg></button>
         </div>
-        <a href="gbfpc-ministries.html" class="view-all">View All â</a>
+        <a href="gbfpc-ministries.html" class="view-all">View All →</a>
       </div>
     </div>
     <div class="cards" id="ldScrollTrack">
-      <div class="mc r"><div class="mc-bg" style="background-image:url('MEDIA/t-rocket1.jpg')"></div><div class="mc-ov"></div><div class="mc-body"><div class="mc-tag">Youth</div><div class="mc-name">Amplified Youth</div><div class="mc-desc">Fostering an environment for young people to be filled with Holy Ghost energy and sent out as a voice of truth.</div><a href="gbfpc-ministries.html#youth" class="mc-link">Explore â</a></div></div>
-      <div class="mc r d1"><div class="mc-bg" style="background-image:url('MEDIA/kick1.jpg')"></div><div class="mc-ov"></div><div class="mc-body"><div class="mc-tag">Children</div><div class="mc-name">K.I.C.K.</div><div class="mc-desc">Kids In Christ's Kingdom â teaching children God's Word through fun, community, and the power of His Spirit.</div><a href="gbfpc-ministries.html#children" class="mc-link">Explore â</a></div></div>
-      <div class="mc r d2"><div class="mc-bg" style="background-image:url('MEDIA/SLJ03694-2.jpg')"></div><div class="mc-ov"></div><div class="mc-body"><div class="mc-tag">Family</div><div class="mc-name">Thrive</div><div class="mc-desc">Helping families and marriages thrive through prayer, fellowship, relationships, and unity.</div><a href="gbfpc-ministries.html" class="mc-link">Explore â</a></div></div>
-      <div class="mc r d1"><div class="mc-bg" style="background-image:url('MEDIA/education1.jpg')"></div><div class="mc-ov"></div><div class="mc-body"><div class="mc-tag">Education</div><div class="mc-name">Education</div><div class="mc-desc">Bethel Apostolic Academy (Kâ12) and Kiddie Korral â academic excellence in a Christian environment since 1972.</div><a href="gbfpc-education.html" class="mc-link">Explore â</a></div></div>
+      <div class="mc r"><div class="mc-bg" style="background-image:url('MEDIA/t-rocket1.jpg')"></div><div class="mc-ov"></div><div class="mc-body"><div class="mc-tag">Youth</div><div class="mc-name">Amplified Youth</div><div class="mc-desc">Fostering an environment for young people to be filled with Holy Ghost energy and sent out as a voice of truth.</div><a href="gbfpc-ministries.html#youth" class="mc-link">Explore ↗</a></div></div>
+      <div class="mc r d1"><div class="mc-bg" style="background-image:url('MEDIA/kick1.jpg')"></div><div class="mc-ov"></div><div class="mc-body"><div class="mc-tag">Children</div><div class="mc-name">K.I.C.K.</div><div class="mc-desc">Kids In Christ's Kingdom — teaching children God's Word through fun, community, and the power of His Spirit.</div><a href="gbfpc-ministries.html#children" class="mc-link">Explore ↗</a></div></div>
+      <div class="mc r d2"><div class="mc-bg" style="background-image:url('MEDIA/SLJ03694-2.jpg')"></div><div class="mc-ov"></div><div class="mc-body"><div class="mc-tag">Family</div><div class="mc-name">Thrive</div><div class="mc-desc">Helping families and marriages thrive through prayer, fellowship, relationships, and unity.</div><a href="gbfpc-ministries.html" class="mc-link">Explore ↗</a></div></div>
+      <div class="mc r d1"><div class="mc-bg" style="background-image:url('MEDIA/education1.jpg')"></div><div class="mc-ov"></div><div class="mc-body"><div class="mc-tag">Education</div><div class="mc-name">Education</div><div class="mc-desc">Bethel Apostolic Academy (K–12) and Kiddie Korral — academic excellence in a Christian environment since 1972.</div><a href="gbfpc-education.html" class="mc-link">Explore ↗</a></div></div>
 
     </div>
   </div>
 </div>
 
-<!-- âââââââ LEADERSHIP â Passion City card style âââââââ -->
+<!-- ═══════ LEADERSHIP — Passion City card style ═══════ -->
 <section id="leadership">
   <div class="lead-outer">
 
@@ -1289,15 +1289,15 @@ window.scrollTo(0, 0);
 
       <!-- Arrows bottom right -->
       <div class="lead-arrows">
-        <button class="lead-arrow" id="leadPrev" onclick="leadNav(-1)" disabled>â</button>
-        <button class="lead-arrow" id="leadNext" onclick="leadNav(1)">â</button>
+        <button class="lead-arrow" id="leadPrev" onclick="leadNav(-1)" disabled>←</button>
+        <button class="lead-arrow" id="leadNext" onclick="leadNav(1)">→</button>
       </div>
 
     </div>
   </div>
 </section>
 
-<!-- âââââââ GIVING âââââââ -->
+<!-- ═══════ GIVING ═══════ -->
 <section id="giving" style="padding:100px 80px;">
   <div style="max-width:1240px;margin:0 auto;">
     <div class="give-grid">
@@ -1307,14 +1307,14 @@ window.scrollTo(0, 0);
       <div class="give-text">
         <div class="eyebrow r">Generosity</div>
         <h2 class="h2 r d1">Giving<br>Is Worship.</h2>
-        <p class="para r d2">We believe generosity is a response to God's grace â not an obligation. When you give, you partner with the work God is doing in Bakersfield and beyond.</p>
+        <p class="para r d2">We believe generosity is a response to God's grace — not an obligation. When you give, you partner with the work God is doing in Bakersfield and beyond.</p>
         <div class="r d3" style="margin-top:36px;"><a href="https://gbfpc.org/give" class="btn-dark">Give Now</a></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- âââââââ DARK MID-SECTION (Stay Connected) âââââââ -->
+<!-- ═══════ DARK MID-SECTION (Stay Connected) ═══════ -->
 <div class="float-sec" style="padding-top:60px;padding-bottom:60px;">
   <div class="float-card-dark">
     <div class="connect-dark-inner">
@@ -1335,12 +1335,12 @@ window.scrollTo(0, 0);
 </div>
 
 
-<!-- âââââââ NEWSLETTER âââââââ -->
-<!-- archived â will replace with church app download section -->
+<!-- ═══════ NEWSLETTER ═══════ -->
+<!-- archived — will replace with church app download section -->
 
 </main>
 
-<!-- âââââââ FOOTER âââââââ -->
+<!-- ═══════ FOOTER ═══════ -->
 <footer>
   <div class="ft-grid">
     <div>
@@ -1350,7 +1350,7 @@ window.scrollTo(0, 0);
       <div class="ft-soc">
         <a href="https://www.facebook.com/gbfpcmedia/" class="ft-s">f</a>
         <a href="https://www.instagram.com/gbfpc/" class="ft-s">ig</a>
-        <a href="https://www.youtube.com/channel/UCO1PnTTAT_uOS4ZkMjdBzGg/videos" class="ft-s">â¶</a>
+        <a href="https://www.youtube.com/channel/UCO1PnTTAT_uOS4ZkMjdBzGg/videos" class="ft-s">▶</a>
       </div>
     </div>
     <div class="ft-col"><h5>Our House</h5><ul><li><a href="gbfpc-about.html">About Us</a></li><li><a href="gbfpc-about.html#vision">Our Vision</a></li><li><a href="gbfpc-about.html#articles">Articles of Faith</a></li><li><a href="gbfpc-about.html#history">Church History</a></li></ul></div>
@@ -1372,7 +1372,7 @@ window.scrollTo(0, 0);
   // Fallback: guarantee content visible within 900ms if observer hasn't fired
   setTimeout(function(){document.querySelectorAll('.r:not(.in),.r-sm:not(.in)').forEach(function(el){el.classList.add('in');});},900);
 
-  // Pastor video â no click handler needed (video plays inline)
+  // Pastor video — no click handler needed (video plays inline)
 
   // Leadership carousel
   const leadSlides = document.querySelectorAll('.lead-slide');
@@ -1388,7 +1388,7 @@ window.scrollTo(0, 0);
     leadNext.disabled = leadCurrent === leadSlides.length - 1;
   }
 
-  // ââ HERO SOFT-LOOP VIDEO ââââââââââââââââââââââââââââââââââââââââââââââââââ
+  // ── HERO SOFT-LOOP VIDEO ──────────────────────────────────────────────────
   // Drop your collage mp4 path here when ready, e.g. 'video/hero-collage.mp4'
   var HERO_SRC = '';
   var FADE     = 2.2; // seconds of crossfade overlap
@@ -1413,7 +1413,7 @@ window.scrollTo(0, 0);
   if(!toggle || !nav) return;
   function openMenu(){
     // Teleport nav to body so position:fixed works on iOS Safari
-    // (fixed inside sticky is broken on iOS â nav only covers header height)
+    // (fixed inside sticky is broken on iOS — nav only covers header height)
     nav.__origParent = nav.parentNode; nav.__origNext = nav.nextSibling;
     document.body.appendChild(nav);
     nav.classList.add('nav-open');
@@ -1445,7 +1445,7 @@ window.scrollTo(0, 0);
 })();
 </script>
 
-<!-- âââ HERO CANVAS ANIMATION (mock video â swap for real footage) âââ -->
+<!-- ═══ HERO CANVAS ANIMATION (mock video — swap for real footage) ═══ -->
 <script>
 (function(){
   var cv = document.getElementById('heroCnv');
@@ -1453,7 +1453,7 @@ window.scrollTo(0, 0);
   var cx = cv.getContext('2d');
   var W, H, last = 0;
 
-  /* ââ particles ââ */
+  /* ── particles ── */
   var PCOUNT = 60;
   var pts = [];
   function initPt(p) {
@@ -1475,7 +1475,7 @@ window.scrollTo(0, 0);
     pts.push(p);
   }
 
-  /* ââ light rays ââ */
+  /* ── light rays ── */
   var rays = [
     { a: -0.58, w: 0.20, spd: 0.00014, ph: 0.0 },
     { a: -0.33, w: 0.15, spd: 0.00021, ph: 1.3 },
@@ -1503,7 +1503,7 @@ window.scrollTo(0, 0);
     cx.fillStyle = '#08070b';
     cx.fillRect(0, 0, W, H);
 
-    /* ambient warm glow â upper area, slightly left of center */
+    /* ambient warm glow — upper area, slightly left of center */
     var gx = W * 0.40, gy = H * 0.02;
     var g1 = cx.createRadialGradient(gx, gy, 0, gx, gy, W * 0.72);
     g1.addColorStop(0,   'rgba(201,169,110,0.09)');
@@ -1512,7 +1512,7 @@ window.scrollTo(0, 0);
     cx.fillStyle = g1;
     cx.fillRect(0, 0, W, H);
 
-    /* secondary blue-violet depth glow â lower right */
+    /* secondary blue-violet depth glow — lower right */
     var g2 = cx.createRadialGradient(W*0.78, H*0.85, 0, W*0.78, H*0.85, W*0.55);
     g2.addColorStop(0,   'rgba(40,25,80,0.12)');
     g2.addColorStop(1,   'rgba(0,0,0,0)');
