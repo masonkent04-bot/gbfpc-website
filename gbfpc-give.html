@@ -416,13 +416,14 @@
     content: '▾'; position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
     color: rgba(255,255,255,0.35); pointer-events: none; font-size: 0.75rem;
   }
-  /* Square card container */
+  /* Square card container — iframe has its own white bg, so we match it */
   #card-container {
-    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 10px; padding: 14px 16px; min-height: 48px;
-    transition: border-color 0.18s;
+    background: #fff; border-radius: 10px;
+    min-height: 90px;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.1);
+    transition: box-shadow 0.18s;
   }
-  #card-container.sq-focused { border-color: var(--c-brand); }
+  #card-container:focus-within { box-shadow: 0 0 0 2px var(--c-brand); }
   /* Fee checkbox */
   .fee-checkbox-row {
     display: flex; align-items: flex-start; gap: 12px;
@@ -904,19 +905,19 @@
       sqCard = await payments.card({
         style: {
           '.input-container': {
-            borderColor: 'transparent',
-            borderRadius: '0px',
+            borderColor: '#e5e5e5',
+            borderRadius: '6px',
           },
-          '.input-container.is-focus': { borderColor: 'transparent' },
-          '.input-container.is-error': { borderColor: 'transparent' },
+          '.input-container.is-focus': { borderColor: '#c9a96e' },
+          '.input-container.is-error': { borderColor: '#e53e3e' },
           'input': {
-            color: '#ffffff',
+            color: '#111111',
             fontSize: '14px',
             fontWeight: '500',
           },
-          'input::placeholder': { color: 'rgba(255,255,255,0.25)' },
-          '.message-text': { color: '#ff8080' },
-          '.message-icon': { color: '#ff8080' },
+          'input::placeholder': { color: '#aaaaaa' },
+          '.message-text': { color: '#e53e3e' },
+          '.message-icon': { color: '#e53e3e' },
         }
       });
       await sqCard.attach('#card-container');
