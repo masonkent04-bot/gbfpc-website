@@ -754,7 +754,7 @@
         <input type="checkbox" id="cover-fees">
         <label for="cover-fees">
           Cover the processing fee so GBFPC receives the full amount of my gift.
-          <span class="fee-note" id="fee-note">Processing fee: ~$3.20 · You'd be charged $103.20</span>
+          <span class="fee-note" id="fee-note">$100.00 gift + $3.20 fee = $103.20 total</span>
         </label>
       </div>
 
@@ -911,7 +911,7 @@
           '.input-container.is-error': { borderColor: 'transparent' },
           'input': {
             color: '#ffffff',
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "Montserrat, sans-serif",
             fontSize: '14px',
             fontWeight: '500',
           },
@@ -943,7 +943,7 @@
     if (selectedAmount > 0) {
       var fee = calcFee(selectedAmount);
       document.getElementById('fee-note').textContent =
-        'Processing fee: ~' + fmt(fee) + ' · You\'ll be charged ' + fmt(total);
+        fmt(selectedAmount) + ' gift + ' + fmt(fee) + ' fee = ' + fmt(selectedAmount + fee) + ' total';
     } else {
       document.getElementById('fee-note').textContent = '';
     }
