@@ -628,7 +628,7 @@
 })();
 
 // Fallback: guarantee static .r elements visible within 900ms
-setTimeout(function(){document.querySelectorAll('.r:not(.in),.r-sm:not(.in)').forEach(function(el){el.classList.add('in');});},900);
+setTimeout(function(){document.querySelectorAll('.r:not(.in),.r-sm:not(.in)').forEach(function(el){var r=el.getBoundingClientRect();if(r.top<window.innerHeight&&r.bottom>=0){el.classList.add('in');}});},900);
 </script>
 
 <!-- ═══════ EVENTS FETCH ═══════ -->
