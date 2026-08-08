@@ -508,6 +508,26 @@
   }
   #give-success button:hover { color: #111; border-color: #aaa; }
 
+  /* ── Payment method selector ── */
+  .method-selector { display: flex; flex-wrap: wrap; gap: 8px; }
+  .method-btn {
+    flex: 1; min-width: calc(50% - 4px);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+    padding: 12px 8px;
+    background: #f5f5f5; border: 2px solid #e8e8e8; border-radius: 12px;
+    cursor: pointer; transition: all 0.15s;
+    font-family: 'Montserrat', sans-serif; font-size: 0.68rem; font-weight: 700;
+    color: #999; text-align: center; line-height: 1.2;
+  }
+  .method-btn:hover { border-color: #ccc; color: #555; background: #efefef; }
+  .method-btn.active { border-color: #c9a96e; background: rgba(201,169,110,0.07); color: #b8923e; }
+  .method-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+  .method-panel { display: none; flex-direction: column; gap: 10px; }
+  .method-panel.active { display: flex; }
+  .method-note {
+    font-size: 0.75rem; color: #999; line-height: 1.55; padding: 4px 2px;
+  }
+
   /* ━━━━━━━━━━━━━━━━━━━━━━━━ GIVE MEDIA SECTIONS ━━━━━━━━━━━━━━━━━━━━━━━━ */
   /* Editorial photo strip — worship moment after hero */
   .give-photo-hero { padding: 0 48px 80px; }
@@ -750,10 +770,58 @@
           </div>
         </div>
 
-        <!-- Card form (primary) — no label, Square renders its own fields -->
-        <div id="card-container"></div>
+        <!-- Payment method selector -->
+        <div class="form-section">
+          <span class="field-label">Payment method</span>
+          <div class="method-selector" role="tablist">
 
-        <!-- Fund dropdown — no label, placeholder makes purpose obvious -->
+            <button type="button" class="method-btn active" data-method="card" role="tab">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+              Credit / Debit
+            </button>
+
+            <button type="button" class="method-btn" data-method="bank" role="tab">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
+              Bank Account
+            </button>
+
+            <!-- Google Pay tab — hidden until SDK confirms support -->
+            <button type="button" class="method-btn" data-method="gpay" role="tab" id="method-gpay-btn" style="display:none;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="6" width="22" height="13" rx="2"/><path d="M1 10h22"/><circle cx="6" cy="15" r="1" fill="currentColor" stroke="none"/></svg>
+              Google Pay
+            </button>
+
+            <!-- Apple Pay tab — hidden until SDK confirms support -->
+            <button type="button" class="method-btn" data-method="apay" role="tab" id="method-apay-btn" style="display:none;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C9.5 2 8 4 8 4s-4 0-4 4c0 5 4 14 4 14h8s4-9 4-14c0-4-4-4-4-4s-1.5-2-4-2z"/></svg>
+              Apple Pay
+            </button>
+
+          </div>
+        </div>
+
+        <!-- Card panel -->
+        <div class="method-panel active" id="panel-card">
+          <div id="card-container"></div>
+        </div>
+
+        <!-- Bank Account panel -->
+        <div class="method-panel" id="panel-bank">
+          <input type="text" id="account-holder-name" class="text-input" placeholder="Account holder name" autocomplete="name">
+          <p class="method-note">After clicking Give, you'll securely connect your bank through Square's bank portal. Settlement takes 3–5 business days.</p>
+        </div>
+
+        <!-- Google Pay panel -->
+        <div class="method-panel" id="panel-gpay">
+          <div id="google-pay-button"></div>
+        </div>
+
+        <!-- Apple Pay panel -->
+        <div class="method-panel" id="panel-apay">
+          <div id="apple-pay-button"></div>
+        </div>
+
+        <!-- Fund -->
         <div class="select-wrap">
           <select id="giving-fund">
             <option value="General Fund">General Fund (Tithe &amp; Offering)</option>
@@ -775,27 +843,12 @@
         <!-- Error -->
         <div class="give-error-msg" id="give-error" style="display:none;"></div>
 
-        <!-- Submit -->
+        <!-- Submit (hidden when G Pay or Apple Pay is active — they have their own buttons) -->
         <button type="submit" class="give-submit-btn" id="give-submit-btn">
           Give <span id="give-amount-display">$100.00</span>
         </button>
 
-        <p class="secure-note">🔒 Secured by <strong>Square</strong> · Card info never stored on our servers</p>
-
-        <!-- Express checkout at bottom (Google Pay, Apple Pay) -->
-        <div id="express-divider" class="pay-divider" style="display:none;">
-          <span>or use express checkout</span>
-        </div>
-
-        <div id="express-pay-section" style="display:none;">
-          <div class="express-btns">
-            <div id="apple-pay-button" style="display:none;"></div>
-            <div id="google-pay-button" style="display:none;"></div>
-          </div>
-        </div>
-
-        <!-- Hidden name field used for payment note -->
-        <input type="hidden" id="giver-name" value="">
+        <p class="secure-note" id="give-secure-note">🔒 Secured by <strong>Square</strong> · Card info never stored on our servers</p>
 
       </form>
 
@@ -915,32 +968,50 @@
 (function() {
   // ── State ──
   var selectedAmount = 100;
+  var selectedMethod = 'card';
   var sqPayments = null;
   var sqCard = null;
   var sqGooglePay = null;
   var sqApplePay = null;
+  var sqAch = null;
   var sqPaymentRequest = null;
   var sdkLoaded = false;
   var sdkLoading = false;
 
   // ── Modal open / close ──
   window.openGiveModal = function() {
-    var overlay = document.getElementById('give-modal-overlay');
-    overlay.classList.add('open');
+    document.getElementById('give-modal-overlay').classList.add('open');
     document.body.style.overflow = 'hidden';
-    // Lazy-load Square SDK on first open
     if (!sdkLoaded && !sdkLoading) loadSquareSDK();
   };
   window.closeGiveModal = function() {
     document.getElementById('give-modal-overlay').classList.remove('open');
     document.body.style.overflow = '';
   };
-
   document.getElementById('give-modal-close').addEventListener('click', closeGiveModal);
   document.getElementById('give-modal-overlay').addEventListener('click', function(e) {
     if (e.target === this) closeGiveModal();
   });
   document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeGiveModal(); });
+
+  // ── Method selector ──
+  function selectMethod(method) {
+    selectedMethod = method;
+    document.querySelectorAll('.method-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.method-panel').forEach(function(p) { p.classList.remove('active'); });
+    var btn = document.querySelector('[data-method="' + method + '"]');
+    if (btn) btn.classList.add('active');
+    var panel = document.getElementById('panel-' + method);
+    if (panel) panel.classList.add('active');
+    // Submit button and fee row are hidden for express methods (they have native buttons)
+    var isExpress = method === 'gpay' || method === 'apay';
+    document.getElementById('give-submit-btn').style.display = isExpress ? 'none' : '';
+    document.getElementById('give-secure-note').style.display = isExpress ? 'none' : '';
+  }
+
+  document.querySelectorAll('.method-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() { selectMethod(btn.dataset.method); });
+  });
 
   // ── Square SDK loader ──
   function loadSquareSDK() {
@@ -961,49 +1032,48 @@
     try {
       sqPayments = Square.payments('sq0idp-MgO5yGBHOlSsUISnTMFp6w', '5KV3WQA35CBQ5');
 
-      // Payment request object for Apple Pay / Google Pay
+      // Payment request for Apple Pay / Google Pay
       sqPaymentRequest = sqPayments.paymentRequest({
-        countryCode: 'US',
-        currencyCode: 'USD',
+        countryCode: 'US', currencyCode: 'USD',
         total: { amount: getAmountStr(), label: 'GBFPC Giving' },
       });
 
-      var hasExpress = false;
-
-      // Try Google Pay
+      // Google Pay — show tab only if supported
       try {
         sqGooglePay = await sqPayments.googlePay(sqPaymentRequest);
         await sqGooglePay.attach('#google-pay-button');
-        document.getElementById('google-pay-button').style.display = 'block';
-        hasExpress = true;
         sqGooglePay.addEventListener('ontokenization', function(e) {
           if (e.detail.tokenResult && e.detail.tokenResult.status === 'OK') {
             submitPayment(e.detail.tokenResult.token);
           } else {
-            showFormError('Google Pay could not complete. Please try another payment method.');
+            showFormError('Google Pay could not complete. Please try another method.');
           }
         });
+        document.getElementById('method-gpay-btn').style.display = '';
       } catch(e) { sqGooglePay = null; }
 
-      // Try Apple Pay (requires domain verification file — may fail in dev)
+      // Apple Pay — show tab only if supported + domain verified
       try {
         sqApplePay = await sqPayments.applePay(sqPaymentRequest);
         await sqApplePay.attach('#apple-pay-button');
-        document.getElementById('apple-pay-button').style.display = 'block';
-        hasExpress = true;
         sqApplePay.addEventListener('ontokenization', function(e) {
           if (e.detail.tokenResult && e.detail.tokenResult.status === 'OK') {
             submitPayment(e.detail.tokenResult.token);
           } else {
-            showFormError('Apple Pay could not complete. Please try another payment method.');
+            showFormError('Apple Pay could not complete. Please try another method.');
           }
         });
+        document.getElementById('method-apay-btn').style.display = '';
       } catch(e) { sqApplePay = null; }
 
-      // Show express section only if at least one method is available
-      if (hasExpress) {
-        document.getElementById('express-pay-section').style.display = 'flex';
-        document.getElementById('express-divider').style.display = 'flex';
+      // ACH / Bank account
+      try {
+        sqAch = await sqPayments.ach();
+      } catch(e) {
+        sqAch = null;
+        // Disable bank tab if ACH not available on this account
+        var bankBtn = document.querySelector('[data-method="bank"]');
+        if (bankBtn) { bankBtn.style.opacity = '0.4'; bankBtn.disabled = true; bankBtn.title = 'Bank payments not currently available'; }
       }
 
       // Card form
@@ -1037,15 +1107,13 @@
   function updateDisplay() {
     var coverFees = document.getElementById('cover-fees').checked;
     var total = calcTotal(selectedAmount, coverFees);
-    document.getElementById('give-amount-display').textContent = fmt(total);
+    var display = document.getElementById('give-amount-display');
+    if (display) display.textContent = fmt(total);
     if (selectedAmount > 0) {
       var fee = calcFee(selectedAmount);
-      document.getElementById('fee-note').textContent =
-        fmt(selectedAmount) + ' gift + ' + fmt(fee) + ' fee = ' + fmt(selectedAmount + fee) + ' total';
-    } else {
-      document.getElementById('fee-note').textContent = '';
+      var note = document.getElementById('fee-note');
+      if (note) note.textContent = fmt(selectedAmount) + ' gift + ' + fmt(fee) + ' fee = ' + fmt(selectedAmount + fee) + ' total';
     }
-    // Keep payment request in sync for express pay
     if (sqPaymentRequest) {
       try { sqPaymentRequest.update({ total: { amount: total.toFixed(2), label: 'GBFPC Giving' } }); } catch(e) {}
     }
@@ -1068,12 +1136,10 @@
       updateDisplay();
     });
   });
-
   document.getElementById('custom-amount').addEventListener('input', function() {
     selectedAmount = parseFloat(this.value) || 0;
     updateDisplay();
   });
-
   document.getElementById('cover-fees').addEventListener('change', updateDisplay);
 
   // ── Error display ──
@@ -1090,13 +1156,10 @@
   async function submitPayment(sourceId) {
     clearFormError();
     var btn = document.getElementById('give-submit-btn');
-    if (btn) { btn.disabled = true; btn.textContent = 'Processing…'; }
-
+    if (btn && btn.style.display !== 'none') { btn.disabled = true; btn.textContent = 'Processing…'; }
     var coverFees = document.getElementById('cover-fees').checked;
     var fund = document.getElementById('giving-fund').value;
-    var name = document.getElementById('giver-name').value.trim();
-    var note = fund + (name ? ' · ' + name : '') + ' · GBFPC Guest Giving';
-
+    var note = fund + ' · GBFPC Guest Giving';
     try {
       var resp = await fetch('/api/create-payment', {
         method: 'POST',
@@ -1105,42 +1168,53 @@
       });
       var data = await resp.json();
       if (!resp.ok) throw new Error(data.error || 'Payment could not be processed.');
-      // Show success
       document.getElementById('guest-give-form').style.display = 'none';
       document.getElementById('give-success').style.display = 'block';
     } catch(err) {
       showFormError(err.message || 'An error occurred. Please try again.');
-      if (btn) {
+      if (btn && btn.style.display !== 'none') {
         btn.disabled = false;
         btn.innerHTML = 'Give <span id="give-amount-display">' + fmt(calcTotal(selectedAmount, document.getElementById('cover-fees').checked)) + '</span>';
       }
     }
   }
 
-  // ── Card form submit ──
+  // ── Form submit (card + bank) ──
   document.getElementById('guest-give-form').addEventListener('submit', async function(e) {
     e.preventDefault();
     clearFormError();
-    if (!sqCard) { showFormError('Payment form is still loading. Please wait a moment.'); return; }
-    if (!selectedAmount || selectedAmount < 1) { showFormError('Please enter a gift amount of at least $1.'); return; }
-    try {
-      var tokenResult = await sqCard.tokenize();
-      if (tokenResult.status !== 'OK') {
-        throw new Error((tokenResult.errors && tokenResult.errors[0] && tokenResult.errors[0].message)
-          || 'Card information could not be verified. Please check your details.');
+    if (!selectedAmount || selectedAmount < 1) { showFormError('Please select a gift amount of at least $1.'); return; }
+
+    if (selectedMethod === 'card') {
+      if (!sqCard) { showFormError('Card form is still loading. Please wait a moment.'); return; }
+      try {
+        var tokenResult = await sqCard.tokenize();
+        if (tokenResult.status !== 'OK') throw new Error(
+          (tokenResult.errors && tokenResult.errors[0] && tokenResult.errors[0].message) || 'Card could not be verified.');
+        await submitPayment(tokenResult.token);
+      } catch(err) {
+        showFormError(err.message || 'An error occurred. Please try again.');
+        var btn = document.getElementById('give-submit-btn');
+        if (btn) { btn.disabled = false; btn.innerHTML = 'Give <span id="give-amount-display">' + fmt(calcTotal(selectedAmount, document.getElementById('cover-fees').checked)) + '</span>'; }
       }
-      await submitPayment(tokenResult.token);
-    } catch(err) {
-      showFormError(err.message || 'An error occurred. Please try again.');
-      var btn = document.getElementById('give-submit-btn');
-      if (btn) {
-        btn.disabled = false;
-        btn.innerHTML = 'Give <span id="give-amount-display">' + fmt(calcTotal(selectedAmount, document.getElementById('cover-fees').checked)) + '</span>';
+
+    } else if (selectedMethod === 'bank') {
+      if (!sqAch) { showFormError('Bank account payments are not available at this time.'); return; }
+      var holderName = document.getElementById('account-holder-name').value.trim();
+      if (!holderName) { showFormError('Please enter the account holder name.'); return; }
+      try {
+        var tokenResult = await sqAch.tokenize({ accountHolderName: holderName });
+        if (tokenResult.status !== 'OK') throw new Error(
+          (tokenResult.errors && tokenResult.errors[0] && tokenResult.errors[0].message) || 'Bank account could not be verified.');
+        await submitPayment(tokenResult.token);
+      } catch(err) {
+        showFormError(err.message || 'An error occurred with bank account payment.');
+        var btn = document.getElementById('give-submit-btn');
+        if (btn) { btn.disabled = false; btn.innerHTML = 'Give <span id="give-amount-display">' + fmt(calcTotal(selectedAmount, document.getElementById('cover-fees').checked)) + '</span>'; }
       }
     }
   });
 
-  // Initialize display
   updateDisplay();
 })();
 </script>
