@@ -1,13 +1,5 @@
 {
   "rewrites": [
     { "source": "/give-payment", "destination": "/gbfpc-give.html" }
-  ],
-  "headers": [
-    {
-      "source": "/.well-known/apple-developer-merchantid-domain-association",
-      "headers": [
-        { "key": "Content-Type", "value": "application/json" }
-      ]
-    }
   ]
 }
