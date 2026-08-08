@@ -127,7 +127,9 @@
   .page-hero-card { max-width: 1300px; margin: 0 auto; background: var(--c-darker); border-radius: 22px; padding: 80px 72px; }
   .page-hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; }
   .page-tag { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: var(--c-brand); margin-bottom: 20px; display: block; }
-  .page-hero-title { font-weight: 900; font-size: clamp(3.5rem, 7vw, 7rem); line-height: 0.9; letter-spacing: -0.04em; text-transform: uppercase; color: #fff; }
+  .page-hero-title { font-weight: 900; font-size: clamp(2.6rem, 4.6vw, 4.6rem); line-height: 0.94; letter-spacing: -0.035em; text-transform: uppercase; color: #fff; }
+  .page-hero-title br { display: none; }
+  .page-hero-title .ln { display: block; white-space: nowrap; }
   .page-hero-desc { font-size: 1.05rem; font-weight: 300; color: rgba(255,255,255,0.55); line-height: 1.75; max-width: 440px; margin-bottom: 32px; }
   .page-hero-links { display: flex; gap: 8px; flex-wrap: wrap; }
   .page-link { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; padding: 9px 16px; border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.6); border-radius: 100px; background: rgba(255,255,255,0.05); transition: border-color 0.2s, color 0.2s; }
@@ -429,7 +431,7 @@
     <div class="page-hero-inner">
       <div class="page-hero-left">
         <span class="page-tag r">New Here?</span>
-        <h1 class="page-hero-title r d1">We'd Love<br>to Meet<br>You.</h1>
+        <h1 class="page-hero-title r d1"><span class="ln">We'd Love</span><span class="ln">to Meet You.</span></h1>
       </div>
       <div class="page-hero-right r d2">
         <p class="page-hero-desc">Whether you've been thinking about visiting for weeks or just decided today — you are welcome here exactly as you are.</p>
