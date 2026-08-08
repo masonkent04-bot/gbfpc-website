@@ -395,13 +395,13 @@
   }
   .modal-close:hover { background: #e5e5e5; color: #111; }
 
-  .modal-body { padding: 22px; }
-  #guest-give-form { display: flex; flex-direction: column; gap: 18px; }
+  .modal-body { padding: 20px 22px 28px; }
+  #guest-give-form { display: flex; flex-direction: column; gap: 12px; }
 
   .form-section { display: flex; flex-direction: column; gap: 0; }
   .field-label {
-    display: block; font-size: 0.55rem; font-weight: 700;
-    letter-spacing: 0.22em; text-transform: uppercase; color: #999; margin-bottom: 10px;
+    display: block; font-size: 0.6rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase; color: #bbb; margin-bottom: 9px;
   }
 
   .amount-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
@@ -444,9 +444,10 @@
   .select-wrap select:focus, .text-input:focus { border-color: #c9a96e; }
   .text-input::placeholder { color: #bbb; }
 
-  .express-btns { display: flex; flex-direction: column; gap: 10px; }
+  .express-btns { display: flex; flex-direction: row; gap: 10px; flex-wrap: wrap; }
+  .express-btns > div { flex: 1; min-width: 120px; }
   .pay-divider {
-    display: flex; align-items: center; gap: 12px; margin: 2px 0 4px;
+    display: flex; align-items: center; gap: 12px; margin: 6px 0 4px;
   }
   .pay-divider::before, .pay-divider::after { content: ''; flex: 1; height: 1px; background: #ebebeb; }
   .pay-divider span { font-size: 0.7rem; color: #bbb; white-space: nowrap; letter-spacing: 0.05em; }
@@ -458,9 +459,9 @@
   #card-container:focus-within { border-color: #c9a96e; }
 
   .fee-checkbox-row {
-    display: flex; align-items: flex-start; gap: 12px;
-    background: rgba(201,169,110,0.07); border: 1px solid rgba(201,169,110,0.22);
-    border-radius: 10px; padding: 14px 16px;
+    display: flex; align-items: flex-start; gap: 10px;
+    background: rgba(201,169,110,0.06); border: 1px solid rgba(201,169,110,0.2);
+    border-radius: 10px; padding: 12px 14px;
   }
   .fee-checkbox-row input[type="checkbox"] {
     width: 18px; height: 18px; accent-color: #c9a96e; flex-shrink: 0; margin-top: 2px; cursor: pointer;
@@ -732,7 +733,7 @@
 
         <!-- Amount -->
         <div class="form-section">
-          <span class="field-label">Select Amount</span>
+          <span class="field-label">Select an amount</span>
           <div class="amount-grid" role="group" aria-label="Select gift amount">
             <button type="button" class="amount-btn" data-amount="25">$25</button>
             <button type="button" class="amount-btn" data-amount="50">$50</button>
@@ -744,55 +745,29 @@
           <div class="custom-amount-wrap" id="custom-amount-wrap" style="display:none;">
             <div class="amount-input-row">
               <span class="dollar-sign" aria-hidden="true">$</span>
-              <input type="number" id="custom-amount" placeholder="Enter amount" min="1" step="1" aria-label="Custom amount in dollars">
+              <input type="number" id="custom-amount" placeholder="0.00" min="1" step="1" aria-label="Custom gift amount">
             </div>
           </div>
         </div>
 
-        <!-- Fund -->
-        <div class="form-section">
-          <label class="field-label" for="giving-fund">Designated Fund</label>
-          <div class="select-wrap">
-            <select id="giving-fund">
-              <option value="General Fund">General Fund (Tithe &amp; Offering)</option>
-              <option value="Building Fund">Building Fund</option>
-              <option value="Missions / Harvest">Missions / Harvest</option>
-              <option value="Youth Ministry">Youth Ministry</option>
-            </select>
-          </div>
+        <!-- Card form (primary) — no label, Square renders its own fields -->
+        <div id="card-container"></div>
+
+        <!-- Fund dropdown — no label, placeholder makes purpose obvious -->
+        <div class="select-wrap">
+          <select id="giving-fund">
+            <option value="General Fund">General Fund (Tithe &amp; Offering)</option>
+            <option value="Building Fund">Building Fund</option>
+            <option value="Missions / Harvest">Missions / Harvest</option>
+            <option value="Youth Ministry">Youth Ministry</option>
+          </select>
         </div>
 
-        <!-- Name -->
-        <div class="form-section">
-          <label class="field-label" for="giver-name">Your Name <span style="font-weight:300;">(optional)</span></label>
-          <input type="text" id="giver-name" class="text-input" placeholder="First &amp; Last Name" autocomplete="name">
-        </div>
-
-        <!-- Express pay: Apple Pay / Google Pay (shown only when supported) -->
-        <div id="express-pay-section" class="form-section" style="display:none;">
-          <span class="field-label">Pay Quickly</span>
-          <div class="express-btns">
-            <div id="apple-pay-button" style="display:none;min-height:48px;"></div>
-            <div id="google-pay-button" style="display:none;min-height:48px;"></div>
-          </div>
-        </div>
-
-        <!-- Divider between express and card -->
-        <div id="express-divider" class="pay-divider" style="display:none;">
-          <span>or pay with card</span>
-        </div>
-
-        <!-- Card -->
-        <div class="form-section">
-          <span class="field-label">Card Information</span>
-          <div id="card-container"></div>
-        </div>
-
-        <!-- Fee checkbox -->
+        <!-- Fee -->
         <div class="fee-checkbox-row">
           <input type="checkbox" id="cover-fees">
           <label for="cover-fees">
-            Cover the processing fee so GBFPC receives the full amount of my gift.
+            Cover processing fees so GBFPC receives your full gift
             <span class="fee-note" id="fee-note">$100.00 gift + $3.20 fee = $103.20 total</span>
           </label>
         </div>
@@ -806,6 +781,21 @@
         </button>
 
         <p class="secure-note">🔒 Secured by <strong>Square</strong> · Card info never stored on our servers</p>
+
+        <!-- Express checkout at bottom (Google Pay, Apple Pay) -->
+        <div id="express-divider" class="pay-divider" style="display:none;">
+          <span>or use express checkout</span>
+        </div>
+
+        <div id="express-pay-section" style="display:none;">
+          <div class="express-btns">
+            <div id="apple-pay-button" style="display:none;"></div>
+            <div id="google-pay-button" style="display:none;"></div>
+          </div>
+        </div>
+
+        <!-- Hidden name field used for payment note -->
+        <input type="hidden" id="giver-name" value="">
 
       </form>
 
