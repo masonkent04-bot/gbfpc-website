@@ -116,6 +116,7 @@
   .r-sm.in { opacity: 1; transform: none; }
   .d1 { transition-delay: 0.08s; } .d2 { transition-delay: 0.16s; } .d3 { transition-delay: 0.24s; }
   .d4 { transition-delay: 0.32s; } .d5 { transition-delay: 0.40s; } .d6 { transition-delay: 0.48s; }
+  .d7 { transition-delay: 0.56s; }
 
   /* ━━━━━━━━━━━━━━━━━━━━━━━━
      SHARED UTILITIES
@@ -686,6 +687,11 @@
     font-weight: 900; font-size: 1.2rem; letter-spacing: -0.02em;
     text-transform: uppercase; color: #fff; line-height: 1.05; margin-bottom: 10px;
   }
+  .min-sc-desc {
+    font-size: 0.68rem; font-weight: 300; color: rgba(255,255,255,0.62);
+    line-height: 1.5; margin: -4px 0 10px;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+  }
   .min-sc-cta {
     font-size: 0.52rem; font-weight: 700; letter-spacing: 0.18em;
     text-transform: uppercase; color: rgba(255,255,255,0.45);
@@ -795,9 +801,9 @@
         <div class="min-panel-photo">
           <img src="MEDIA/t-rocket1.jpg" alt="Amplified Youth ministry" loading="lazy"/>
         </div>
-        <span class="min-panel-tag">Ages 13–18</span>
+        <span class="min-panel-tag">Ages 12–25, Unmarried</span>
         <div class="min-panel-name">Amplified Youth</div>
-        <p class="min-panel-desc">High-energy, Spirit-filled ministry for teens. Tuesday nights are where faith gets real — worship, the Word, and a community that genuinely does life together. Special events, camps, and outings throughout the year.</p>
+        <p class="min-panel-desc">High-energy, Spirit-filled ministry for young people ages 12–25 who are unmarried. Tuesday nights are where faith gets real — worship, the Word, and a community that genuinely does life together. Special events, camps, and outings throughout the year.</p>
         <a href="gbfpc-connect.html#amplified-youth" class="min-panel-link">
           Join This Ministry
           <svg viewBox="0 0 12 12" style="width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round"><path d="M1 6h10M7 2l4 4-4 4"/></svg>
@@ -807,9 +813,9 @@
       <!-- CULTIVATE -->
       <div class="min-panel r d2" id="thrive">
         <div class="min-panel-photo">
-          <img src="MEDIA/SLJ03694-2.jpg" alt="Cultivate Women and Family Ministry" loading="lazy"/>
+          <img src="MEDIA/SLJ03694-2.jpg" alt="Cultivate family connection ministry" loading="lazy"/>
         </div>
-        <span class="min-panel-tag">Women &amp; Family</span>
+        <span class="min-panel-tag">Family Connection</span>
         <div class="min-panel-name">Cultivate</div>
         <p class="min-panel-desc">Helping parents, families, and marriages grow through prayer, fellowship, and authentic community. A place to go deeper in faith and find your people.</p>
         <a href="gbfpc-connect.html#cultivate" class="min-panel-link">
@@ -842,8 +848,20 @@
 
     <div class="min-scroll-track" id="minScrollTrack">
 
+      <!-- AMPLIFIED YOUTH -->
+      <a href="gbfpc-connect.html#amplified-youth" class="min-sc-card r">
+        <div class="min-sc-bg" style="background-image:url('MEDIA/t-rocket1.jpg')"></div>
+        <div class="min-sc-overlay"></div>
+        <div class="min-sc-body">
+          <span class="min-sc-tag">Ages 12–25, Unmarried</span>
+          <div class="min-sc-name">Amplified<br>Youth</div>
+          <p class="min-sc-desc">High-energy, Spirit-filled ministry for young people — worship, the Word, and real community.</p>
+          <span class="min-sc-cta">Join This Ministry <svg viewBox="0 0 12 12"><path d="M1 6h10M7 2l4 4-4 4"/></svg></span>
+        </div>
+      </a>
+
       <!-- K.I.C.K. -->
-      <a href="gbfpc-connect.html#kick" class="min-sc-card r" id="children">
+      <a href="gbfpc-connect.html#kick" class="min-sc-card r d1" id="children">
         <div class="min-sc-bg" style="background-image:url('MEDIA/kick2.jpg')"></div>
         <div class="min-sc-overlay"></div>
         <div class="min-sc-body">
@@ -854,7 +872,7 @@
       </a>
 
       <!-- EDUCATION -->
-      <a href="gbfpc-education.html" class="min-sc-card r d1" id="education">
+      <a href="gbfpc-education.html" class="min-sc-card r d2" id="education">
         <div class="min-sc-bg" style="background-image:url('MEDIA/education1.jpg')"></div>
         <div class="min-sc-overlay"></div>
         <div class="min-sc-body">
@@ -865,7 +883,7 @@
       </a>
 
       <!-- PRAYER MINISTRY -->
-      <a href="gbfpc-connect.html#prayer-ministry" class="min-sc-card r d2">
+      <a href="gbfpc-connect.html#prayer-ministry" class="min-sc-card r d3">
         <div class="min-sc-bg" style="background-image:url('MEDIA/prayer1.jpg')"></div>
         <div class="min-sc-overlay"></div>
         <div class="min-sc-body">
@@ -876,13 +894,49 @@
       </a>
 
       <!-- HARVEST -->
-      <a href="gbfpc-connect.html#harvest" class="min-sc-card r d3" id="outreach">
+      <a href="gbfpc-connect.html#harvest" class="min-sc-card r d4" id="outreach">
         <div class="min-sc-bg" style="background-image:url('MEDIA/SLJ03746.jpg')"></div>
         <div class="min-sc-overlay"></div>
         <div class="min-sc-body">
           <span class="min-sc-tag">Serving Our City</span>
           <div class="min-sc-name">Harvest</div>
           <span class="min-sc-cta">Join This Ministry <svg viewBox="0 0 12 12"><path d="M1 6h10M7 2l4 4-4 4"/></svg></span>
+        </div>
+      </a>
+
+      <!-- CULTIVATE HOMES -->
+      <a href="gbfpc-connect.html#cultivate-homes" class="min-sc-card r d5" id="cultivate-homes">
+        <div class="min-sc-bg" style="background-image:url('MEDIA/connect1.jpg')"></div>
+        <div class="min-sc-overlay"></div>
+        <div class="min-sc-body">
+          <span class="min-sc-tag">Small Groups</span>
+          <div class="min-sc-name">Cultivate<br>Homes</div>
+          <p class="min-sc-desc">A Kingdom-centered &ldquo;third place&rdquo; where people connect outside of formal church gatherings.</p>
+          <span class="min-sc-cta">Join This Ministry <svg viewBox="0 0 12 12"><path d="M1 6h10M7 2l4 4-4 4"/></svg></span>
+        </div>
+      </a>
+
+      <!-- CONNEXION -->
+      <a href="gbfpc-connect.html#connexion" class="min-sc-card r d6" id="connexion">
+        <div class="min-sc-bg" style="background-image:url('MEDIA/SLJ03838-2.jpg')"></div>
+        <div class="min-sc-overlay"></div>
+        <div class="min-sc-body">
+          <span class="min-sc-tag">Fellowship &amp; Life Skills</span>
+          <div class="min-sc-name">Connexion</div>
+          <p class="min-sc-desc">A time of fellowship, recreation, crafts, entrepreneurship, and life lessons.</p>
+          <span class="min-sc-cta">Join This Ministry <svg viewBox="0 0 12 12"><path d="M1 6h10M7 2l4 4-4 4"/></svg></span>
+        </div>
+      </a>
+
+      <!-- T-ROCKET -->
+      <a href="trocket.html" class="min-sc-card r d7" id="trocket">
+        <div class="min-sc-bg" style="background-image:url('MEDIA/t-rocket1.jpg')"></div>
+        <div class="min-sc-overlay"></div>
+        <div class="min-sc-body">
+          <span class="min-sc-tag">Mentorship</span>
+          <div class="min-sc-name">T-Rocket</div>
+          <p class="min-sc-desc">Community mentorship program.</p>
+          <span class="min-sc-cta">Sign Up <svg viewBox="0 0 12 12"><path d="M1 6h10M7 2l4 4-4 4"/></svg></span>
         </div>
       </a>
 
