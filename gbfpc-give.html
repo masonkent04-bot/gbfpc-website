@@ -1203,7 +1203,14 @@
       var holderName = document.getElementById('account-holder-name').value.trim();
       if (!holderName) { showFormError('Please enter the account holder name.'); return; }
       try {
-        var tokenResult = await sqAch.tokenize({ accountHolderName: holderName, intent: 'CHARGE' });
+        var coverFees2 = document.getElementById('cover-fees').checked;
+        var achTotal = Math.round(calcTotal(selectedAmount, coverFees2) * 100).toString();
+        var tokenResult = await sqAch.tokenize({
+          accountHolderName: holderName,
+          intent: 'CHARGE',
+          amount: achTotal,
+          currency: 'USD',
+        });
         if (tokenResult.status !== 'OK') throw new Error(
           (tokenResult.errors && tokenResult.errors[0] && tokenResult.errors[0].message) || 'Bank account could not be verified.');
         await submitPayment(tokenResult.token);
