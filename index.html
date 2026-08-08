@@ -504,6 +504,97 @@
     max-width: 400px;
     margin-bottom: 32px;
   }
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━ UPCOMING EVENTS (home) ━━━━━━━━━━━━━━━━━━━━━━━━ */
+  #home-events { background: #fff; padding: 100px 80px 40px; }
+  .he-inner { max-width: 1240px; margin: 0 auto; }
+  .he-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 32px; margin-bottom: 44px; flex-wrap: wrap;
+  }
+  .he-eyebrow {
+    font-size: 0.58rem; font-weight: 700; letter-spacing: 0.28em;
+    text-transform: uppercase; color: #bbb; margin-bottom: 14px; display: block;
+  }
+  .he-title {
+    font-weight: 900; font-size: clamp(2.8rem, 5vw, 4.8rem);
+    line-height: 0.93; letter-spacing: -0.03em;
+    text-transform: uppercase; color: var(--c-dark);
+  }
+  .he-allbtn {
+    flex-shrink: 0; display: inline-flex; align-items: center; gap: 8px;
+    background: var(--c-dark); color: #fff;
+    font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; padding: 14px 28px; border-radius: 100px;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .he-allbtn:hover { opacity: 0.82; transform: translateX(3px); }
+  .he-allbtn svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+
+  .he-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+  .he-card {
+    border: 1px solid var(--c-border); border-radius: 16px; overflow: hidden;
+    background: #fff; display: flex; flex-direction: column;
+    transition: border-color 0.22s, transform 0.22s, box-shadow 0.22s;
+  }
+  .he-card:hover {
+    border-color: #ddd; transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.07);
+  }
+  .he-thumb {
+    position: relative; aspect-ratio: 16/10; background: var(--c-surface); overflow: hidden;
+  }
+  .he-thumb img {
+    width: 100%; height: 100%; object-fit: cover;
+    opacity: 0; transition: opacity 0.5s ease, transform 0.6s ease;
+  }
+  .he-thumb img.he-loaded { opacity: 1; }
+  .he-card:hover .he-thumb img { transform: scale(1.05); }
+  .he-datebadge {
+    position: absolute; top: 12px; left: 12px; z-index: 2;
+    background: rgba(255,255,255,0.95); backdrop-filter: blur(6px);
+    border-radius: 9px; padding: 7px 12px; text-align: center; line-height: 1.15;
+  }
+  .he-date-main {
+    display: block; font-size: 0.72rem; font-weight: 900;
+    letter-spacing: -0.01em; text-transform: uppercase; color: var(--c-dark);
+  }
+  .he-cat {
+    position: absolute; top: 12px; right: 12px; z-index: 2;
+    background: rgba(0,0,0,0.62); backdrop-filter: blur(6px); color: #fff;
+    font-size: 0.5rem; font-weight: 700; letter-spacing: 0.16em;
+    text-transform: uppercase; padding: 6px 10px; border-radius: 100px;
+  }
+  .he-body { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .he-name {
+    font-weight: 800; font-size: 1.02rem; letter-spacing: -0.015em;
+    color: var(--c-dark); line-height: 1.25;
+  }
+  .he-times { font-size: 0.72rem; font-weight: 600; color: var(--c-brand); letter-spacing: 0.02em; }
+  .he-loc {
+    margin-top: auto; padding-top: 8px;
+    display: flex; align-items: center; gap: 5px;
+    font-size: 0.68rem; font-weight: 500; color: #aaa;
+  }
+  .he-empty {
+    grid-column: 1/-1; text-align: center; padding: 56px 0;
+    border: 1px dashed var(--c-border); border-radius: 16px;
+  }
+  .he-empty p { font-size: 0.82rem; color: #bbb; font-weight: 500; }
+  .he-empty p + p { font-size: 0.72rem; color: #ccc; margin-top: 7px; }
+  .he-skel { background: var(--c-surface); border-radius: 16px; aspect-ratio: 16/13; }
+  @media(max-width:1024px) {
+    #home-events { padding: 80px 40px 32px; }
+    .he-grid { grid-template-columns: repeat(2, 1fr); }
+    .he-grid > *:nth-child(3) { display: none; }
+  }
+  @media(max-width:640px) {
+    #home-events { padding: 64px 20px 24px; }
+    .he-head { margin-bottom: 30px; }
+    .he-grid { grid-template-columns: 1fr; gap: 18px; }
+    .he-grid > *:nth-child(3) { display: flex; }
+    .he-allbtn { width: 100%; justify-content: center; }
+  }
+
   /* Pastor's welcome message — transcript of the video */
   .pastor-msg { max-width: 560px; }
   .pastor-msg p {
@@ -1203,6 +1294,25 @@ window.scrollTo(0, 0);
 </div>
 </section>
 
+<!-- ═══════ UPCOMING EVENTS ═══════ -->
+<section id="home-events" aria-labelledby="he-heading">
+  <div class="he-inner">
+    <div class="he-head">
+      <div>
+        <span class="he-eyebrow r">What's Happening</span>
+        <h2 class="he-title r d1" id="he-heading">Upcoming<br>Events.</h2>
+      </div>
+      <a href="gbfpc-events.html" class="he-allbtn r d2">
+        View All Events
+        <svg viewBox="0 0 12 12"><path d="M1 6h10M7 2l4 4-4 4"/></svg>
+      </a>
+    </div>
+    <div class="he-grid" id="heGrid">
+      <div class="he-skel"></div><div class="he-skel"></div><div class="he-skel"></div>
+    </div>
+  </div>
+</section>
+
 <!-- ═══════ PASTOR / FEATURING ═══════ -->
 <section id="pastor">
   <div class="pastor-inner">
@@ -1594,6 +1704,117 @@ window.scrollTo(0, 0);
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
+})();
+</script>
+
+<!-- ═══════ UPCOMING EVENTS FETCH ═══════ -->
+<script>
+(function(){
+  var SUPABASE_URL = 'https://keuecvwaailuvouwegod.supabase.co';
+  var ANON_KEY = 'sb_publishable_LRE10Uf2omW1sP2qqKsbEQ_gvPLaKVC';
+  var grid = document.getElementById('heGrid');
+  if(!grid) return;
+
+  var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var CAT_LABELS = {
+    general:'General', special:'Special Service', revival:'Revival', conference:'Conference',
+    youth:'Amplified Youth', women:'Cultivate', men:'Men', kids:'K.I.C.K.', vbs:'VBS', holiday:'Holiday'
+  };
+
+  function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+  function fmt12(t){
+    if(!t) return '';
+    var p = t.split(':'), h = parseInt(p[0],10), m = parseInt(p[1]||'0',10);
+    return (h%12||12)+':'+(m<10?'0':'')+m+' '+(h>=12?'PM':'AM');
+  }
+  function fmtDate(d){
+    if(!d) return '';
+    var x = new Date(d+'T00:00:00');
+    return MONTHS[x.getMonth()]+' '+x.getDate();
+  }
+  function fmtRange(start, end){
+    if(!end || end===start) return fmtDate(start);
+    var s = new Date(start+'T00:00:00'), e = new Date(end+'T00:00:00');
+    var sm = MONTHS[s.getMonth()], em = MONTHS[e.getMonth()];
+    return sm===em ? sm+' '+s.getDate()+'–'+e.getDate()
+                   : sm+' '+s.getDate()+' – '+em+' '+e.getDate();
+  }
+  function timesText(ev){
+    var list = (ev.sessions && ev.sessions.length) ? ev.sessions
+             : (ev.start_time ? [{label:'', time:ev.start_time}] : []);
+    return list.map(function(s){ return s.label ? s.label+' · '+fmt12(s.time) : fmt12(s.time); }).join('  ·  ');
+  }
+
+  function card(ev){
+    var img = ev.image_url
+      ? '<img src="'+esc(ev.image_url)+'" alt="'+esc(ev.title)+'" loading="lazy"'
+        +' onload="this.classList.add(\'he-loaded\')" onerror="this.style.display=\'none\'">'
+      : '';
+    var cat = CAT_LABELS[ev.category] || ev.category || '';
+    var times = timesText(ev);
+    var loc = (ev.location||'GBFPC')
+      .replace('GBFPC — ','').replace(', Bakersfield CA','').replace(', Bakersfield, CA','');
+
+    return '<a href="gbfpc-events.html" class="he-card r">'
+      + '<div class="he-thumb">'+img
+      +   '<div class="he-datebadge"><span class="he-date-main">'+esc(fmtRange(ev.event_date, ev.date_end))+'</span></div>'
+      +   (cat ? '<div class="he-cat">'+esc(cat)+'</div>' : '')
+      + '</div>'
+      + '<div class="he-body">'
+      +   '<div class="he-name">'+esc(ev.title)+'</div>'
+      +   (times ? '<div class="he-times">'+esc(times)+'</div>' : '')
+      +   '<div class="he-loc">'
+      +     '<svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1C5.2 1 3 3.2 3 6c0 4 5 9 5 9s5-5 5-9c0-2.8-2.2-5-5-5z"/><circle cx="8" cy="6" r="1.5"/></svg>'
+      +     esc(loc)
+      +   '</div>'
+      + '</div></a>';
+  }
+
+  function showEmpty(msg, sub){
+    grid.innerHTML = '<div class="he-empty"><p>'+msg+'</p>'+(sub?'<p>'+sub+'</p>':'')+'</div>';
+  }
+
+  var today = new Date().toISOString().slice(0,10);
+  var endpoint = SUPABASE_URL + '/rest/v1/events'
+    + '?is_published=eq.true'
+    + '&or=(event_date.gte.' + today + ',date_end.gte.' + today + ')'
+    + '&order=is_featured.desc,event_date.asc'
+    + '&limit=6&select=*';
+
+  var timer = setTimeout(function(){ showEmpty('Events could not be loaded.', 'Please try again later.'); }, 8000);
+
+  fetch(endpoint, { headers: { 'apikey': ANON_KEY, 'Authorization': 'Bearer '+ANON_KEY } })
+    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(function(events){
+      clearTimeout(timer);
+      var now = Date.now();
+      events = (events||[]).filter(function(ev){
+        return !ev.publish_at || new Date(ev.publish_at).getTime() <= now;
+      }).slice(0, 3);
+
+      if(!events.length){
+        showEmpty('No upcoming events right now.', "Check back soon — we're always planning something.");
+        return;
+      }
+      grid.innerHTML = events.map(card).join('');
+
+      var obs = new IntersectionObserver(function(en){
+        en.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); } });
+      }, { threshold: 0.08 });
+      grid.querySelectorAll('.r').forEach(function(el, i){
+        el.style.transitionDelay = (i*0.08)+'s';
+        obs.observe(el);
+      });
+      setTimeout(function(){ grid.querySelectorAll('.r:not(.in)').forEach(function(el){
+        var b = el.getBoundingClientRect();
+        if(b.top < window.innerHeight && b.bottom >= 0) el.classList.add('in');
+      }); }, 700);
+    })
+    .catch(function(){
+      clearTimeout(timer);
+      showEmpty('Could not load events.', 'Please try again later.');
+    });
 })();
 </script>
 </body>
