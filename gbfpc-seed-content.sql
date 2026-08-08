@@ -11,7 +11,7 @@ FROM (VALUES
   ('home', 'hero',              'title',       'We Are So Glad You Are Here.'),
   ('home', 'hero',              'subtitle',    'A church rooted in truth and alive in the Spirit. Join us every Sunday and Tuesday.'),
   ('home', 'service-times',     'sunday',      'Sunday School — 10:00 AM | Morning Worship — 11:00 AM'),
-  ('home', 'service-times',     'wednesday',   'Bible Study — 7:00 PM (Tuesday)'),
+  ('home', 'service-times',     'wednesday',   'Midweek Bible Study — 7:30 PM (Tuesday)'),
   ('home', 'service-times',     'address',     '1418 W Columbus St, Bakersfield, CA 93301'),
   ('home', 'about-preview',     'title',       'Our Pastor & Ministries.'),
   ('home', 'about-preview',     'body',        'Hear from Pastor Kevin Bradford and explore the ministries that make GBFPC a home for every person, every age, and every season of life.'),
