@@ -25,8 +25,8 @@ FROM (VALUES
   ('home', 'ministry-youth',    'description', 'High-energy, Spirit-filled youth ministry for teens in middle and high school. Wednesday nights are where faith gets real — worship, the Word, and a community that genuinely does life together.'),
   ('home', 'ministry-kids',     'title',       'K.I.C.K.'),
   ('home', 'ministry-kids',     'description', 'Kids In Christ''s Kingdom. A vibrant Sunday morning experience designed just for children — interactive worship, age-appropriate teaching, and activities that make faith come alive at every stage of childhood.'),
-  ('home', 'ministry-women',    'title',       'Thrive'),
-  ('home', 'ministry-women',    'description', 'Helping women, families, and marriages thrive through prayer, fellowship, and authentic community.'),
+  ('home', 'ministry-women',    'title',       'Cultivate'),
+  ('home', 'ministry-women',    'description', 'Helping women, families, and marriages grow through prayer, fellowship, and authentic community.'),
   ('home', 'ministry-men',      'title',       'Men of GBFPC'),
   ('home', 'ministry-men',      'description', 'Brotherhood, accountability, and Spirit-filled growth. Monthly gatherings, service projects, and discipleship opportunities designed to help men become the husbands, fathers, and leaders God has called them to be.'),
 
