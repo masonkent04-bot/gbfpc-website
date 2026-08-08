@@ -502,6 +502,28 @@
     max-width: 400px;
     margin-bottom: 32px;
   }
+  /* Pastor's welcome message — transcript of the video */
+  .pastor-msg { max-width: 560px; }
+  .pastor-msg p {
+    font-size: 0.95rem; font-weight: 300; color: #5c5c5c;
+    line-height: 1.85; margin-bottom: 18px;
+  }
+  .pastor-msg p:last-of-type { margin-bottom: 0; }
+  .pastor-msg p.lead {
+    font-size: 1.12rem; font-weight: 400; color: var(--c-dark); line-height: 1.7;
+  }
+  .pastor-msg .vip-line { color: var(--c-dark); font-weight: 500; }
+  .pastor-sign {
+    margin-top: 30px; padding-top: 22px; border-top: 1px solid #eee;
+  }
+  .pastor-sign-name {
+    font-weight: 900; font-size: 1rem; letter-spacing: -0.01em;
+    text-transform: uppercase; color: var(--c-dark);
+  }
+  .pastor-sign-role {
+    font-size: 0.68rem; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; color: #aaa; margin-top: 4px;
+  }
   /* Ministry list */
   .min-list { border-top: 1px solid #eee; }
   .min-item-dark {
@@ -1182,8 +1204,8 @@ window.scrollTo(0, 0);
 
     <!-- Heading row -->
     <div class="pastor-head">
-      <span class="pastor-feat-eyebrow r">Featuring</span>
-      <h2 class="pastor-feat-title r d1">Our Pastor &amp; Ministries.</h2>
+      <span class="pastor-feat-eyebrow r">Welcome</span>
+      <h2 class="pastor-feat-title r d1">A Message From<br>Our Pastor.</h2>
     </div>
 
     <!-- Content row: video left / text + list right -->
@@ -1206,15 +1228,19 @@ window.scrollTo(0, 0);
         </div>
       </div>
 
-      <!-- Right: intro + ministry list -->
+      <!-- Right: pastor's welcome message -->
       <div class="pastor-text r d2">
-        <p class="pastor-intro">Hear from Pastor Kevin Bradford and explore the ministries that make GBFPC a home for every person, every age, and every season of life.</p>
-        <div class="min-list">
-          <a href="gbfpc-ministries.html#youth" class="min-item-dark"><div><div class="min-name">Amplified Youth</div><div class="min-sub">Energy, truth, and purpose for young people</div></div><span class="min-arr">→</span></a>
-          <a href="gbfpc-ministries.html#children" class="min-item-dark"><div><div class="min-name">K.I.C.K.</div><div class="min-sub">Kids In Christ's Kingdom — Pre-K through 6th grade</div></div><span class="min-arr">→</span></a>
-          <a href="gbfpc-ministries.html" class="min-item-dark"><div><div class="min-name">Cultivate</div><div class="min-sub">Building genuine connection between families through prayer and community</div></div><span class="min-arr">→</span></a>
-          <a href="gbfpc-education.html" class="min-item-dark"><div><div class="min-name">Education</div><div class="min-sub">Bethel Academy &amp; Kiddie Korral — K–12 &amp; early childhood</div></div><span class="min-arr">→</span></a>
-
+        <div class="pastor-msg">
+          <p class="lead">Hi, I'm Kevin Bradford, and I want to personally welcome you to Greater Bakersfield's First Pentecostal Church.</p>
+          <p>We've been serving the Bakersfield community since 1943, and it's an honor to have you visit our website today. Whether someone invited you, you're new to the area, or you're simply exploring faith, we're so glad you're here.</p>
+          <p>Our church is made up of people from every walk of life who have found hope, purpose, and community through Jesus Christ and His Word. We love worshiping together, growing in Scripture, and building genuine relationships that extend far beyond a Sunday service.</p>
+          <p>As you explore our website, I hope you'll get a glimpse of who we are. But even more than that, I hope you'll come experience a service for yourself.</p>
+          <p class="vip-line">Around here, we have a saying: &ldquo;Be My VIP.&rdquo; We want every guest to know they're a Very Important Person, and from the moment you arrive, our prayer is that you'll feel welcomed, valued, and right at home.</p>
+          <p>Thank you again for stopping by. We hope to meet you soon. Until then, may God richly bless you!</p>
+          <div class="pastor-sign">
+            <div class="pastor-sign-name">Pastor Kevin Bradford</div>
+            <div class="pastor-sign-role">Greater Bakersfield's First Pentecostal Church</div>
+          </div>
         </div>
       </div>
 
@@ -1348,7 +1374,6 @@ window.scrollTo(0, 0);
       <div class="ft-name">Greater Bakersfield's<br>First Pentecostal Church</div>
       <p class="ft-tag">Rooted in truth, alive in the Spirit, and built for community in Bakersfield, California.</p>
       <div class="ft-soc">
-        <a href="https://www.facebook.com/gbfpcmedia/" class="ft-s">f</a>
         <a href="https://www.instagram.com/gbfpc/" class="ft-s">ig</a>
         <a href="https://www.youtube.com/channel/UCO1PnTTAT_uOS4ZkMjdBzGg/videos" class="ft-s">▶</a>
       </div>
