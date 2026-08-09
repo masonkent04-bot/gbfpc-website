@@ -503,7 +503,8 @@
     margin-bottom: 32px;
   }
   /* ━━━━━━━━━━━━━━━━━━━━━━━━ UPCOMING EVENTS (home) ━━━━━━━━━━━━━━━━━━━━━━━━ */
-  #home-events { background: #fff; padding: 100px 80px 40px; }
+  #home-events { display: none; background: #fff; padding: 100px 80px 40px; }
+  #home-events.is-live { display: block; }
   .he-inner { max-width: 1240px; margin: 0 auto; }
   .he-head {
     display: flex; align-items: flex-end; justify-content: space-between;
@@ -573,12 +574,6 @@
     display: flex; align-items: center; gap: 5px;
     font-size: 0.68rem; font-weight: 500; color: #aaa;
   }
-  .he-empty {
-    grid-column: 1/-1; text-align: center; padding: 56px 0;
-    border: 1px dashed var(--c-border); border-radius: 16px;
-  }
-  .he-empty p { font-size: 0.82rem; color: #bbb; font-weight: 500; }
-  .he-empty p + p { font-size: 0.72rem; color: #ccc; margin-top: 7px; }
   .he-skel { background: var(--c-surface); border-radius: 16px; aspect-ratio: 16/13; }
   @media(max-width:1024px) {
     #home-events { padding: 80px 40px 32px; }
@@ -1338,7 +1333,7 @@ window.scrollTo(0, 0);
 </section>
 
 <!-- ═══════ UPCOMING EVENTS ═══════ -->
-<section id="home-events" aria-labelledby="he-heading">
+<section id="home-events" aria-labelledby="he-heading" hidden>
   <div class="he-inner">
     <div class="he-head">
       <div>
@@ -1813,9 +1808,10 @@ window.scrollTo(0, 0);
       + '</div></a>';
   }
 
-  function showEmpty(msg, sub){
-    grid.innerHTML = '<div class="he-empty"><p>'+msg+'</p>'+(sub?'<p>'+sub+'</p>':'')+'</div>';
-  }
+  // Nothing to show (no events, error, or timeout) -> drop the whole section
+  var section = document.getElementById('home-events');
+  function dropSection(){ if(section && section.parentNode) section.parentNode.removeChild(section); }
+  function revealSection(){ if(section){ section.hidden = false; section.classList.add('is-live'); } }
 
   var today = new Date().toISOString().slice(0,10);
   var endpoint = SUPABASE_URL + '/rest/v1/events'
@@ -1824,7 +1820,7 @@ window.scrollTo(0, 0);
     + '&order=is_featured.desc,event_date.asc'
     + '&limit=6&select=*';
 
-  var timer = setTimeout(function(){ showEmpty('Events could not be loaded.', 'Please try again later.'); }, 8000);
+  var timer = setTimeout(dropSection, 8000);
 
   fetch(endpoint, { headers: { 'apikey': ANON_KEY, 'Authorization': 'Bearer '+ANON_KEY } })
     .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
@@ -1835,11 +1831,10 @@ window.scrollTo(0, 0);
         return !ev.publish_at || new Date(ev.publish_at).getTime() <= now;
       }).slice(0, 3);
 
-      if(!events.length){
-        showEmpty('No upcoming events right now.', "Check back soon — we're always planning something.");
-        return;
-      }
+      if(!events.length){ dropSection(); return; }
+
       grid.innerHTML = events.map(card).join('');
+      revealSection();
 
       var obs = new IntersectionObserver(function(en){
         en.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); } });
@@ -1855,7 +1850,7 @@ window.scrollTo(0, 0);
     })
     .catch(function(){
       clearTimeout(timer);
-      showEmpty('Could not load events.', 'Please try again later.');
+      dropSection();
     });
 })();
 </script>
