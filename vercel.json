@@ -2,47 +2,226 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
-    { "source": "/gbfpc-about.html",      "destination": "/about",      "permanent": true },
-    { "source": "/gbfpc-ministries.html", "destination": "/ministries", "permanent": true },
-    { "source": "/gbfpc-education.html",  "destination": "/education",  "permanent": true },
-    { "source": "/gbfpc-academy.html",    "destination": "/education",  "permanent": true },
-    { "source": "/gbfpc-events.html",     "destination": "/events",     "permanent": true },
-    { "source": "/gbfpc-give.html",       "destination": "/give",       "permanent": true },
-    { "source": "/gbfpc-connect.html",    "destination": "/connect",    "permanent": true },
-    { "source": "/gbfpc-livestream.html", "destination": "/livestream", "permanent": true },
-    { "source": "/gbfpc-visit.html",      "destination": "/visit",      "permanent": true },
-    { "source": "/gbfpc-visit-plan.html", "destination": "/vip",        "permanent": true },
-    { "source": "/gbfpc-landing.html",    "destination": "/",           "permanent": true },
-    { "source": "/give-payment",          "destination": "/give",       "permanent": true },
-
-    { "source": "/giving",       "destination": "/give",       "permanent": false },
-    { "source": "/donate",       "destination": "/give",       "permanent": false },
-    { "source": "/plan-a-visit", "destination": "/vip",        "permanent": false },
-    { "source": "/planyourvisit","destination": "/vip",        "permanent": false },
-    { "source": "/watch",        "destination": "/livestream", "permanent": false },
-    { "source": "/live",         "destination": "/livestream", "permanent": false },
-    { "source": "/contact",      "destination": "/connect",    "permanent": false },
-    { "source": "/t-rocket",     "destination": "/trocket",    "permanent": false },
-    { "source": "/academy",      "destination": "/education",  "permanent": false },
-    { "source": "/school",       "destination": "/education",  "permanent": false }
+    {
+      "source": "/gbfpc-about",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/gbfpc-about.html",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/gbfpc-ministries",
+      "destination": "/ministries",
+      "permanent": true
+    },
+    {
+      "source": "/gbfpc-ministries.html",
+      "destination": "/ministries",
+      "permanent": true
+    },
+    {
+      "source": "/gbfpc-education",
+      "destination": "/education",
+      "permanent": true
+    },
+    {
+      "source": "/gbfpc-education.html",
+      "destination": "/education",
+      "permanent": true
+    },
+    {
+      "source": "/gbfpc-academy",
+      "destination": "/education",
+      "permanent": true
+    },
+    {
+      "source": "/gbfpc-academy.html",
+      "destination": "/education",
+      "permanent": true
+    },
+    {
+      "source": "/gbfpc-events",
+      "destination": "/events",
+      "permanent": true
+    },
+    {
+      "source": "/gbfpc-events.html",
+      "destination": "/events",
+      "permanent": true
+    },
+    {
+      "source": "/gbfpc-give",
+      "destination": "/give",
+      "permanent": true
+    },
+    {
+      "source": "/gbfpc-give.html",
+      "destination": "/give",
+      "permanent": true
+    },
+    {
+      "source": "/gbfpc-connect",
+      "destination": "/connect",
+      "permanent": true
+    },
+    {
+      "source": "/gbfpc-connect.html",
+      "destination": "/connect",
+      "permanent": true
+    },
+    {
+      "source": "/gbfpc-livestream",
+      "destination": "/livestream",
+      "permanent": true
+    },
+    {
+      "source": "/gbfpc-livestream.html",
+      "destination": "/livestream",
+      "permanent": true
+    },
+    {
+      "source": "/gbfpc-visit",
+      "destination": "/visit",
+      "permanent": true
+    },
+    {
+      "source": "/gbfpc-visit.html",
+      "destination": "/visit",
+      "permanent": true
+    },
+    {
+      "source": "/gbfpc-visit-plan",
+      "destination": "/vip",
+      "permanent": true
+    },
+    {
+      "source": "/gbfpc-visit-plan.html",
+      "destination": "/vip",
+      "permanent": true
+    },
+    {
+      "source": "/gbfpc-landing",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/gbfpc-landing.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/gbfpc-index",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/gbfpc-index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/give-payment",
+      "destination": "/give",
+      "permanent": true
+    },
+    {
+      "source": "/giving",
+      "destination": "/give",
+      "permanent": false
+    },
+    {
+      "source": "/donate",
+      "destination": "/give",
+      "permanent": false
+    },
+    {
+      "source": "/plan-a-visit",
+      "destination": "/vip",
+      "permanent": false
+    },
+    {
+      "source": "/planyourvisit",
+      "destination": "/vip",
+      "permanent": false
+    },
+    {
+      "source": "/watch",
+      "destination": "/livestream",
+      "permanent": false
+    },
+    {
+      "source": "/live",
+      "destination": "/livestream",
+      "permanent": false
+    },
+    {
+      "source": "/contact",
+      "destination": "/connect",
+      "permanent": false
+    },
+    {
+      "source": "/t-rocket",
+      "destination": "/trocket",
+      "permanent": false
+    },
+    {
+      "source": "/academy",
+      "destination": "/education",
+      "permanent": false
+    },
+    {
+      "source": "/school",
+      "destination": "/education",
+      "permanent": false
+    },
+    {
+      "source": "/vbs",
+      "destination": "/events",
+      "permanent": false
+    }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy", "value": "geolocation=(), microphone=(), camera=()" }
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "geolocation=(), microphone=(), camera=()"
+        }
       ]
     },
     {
       "source": "/MEDIA/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     },
     {
       "source": "/(favicon.ico|favicon.svg|apple-touch-icon.png|icon-192.png|icon-512.png|og-image.png|gbfpc-logo.svg)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        }
+      ]
     }
   ]
 }
