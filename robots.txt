@@ -1,9 +1,8 @@
 User-agent: *
 Allow: /
 
-# Form confirmation / utility pages — no SEO value
-Disallow: /gbfpc-visit-plan.html
-Disallow: /trocket.html
-Disallow: /give-payment
+# Form pages — no SEO value
+Disallow: /vip
+Disallow: /trocket
 
-Sitemap: https://gbfpc-website.vercel.app/sitemap.xml
+Sitemap: https://gbfpc.org/sitemap.xml
