@@ -48,7 +48,7 @@
     display: flex; align-items: center; justify-content: space-between;
     padding: 0 80px; height: 64px;
   }
-  .hdr-logo { height: 36px; }
+  .hdr-logo { height: 36px; width: auto; object-fit: contain; filter: brightness(0); }
   .hdr-nav { display: flex; gap: 32px; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
   .hdr-nav a { color: #555; transition: color 0.2s; }
   .hdr-nav a:hover { color: var(--c-dark); }
@@ -189,7 +189,7 @@
 <body>
 
 <header id="header">
-  <a href="/" aria-label="GBFPC Home"><img src="gbfpc-logo.svg" alt="GBFPC" class="hdr-logo"/></a>
+  <a href="/" aria-label="GBFPC Home"><img src="/gbfpc-logo.svg" alt="GBFPC" class="hdr-logo"/></a>
   <nav class="hdr-nav" id="mainNav" aria-label="Main navigation">
     <button class="nav-close-btn" id="navClose" aria-label="Close menu">&#x2715;</button>
     <a href="/about">About</a>
@@ -426,7 +426,7 @@
 <footer>
   <div class="ft-grid">
     <div>
-      <img src="gbfpc-logo.svg" alt="GBFPC" class="ft-logo"/>
+      <img src="/gbfpc-logo.svg" alt="GBFPC" class="ft-logo"/>
       <div class="ft-name">Greater Bakersfield's<br>First Pentecostal Church</div>
       <p class="ft-tag">Rooted in truth, alive in the Spirit, and built for community in Bakersfield, California.</p>
       <div class="ft-soc">
