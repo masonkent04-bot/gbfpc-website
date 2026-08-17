@@ -1,6 +1,7 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "rewrites": [{ "source": "/f/:path*", "destination": "https://admin.gbfpc.org/f/:path*" }, { "source": "/q/:path*", "destination": "https://admin.gbfpc.org/q/:path*" }],
   "redirects": [
     {
       "source": "/gbfpc-about",
