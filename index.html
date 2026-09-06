@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>GBFPC | Greater Bakersfield's First Pentecostal Church</title>
   <meta name="description" content="A Spirit-filled church family in Bakersfield, California since 1943. Join us Sunday at 10:00 AM and 6:00 PM, and Tuesday at 7:30 PM. All are welcome."/>
-  <link rel="canonical" href="https://gbfpc.org/"/>
+  <link rel="canonical" href="https://gbfpc-website.vercel.app/"/>
   <link rel="icon" href="/favicon.ico" sizes="any"/>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
   <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
@@ -15,14 +15,14 @@
   <meta property="og:site_name" content="Greater Bakersfield's First Pentecostal Church"/>
   <meta property="og:title" content="Greater Bakersfield's First Pentecostal Church"/>
   <meta property="og:description" content="A Spirit-filled church family in Bakersfield, California since 1943. Join us Sunday at 10:00 AM and 6:00 PM, and Tuesday at 7:30 PM. All are welcome."/>
-  <meta property="og:url" content="https://gbfpc.org/"/>
-  <meta property="og:image" content="https://gbfpc.org/og-image.png"/>
+  <meta property="og:url" content="https://gbfpc-website.vercel.app/"/>
+  <meta property="og:image" content="https://gbfpc-website.vercel.app/og-image.png"/>
   <meta property="og:image:width" content="1200"/>
   <meta property="og:image:height" content="630"/>
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="Greater Bakersfield's First Pentecostal Church"/>
   <meta name="twitter:description" content="A Spirit-filled church family in Bakersfield, California since 1943. Join us Sunday at 10:00 AM and 6:00 PM, and Tuesday at 7:30 PM. All are welcome."/>
-  <meta name="twitter:image" content="https://gbfpc.org/og-image.png"/>
+  <meta name="twitter:image" content="https://gbfpc-website.vercel.app/og-image.png"/>
   <!-- Open Graph / social preview -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -504,6 +504,62 @@
   .pastor-vbox video.loaded {
     opacity: 1;
   }
+  /* Poster as a box background too, so the frame is visible even before the
+     video decodes — or if it never loads at all. The video fades in over it. */
+  .pastor-vbox.has-video {
+    background-image: url('MEDIA/pastor-poster.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  /* Sound toggle — above both the video (z2) and the name footer (z2) */
+  .vbox-sound {
+    position: absolute; top: 14px; right: 14px; z-index: 6;
+    width: 44px; height: 44px;
+    border: 0; padding: 0; margin: 0; border-radius: 50%;
+    display: grid; place-items: center;
+    cursor: pointer; color: #fff;
+    background: rgba(10,10,10,0.45);
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.18);
+    transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.15s ease;
+  }
+  .vbox-sound:hover { background: rgba(10,10,10,0.7); box-shadow: inset 0 0 0 1px var(--c-brand); }
+  .vbox-sound:active { transform: scale(0.94); }
+  .vbox-sound svg { width: 19px; height: 19px; display: block; pointer-events: none; }
+  .vbox-sound .ico-on { display: none; }
+  .vbox-sound.is-on { background: var(--c-brand); color: #111; box-shadow: none; }
+  .vbox-sound.is-on .ico-on { display: block; }
+  .vbox-sound.is-on .ico-off { display: none; }
+  /* Nudge so people know audio is available; fades once they've used it */
+  .vbox-hint {
+    position: absolute; top: 23px; right: 68px; z-index: 6;
+    font-size: 0.54rem; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase; color: #fff;
+    background: rgba(10,10,10,0.45);
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    padding: 7px 11px; border-radius: 100px;
+    white-space: nowrap; pointer-events: none;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .vbox-hint.hide { opacity: 0; transform: translateX(8px); }
+  /* Shown only when autoplay is refused outright (iOS Low Power Mode, etc.) */
+  .vbox-play {
+    position: absolute; inset: 0; z-index: 5;
+    display: none; place-items: center;
+    border: 0; padding: 0; margin: 0; cursor: pointer;
+    background: rgba(0,0,0,0.3);
+  }
+  .vbox-play.show { display: grid; }
+  .vbox-play span {
+    width: 66px; height: 66px; border-radius: 50%;
+    background: rgba(255,255,255,0.93);
+    display: grid; place-items: center;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.32);
+    transition: transform 0.15s ease;
+  }
+  .vbox-play:active span { transform: scale(0.94); }
+  .vbox-play svg { width: 25px; height: 25px; margin-left: 3px; color: #111; }
   /* Right: intro text + ministry list */
   .pastor-text {
     padding-top: 8px;
@@ -1260,19 +1316,19 @@ window.scrollTo(0, 0);
 <!-- ═══════ HEADER ═══════ -->
 <header id="header">
   <a href="/" class="hdr-logo-link" aria-label="GBFPC Home">
-    <img src="/gbfpc-logo.svg" alt="GBFPC" class="hdr-logo"/>
+    <img src="gbfpc-logo.svg" alt="GBFPC" class="hdr-logo"/>
   </a>
   <nav class="hdr-nav" id="mainNav" role="navigation" aria-label="Main navigation">
     <button class="nav-close-btn" id="navClose" aria-label="Close menu">&#x2715;</button>
-    <a href="/about">About</a>
-    <a href="/ministries">Ministries</a>
-    <a href="/education">Education</a>
-    <a href="/events">Events</a>
-    <a href="/give">Give</a>
-    <a href="/connect">Connect</a>
-    <a href="/livestream">Livestream</a>
+    <a href="gbfpc-about.html">About</a>
+    <a href="gbfpc-ministries.html">Ministries</a>
+    <a href="gbfpc-education.html">Education</a>
+    <a href="gbfpc-events.html">Events</a>
+    <a href="gbfpc-give.html">Give</a>
+    <a href="gbfpc-connect.html">Connect</a>
+    <a href="gbfpc-livestream.html">Livestream</a>
   </nav>
-  <a href="/visit" class="hdr-pv">Be Our V.I.P.</a>
+  <a href="gbfpc-visit.html" class="hdr-pv">Be Our V.I.P.</a>
   <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav">
     <span class="nav-toggle-bar"></span>
     <span class="nav-toggle-bar"></span>
@@ -1314,8 +1370,8 @@ window.scrollTo(0, 0);
       </h1>
       <p class="hero-body">A church rooted in truth and alive in the Spirit. Join us every Sunday and Tuesday.</p>
       <div class="hero-btns">
-        <a href="/livestream" class="btn-white">Watch Livestream</a>
-        <a href="/visit" class="btn-ghost-w">Be Our V.I.P.</a>
+        <a href="gbfpc-livestream.html" class="btn-white">Watch Livestream</a>
+        <a href="gbfpc-visit-plan.html" class="btn-ghost-w">Be Our V.I.P.</a>
       </div>
     </div>
   </div>
@@ -1328,19 +1384,19 @@ window.scrollTo(0, 0);
     </div>
     <div class="info-text"><span class="info-label">Location</span><span class="info-val">1418 W Columbus St, Bakersfield</span></div>
   </a>
-  <a href="/visit#services" class="info-cell">
+  <a href="gbfpc-visit.html#services" class="info-cell">
     <div class="info-icon-wrap">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 15.5"/></svg>
     </div>
     <div class="info-text"><span class="info-label">Services</span><span class="info-val">Every Sunday &amp; Tuesday</span></div>
   </a>
-  <a href="/visit" class="info-cell">
+  <a href="gbfpc-visit.html" class="info-cell">
     <div class="info-icon-wrap">
       <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
     </div>
     <div class="info-text"><span class="info-label">New Here?</span><span class="info-val">Be Our V.I.P.</span></div>
   </a>
-  <a href="/give" class="info-cell">
+  <a href="gbfpc-give.html" class="info-cell">
     <div class="info-icon-wrap">
       <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
     </div>
@@ -1357,7 +1413,7 @@ window.scrollTo(0, 0);
         <span class="he-eyebrow r">What's Happening</span>
         <h2 class="he-title r d1" id="he-heading">Upcoming<br>Events.</h2>
       </div>
-      <a href="/events" class="he-allbtn r d2">
+      <a href="gbfpc-events.html" class="he-allbtn r d2">
         View All Events
         <svg viewBox="0 0 12 12"><path d="M1 6h10M7 2l4 4-4 4"/></svg>
       </a>
@@ -1381,16 +1437,37 @@ window.scrollTo(0, 0);
     <!-- Content row: video left / text + list right -->
     <div class="pastor-body">
 
-      <!-- Left: vertical portrait — placeholder photo until video is ready -->
-      <div class="pastor-vbox r d1">
-        <!-- ═══ PASTOR VIDEO ═══
-             To activate: replace the img below with:
-             <video id="pastorVid" src="MEDIA/pastor-bradford.mp4" muted loop playsinline autoplay></video> -->
-        <img
-          src="MEDIA/pastor-video-placeholder.jpg"
-          alt="Pastor Kevin Bradford"
-          style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;z-index:2;display:block;"
-        />
+      <!-- Left: vertical video — plays muted when scrolled into view, with a
+           sound button. Autoplay with sound is blocked by every browser, so
+           muted-then-unmute is the only arrangement that actually works. -->
+      <div class="pastor-vbox has-video r d1">
+        <video
+          id="pastorVid"
+          src="MEDIA/pastor-message.mp4"
+          poster="MEDIA/pastor-poster.jpg"
+          muted loop playsinline preload="metadata"
+        ></video>
+
+        <button id="pastorPlay" class="vbox-play" type="button" aria-label="Play the welcome message">
+          <span>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          </span>
+        </button>
+
+        <span id="pastorHint" class="vbox-hint">Tap for sound</span>
+
+        <button id="pastorSound" class="vbox-sound" type="button"
+                aria-label="Turn sound on" aria-pressed="false">
+          <svg class="ico-off" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M23 9l-6 6"/><path d="M17 9l6 6"/>
+          </svg>
+          <svg class="ico-on" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/>
+          </svg>
+        </button>
+
         <div class="vbox-footer">
           <div class="vbox-tag">Our Pastor</div>
           <div class="vbox-name">Kevin Bradford</div>
@@ -1431,14 +1508,14 @@ window.scrollTo(0, 0);
           <button class="ld-arr" id="ldPrev" aria-label="Previous"><svg viewBox="0 0 12 12"><path d="M8 1L3 6l5 5"/></svg></button>
           <button class="ld-arr" id="ldNext" aria-label="Next"><svg viewBox="0 0 12 12"><path d="M4 1l5 5-5 5"/></svg></button>
         </div>
-        <a href="/ministries" class="view-all">View All →</a>
+        <a href="gbfpc-ministries.html" class="view-all">View All →</a>
       </div>
     </div>
     <div class="cards" id="ldScrollTrack">
-      <div class="mc r"><div class="mc-bg" style="background-image:url('MEDIA/t-rocket1.jpg')"></div><div class="mc-ov"></div><div class="mc-body"><div class="mc-tag">Ages 12–25, Unmarried</div><div class="mc-name">Amplified Youth</div><div class="mc-desc">Fostering an environment for young people to be filled with Holy Ghost energy and sent out as a voice of truth.</div><a href="/ministries#youth" class="mc-link">Explore ↗</a></div></div>
-      <div class="mc r d1"><div class="mc-bg" style="background-image:url('MEDIA/kick1.jpg')"></div><div class="mc-ov"></div><div class="mc-body"><div class="mc-tag">Ages 4–12</div><div class="mc-name">K.I.C.K.</div><div class="mc-desc">Kids In Christ's Kingdom — teaching children God's Word through fun, community, and the power of His Spirit.</div><a href="/ministries#children" class="mc-link">Explore ↗</a></div></div>
-      <div class="mc r d2"><div class="mc-bg" style="background-image:url('MEDIA/SLJ03694-2.jpg')"></div><div class="mc-ov"></div><div class="mc-body"><div class="mc-tag">Family Connection</div><div class="mc-name">Cultivate</div><div class="mc-desc">Building genuine connection between families through prayer, fellowship, and authentic community.</div><a href="/ministries" class="mc-link">Explore ↗</a></div></div>
-      <div class="mc r d1"><div class="mc-bg" style="background-image:url('MEDIA/education1.jpg')"></div><div class="mc-ov"></div><div class="mc-body"><div class="mc-tag">Education</div><div class="mc-name">Education</div><div class="mc-desc">Bethel Apostolic Academy (K–12) and Kiddie Korral — academic excellence in a Christian environment since 1972.</div><a href="/education" class="mc-link">Explore ↗</a></div></div>
+      <div class="mc r"><div class="mc-bg" style="background-image:url('MEDIA/t-rocket1.jpg')"></div><div class="mc-ov"></div><div class="mc-body"><div class="mc-tag">Ages 12–25, Unmarried</div><div class="mc-name">Amplified Youth</div><div class="mc-desc">Fostering an environment for young people to be filled with Holy Ghost energy and sent out as a voice of truth.</div><a href="gbfpc-ministries.html#youth" class="mc-link">Explore ↗</a></div></div>
+      <div class="mc r d1"><div class="mc-bg" style="background-image:url('MEDIA/kick1.jpg')"></div><div class="mc-ov"></div><div class="mc-body"><div class="mc-tag">Ages 4–12</div><div class="mc-name">K.I.C.K.</div><div class="mc-desc">Kids In Christ's Kingdom — teaching children God's Word through fun, community, and the power of His Spirit.</div><a href="gbfpc-ministries.html#children" class="mc-link">Explore ↗</a></div></div>
+      <div class="mc r d2"><div class="mc-bg" style="background-image:url('MEDIA/SLJ03694-2.jpg')"></div><div class="mc-ov"></div><div class="mc-body"><div class="mc-tag">Family Connection</div><div class="mc-name">Cultivate</div><div class="mc-desc">Building genuine connection between families through prayer, fellowship, and authentic community.</div><a href="gbfpc-ministries.html" class="mc-link">Explore ↗</a></div></div>
+      <div class="mc r d1"><div class="mc-bg" style="background-image:url('MEDIA/education1.jpg')"></div><div class="mc-ov"></div><div class="mc-body"><div class="mc-tag">Education</div><div class="mc-name">Education</div><div class="mc-desc">Bethel Apostolic Academy (K–12) and Kiddie Korral — academic excellence in a Christian environment since 1972.</div><a href="gbfpc-education.html" class="mc-link">Explore ↗</a></div></div>
 
     </div>
   </div>
@@ -1461,7 +1538,7 @@ window.scrollTo(0, 0);
           <div class="lead-role">Pastor</div>
           <div class="lead-name">Pastor Kevin Bradford</div>
           <p class="lead-bio">Kevin Bradford and his family have served Greater Bakersfield's First Pentecostal Church full-time since 1992, and as pastor since October 2010. He holds a degree in Business Administration from CSUB and a master's in Biblical Studies from Fuller Theological Seminary.</p>
-          <a href="/about" class="lead-btn">See Our Leadership</a>
+          <a href="gbfpc-about.html" class="lead-btn">See Our Leadership</a>
         </div>
         <div class="lead-slide-img">
           <img src="MEDIA/pastor-bradford.jpg" alt="Pastor Kevin Bradford" loading="lazy"/>
@@ -1474,7 +1551,7 @@ window.scrollTo(0, 0);
           <div class="lead-role">Bishop</div>
           <div class="lead-name">Bishop Leon Frost</div>
           <p class="lead-bio">Bishop Leon Frost has served First Pentecostal Church for most of his life. Known for his anointed teaching, preaching, stature, and leadership, he guided GBFPC through over 30 years of growth and ministry. His legacy continues to shape the church today.</p>
-          <a href="/about" class="lead-btn">See Our Leadership</a>
+          <a href="gbfpc-about.html" class="lead-btn">See Our Leadership</a>
         </div>
         <div class="lead-slide-img">
           <img src="MEDIA/bishop-frost.jpg" alt="Bishop Leon Frost" loading="lazy"/>
@@ -1519,7 +1596,7 @@ window.scrollTo(0, 0);
         <h2 class="h2 inv r d1">Now It's Easier<br>Than Ever.</h2>
         <p class="para inv r d2">Join us for service in-person or online. It's never too late to get involved in what God is doing through GBFPC.</p>
         <div class="r d3" style="margin-top:36px;display:flex;gap:12px;flex-wrap:wrap;">
-          <a href="/livestream" class="btn-white-solid">Watch Livestream</a>
+          <a href="gbfpc-livestream.html" class="btn-white-solid">Watch Livestream</a>
           <a href="https://gbfpc.org/pages/church-calendar" class="btn-ghost-w" target="_blank" rel="noopener noreferrer">View Calendar</a>
         </div>
       </div>
@@ -1540,7 +1617,7 @@ window.scrollTo(0, 0);
 <footer>
   <div class="ft-grid">
     <div>
-      <img src="/gbfpc-logo.svg" alt="GBFPC" class="ft-logo" loading="lazy"/>
+      <img src="gbfpc-logo.svg" alt="GBFPC" class="ft-logo" loading="lazy"/>
       <div class="ft-name">Greater Bakersfield's<br>First Pentecostal Church</div>
       <p class="ft-tag">Rooted in truth, alive in the Spirit, and built for community in Bakersfield, California.</p>
       <div class="ft-soc">
@@ -1548,12 +1625,12 @@ window.scrollTo(0, 0);
         <a href="https://www.youtube.com/channel/UCO1PnTTAT_uOS4ZkMjdBzGg/videos" class="ft-s" target="_blank" rel="noopener noreferrer">▶</a>
       </div>
     </div>
-    <div class="ft-col"><h5>Our House</h5><ul><li><a href="/about">About Us</a></li><li><a href="/about#vision">Our Vision</a></li><li><a href="/about#articles">Articles of Faith</a></li><li><a href="/about#history">Church History</a></li></ul></div>
-    <div class="ft-col"><h5>Ministries</h5><ul><li><a href="/ministries#youth">Amplified Youth</a></li><li><a href="/ministries#children">K.I.C.K.</a></li><li><a href="/ministries#thrive">Cultivate</a></li><li><a href="/education">Education</a></li><li><a href="/ministries#outreach">Harvest</a></li></ul></div>
-    <div class="ft-col"><h5>Connect</h5><ul><li><a href="/visit">Be Our V.I.P.</a></li><li><a href="/give">Give Online</a></li><li><a href="/events">Upcoming Events</a></li><li><a href="/livestream">Livestream</a></li><li><a href="/connect">Contact Us</a></li></ul></div>
+    <div class="ft-col"><h5>Our House</h5><ul><li><a href="gbfpc-about.html">About Us</a></li><li><a href="gbfpc-about.html#vision">Our Vision</a></li><li><a href="gbfpc-about.html#articles">Articles of Faith</a></li><li><a href="gbfpc-about.html#history">Church History</a></li></ul></div>
+    <div class="ft-col"><h5>Ministries</h5><ul><li><a href="gbfpc-ministries.html#youth">Amplified Youth</a></li><li><a href="gbfpc-ministries.html#children">K.I.C.K.</a></li><li><a href="gbfpc-ministries.html#thrive">Cultivate</a></li><li><a href="gbfpc-education.html">Education</a></li><li><a href="gbfpc-ministries.html#outreach">Harvest</a></li></ul></div>
+    <div class="ft-col"><h5>Connect</h5><ul><li><a href="gbfpc-visit.html">Be Our V.I.P.</a></li><li><a href="gbfpc-give.html">Give Online</a></li><li><a href="gbfpc-events.html">Upcoming Events</a></li><li><a href="gbfpc-livestream.html">Livestream</a></li><li><a href="gbfpc-connect.html">Contact Us</a></li></ul></div>
   </div>
   <div class="ft-bot">
-    <div class="ft-copy">© 2026 GBFPC. All Rights Reserved. <a href="https://admin.gbfpc.org" style="color:inherit;opacity:0.3;text-decoration:none;margin-left:8px;" target="_blank" rel="noopener noreferrer">Staff</a></div>
+    <div class="ft-copy">© 2026 GBFPC. All Rights Reserved. <a href="https://gbfpc-admin.vercel.app" style="color:inherit;opacity:0.3;text-decoration:none;margin-left:8px;" target="_blank" rel="noopener noreferrer">Staff</a></div>
     <div class="ft-addr">1418 W Columbus St, Bakersfield, CA 93301 · (661) 323-2851</div>
   </div>
 </footer>
@@ -1811,7 +1888,7 @@ window.scrollTo(0, 0);
     var loc = (ev.location||'GBFPC')
       .replace('GBFPC — ','').replace(', Bakersfield CA','').replace(', Bakersfield, CA','');
 
-    return '<a href="/events" class="he-card r">'
+    return '<a href="gbfpc-events.html" class="he-card r">'
       + '<div class="he-thumb">'+img
       +   '<div class="he-datebadge"><span class="he-date-main">'+esc(fmtRange(ev.event_date, ev.date_end))+'</span></div>'
       +   (cat ? '<div class="he-cat">'+esc(cat)+'</div>' : '')
@@ -1871,6 +1948,77 @@ window.scrollTo(0, 0);
       dropSection();
     });
 })();
+</script>
+
+<script>
+/* ═══════ PASTOR WELCOME VIDEO ═══════
+   Plays muted once scrolled into view, pauses when scrolled away, and exposes a
+   button to turn sound on. Sound-on autoplay is refused by every modern browser,
+   so muted-first with a manual unmute is the only arrangement that works.
+   If autoplay is refused outright — iOS Low Power Mode, Low Data Mode, or a
+   per-site "never autoplay" setting — we surface a tap-to-play overlay instead
+   of silently showing a dead poster. */
+(function () {
+  var vid = document.getElementById('pastorVid');
+  if (!vid) return;
+
+  var sound = document.getElementById('pastorSound');
+  var hint  = document.getElementById('pastorHint');
+  var play  = document.getElementById('pastorPlay');
+  var userPaused = false;
+
+  function markLoaded() { vid.classList.add('loaded'); }
+  vid.addEventListener('loadeddata', markLoaded);
+  if (vid.readyState >= 2) markLoaded();
+
+  // If the file 404s, drop the controls rather than leaving them over a black box.
+  vid.addEventListener('error', function () {
+    if (sound) sound.style.display = 'none';
+    if (hint)  hint.style.display  = 'none';
+    if (play)  play.classList.remove('show');
+  });
+
+  function attempt() {
+    var p = vid.play();
+    if (p && typeof p.then === 'function') {
+      p.then(function ()  { play.classList.remove('show'); })
+       .catch(function () { play.classList.add('show'); });
+    }
+  }
+
+  if ('IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting && e.intersectionRatio >= 0.35) {
+          if (!userPaused) attempt();
+        } else if (e.intersectionRatio < 0.1) {
+          vid.pause();
+        }
+      });
+    }, { threshold: [0, 0.1, 0.35, 0.6] });
+    obs.observe(vid);
+  } else {
+    attempt();
+  }
+
+  sound.addEventListener('click', function () {
+    vid.muted = !vid.muted;
+    sound.classList.toggle('is-on', !vid.muted);
+    sound.setAttribute('aria-label', vid.muted ? 'Turn sound on' : 'Turn sound off');
+    sound.setAttribute('aria-pressed', vid.muted ? 'false' : 'true');
+    hint.classList.add('hide');
+    if (!vid.muted) { userPaused = false; attempt(); }
+  });
+
+  play.addEventListener('click', function () {
+    userPaused = false;
+    play.classList.remove('show');
+    attempt();
+  });
+
+  // Retire the nudge on its own if nobody touches it.
+  setTimeout(function () { hint.classList.add('hide'); }, 9000);
+}());
 </script>
 </body>
 </html>
