@@ -353,7 +353,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="form-label" for="lg-months">For how many months</label>
+              <label class="form-label" for="lg-months">For how many months <span style="color:var(--c-brand)">*</span></label>
               <input class="form-input" type="number" min="1" max="600" id="lg-months"
                      name="duration_months" placeholder="12"/>
             </div>
@@ -500,7 +500,7 @@
     recSection.classList.toggle('open', rec);
   }
   btnOnce.addEventListener('click', function(){ setType(false); });
-  btnRec.addEventListener('click',  function(){ setType(true);  });
+  btnRec.addEventListener('click',  function(){ setType(true); document.getElementById('lg-months').focus(); });
 
   /* Ask the server whether we're open and whether a code is needed.
      The code itself is never sent to the browser - only the boolean. */
@@ -571,6 +571,13 @@
 
     var isRec = form.pledge_type.value === 'recurring';
     var months = isRec ? (parseInt(form.duration_months.value,10) || null) : null;
+    // Without a duration a recurring pledge can't be valued, so the total would
+    // silently under-count it on the screen.
+    if(isRec && (!months || months < 1)){
+      showErr('Please say how many months you plan to give for.');
+      document.getElementById('lg-months').focus();
+      return;
+    }
 
     pending = {
       p_full_name       : name,
@@ -632,9 +639,12 @@
       }
       backToForm();
       var m = res && res.error;
-      if(m === 'bad_code')    showErr('That service code is not correct. Please check and try again.');
-      else if(m === 'closed') showErr('The Legacy offering is closed right now.');
-      else                    showErr('Something went wrong \u2014 please try again or call (661) 323-2851.');
+      if(m === 'bad_code')               showErr('That service code is not correct. Please check and try again.');
+      else if(m === 'closed')            showErr('The Legacy offering is closed right now.');
+      else if(m === 'duration_required') showErr('Please say how many months you plan to give for.');
+      else if(m === 'amount_too_large')  showErr('That amount looks too large \u2014 please check it.');
+      else if(m === 'name_required')     showErr('Please enter your name.');
+      else                               showErr('Something went wrong \u2014 please try again or call (661) 323-2851.');
     })
     .catch(function(){
       backToForm();
