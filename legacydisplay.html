@@ -200,7 +200,10 @@
     elScale.classList.toggle('hide', !hasGoal);
     if(hasGoal){
       elFill.style.width = pct + '%';
-      var tickAtGoal = ms.some ? ms.some(function(m){ return Number(m.amount) >= goal; }) : false;
+      // read s.milestones directly: the local `ms` is not assigned until below
+      var msList = s.milestones || [];
+      var tickAtGoal = false;
+      for(var g=0; g<msList.length; g++){ if(Number(msList[g].amount) >= goal){ tickAtGoal = true; break; } }
       document.getElementById('goalLabel').textContent = tickAtGoal ? '' : usd0(goal) + ' Goal';
     }
 
