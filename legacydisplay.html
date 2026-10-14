@@ -156,7 +156,13 @@
     });
   }
 
+  /* requestAnimationFrame is suspended whenever the page is not visible - a
+     minimised window, another desktop, or an offscreen ProPresenter layer. If
+     the count-up relied on it alone the number would silently freeze while the
+     page still looked fine. So: skip the animation outright when hidden, and
+     always write the final value on a timer as a backstop. */
   function animateNumber(el, from, to, ms, fmt){
+    if (document.hidden) { el.textContent = fmt(to); return; }
     var t0 = (window.performance && performance.now) ? performance.now() : Date.now();
     function step(){
       var now = (window.performance && performance.now) ? performance.now() : Date.now();
@@ -165,6 +171,7 @@
       if(p<1) requestAnimationFrame(step);
     }
     requestAnimationFrame(step);
+    setTimeout(function(){ el.textContent = fmt(to); }, ms + 150);
   }
   function usd0(n){ return '$' + Math.round(n).toLocaleString('en-US'); }
   function int0(n){ return Math.round(n).toLocaleString('en-US'); }
@@ -249,6 +256,8 @@
   }
   tick();
   setInterval(tick, POLL_MS);
+  // catch up immediately if the window is restored or brought forward
+  document.addEventListener('visibilitychange', function(){ if(!document.hidden) tick(); });
 }());
 </script>
 </body>
