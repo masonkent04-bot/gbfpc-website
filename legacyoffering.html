@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Legacy Offering | GBFPC</title>
+  <meta name="description" content="Make your Legacy commitment to Greater Bakersfield\'s First Pentecostal Church."/>
+  <link rel="canonical" href="https://gbfpc.org/legacyoffering"/>
+  <link rel="icon" href="/favicon.ico" sizes="any"/>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+  <link rel="manifest" href="/site.webmanifest"/>
+  <meta name="theme-color" content="#111111"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="Greater Bakersfield's First Pentecostal Church"/>
+  <meta property="og:title" content="Legacy Offering | GBFPC"/>
+  <meta property="og:description" content="Make your Legacy commitment."/>
+  <meta property="og:url" content="https://gbfpc.org/legacyoffering"/>
+  <meta property="og:image" content="https://gbfpc.org/og-image.png"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Be Our V.I.P. | GBFPC"/>
+  <meta name="twitter:description" content="Let us know you're coming. Tell us a little about yourself and we'll roll out the red carpet for your first visit to GBFPC."/>
+  <meta name="twitter:image" content="https://gbfpc.org/og-image.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+  :root {
+    --c-brand:   #c9a96e;
+    --c-dark:    #111111;
+    --c-surface: #f2f1ee;
+    --c-muted:   #888888;
+    --c-border:  #ebebeb;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: #fff; color: var(--c-dark); font-family: 'Montserrat', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: clip; }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; }
+
+  /* ── HEADER ── */
+  #header {
+    position: sticky; top: 0; z-index: 200;
+    background: rgba(255,255,255,0.97); backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--c-border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 80px; height: 64px;
+  }
+  .hdr-logo { height: 36px; width: auto; object-fit: contain; filter: brightness(0); }
+  .hdr-nav { display: flex; gap: 32px; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+  .hdr-nav a { color: #555; transition: color 0.2s; }
+  .hdr-nav a:hover { color: var(--c-dark); }
+  .hdr-pv { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 9px 20px; background: var(--c-dark); color: #fff; border-radius: 100px; }
+  .hdr-spacer { height: 64px; }
+  .nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+  .nav-toggle-bar { width: 22px; height: 2px; background: var(--c-dark); border-radius: 2px; transition: transform 0.3s, opacity 0.2s; }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) { opacity: 0; }
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav-close-btn { display: none; }
+
+  /* ── HERO ── */
+  #page-hero { padding: 72px 80px 0; }
+  .page-hero-inner { max-width: 1240px; margin: 0 auto; padding-bottom: 56px; border-bottom: 1px solid var(--c-border); }
+  .page-tag { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: var(--c-brand); margin-bottom: 20px; display: block; }
+  .page-hero-title { font-weight: 900; font-size: clamp(3.5rem, 7vw, 7rem); line-height: 0.9; letter-spacing: -0.04em; text-transform: uppercase; color: var(--c-dark); margin-bottom: 24px; }
+  .page-hero-sub { font-size: 0.9rem; color: var(--c-muted); max-width: 520px; line-height: 1.65; }
+
+  /* ── LAYOUT ── */
+  #pv-section { padding: 56px 80px 80px; }
+  .pv-inner { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: 1fr 320px; gap: 72px; align-items: start; }
+
+  /* ── FORM ── */
+  .section-head {
+    font-weight: 800; font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--c-dark); margin: 32px 0 20px; padding-bottom: 14px;
+    border-bottom: 1px solid var(--c-border);
+  }
+  .section-head:first-child { margin-top: 0; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  .form-group { margin-bottom: 18px; }
+  .form-label { font-size: 0.52rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--c-muted); margin-bottom: 7px; display: block; }
+  .form-input, .form-select, .form-textarea {
+    width: 100%; padding: 11px 13px;
+    border: 1px solid var(--c-border); border-radius: 9px;
+    font-family: 'Montserrat', sans-serif; font-size: 0.82rem; font-weight: 500;
+    color: var(--c-dark); background: #fff; outline: none; transition: border-color 0.2s;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--c-brand); }
+  .form-input::placeholder, .form-textarea::placeholder { color: #ccc; font-weight: 400; }
+  .form-textarea { min-height: 90px; resize: vertical; }
+  .form-select-wrap { position: relative; }
+  .form-select-wrap::after { content: ''; position: absolute; right: 13px; top: 50%; transform: translateY(-50%); width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 5px solid #aaa; pointer-events: none; }
+  .form-select { appearance: none; cursor: pointer; }
+
+  /* Service checkboxes */
+  .checkbox-group { display: flex; flex-direction: column; gap: 10px; }
+  .checkbox-item { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+  .checkbox-item input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--c-brand); cursor: pointer; flex-shrink: 0; }
+  .checkbox-item span { font-size: 0.84rem; font-weight: 600; color: var(--c-dark); }
+
+  /* Yes/No toggle */
+  .toggle-row { display: flex; gap: 8px; }
+  .toggle-btn {
+    flex: 1; padding: 10px; border: 1px solid var(--c-border); border-radius: 9px;
+    font-family: 'Montserrat', sans-serif; font-size: 0.78rem; font-weight: 600;
+    cursor: pointer; background: #fff; color: #999; transition: all 0.15s;
+  }
+  .toggle-btn.active { border-color: var(--c-brand); color: var(--c-brand); background: rgba(201,169,110,0.06); }
+
+  /* Collapsible sections */
+  .collapsible { overflow: hidden; transition: max-height 0.35s ease, opacity 0.3s ease; max-height: 0; opacity: 0; }
+  .collapsible.open { max-height: 600px; opacity: 1; }
+
+  /* Error + submit */
+  #pv-error { display: none; margin-bottom: 16px; padding: 12px 16px; background: #fff0f0; border: 1px solid #fcc; border-radius: 9px; font-size: 0.78rem; color: #c00; }
+  .pv-submit {
+    width: 100%; padding: 15px; background: var(--c-dark); color: #fff;
+    font-family: 'Montserrat', sans-serif; font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase; border: none; border-radius: 11px;
+    cursor: pointer; transition: opacity 0.2s; margin-top: 6px;
+  }
+  .pv-submit:hover { opacity: 0.8; }
+  .pv-submit:disabled { opacity: 0.4; cursor: not-allowed; }
+  .form-hint { font-size: 0.68rem; color: #bbb; margin-top: 12px; text-align: center; line-height: 1.5; }
+
+  /* ── SUCCESS ── */
+  #pv-success { display: none; text-align: center; padding: 56px 24px; }
+  .success-icon { width: 60px; height: 60px; border-radius: 50%; background: rgba(201,169,110,0.12); display: flex; align-items: center; justify-content: center; margin: 0 auto 22px; }
+  .success-icon svg { width: 24px; height: 24px; stroke: var(--c-brand); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+  .success-title { font-weight: 900; font-size: 1.5rem; letter-spacing: -0.03em; text-transform: uppercase; color: var(--c-dark); margin-bottom: 12px; }
+  .success-body { font-size: 0.82rem; color: var(--c-muted); line-height: 1.7; max-width: 380px; margin: 0 auto 28px; }
+  .success-cta { display: inline-block; padding: 12px 28px; background: var(--c-dark); color: #fff; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; border-radius: 100px; }
+
+  /* ── SIDEBAR ── */
+  .pv-sidebar-card { background: var(--c-surface); border-radius: 16px; padding: 28px; margin-bottom: 16px; }
+  .sc-label { font-size: 0.48rem; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; color: #bbb; margin-bottom: 12px; display: block; }
+  .sc-title { font-weight: 800; font-size: 0.95rem; color: var(--c-dark); margin-bottom: 6px; letter-spacing: -0.01em; }
+  .sc-body { font-size: 0.78rem; color: var(--c-muted); line-height: 1.65; }
+  .sc-body strong { color: var(--c-dark); font-weight: 700; }
+  .sc-divider { border: none; border-top: 1px solid rgba(0,0,0,0.07); margin: 14px 0; }
+  .sc-link { display: inline-flex; align-items: center; gap: 5px; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-brand); margin-top: 12px; border-bottom: 1px solid rgba(201,169,110,0.3); padding-bottom: 1px; }
+
+  /* ── FOOTER ── */
+  footer { background: #111; color: rgba(255,255,255,0.45); font-size: 0.78rem; }
+  .ft-grid { max-width: 1380px; margin: 0 auto; display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 48px; padding: 60px 80px 44px; }
+  .ft-logo { height: 28px; margin-bottom: 14px; filter: brightness(0) invert(1) opacity(0.4); }
+  .ft-name { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 10px; line-height: 1.4; }
+  .ft-tag { font-size: 0.74rem; color: rgba(255,255,255,0.22); line-height: 1.6; margin-bottom: 18px; }
+  .ft-soc { display: flex; gap: 8px; }
+  .ft-s { width: 30px; height: 30px; border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 700; color: rgba(255,255,255,0.35); transition: border-color 0.2s, color 0.2s; }
+  .ft-s:hover { border-color: var(--c-brand); color: var(--c-brand); }
+  .ft-col h5 { font-size: 0.54rem; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(255,255,255,0.18); margin-bottom: 14px; }
+  .ft-col ul { list-style: none; }
+  .ft-col li { margin-bottom: 9px; }
+  .ft-col a { font-size: 0.74rem; color: rgba(255,255,255,0.38); transition: color 0.2s; }
+  .ft-col a:hover { color: rgba(255,255,255,0.75); }
+  .ft-bot { max-width: 1380px; margin: 0 auto; display: flex; justify-content: space-between; padding: 18px 80px 26px; border-top: 1px solid rgba(255,255,255,0.05); }
+  .ft-copy { font-size: 0.58rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.14); }
+  .ft-addr { font-size: 0.58rem; color: rgba(255,255,255,0.18); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    #header { padding: 0 28px; }
+    .hdr-nav, .hdr-pv { display: none; }
+    .nav-toggle { display: flex; }
+    .hdr-nav.nav-open { display: flex; flex-direction: column; position: fixed; inset: 0; background: #fff; z-index: 300; padding: 80px 28px 40px; gap: 0; }
+    .hdr-nav.nav-open a { font-size: 1rem; font-weight: 800; padding: 14px 0; border-bottom: 1px solid var(--c-border); width: 100%; }
+    .nav-close-btn { display: block; position: absolute; top: 18px; right: 22px; font-size: 1.3rem; background: none; border: none; cursor: pointer; }
+    #page-hero { padding: 48px 28px 0; }
+    #pv-section { padding: 40px 28px 64px; }
+    .pv-inner { grid-template-columns: 1fr; gap: 48px; }
+    .ft-grid { grid-template-columns: 1fr 1fr; gap: 32px; padding: 44px 28px 32px; }
+    .ft-bot { flex-direction: column; gap: 6px; text-align: center; padding: 14px 28px 22px; }
+  }
+  @media (max-width: 540px) {
+    #header { padding: 0 18px; }
+    #page-hero { padding: 36px 18px 0; }
+    #pv-section { padding: 32px 18px 56px; }
+    .form-row, .form-row-3 { grid-template-columns: 1fr; }
+    .ft-grid { grid-template-columns: 1fr; gap: 24px; padding: 36px 18px 28px; }
+    .ft-bot { padding: 12px 18px 18px; }
+  }
+
+  /* ── LEGACY-SPECIFIC ───────────────────────────────────────── */
+  .amt-wrap { position: relative; }
+  .amt-wrap::before {
+    content: '$'; position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
+    font-weight: 800; font-size: 1.15rem; color: var(--c-brand); pointer-events: none;
+  }
+  .amt-input.form-input {
+    padding: 15px 13px 15px 33px; font-size: 1.35rem; font-weight: 800; letter-spacing: -0.02em;
+  }
+  .code-card {
+    background: rgba(201,169,110,0.07); border: 1px solid rgba(201,169,110,0.3);
+    border-radius: 12px; padding: 18px 20px; margin-bottom: 26px;
+  }
+  .code-card .form-group { margin-bottom: 0; }
+  #lg-closed { display: none; text-align: center; padding: 56px 24px; }
+  .privacy-note {
+    display: flex; gap: 11px; align-items: flex-start;
+    background: var(--c-surface); border-radius: 12px; padding: 16px 18px; margin-top: 22px;
+  }
+  .privacy-note svg { width: 16px; height: 16px; stroke: var(--c-brand); fill: none; stroke-width: 2; flex-shrink: 0; margin-top: 1px; }
+  .privacy-note p { font-size: 0.72rem; color: var(--c-muted); line-height: 1.6; }
+
+  #lg-confirm { display: none; text-align: center; padding: 48px 24px; }
+  .cf-eyebrow { font-size: 0.52rem; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; color: var(--c-brand); margin-bottom: 20px; display: block; }
+  .cf-figure { font-weight: 900; font-size: clamp(2.6rem, 8vw, 4rem); line-height: 1; letter-spacing: -0.035em; color: var(--c-dark); }
+  .cf-words {
+    font-size: 0.86rem; font-weight: 600; color: var(--c-dark); margin-top: 14px;
+    text-transform: uppercase; letter-spacing: 0.08em; line-height: 1.5;
+  }
+  .cf-meta { font-size: 0.8rem; color: var(--c-muted); line-height: 1.7; margin-top: 18px; }
+  .cf-meta strong { color: var(--c-dark); font-weight: 700; }
+  .cf-rule { border: none; border-top: 1px solid var(--c-border); margin: 28px auto; max-width: 300px; }
+  .cf-ask { font-size: 0.92rem; font-weight: 700; color: var(--c-dark); margin-bottom: 22px; }
+  .cf-actions { display: flex; flex-direction: column; gap: 10px; max-width: 340px; margin: 0 auto; }
+  .pv-back {
+    width: 100%; padding: 14px; background: #fff; color: var(--c-muted);
+    font-family: 'Montserrat', sans-serif; font-size: 0.66rem; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase; border: 1px solid var(--c-border);
+    border-radius: 11px; cursor: pointer; transition: border-color 0.2s, color 0.2s;
+  }
+  .pv-back:hover { border-color: var(--c-dark); color: var(--c-dark); }
+  </style>
+  <meta name="robots" content="noindex, nofollow"/>
+</head>
+<body>
+
+<header id="header">
+  <a href="/" aria-label="GBFPC Home"><img src="/gbfpc-logo.svg" alt="GBFPC" class="hdr-logo"/></a>
+  <nav class="hdr-nav" id="mainNav" aria-label="Main navigation">
+    <button class="nav-close-btn" id="navClose" aria-label="Close menu">&#x2715;</button>
+    <a href="/about">About</a>
+    <a href="/ministries">Ministries</a>
+    <a href="/education">Education</a>
+    <a href="/events">Events</a>
+    <a href="/give">Give</a>
+    <a href="/connect">Connect</a>
+    <a href="/livestream">Livestream</a>
+  </nav>
+  <a href="/visit" class="hdr-pv">Be Our V.I.P.</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav">
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+    <span class="nav-toggle-bar"></span>
+  </button>
+</header>
+<div class="hdr-spacer"></div>
+
+<!-- ═══ HERO ═══ -->
+<section id="page-hero">
+  <div class="page-hero-inner">
+    <span class="page-tag">Legacy</span>
+    <h1 class="page-hero-title">Legacy<br/>Offering.</h1>
+    <p class="page-hero-sub">
+      Make your commitment below. You're telling us what you intend to give &mdash;
+      nothing is charged here, and no payment information is collected.
+    </p>
+  </div>
+</section>
+
+<!-- ═══ FORM ═══ -->
+<section id="pv-section">
+  <div class="pv-inner">
+    <div>
+
+      <!-- closed state -->
+      <div id="lg-closed">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 8v5M12 16.5v.01"/><circle cx="12" cy="12" r="9"/></svg>
+        </div>
+        <h2 class="success-title">Not Open Yet</h2>
+        <p class="success-body">The Legacy offering isn't accepting commitments right now. Please check back during the service.</p>
+        <a href="/" class="success-cta">Back to Home</a>
+      </div>
+
+      <!-- success state -->
+      <div id="pv-success">
+        <div class="success-icon">
+          <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+        </div>
+        <h2 class="success-title">Thank You</h2>
+        <p class="success-body">
+          Your Legacy commitment has been recorded. Thank you for your faithfulness &mdash;
+          it makes a real difference in what God does through this church.
+        </p>
+        <a href="/" class="success-cta">Back to Home</a>
+      </div>
+
+
+      <!-- confirm-before-submit, guards against mistyped amounts -->
+      <div id="lg-confirm">
+        <span class="cf-eyebrow">Please Check This</span>
+        <div class="cf-figure" id="cf-figure">$0.00</div>
+        <div class="cf-words" id="cf-words"></div>
+        <div class="cf-meta" id="cf-meta"></div>
+        <hr class="cf-rule"/>
+        <p class="cf-ask">Is that the amount you meant to enter?</p>
+        <div class="cf-actions">
+          <button type="button" class="pv-submit" id="cf-yes" style="margin-top:0;">Yes, Submit It &rarr;</button>
+          <button type="button" class="pv-back"   id="cf-no">No, Let Me Fix It</button>
+        </div>
+      </div>
+
+      <form id="pvForm">
+        <div id="pv-error"></div>
+
+        <!-- service code, shown only when enabled -->
+        <div class="code-card" id="code-card" style="display:none;">
+          <div class="form-group">
+            <label class="form-label" for="lg-code">Service Code</label>
+            <input class="form-input" type="text" id="lg-code" name="code"
+                   autocomplete="off" placeholder="As announced in the service"/>
+          </div>
+        </div>
+
+        <div class="section-head">Your Commitment</div>
+
+        <div class="form-group">
+          <label class="form-label" for="lg-amount">Pledge Amount</label>
+          <div class="amt-wrap">
+            <input class="form-input amt-input" type="text" inputmode="decimal"
+                   id="lg-amount" name="pledge_amount" placeholder="0.00" required/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">How will you give it?</label>
+          <div class="toggle-row">
+            <button type="button" class="toggle-btn active" id="type-once">All at once</button>
+            <button type="button" class="toggle-btn" id="type-rec">Over time</button>
+          </div>
+          <input type="hidden" name="pledge_type" id="lg-type" value="one_time"/>
+        </div>
+
+        <div class="collapsible" id="rec-section">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="lg-freq">How often</label>
+              <div class="form-select-wrap">
+                <select class="form-select" id="lg-freq" name="frequency">
+                  <option value="monthly">Monthly</option>
+                  <option value="weekly">Weekly</option>
+                  <option value="biweekly">Every two weeks</option>
+                  <option value="quarterly">Quarterly</option>
+                  <option value="annually">Annually</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="lg-months">For how many months</label>
+              <input class="form-input" type="number" min="1" max="600" id="lg-months"
+                     name="duration_months" placeholder="12"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="lg-start">First gift on (optional)</label>
+          <input class="form-input" type="date" id="lg-start" name="start_date"/>
+        </div>
+
+        <div class="section-head">About You</div>
+
+        <div class="form-group">
+          <label class="form-label" for="lg-name">Full Name</label>
+          <input class="form-input" type="text" id="lg-name" name="full_name"
+                 autocomplete="name" required/>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="lg-email">Email (optional)</label>
+            <input class="form-input" type="email" id="lg-email" name="email" autocomplete="email"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="lg-phone">Phone (optional)</label>
+            <input class="form-input" type="tel" id="lg-phone" name="phone" autocomplete="tel"/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="lg-note">Anything we should know? (optional)</label>
+          <textarea class="form-textarea" id="lg-note" name="note"></textarea>
+        </div>
+
+        <button type="submit" class="pv-submit" id="pv-btn">Submit My Commitment &rarr;</button>
+        <p class="form-hint">Nothing is charged today. This records your intention to give.</p>
+
+        <div class="privacy-note">
+          <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <p>Your name and amount are private. They're visible only to a small number of
+             authorised church staff and are never shown on screen or shared.</p>
+        </div>
+      </form>
+    </div>
+
+    <!-- sidebar -->
+    <aside>
+      <div class="pv-sidebar-card">
+        <span class="sc-label">What This Is</span>
+        <div class="sc-title">A commitment, not a payment</div>
+        <p class="sc-body">
+          This form records what you intend to give toward Legacy. No card or bank
+          details are collected here and nothing is charged.
+        </p>
+        <hr class="sc-divider"/>
+        <p class="sc-body">
+          When you're ready to give, use the normal <strong>Give</strong> page, the offering,
+          or the church office.
+        </p>
+        <a href="/give" class="sc-link">Go to Giving &rarr;</a>
+      </div>
+
+      <div class="pv-sidebar-card">
+        <span class="sc-label">Questions</span>
+        <div class="sc-title">We're here to help</div>
+        <p class="sc-body">
+          Call the office at <strong>(661) 323-2851</strong> or speak with any member
+          of the pastoral staff.
+        </p>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<footer>
+  <div class="ft-grid">
+    <div>
+      <img src="/gbfpc-logo.svg" alt="GBFPC" class="ft-logo"/>
+      <div class="ft-name">Greater Bakersfield's<br>First Pentecostal Church</div>
+      <p class="ft-tag">Rooted in truth, alive in the Spirit, and built for community in Bakersfield, California.</p>
+      <div class="ft-soc">
+        <a href="https://www.instagram.com/gbfpc/" class="ft-s" target="_blank" rel="noopener noreferrer">ig</a>
+        <a href="https://www.youtube.com/channel/UCO1PnTTAT_uOS4ZkMjdBzGg/videos" class="ft-s" target="_blank" rel="noopener noreferrer">▶</a>
+      </div>
+    </div>
+    <div class="ft-col"><h5>Our House</h5><ul>
+      <li><a href="/about">About Us</a></li>
+      <li><a href="/about#vision">Our Vision</a></li>
+      <li><a href="/about#articles">Articles of Faith</a></li>
+      <li><a href="/about#history">Church History</a></li>
+    </ul></div>
+    <div class="ft-col"><h5>Ministries</h5><ul>
+      <li><a href="/ministries#youth">Amplified Youth</a></li>
+      <li><a href="/ministries#children">K.I.C.K.</a></li>
+      <li><a href="/ministries">Cultivate</a></li>
+      <li><a href="/ministries">Kiddie Korral</a></li>
+      <li><a href="/education">Education</a></li>
+    </ul></div>
+    <div class="ft-col"><h5>Connect</h5><ul>
+      <li><a href="/visit">Be Our V.I.P.</a></li>
+      <li><a href="/give">Give Online</a></li>
+      <li><a href="/events">Upcoming Events</a></li>
+      <li><a href="/livestream">Livestream</a></li>
+      <li><a href="/connect">Contact Us</a></li>
+    </ul></div>
+  </div>
+  <div class="ft-bot">
+    <div class="ft-copy">© 2026 GBFPC. All Rights Reserved. <a href="https://admin.gbfpc.org" style="color:inherit;opacity:0.3;text-decoration:none;margin-left:8px;" target="_blank" rel="noopener noreferrer">Staff</a></div>
+    <div class="ft-addr">1418 W Columbus St, Bakersfield, CA 93301 · (661) 323-2851</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var SUPABASE_URL = 'https://keuecvwaailuvouwegod.supabase.co';
+  var ANON_KEY     = 'sb_publishable_LRE10Uf2omW1sP2qqKsbEQ_gvPLaKVC';
+
+  /* Nav */
+  var toggle = document.getElementById('navToggle');
+  var nav    = document.getElementById('mainNav');
+  var closeBtn = document.getElementById('navClose');
+  if(toggle && nav){
+    function open(){  nav.classList.add('nav-open');    toggle.setAttribute('aria-expanded','true');  document.body.style.overflow='hidden'; }
+    function close(){ nav.classList.remove('nav-open'); toggle.setAttribute('aria-expanded','false'); document.body.style.overflow=''; }
+    toggle.addEventListener('click', function(){ toggle.getAttribute('aria-expanded')==='true'?close():open(); });
+    if(closeBtn) closeBtn.addEventListener('click', close);
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });
+  }
+
+  var form   = document.getElementById('pvForm');
+  var btn    = document.getElementById('pv-btn');
+  var errBox = document.getElementById('pv-error');
+  var codeCard = document.getElementById('code-card');
+  var recSection = document.getElementById('rec-section');
+
+  /* One-time vs over-time */
+  var btnOnce = document.getElementById('type-once');
+  var btnRec  = document.getElementById('type-rec');
+  function setType(rec){
+    document.getElementById('lg-type').value = rec ? 'recurring' : 'one_time';
+    btnRec.classList.toggle('active', rec);
+    btnOnce.classList.toggle('active', !rec);
+    recSection.classList.toggle('open', rec);
+  }
+  btnOnce.addEventListener('click', function(){ setType(false); });
+  btnRec.addEventListener('click',  function(){ setType(true);  });
+
+  /* Ask the server whether we're open and whether a code is needed.
+     The code itself is never sent to the browser - only the boolean. */
+  fetch(SUPABASE_URL + '/rest/v1/rpc/legacy_public_totals', {
+    method:'POST',
+    headers:{ 'Content-Type':'application/json', 'apikey':ANON_KEY, 'Authorization':'Bearer '+ANON_KEY },
+    body:'{}'
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(s){
+    if(!s) return;
+    if(s.require_code) codeCard.style.display = 'block';
+    if(s.is_open === false){
+      form.style.display = 'none';
+      document.getElementById('lg-closed').style.display = 'block';
+    }
+  })
+  .catch(function(){ /* leave the form usable; the server validates anyway */ });
+
+  /* Spell the amount out, because an extra zero is invisible as digits
+     but glaring as words. This is the typo guard. */
+  var ONES = ['zero','one','two','three','four','five','six','seven','eight','nine','ten',
+              'eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen'];
+  var TENS = ['','','twenty','thirty','forty','fifty','sixty','seventy','eighty','ninety'];
+  function under100(n){
+    if(n < 20) return ONES[n];
+    var t = TENS[Math.floor(n/10)], o = n % 10;
+    return o ? t + '-' + ONES[o] : t;
+  }
+  function under1000(n){
+    if(n < 100) return under100(n);
+    var h = Math.floor(n/100), r = n % 100;
+    return ONES[h] + ' hundred' + (r ? ' ' + under100(r) : '');
+  }
+  function toWords(n){
+    if(n === 0) return 'zero';
+    var parts = [], units = [[1e9,'billion'],[1e6,'million'],[1e3,'thousand']];
+    for(var i=0;i<units.length;i++){
+      var v = Math.floor(n / units[i][0]);
+      if(v > 0){ parts.push(under1000(v) + ' ' + units[i][1]); n -= v * units[i][0]; }
+    }
+    if(n > 0) parts.push(under1000(n));
+    return parts.join(' ');
+  }
+  function money(n){
+    return '$' + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+  function amountInWords(n){
+    var d = Math.floor(n), c = Math.round((n - d) * 100);
+    var s = toWords(d) + ' dollar' + (d === 1 ? '' : 's');
+    if(c > 0) s += ' and ' + toWords(c) + ' cent' + (c === 1 ? '' : 's');
+    return s;
+  }
+
+  var pending = null;
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    errBox.style.display = 'none';
+
+    var name = form.full_name.value.trim();
+    var raw  = form.pledge_amount.value.replace(/[$,\s]/g,'');
+    var amt  = parseFloat(raw);
+
+    if(!name){ showErr('Please enter your name.'); return; }
+    if(!raw || isNaN(amt) || amt <= 0){ showErr('Please enter a pledge amount.'); return; }
+    if(amt > 99999999){ showErr('That amount looks too large \u2014 please check it.'); return; }
+
+    var isRec = form.pledge_type.value === 'recurring';
+    var months = isRec ? (parseInt(form.duration_months.value,10) || null) : null;
+
+    pending = {
+      p_full_name       : name,
+      p_pledge_amount   : amt,
+      p_email           : form.email.value.trim() || null,
+      p_phone           : form.phone.value.trim() || null,
+      p_pledge_type     : isRec ? 'recurring' : 'one_time',
+      p_frequency       : isRec ? form.frequency.value : null,
+      p_duration_months : months,
+      p_start_date      : form.start_date.value || null,
+      p_note            : form.note.value.trim() || null,
+      p_code            : codeCard.style.display === 'block' ? document.getElementById('lg-code').value : null
+    };
+
+    document.getElementById('cf-figure').textContent = money(amt);
+    document.getElementById('cf-words').textContent  = amountInWords(amt);
+
+    var meta = '<strong>' + name.replace(/[<>&]/g,'') + '</strong><br/>';
+    if(isRec){
+      var freqWord = { weekly:'every week', biweekly:'every two weeks', monthly:'every month',
+                       quarterly:'every quarter', annually:'every year' }[form.frequency.value] || '';
+      meta += money(amt) + ' ' + freqWord + (months ? ' for ' + months + ' month' + (months===1?'':'s') : '');
+      if(months) meta += '<br/>Total: <strong>' + money(amt * months) + '</strong>';
+    } else {
+      meta += 'Given all at once';
+    }
+    document.getElementById('cf-meta').innerHTML = meta;
+
+    form.style.display = 'none';
+    document.getElementById('lg-confirm').style.display = 'block';
+    document.getElementById('pv-section').scrollIntoView({ behavior:'smooth' });
+  });
+
+  document.getElementById('cf-no').addEventListener('click', function(){
+    document.getElementById('lg-confirm').style.display = 'none';
+    form.style.display = 'block';
+    document.getElementById('lg-amount').focus();
+    document.getElementById('lg-amount').select();
+  });
+
+  document.getElementById('cf-yes').addEventListener('click', function(){
+    if(!pending) return;
+    var yes = document.getElementById('cf-yes');
+    yes.disabled = true;
+    yes.textContent = 'Submitting\u2026';
+
+    fetch(SUPABASE_URL + '/rest/v1/rpc/submit_legacy_pledge', {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json', 'apikey':ANON_KEY, 'Authorization':'Bearer '+ANON_KEY },
+      body: JSON.stringify(pending)
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if(res && res.ok){
+        document.getElementById('lg-confirm').style.display = 'none';
+        document.getElementById('pv-success').style.display = 'block';
+        document.getElementById('pv-section').scrollIntoView({ behavior:'smooth' });
+        return;
+      }
+      backToForm();
+      var m = res && res.error;
+      if(m === 'bad_code')    showErr('That service code is not correct. Please check and try again.');
+      else if(m === 'closed') showErr('The Legacy offering is closed right now.');
+      else                    showErr('Something went wrong \u2014 please try again or call (661) 323-2851.');
+    })
+    .catch(function(){
+      backToForm();
+      showErr('Something went wrong \u2014 please try again or call (661) 323-2851.');
+    });
+  });
+
+  function backToForm(){
+    document.getElementById('lg-confirm').style.display = 'none';
+    form.style.display = 'block';
+    reset();
+  }
+
+  function reset(){
+    btn.disabled = false; btn.textContent = 'Submit My Commitment \u2192';
+    var y = document.getElementById('cf-yes'); y.disabled = false; y.textContent = 'Yes, Submit It \u2192';
+  }
+  function showErr(msg){ errBox.textContent = msg; errBox.style.display = 'block'; window.scrollTo({top:0,behavior:'smooth'}); }
+})();
+</script>
+</body>
+</html>
