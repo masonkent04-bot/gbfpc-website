@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=1920,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow"/>
+<title>Legacy — Live Total</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;900&display=swap" rel="stylesheet"/>
+<style>
+  /* Built for 1920x1080. Sizes are in vw so it still scales if the projector
+     differs, but the proportions are tuned for 16:9. */
+  :root{ --accent:#c9a96e; --bg:#0b0b0b; }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{height:100%;overflow:hidden;background:var(--bg);}
+  body{
+    font-family:'Montserrat',system-ui,-apple-system,sans-serif;color:#fff;
+    display:flex;flex-direction:column;justify-content:center;padding:0 7vw;
+    transition:background 1s ease;
+    /* projectors clip edges; keep everything inside a safe area */
+  }
+
+  .top{display:flex;align-items:flex-end;justify-content:space-between;gap:4vw;margin-bottom:5.6vh;}
+  .eyebrow{font-size:.95vw;font-weight:700;letter-spacing:.42em;text-transform:uppercase;
+           color:rgba(255,255,255,.4);margin-bottom:2.2vh;}
+  .total{font-size:12vw;font-weight:900;line-height:.82;letter-spacing:-.045em;
+         font-variant-numeric:tabular-nums;color:var(--accent);transition:color 1s ease;
+         text-shadow:0 0 100px rgba(201,169,110,.18);}
+  .right{text-align:right;padding-bottom:1.4vh;}
+  .right .n{font-size:4.4vw;font-weight:900;letter-spacing:-.025em;line-height:1;
+            font-variant-numeric:tabular-nums;}
+  .right .l{font-size:.8vw;font-weight:700;letter-spacing:.3em;text-transform:uppercase;
+            color:rgba(255,255,255,.35);margin-top:1.3vh;}
+  .right.hide{display:none;}
+
+  .track{position:relative;height:5.4vh;border-radius:99px;background:rgba(255,255,255,.07);
+         box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);}
+  .fill{position:absolute;top:0;bottom:0;left:0;width:0;border-radius:99px;background:var(--accent);
+        transition:width 1.6s cubic-bezier(.22,1,.36,1),background 1s ease;}
+  .fill::after{content:'';position:absolute;right:0;top:0;bottom:0;width:12vw;border-radius:99px;
+               background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.22));}
+  .ticks{position:absolute;inset:0;pointer-events:none;}
+  .tick{position:absolute;top:-3.4vh;bottom:-3.4vh;width:2px;background:rgba(255,255,255,.2);
+        transition:background .6s ease;}
+  .tick b{position:absolute;bottom:-3.2vh;left:50%;transform:translateX(-50%);white-space:nowrap;
+          font-size:.7vw;font-weight:700;letter-spacing:.24em;text-transform:uppercase;
+          color:rgba(255,255,255,.38);transition:color .6s ease;}
+  .tick.hit{background:#fff;}
+  .tick.hit b{color:#fff;}
+  .ticks.hide{display:none;}
+
+  .scale{display:flex;justify-content:space-between;margin-top:7vh;
+         font-size:.82vw;font-weight:700;letter-spacing:.26em;text-transform:uppercase;
+         color:rgba(255,255,255,.3);}
+  .track.hide,.scale.hide{display:none;}
+
+  .banner{position:fixed;left:0;right:0;bottom:0;padding:4.2vh 7vw;background:var(--accent);
+          color:#0b0b0b;transform:translateY(110%);
+          transition:transform .85s cubic-bezier(.22,1,.36,1);z-index:9;}
+  .banner.on{transform:translateY(0);}
+  .banner .l{font-size:.88vw;font-weight:700;letter-spacing:.42em;text-transform:uppercase;opacity:.62;}
+  .banner .m{font-size:4.6vw;font-weight:900;letter-spacing:-.03em;line-height:1;margin-top:1.3vh;}
+
+  /* shown before anything has been pledged */
+  .idle{position:fixed;inset:0;display:none;place-items:center;background:var(--bg);z-index:4;}
+  .idle.on{display:grid;}
+  .idle p{font-size:1.5vw;font-weight:700;letter-spacing:.34em;text-transform:uppercase;
+          color:rgba(255,255,255,.3);}
+</style>
+</head>
+<body>
+  <div class="top">
+    <div>
+      <div class="eyebrow" id="eyebrow">Legacy Offering</div>
+      <div class="total" id="total">$0</div>
+    </div>
+    <div class="right" id="rightBlock">
+      <div class="n" id="count">0</div>
+      <div class="l">Families</div>
+    </div>
+  </div>
+
+  <div class="track" id="track">
+    <div class="fill" id="fill"></div>
+    <div class="ticks" id="ticks"></div>
+  </div>
+  <div class="scale" id="scale"><span>$0</span><span id="goalLabel">Goal</span></div>
+
+  <div class="banner" id="banner">
+    <div class="l" id="blabel"></div>
+    <div class="m" id="bmsg"></div>
+  </div>
+
+  <div class="idle" id="idle"><p>Ready</p></div>
+
+<script>
+(function(){
+  /* ── config, overridable from the URL so the booth can adjust without a
+     redeploy:  ?demo=1  ?poll=3000  ?families=0  ?ticks=0  ?bg=000000
+     ?banner=8000  ?idle=0                                            */
+  function qp(k, d){
+    var m = new RegExp('[?&]'+k+'=([^&]*)').exec(location.search);
+    return m ? decodeURIComponent(m[1]) : d;
+  }
+  var DEMO       = qp('demo','0') === '1';
+  var POLL_MS    = parseInt(qp('poll','4000'),10) || 4000;
+  var BANNER_MS  = parseInt(qp('banner','6500'),10) || 6500;
+  var SHOW_FAM   = qp('families','1') !== '0';
+  var SHOW_TICKS = qp('ticks','1') !== '0';
+  var SHOW_IDLE  = qp('idle','1') !== '0';
+  var BG         = qp('bg','');
+  if (BG) document.documentElement.style.setProperty('--bg', '#'+BG.replace('#',''));
+  if (!SHOW_FAM) document.getElementById('rightBlock').classList.add('hide');
+  if (!SHOW_TICKS) document.getElementById('ticks').classList.add('hide');
+
+  var SUPABASE_URL = 'https://keuecvwaailuvouwegod.supabase.co';
+  var ANON_KEY     = 'sb_publishable_LRE10Uf2omW1sP2qqKsbEQ_gvPLaKVC';
+
+  /* ── demo loop, for rehearsing the look without touching real data ── */
+  var demoScript = [
+    {total:18400,count:12},{total:34250,count:21},{total:52900,count:38},
+    {total:78600,count:54},{total:104300,count:71},{total:128750,count:93},
+    {total:161200,count:118},{total:198400,count:142},{total:231900,count:167},
+    {total:262500,count:189}
+  ];
+  var demoMs = [
+    {amount:50000,label:'Strong Start',message:'We just crossed fifty thousand!',color:'#c9a96e'},
+    {amount:125000,label:'Halfway',message:'Halfway to the goal!',color:'#2e7d32'},
+    {amount:200000,label:'Almost There',message:'Two hundred thousand!',color:'#1565c0'},
+    {amount:250000,label:'Goal Reached',message:'We made it. To God be the glory.',color:'#b3261e'}
+  ];
+  var di = 0;
+  function demoState(){
+    var d = demoScript[di % demoScript.length]; di++;
+    var reached = demoMs.filter(function(m){ return d.total >= m.amount; });
+    return { campaign:'Legacy', goal:250000, total_pledged:d.total, pledge_count:d.count,
+      milestones: demoMs.map(function(m){
+        return {amount:m.amount,label:m.label,message:m.message,color:m.color,reached:d.total>=m.amount}; }),
+      current_milestone: reached.length ? reached[reached.length-1] : null,
+      next_milestone: demoMs.filter(function(m){ return d.total < m.amount; })[0] || null };
+  }
+
+  function fetchState(){
+    if (DEMO) return Promise.resolve(demoState());
+    return fetch(SUPABASE_URL + '/rest/v1/rpc/legacy_public_totals', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':ANON_KEY,'Authorization':'Bearer '+ANON_KEY},
+      body:'{}'
+    }).then(function(r){
+      if(!r.ok) throw new Error('HTTP '+r.status);
+      return r.json();
+    });
+  }
+
+  function animateNumber(el, from, to, ms, fmt){
+    var t0 = (window.performance && performance.now) ? performance.now() : Date.now();
+    function step(){
+      var now = (window.performance && performance.now) ? performance.now() : Date.now();
+      var p = Math.min(1,(now-t0)/ms), e = 1-Math.pow(1-p,3);
+      el.textContent = fmt(from+(to-from)*e);
+      if(p<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  function usd0(n){ return '$' + Math.round(n).toLocaleString('en-US'); }
+  function int0(n){ return Math.round(n).toLocaleString('en-US'); }
+
+  var elTotal = document.getElementById('total'),
+      elCount = document.getElementById('count'),
+      elFill  = document.getElementById('fill'),
+      elTicks = document.getElementById('ticks'),
+      elTrack = document.getElementById('track'),
+      elScale = document.getElementById('scale'),
+      banner  = document.getElementById('banner'),
+      idle    = document.getElementById('idle');
+
+  var prevTotal = 0, prevCount = 0, lastMs = null, first = true,
+      tickSig = '', bannerTimer = null;
+
+  function render(s){
+    if(!s) return;
+    var total = Number(s.total_pledged||0),
+        goal  = Number(s.goal||0),
+        count = Number(s.pledge_count||0);
+    var pct = goal > 0 ? Math.min(100, total/goal*100) : 0;
+    var accent = (s.current_milestone && s.current_milestone.color) || '#c9a96e';
+    document.documentElement.style.setProperty('--accent', accent);
+
+    idle.classList.toggle('on', SHOW_IDLE && total <= 0 && count <= 0);
+
+    animateNumber(elTotal, first?0:prevTotal, total, 1500, usd0);
+    animateNumber(elCount, first?0:prevCount, count, 1500, int0);
+
+    var hasGoal = goal > 0;
+    elTrack.classList.toggle('hide', !hasGoal);
+    elScale.classList.toggle('hide', !hasGoal);
+    if(hasGoal){
+      elFill.style.width = pct + '%';
+      document.getElementById('goalLabel').textContent = usd0(goal) + ' Goal';
+    }
+
+    document.getElementById('eyebrow').textContent = (s.campaign || 'Legacy') + ' Offering';
+
+    /* rebuild ticks only when the milestone set actually changes */
+    var ms = s.milestones || [];
+    var sig = goal + '|' + ms.map(function(m){ return m.amount+':'+(m.label||''); }).join(',');
+    if(hasGoal && sig !== tickSig){
+      elTicks.innerHTML = ms.map(function(m){
+        var left = Math.max(0, Math.min(100, Number(m.amount)/goal*100));
+        var text = (m.label || usd0(m.amount)).replace(/[<>&]/g,'');
+        return '<div class="tick" data-a="'+Number(m.amount)+'" style="left:'+left+'%"><b>'+text+'</b></div>';
+      }).join('');
+      tickSig = sig;
+    }
+    for(var i=0;i<elTicks.children.length;i++){
+      var t = elTicks.children[i];
+      if(total >= Number(t.getAttribute('data-a'))) t.className = 'tick hit';
+      else t.className = 'tick';
+    }
+
+    var cm = s.current_milestone, key = cm ? String(cm.amount) : null;
+    if(key && key !== lastMs && !first){
+      document.getElementById('blabel').textContent = cm.label || 'Milestone';
+      document.getElementById('bmsg').textContent   = cm.message || '';
+      banner.style.background = cm.color || accent;
+      banner.classList.add('on');
+      if(bannerTimer) clearTimeout(bannerTimer);
+      bannerTimer = setTimeout(function(){ banner.classList.remove('on'); }, BANNER_MS);
+    }
+    lastMs = key;
+    prevTotal = total; prevCount = count; first = false;
+  }
+
+  /* A failed poll must never blank the screen mid-service — keep the last
+     good values on screen and quietly try again. */
+  function tick(){
+    fetchState().then(render).catch(function(e){
+      if(window.console) console.warn('legacy poll failed, keeping last values:', e.message);
+    });
+  }
+  tick();
+  setInterval(tick, POLL_MS);
+}());
+</script>
+</body>
+</html>
