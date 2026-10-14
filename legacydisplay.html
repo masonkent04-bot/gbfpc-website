@@ -48,6 +48,9 @@
           color:rgba(255,255,255,.38);transition:color .6s ease;}
   .tick.hit{background:#fff;}
   .tick.hit b{color:#fff;}
+  /* keep end labels inside the frame — projectors overscan and clip edges */
+  .tick.at-start b{left:0;transform:translateX(0);}
+  .tick.at-end   b{left:auto;right:0;transform:translateX(0);}
   .ticks.hide{display:none;}
 
   .scale{display:flex;justify-content:space-between;margin-top:7vh;
@@ -197,7 +200,8 @@
     elScale.classList.toggle('hide', !hasGoal);
     if(hasGoal){
       elFill.style.width = pct + '%';
-      document.getElementById('goalLabel').textContent = usd0(goal) + ' Goal';
+      var tickAtGoal = ms.some ? ms.some(function(m){ return Number(m.amount) >= goal; }) : false;
+      document.getElementById('goalLabel').textContent = tickAtGoal ? '' : usd0(goal) + ' Goal';
     }
 
     document.getElementById('eyebrow').textContent = (s.campaign || 'Legacy') + ' Offering';
@@ -209,14 +213,15 @@
       elTicks.innerHTML = ms.map(function(m){
         var left = Math.max(0, Math.min(100, Number(m.amount)/goal*100));
         var text = (m.label || usd0(m.amount)).replace(/[<>&]/g,'');
-        return '<div class="tick" data-a="'+Number(m.amount)+'" style="left:'+left+'%"><b>'+text+'</b></div>';
+        var edge = left > 92 ? ' at-end' : (left < 8 ? ' at-start' : '');
+        return '<div class="tick'+edge+'" data-a="'+Number(m.amount)+'" data-edge="'+edge+'" style="left:'+left+'%"><b>'+text+'</b></div>';
       }).join('');
       tickSig = sig;
     }
     for(var i=0;i<elTicks.children.length;i++){
       var t = elTicks.children[i];
-      if(total >= Number(t.getAttribute('data-a'))) t.className = 'tick hit';
-      else t.className = 'tick';
+      var edge = t.getAttribute('data-edge') || '';
+      t.className = 'tick' + (total >= Number(t.getAttribute('data-a')) ? ' hit' : '') + edge;
     }
 
     var cm = s.current_milestone, key = cm ? String(cm.amount) : null;
