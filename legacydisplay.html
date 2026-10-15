@@ -65,9 +65,12 @@
   /* keep end labels inside the frame — projectors overscan and clip edges */
   .tick.at-start b{left:0;transform:translateX(0);}
   .tick.at-end   b{left:auto;right:0;transform:translateX(0);}
+  /* the track narrowed when the QR took a column, so adjacent labels can
+     collide; anything that would overlap drops to a second row */
+  .tick b.row2{bottom:-6.4vh;}
   .ticks.hide{display:none;}
 
-  .scale{display:flex;justify-content:space-between;margin-top:7vh;
+  .scale{display:flex;justify-content:space-between;margin-top:9.5vh;
          font-size:.82vw;font-weight:700;letter-spacing:.26em;text-transform:uppercase;
          color:rgba(255,255,255,.3);}
   .track.hide,.scale.hide{display:none;}
@@ -253,6 +256,7 @@
         return '<div class="tick'+edge+'" data-a="'+Number(m.amount)+'" data-edge="'+edge+'" style="left:'+left+'%"><b>'+text+'</b></div>';
       }).join('');
       tickSig = sig;
+      destagger();
     }
     for(var i=0;i<elTicks.children.length;i++){
       var t = elTicks.children[i];
@@ -272,6 +276,30 @@
     lastMs = key;
     prevTotal = total; prevCount = count; first = false;
   }
+
+  /* Labels are positioned as percentages, so whether two collide depends on
+     the rendered width of the text - it has to be measured, not guessed. */
+  function destagger(){
+    var labels = [];
+    for(var i=0;i<elTicks.children.length;i++){
+      var b = elTicks.children[i].querySelector('b');
+      if(b){ b.className = ''; labels.push(b); }
+    }
+    if(labels.length < 2) return;
+    labels.sort(function(a,b){
+      return a.getBoundingClientRect().left - b.getBoundingClientRect().left;
+    });
+    var lastRight = -Infinity;
+    for(var j=0;j<labels.length;j++){
+      var r = labels[j].getBoundingClientRect();
+      if(r.left < lastRight + 12){        // 12px breathing room
+        labels[j].className = 'row2';
+      } else {
+        lastRight = r.right;
+      }
+    }
+  }
+  window.addEventListener('resize', destagger);
 
   /* A failed poll must never blank the screen mid-service — keep the last
      good values on screen and quietly try again. */
