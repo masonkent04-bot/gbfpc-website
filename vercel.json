@@ -1,7 +1,16 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-  "rewrites": [{ "source": "/f/:path*", "destination": "https://admin.gbfpc.org/f/:path*" }, { "source": "/q/:path*", "destination": "https://admin.gbfpc.org/q/:path*" }],
+  "rewrites": [
+    {
+      "source": "/f/:path*",
+      "destination": "https://admin.gbfpc.org/f/:path*"
+    },
+    {
+      "source": "/q/:path*",
+      "destination": "https://admin.gbfpc.org/q/:path*"
+    }
+  ],
   "redirects": [
     {
       "source": "/gbfpc-about",
@@ -181,6 +190,21 @@
     {
       "source": "/vbs",
       "destination": "/events",
+      "permanent": false
+    },
+    {
+      "source": "/legacy",
+      "destination": "/legacyoffering",
+      "permanent": false
+    },
+    {
+      "source": "/Legacy",
+      "destination": "/legacyoffering",
+      "permanent": false
+    },
+    {
+      "source": "/LEGACY",
+      "destination": "/legacyoffering",
       "permanent": false
     }
   ],
