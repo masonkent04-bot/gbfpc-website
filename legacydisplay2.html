@@ -90,6 +90,9 @@
   .scale{display:flex;justify-content:space-between;align-items:baseline;margin-top:30px;
          font-size:44px;font-weight:800;letter-spacing:.02em;text-transform:uppercase;color:#fff;}
   .scale .muted{color:rgba(255,255,255,.6);font-size:34px;letter-spacing:.12em;}
+  #famLabel{color:#fff;}
+  #famLabel b{font-weight:900;}
+  #famLabel.hide{visibility:hidden;}
   .track.hide,.scale.hide{display:none;}
 
   /* Crossing a milestone takes over the whole stage for a few seconds so the
@@ -196,17 +199,13 @@
       <div class="eyebrow" id="eyebrow">Legacy Offering</div>
       <div class="total" id="total">$0</div>
     </div>
-    <div class="right" id="rightBlock">
-      <div class="n" id="count">0</div>
-      <div class="l">Families</div>
-    </div>
   </div>
 
   <div class="track" id="track">
     <div class="fill" id="fill"></div>
     <div class="ticks" id="ticks"></div>
   </div>
-  <div class="scale" id="scale"><span id="nextLabel"></span><span class="muted" id="goalLabel"></span></div>
+  <div class="scale" id="scale"><span id="nextLabel"></span><span id="famLabel"><b id="count">0</b> Families</span><span class="muted" id="goalLabel"></span></div>
   <div class="echo" id="echo"></div>
   </div>
 
@@ -279,7 +278,7 @@
   window.addEventListener('resize', fitStage);
   window.addEventListener('orientationchange', fitStage);
   if (BG) document.documentElement.style.setProperty('--bg', '#'+BG.replace('#',''));
-  if (!SHOW_FAM) document.getElementById('rightBlock').classList.add('hide');
+  if (!SHOW_FAM) document.getElementById('famLabel').classList.add('hide');
   if (!SHOW_TICKS) document.getElementById('ticks').classList.add('hide');
 
   var SUPABASE_URL = 'https://keuecvwaailuvouwegod.supabase.co';
@@ -365,6 +364,11 @@
 
     idle.classList.toggle('on', SHOW_IDLE && total <= 0 && count <= 0);
 
+    // A wide total used to push the family count under the QR card. Families
+    // now live under the bar, and the figure steps down so even seven digits
+    // cannot overflow the column.
+    var digits = usd0(total).length;
+    elTotal.style.fontSize = digits > 10 ? '160px' : digits > 8 ? '190px' : '234px';
     animateNumber(elTotal, first?0:prevTotal, total, 1500, usd0);
     animateNumber(elCount, first?0:prevCount, count, 1500, int0);
 
