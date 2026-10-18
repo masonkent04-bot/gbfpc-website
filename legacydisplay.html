@@ -97,10 +97,24 @@
     position:absolute;inset:0;z-index:50;
     display:flex;flex-direction:column;align-items:center;justify-content:center;
     text-align:center;padding:0 150px;background:var(--accent);color:#0b0b0b;
-    opacity:0;pointer-events:none;transform:scale(.97);
-    transition:opacity .45s ease,transform .6s cubic-bezier(.22,1,.36,1);
+    opacity:0;pointer-events:none;
   }
-  .banner.on{opacity:1;transform:scale(1);}
+  .banner.on{opacity:1;}
+
+  /* ── milestone animation modes: ?anim=cut | fade | scale ───────
+     Animating a scale across a full-screen element containing 168px text
+     forces the glyphs to be re-rasterised every frame, which an embedded
+     browser without GPU compositing cannot keep up with. cut costs nothing,
+     fade costs one cheap property, scale is the original look. */
+  body.anim-scale .banner{
+    transform:scale(.97);
+    transition:opacity .45s ease,transform .6s cubic-bezier(.22,1,.36,1);
+    will-change:opacity,transform;
+  }
+  body.anim-scale .banner.on{transform:scale(1);}
+  body.anim-fade .banner{transition:opacity .35s ease;will-change:opacity;}
+  body.anim-cut  .banner{transition:none;}
+  body.anim-cut  .echo{transition:none;}
   .banner .l{font-size:26px;font-weight:800;letter-spacing:.44em;text-transform:uppercase;
              opacity:.5;margin-bottom:26px;}
   .banner .x{font-size:30px;font-weight:800;letter-spacing:.34em;text-transform:uppercase;
@@ -202,7 +216,7 @@
 (function(){
   /* ── config, overridable from the URL so the booth can adjust without a
      redeploy:  ?demo=1  ?poll=3000  ?families=0  ?ticks=0  ?bg=000000
-     ?banner=6000  ?echo=12000  ?idle=0  ?fs=0                                            */
+     ?banner=6000  ?echo=12000  ?idle=0  ?fs=0  ?anim=cut|fade|scale                                            */
   function qp(k, d){
     var m = new RegExp('[?&]'+k+'=([^&]*)').exec(location.search);
     return m ? decodeURIComponent(m[1]) : d;
@@ -218,6 +232,11 @@
   var SHOW_QR    = qp('qr','1') !== '0';
   var QR_COL     = qp('qrsize','');
   var SHOW_FS    = qp('fs','1') !== '0';   // ?fs=0 when embedded in ProPresenter
+  // cut = instant (cheapest, immune to dropped frames), fade = opacity only,
+  // scale = opacity + scale. Switchable live from the URL.
+  var ANIM       = qp('anim','fade');
+  if (['cut','fade','scale'].indexOf(ANIM) === -1) ANIM = 'fade';
+  document.body.classList.add('anim-' + ANIM);
   var stage      = document.getElementById('stage');
   if (!SHOW_QR) stage.classList.add('no-qr');
   // qrsize stays a percentage of stage width, so the knob behaves as before
