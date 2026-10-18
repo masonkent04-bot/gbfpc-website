@@ -202,13 +202,13 @@
 (function(){
   /* ── config, overridable from the URL so the booth can adjust without a
      redeploy:  ?demo=1  ?poll=3000  ?families=0  ?ticks=0  ?bg=000000
-     ?banner=6000  ?echo=12000  ?idle=0                                            */
+     ?banner=6000  ?echo=12000  ?idle=0  ?fs=0                                            */
   function qp(k, d){
     var m = new RegExp('[?&]'+k+'=([^&]*)').exec(location.search);
     return m ? decodeURIComponent(m[1]) : d;
   }
   var DEMO       = qp('demo','0') === '1';
-  var POLL_MS    = parseInt(qp('poll','4000'),10) || 4000;
+  var POLL_MS    = parseInt(qp('poll','2000'),10) || 2000;   // how fast a new pledge shows
   var BANNER_MS  = parseInt(qp('banner','4000'),10) || 4000;   // full-screen takeover
   var ECHO_MS    = qp('echo','') === '0' ? 0 : (parseInt(qp('echo','9000'),10) || 9000);
   var SHOW_FAM   = qp('families','1') !== '0';
@@ -217,6 +217,7 @@
   var BG         = qp('bg','');
   var SHOW_QR    = qp('qr','1') !== '0';
   var QR_COL     = qp('qrsize','');
+  var SHOW_FS    = qp('fs','1') !== '0';   // ?fs=0 when embedded in ProPresenter
   var stage      = document.getElementById('stage');
   if (!SHOW_QR) stage.classList.add('no-qr');
   // qrsize stays a percentage of stage width, so the knob behaves as before
@@ -430,10 +431,12 @@
     keepAwake();
   }
   function syncFsButton(){
-    if (inFullscreen()) fsbtn.classList.add('gone');
+    if (!SHOW_FS) { fsbtn.classList.add('gone'); }
+    else if (inFullscreen()) fsbtn.classList.add('gone');
     else fsbtn.classList.remove('gone');
     setTimeout(fitStage, 120);   // the viewport changes size on the way in/out
   }
+  if (!SHOW_FS) fsbtn.style.display = 'none';
   fsbtn.addEventListener('click', requestFs);
   document.addEventListener('keydown', function(e){
     if (e.key === 'f' || e.key === 'F') requestFs();
