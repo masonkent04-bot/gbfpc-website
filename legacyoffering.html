@@ -226,10 +226,68 @@
     border-radius: 11px; cursor: pointer; transition: border-color 0.2s, color 0.2s;
   }
   .pv-back:hover { border-color: var(--c-dark); color: var(--c-dark); }
+
+  /* ── CODE GATE ──────────────────────────────────────────────
+     The form is not rendered at all until the code checks out, so this is a
+     gate rather than a field. The scrim is near-opaque so the page behind
+     reads as background, not as content you could fill in. */
+  .gate{
+    position:fixed;inset:0;z-index:300;display:grid;place-items:center;padding:24px;
+    background:rgba(242,241,238,.97);
+    -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  }
+  .gate[hidden]{display:none;}
+  .gate-card{
+    width:100%;max-width:410px;background:#fff;border-radius:22px;
+    padding:44px 34px 36px;text-align:center;
+    box-shadow:0 30px 90px rgba(0,0,0,.16),0 2px 8px rgba(0,0,0,.05);
+  }
+  .gate-lock{
+    width:56px;height:56px;border-radius:50%;margin:0 auto 22px;
+    background:rgba(201,169,110,.12);display:flex;align-items:center;justify-content:center;
+  }
+  .gate-lock svg{width:23px;height:23px;stroke:var(--c-brand);fill:none;stroke-width:2;
+                 stroke-linecap:round;stroke-linejoin:round;}
+  .gate-title{font-weight:900;font-size:1.6rem;letter-spacing:-.03em;text-transform:uppercase;
+              color:var(--c-dark);line-height:1;margin-bottom:12px;}
+  .gate-body{font-size:.82rem;font-weight:300;color:var(--c-muted);line-height:1.7;margin-bottom:26px;}
+  .gate-input{
+    width:100%;padding:16px 14px;border:1px solid var(--c-border);border-radius:11px;
+    font-family:'Montserrat',sans-serif;font-size:1.25rem;font-weight:800;
+    letter-spacing:.18em;text-align:center;text-transform:uppercase;
+    color:var(--c-dark);background:var(--c-surface);outline:none;transition:border-color .2s;
+  }
+  .gate-input:focus{border-color:var(--c-brand);background:#fff;}
+  .gate-input::placeholder{letter-spacing:.1em;font-weight:500;color:#ccc;}
+  .gate-err{display:none;margin-top:14px;font-size:.78rem;font-weight:500;color:#c00;}
+  .gate-err.on{display:block;}
+  .gate-btn{
+    width:100%;margin-top:18px;padding:15px;background:var(--c-dark);color:#fff;
+    font-family:'Montserrat',sans-serif;font-size:.68rem;font-weight:700;
+    letter-spacing:.18em;text-transform:uppercase;border:none;border-radius:11px;
+    cursor:pointer;transition:opacity .2s;
+  }
+  .gate-btn:hover{opacity:.85;}
+  .gate-btn:disabled{opacity:.45;cursor:not-allowed;}
   </style>
   <meta name="robots" content="noindex, nofollow"/>
 </head>
 <body>
+
+<div class="gate" id="gate" hidden>
+  <div class="gate-card">
+    <div class="gate-lock">
+      <svg viewBox="0 0 24 24"><rect x="3.5" y="10.5" width="17" height="11" rx="2.2"/><path d="M7.5 10.5V7a4.5 4.5 0 0 1 9 0v3.5"/></svg>
+    </div>
+    <h2 class="gate-title">Enter the Code</h2>
+    <p class="gate-body">The code is announced during the service. Enter it to open the Legacy form.</p>
+    <input class="gate-input" id="gate-input" type="text" inputmode="text"
+           autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Service code"/>
+    <div class="gate-err" id="gate-err"></div>
+    <button type="button" class="gate-btn" id="gate-go">Continue</button>
+  </div>
+</div>
+
 
 <header id="header">
   <a href="/" aria-label="GBFPC Home"><img src="/gbfpc-logo.svg" alt="GBFPC" class="hdr-logo"/></a>
@@ -310,14 +368,8 @@
       <form id="pvForm">
         <div id="pv-error"></div>
 
-        <!-- service code, shown only when enabled -->
-        <div class="code-card" id="code-card" style="display:none;">
-          <div class="form-group">
-            <label class="form-label" for="lg-code">Service Code</label>
-            <input class="form-input" type="text" id="lg-code" name="code"
-                   autocomplete="off" placeholder="As announced in the service"/>
-          </div>
-        </div>
+        <!-- carried from the gate; the gate is where it is actually entered -->
+        <input type="hidden" id="lg-code" name="code" value=""/>
 
         <div class="section-head">Your Commitment</div>
 
@@ -487,7 +539,6 @@
   var form   = document.getElementById('pvForm');
   var btn    = document.getElementById('pv-btn');
   var errBox = document.getElementById('pv-error');
-  var codeCard = document.getElementById('code-card');
   var recSection = document.getElementById('rec-section');
 
   /* One-time vs over-time */
@@ -502,23 +553,91 @@
   btnOnce.addEventListener('click', function(){ setType(false); });
   btnRec.addEventListener('click',  function(){ setType(true); document.getElementById('lg-months').focus(); });
 
-  /* Ask the server whether we're open and whether a code is needed.
-     The code itself is never sent to the browser - only the boolean. */
-  fetch(SUPABASE_URL + '/rest/v1/rpc/legacy_public_totals', {
-    method:'POST',
-    headers:{ 'Content-Type':'application/json', 'apikey':ANON_KEY, 'Authorization':'Bearer '+ANON_KEY },
-    body:'{}'
-  })
-  .then(function(r){ return r.json(); })
-  .then(function(s){
-    if(!s) return;
-    if(s.require_code) codeCard.style.display = 'block';
-    if(s.is_open === false){
-      form.style.display = 'none';
-      document.getElementById('lg-closed').style.display = 'block';
-    }
-  })
-  .catch(function(){ /* leave the form usable; the server validates anyway */ });
+  /* ── code gate ──────────────────────────────────────────────────
+     The form stays unrendered until the server confirms the code. The code
+     itself never reaches the browser: verify_legacy_code() takes a guess and
+     answers yes or no. This is a gate for the congregation's benefit, not the
+     security boundary - submit_legacy_pledge re-checks the code on every
+     insert, so skipping this in devtools achieves nothing. */
+  var gate      = document.getElementById('gate');
+  var gateInput = document.getElementById('gate-input');
+  var gateErr   = document.getElementById('gate-err');
+  var gateGo    = document.getElementById('gate-go');
+  var codeField = document.getElementById('lg-code');
+  var SKEY      = 'gbfpc_legacy_code';
+
+  function rpc(name, body){
+    return fetch(SUPABASE_URL + '/rest/v1/rpc/' + name, {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json', 'apikey':ANON_KEY, 'Authorization':'Bearer '+ANON_KEY },
+      body: JSON.stringify(body || {})
+    }).then(function(r){ return r.json(); });
+  }
+
+  function showForm(code){
+    if(code) codeField.value = code;
+    gate.hidden = true;
+    form.style.display = 'block';
+  }
+  function showGate(){
+    form.style.display = 'none';
+    gate.hidden = false;
+    try { gateInput.focus(); } catch(e){}
+  }
+
+  var saved = null;
+  try { saved = sessionStorage.getItem(SKEY); } catch(e){}
+
+  // closed beats everything else
+  rpc('legacy_public_totals')
+    .then(function(st){
+      if(st && st.is_open === false){
+        form.style.display = 'none';
+        gate.hidden = true;
+        document.getElementById('lg-closed').style.display = 'block';
+        return null;
+      }
+      return rpc('verify_legacy_code', { p_code: saved });
+    })
+    .then(function(res){
+      if(res === null) return;                 // closed, already handled
+      if(res && res.ok) showForm(saved);
+      else showGate();
+    })
+    .catch(function(){
+      // If the check can't run, don't lock people out of giving - the insert
+      // still validates the code, so the worst case is an error on submit.
+      showForm(saved);
+    });
+
+  function tryCode(){
+    var val = gateInput.value.trim();
+    if(!val){ gateErr.textContent = 'Please enter the code.'; gateErr.classList.add('on'); return; }
+    gateErr.classList.remove('on');
+    gateGo.disabled = true;
+    gateGo.textContent = 'Checking\u2026';
+    rpc('verify_legacy_code', { p_code: val })
+      .then(function(res){
+        gateGo.disabled = false;
+        gateGo.textContent = 'Continue';
+        if(res && res.ok){
+          try { sessionStorage.setItem(SKEY, val); } catch(e){}
+          showForm(val);
+        } else {
+          gateErr.textContent = 'That code is not correct.';
+          gateErr.classList.add('on');
+          gateInput.select();
+        }
+      })
+      .catch(function(){
+        gateGo.disabled = false;
+        gateGo.textContent = 'Continue';
+        gateErr.textContent = 'Could not check the code \u2014 please try again.';
+        gateErr.classList.add('on');
+      });
+  }
+  gateGo.addEventListener('click', tryCode);
+  gateInput.addEventListener('keydown', function(e){ if(e.key === 'Enter'){ e.preventDefault(); tryCode(); } });
 
   /* Spell the amount out, because an extra zero is invisible as digits
      but glaring as words. This is the typo guard. */
@@ -589,7 +708,7 @@
       p_duration_months : months,
       p_start_date      : form.start_date.value || null,
       p_note            : form.note.value.trim() || null,
-      p_code            : codeCard.style.display === 'block' ? document.getElementById('lg-code').value : null
+      p_code            : codeField.value || null
     };
 
     document.getElementById('cf-figure').textContent = money(amt);
