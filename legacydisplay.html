@@ -103,6 +103,11 @@
 </style>
 </head>
 <body>
+<button class="fsbtn" id="fsbtn" type="button" aria-label="Fill the screen">
+  <svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+  <b>Fill the Screen</b>
+  <i>or press F &middot; Esc to exit</i>
+</button>
 <div class="stage" id="stage">
   <div class="main">
   <div class="top">
@@ -335,6 +340,59 @@
       if(window.console) console.warn('legacy poll failed, keeping last values:', e.message);
     });
   }
+
+  /* ── fullscreen, cursor, and keeping the display awake ──────────
+     Browsers only grant fullscreen from a real gesture, so there is one
+     button; after that the page runs untouched for the whole service. */
+  var fsbtn = document.getElementById('fsbtn');
+
+  function inFullscreen(){
+    return !!(document.fullscreenElement || document.webkitFullscreenElement ||
+              document.mozFullScreenElement || document.msFullscreenElement);
+  }
+  function requestFs(){
+    var el = document.documentElement;
+    var fn = el.requestFullscreen || el.webkitRequestFullscreen ||
+             el.mozRequestFullScreen || el.msRequestFullscreen;
+    if (fn) { try { fn.call(el); } catch(e){} }
+    keepAwake();
+  }
+  function syncFsButton(){
+    if (inFullscreen()) fsbtn.classList.add('gone');
+    else fsbtn.classList.remove('gone');
+    setTimeout(fitStage, 120);   // the viewport changes size on the way in/out
+  }
+  fsbtn.addEventListener('click', requestFs);
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'f' || e.key === 'F') requestFs();
+  });
+  ['fullscreenchange','webkitfullscreenchange','mozfullscreenchange','MSFullscreenChange']
+    .forEach(function(ev){ document.addEventListener(ev, syncFsButton); });
+  syncFsButton();
+
+  /* A projector showing a static number for an hour will happily sleep. */
+  var wakeLock = null;
+  function keepAwake(){
+    if (!navigator.wakeLock || !navigator.wakeLock.request) return;
+    navigator.wakeLock.request('screen').then(function(wl){
+      wakeLock = wl;
+      wl.addEventListener('release', function(){ wakeLock = null; });
+    }).catch(function(){});
+  }
+  document.addEventListener('visibilitychange', function(){
+    if (!document.hidden && !wakeLock) keepAwake();
+  });
+
+  /* hide the cursor once it stops moving */
+  var idleTimer = null;
+  function pokeCursor(){
+    document.body.classList.remove('idle');
+    if (idleTimer) clearTimeout(idleTimer);
+    idleTimer = setTimeout(function(){ document.body.classList.add('idle'); }, 2500);
+  }
+  document.addEventListener('mousemove', pokeCursor);
+  pokeCursor();
+
   tick();
   setInterval(tick, POLL_MS);
   // catch up immediately if the window is restored or brought forward
