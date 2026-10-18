@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=1920,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow"/>
+<title>Legacy — Lower Third</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;900&display=swap" rel="stylesheet"/>
+<style>
+  /* Lower third for Wirecast: Network -> New Web Page, then tick
+     "Transparent Background" on the source. Nothing here paints a page
+     background, so Wirecast keys straight over the program feed.
+     Designed to sit on screen for the rest of the service, so it is deliberately
+     quiet: no full-screen takeover, no motion beyond the number counting. */
+  :root{ --accent:#c9a96e; }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{height:100%;background:transparent;overflow:hidden;}
+  body{font-family:'Montserrat',system-ui,-apple-system,sans-serif;color:#fff;
+       margin:0;position:relative;}
+
+  /* same fixed-stage trick as the projector page: 1920x1080 scaled to fit,
+     so the layout holds whatever size Wirecast renders the source at */
+  .stage{position:absolute;top:50%;left:50%;width:1920px;height:1080px;
+         transform-origin:50% 50%;}
+
+  .lower{
+    position:absolute;left:80px;bottom:80px;width:1320px;
+    background:rgba(8,8,8,.82);
+    border-radius:20px;
+    border-left:10px solid var(--accent);
+    padding:26px 34px;
+    display:flex;align-items:center;gap:34px;
+    transition:border-color .8s ease, background .8s ease;
+  }
+
+  .lt-main{flex:1;min-width:0;}
+  .lt-eyebrow{font-size:23px;font-weight:800;letter-spacing:.34em;text-transform:uppercase;
+              color:rgba(255,255,255,.7);}
+  .lt-total{font-size:88px;font-weight:900;letter-spacing:-.035em;line-height:1;
+            margin-top:6px;color:var(--accent);font-variant-numeric:tabular-nums;
+            transition:color .8s ease;}
+  .lt-bar{margin-top:16px;height:14px;border-radius:99px;background:rgba(255,255,255,.18);
+          overflow:hidden;}
+  .lt-fill{height:100%;width:0;border-radius:99px;background:var(--accent);
+           transition:width 1.4s cubic-bezier(.22,1,.36,1), background .8s ease;}
+  .lt-meta{margin-top:13px;font-size:30px;font-weight:700;letter-spacing:.02em;
+           color:rgba(255,255,255,.9);}
+  .lt-meta b{font-weight:900;color:#fff;}
+
+  /* milestone: a brief highlight in place of the stats line, never a takeover */
+  .lt-meta.flash{color:#fff;font-weight:900;}
+  .lower.flash{background:rgba(8,8,8,.92);}
+
+  .lt-right{display:flex;align-items:center;gap:22px;flex-shrink:0;}
+  .lt-qr{background:#fff;border-radius:12px;padding:8px;width:124px;height:124px;}
+  .lt-qr svg{display:block;width:100%;height:auto;}
+  .lt-links{text-align:left;}
+  .lt-url{font-size:26px;font-weight:800;letter-spacing:.01em;color:#fff;white-space:nowrap;}
+  .lt-codewrap{margin-top:10px;}
+  .lt-codewrap[hidden]{display:none;}
+  .lt-cl{font-size:18px;font-weight:800;letter-spacing:.28em;text-transform:uppercase;
+         color:rgba(255,255,255,.6);}
+  .lt-cv{font-size:40px;font-weight:900;letter-spacing:.04em;line-height:1.05;
+         color:var(--accent);transition:color .8s ease;}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <div class="lower" id="lower">
+    <div class="lt-main">
+      <div class="lt-eyebrow" id="eyebrow">Legacy Offering</div>
+      <div class="lt-total" id="total">$0</div>
+      <div class="lt-bar"><div class="lt-fill" id="fill"></div></div>
+      <div class="lt-meta" id="meta"></div>
+    </div>
+    <div class="lt-right">
+      <div class="lt-qr"><svg class="qr-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" shape-rendering="crispEdges"><rect width="29" height="29" fill="#ffffff"/><g transform="translate(2,2)" fill="#0b0b0b"><path d="M0 0h1v1h-1zM1 0h1v1h-1zM2 0h1v1h-1zM3 0h1v1h-1zM4 0h1v1h-1zM5 0h1v1h-1zM6 0h1v1h-1zM8 0h1v1h-1zM9 0h1v1h-1zM10 0h1v1h-1zM11 0h1v1h-1zM12 0h1v1h-1zM14 0h1v1h-1zM16 0h1v1h-1zM18 0h1v1h-1zM19 0h1v1h-1zM20 0h1v1h-1zM21 0h1v1h-1zM22 0h1v1h-1zM23 0h1v1h-1zM24 0h1v1h-1zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h1v1h-1zM9 1h1v1h-1zM10 1h1v1h-1zM11 1h1v1h-1zM16 1h1v1h-1zM18 1h1v1h-1zM24 1h1v1h-1zM0 2h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM8 2h1v1h-1zM9 2h1v1h-1zM10 2h1v1h-1zM11 2h1v1h-1zM12 2h1v1h-1zM13 2h1v1h-1zM14 2h1v1h-1zM18 2h1v1h-1zM20 2h1v1h-1zM21 2h1v1h-1zM22 2h1v1h-1zM24 2h1v1h-1zM0 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM11 3h1v1h-1zM12 3h1v1h-1zM13 3h1v1h-1zM16 3h1v1h-1zM18 3h1v1h-1zM20 3h1v1h-1zM21 3h1v1h-1zM22 3h1v1h-1zM24 3h1v1h-1zM0 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM8 4h1v1h-1zM10 4h1v1h-1zM13 4h1v1h-1zM14 4h1v1h-1zM16 4h1v1h-1zM18 4h1v1h-1zM20 4h1v1h-1zM21 4h1v1h-1zM22 4h1v1h-1zM24 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM9 5h1v1h-1zM10 5h1v1h-1zM11 5h1v1h-1zM14 5h1v1h-1zM16 5h1v1h-1zM18 5h1v1h-1zM24 5h1v1h-1zM0 6h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM19 6h1v1h-1zM20 6h1v1h-1zM21 6h1v1h-1zM22 6h1v1h-1zM23 6h1v1h-1zM24 6h1v1h-1zM10 7h1v1h-1zM11 7h1v1h-1zM13 7h1v1h-1zM14 7h1v1h-1zM15 7h1v1h-1zM0 8h1v1h-1zM3 8h1v1h-1zM4 8h1v1h-1zM5 8h1v1h-1zM6 8h1v1h-1zM7 8h1v1h-1zM8 8h1v1h-1zM11 8h1v1h-1zM12 8h1v1h-1zM14 8h1v1h-1zM15 8h1v1h-1zM17 8h1v1h-1zM20 8h1v1h-1zM22 8h1v1h-1zM23 8h1v1h-1zM24 8h1v1h-1zM0 9h1v1h-1zM1 9h1v1h-1zM2 9h1v1h-1zM3 9h1v1h-1zM5 9h1v1h-1zM7 9h1v1h-1zM8 9h1v1h-1zM11 9h1v1h-1zM12 9h1v1h-1zM14 9h1v1h-1zM15 9h1v1h-1zM19 9h1v1h-1zM20 9h1v1h-1zM21 9h1v1h-1zM22 9h1v1h-1zM23 9h1v1h-1zM3 10h1v1h-1zM4 10h1v1h-1zM5 10h1v1h-1zM6 10h1v1h-1zM8 10h1v1h-1zM11 10h1v1h-1zM15 10h1v1h-1zM16 10h1v1h-1zM17 10h1v1h-1zM18 10h1v1h-1zM19 10h1v1h-1zM21 10h1v1h-1zM24 10h1v1h-1zM1 11h1v1h-1zM3 11h1v1h-1zM4 11h1v1h-1zM7 11h1v1h-1zM9 11h1v1h-1zM10 11h1v1h-1zM11 11h1v1h-1zM12 11h1v1h-1zM14 11h1v1h-1zM15 11h1v1h-1zM17 11h1v1h-1zM19 11h1v1h-1zM21 11h1v1h-1zM22 11h1v1h-1zM23 11h1v1h-1zM24 11h1v1h-1zM0 12h1v1h-1zM2 12h1v1h-1zM6 12h1v1h-1zM8 12h1v1h-1zM16 12h1v1h-1zM18 12h1v1h-1zM19 12h1v1h-1zM24 12h1v1h-1zM0 13h1v1h-1zM2 13h1v1h-1zM4 13h1v1h-1zM8 13h1v1h-1zM10 13h1v1h-1zM12 13h1v1h-1zM13 13h1v1h-1zM14 13h1v1h-1zM15 13h1v1h-1zM16 13h1v1h-1zM20 13h1v1h-1zM23 13h1v1h-1zM0 14h1v1h-1zM1 14h1v1h-1zM3 14h1v1h-1zM4 14h1v1h-1zM5 14h1v1h-1zM6 14h1v1h-1zM7 14h1v1h-1zM9 14h1v1h-1zM10 14h1v1h-1zM14 14h1v1h-1zM15 14h1v1h-1zM16 14h1v1h-1zM17 14h1v1h-1zM18 14h1v1h-1zM20 14h1v1h-1zM21 14h1v1h-1zM22 14h1v1h-1zM23 14h1v1h-1zM24 14h1v1h-1zM0 15h1v1h-1zM5 15h1v1h-1zM7 15h1v1h-1zM9 15h1v1h-1zM10 15h1v1h-1zM12 15h1v1h-1zM15 15h1v1h-1zM19 15h1v1h-1zM21 15h1v1h-1zM22 15h1v1h-1zM24 15h1v1h-1zM0 16h1v1h-1zM2 16h1v1h-1zM5 16h1v1h-1zM6 16h1v1h-1zM8 16h1v1h-1zM9 16h1v1h-1zM10 16h1v1h-1zM11 16h1v1h-1zM12 16h1v1h-1zM13 16h1v1h-1zM16 16h1v1h-1zM17 16h1v1h-1zM18 16h1v1h-1zM19 16h1v1h-1zM20 16h1v1h-1zM22 16h1v1h-1zM23 16h1v1h-1zM8 17h1v1h-1zM11 17h1v1h-1zM16 17h1v1h-1zM20 17h1v1h-1zM22 17h1v1h-1zM23 17h1v1h-1zM0 18h1v1h-1zM1 18h1v1h-1zM2 18h1v1h-1zM3 18h1v1h-1zM4 18h1v1h-1zM5 18h1v1h-1zM6 18h1v1h-1zM8 18h1v1h-1zM12 18h1v1h-1zM13 18h1v1h-1zM14 18h1v1h-1zM16 18h1v1h-1zM18 18h1v1h-1zM20 18h1v1h-1zM24 18h1v1h-1zM0 19h1v1h-1zM6 19h1v1h-1zM8 19h1v1h-1zM11 19h1v1h-1zM13 19h1v1h-1zM16 19h1v1h-1zM20 19h1v1h-1zM24 19h1v1h-1zM0 20h1v1h-1zM2 20h1v1h-1zM3 20h1v1h-1zM4 20h1v1h-1zM6 20h1v1h-1zM8 20h1v1h-1zM11 20h1v1h-1zM12 20h1v1h-1zM14 20h1v1h-1zM15 20h1v1h-1zM16 20h1v1h-1zM17 20h1v1h-1zM18 20h1v1h-1zM19 20h1v1h-1zM20 20h1v1h-1zM0 21h1v1h-1zM2 21h1v1h-1zM3 21h1v1h-1zM4 21h1v1h-1zM6 21h1v1h-1zM8 21h1v1h-1zM12 21h1v1h-1zM14 21h1v1h-1zM15 21h1v1h-1zM17 21h1v1h-1zM18 21h1v1h-1zM23 21h1v1h-1zM24 21h1v1h-1zM0 22h1v1h-1zM2 22h1v1h-1zM3 22h1v1h-1zM4 22h1v1h-1zM6 22h1v1h-1zM10 22h1v1h-1zM11 22h1v1h-1zM13 22h1v1h-1zM14 22h1v1h-1zM15 22h1v1h-1zM20 22h1v1h-1zM21 22h1v1h-1zM22 22h1v1h-1zM23 22h1v1h-1zM24 22h1v1h-1zM0 23h1v1h-1zM6 23h1v1h-1zM9 23h1v1h-1zM11 23h1v1h-1zM12 23h1v1h-1zM14 23h1v1h-1zM17 23h1v1h-1zM18 23h1v1h-1zM19 23h1v1h-1zM20 23h1v1h-1zM22 23h1v1h-1zM23 23h1v1h-1zM24 23h1v1h-1zM0 24h1v1h-1zM1 24h1v1h-1zM2 24h1v1h-1zM3 24h1v1h-1zM4 24h1v1h-1zM5 24h1v1h-1zM6 24h1v1h-1zM8 24h1v1h-1zM9 24h1v1h-1zM16 24h1v1h-1zM17 24h1v1h-1zM18 24h1v1h-1zM21 24h1v1h-1zM24 24h1v1h-1z"/></g></svg></div>
+      <div class="lt-links">
+        <div class="lt-url">gbfpc.org/legacy</div>
+        <div class="lt-codewrap" id="codeWrap" hidden>
+          <div class="lt-cl">Code</div>
+          <div class="lt-cv" id="codeVal"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  function qp(k,d){ var m=new RegExp('[?&]'+k+'=([^&]*)').exec(location.search);
+                    return m?decodeURIComponent(m[1]):d; }
+  var POLL_MS   = parseInt(qp('poll','2000'),10) || 2000;
+  var FLASH_MS  = parseInt(qp('flash','7000'),10) || 7000;
+  var DKEY      = qp('key','');
+  var CODE      = qp('code','');
+  var SHOW_QR   = qp('qr','1') !== '0';
+  if (!SHOW_QR) document.querySelector('.lt-qr').style.display = 'none';
+
+  var SUPABASE_URL='https://keuecvwaailuvouwegod.supabase.co';
+  var ANON_KEY='sb_publishable_LRE10Uf2omW1sP2qqKsbEQ_gvPLaKVC';
+  var H={'Content-Type':'application/json','apikey':ANON_KEY,'Authorization':'Bearer '+ANON_KEY};
+
+  var stage=document.getElementById('stage');
+  function fitStage(){
+    var s=Math.min(window.innerWidth/1920, window.innerHeight/1080);
+    stage.style.transform='translate(-50%,-50%) scale('+s+')';
+  }
+  fitStage();
+  window.addEventListener('resize', fitStage);
+
+  function usd0(n){ return '$'+Math.round(n).toLocaleString('en-US'); }
+  /* rAF is suspended whenever the page is not visible - Wirecast may well
+     render this offscreen - so the final value is always written on a timer. */
+  function animateNumber(el,from,to,ms){
+    if(document.hidden){ el.textContent=usd0(to); return; }
+    var t0=(window.performance&&performance.now)?performance.now():Date.now();
+    function step(){
+      var now=(window.performance&&performance.now)?performance.now():Date.now();
+      var p=Math.min(1,(now-t0)/ms), e=1-Math.pow(1-p,3);
+      el.textContent=usd0(from+(to-from)*e);
+      if(p<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+    setTimeout(function(){ el.textContent=usd0(to); }, ms+150);
+  }
+
+  var elTotal=document.getElementById('total'), elFill=document.getElementById('fill'),
+      elMeta=document.getElementById('meta'), lower=document.getElementById('lower');
+  var prev=0, first=true, lastMs=null, flashTimer=null;
+
+  function statsLine(count,goal,total,next){
+    var bits=[];
+    bits.push('<b>'+count.toLocaleString('en-US')+'</b> '+(count===1?'family':'families'));
+    if(next) bits.push('next <b>'+usd0(Number(next.amount))+'</b>');
+    else if(goal>0) bits.push('<b>goal reached</b>');
+    if(goal>0) bits.push('goal '+usd0(goal));
+    return bits.join(' &nbsp;·&nbsp; ');
+  }
+
+  function render(s){
+    if(!s) return;
+    var total=Number(s.total_pledged||0), goal=Number(s.goal||0), count=Number(s.pledge_count||0);
+    var accent=(s.current_milestone&&s.current_milestone.color)||'#c9a96e';
+    document.documentElement.style.setProperty('--accent',accent);
+
+    animateNumber(elTotal, first?0:prev, total, 1300);
+    if(goal>0) elFill.style.width=Math.min(100,total/goal*100)+'%';
+    document.getElementById('eyebrow').textContent=(s.campaign||'Legacy')+' Offering';
+
+    var cm=s.current_milestone, key=cm?String(cm.amount):null;
+    var inFlash = flashTimer !== null;
+    if(key && key!==lastMs && !first){
+      elMeta.innerHTML = (cm.label? cm.label+' &nbsp;·&nbsp; ':'') + (cm.message||'');
+      elMeta.classList.add('flash'); lower.classList.add('flash');
+      if(flashTimer) clearTimeout(flashTimer);
+      flashTimer=setTimeout(function(){
+        elMeta.classList.remove('flash'); lower.classList.remove('flash');
+        flashTimer=null;
+        elMeta.innerHTML=statsLine(count,goal,total,s.next_milestone);
+      }, FLASH_MS);
+    } else if(!inFlash){
+      elMeta.innerHTML=statsLine(count,goal,total,s.next_milestone);
+    }
+    lastMs=key; prev=total; first=false;
+  }
+
+  function tick(){
+    fetch(SUPABASE_URL+'/rest/v1/rpc/legacy_public_totals',{method:'POST',headers:H,body:'{}'})
+      .then(function(r){ return r.json(); }).then(render)
+      .catch(function(){ /* keep last good values on screen */ });
+  }
+  tick(); setInterval(tick, POLL_MS);
+  document.addEventListener('visibilitychange', function(){ if(!document.hidden) tick(); });
+
+  function showCode(v){
+    if(!v){ document.getElementById('codeWrap').hidden=true; return; }
+    document.getElementById('codeVal').textContent=v;
+    document.getElementById('codeWrap').hidden=false;
+  }
+  if(CODE){ showCode(CODE); }
+  else if(DKEY){
+    var pollCode=function(){
+      fetch(SUPABASE_URL+'/rest/v1/rpc/legacy_display_info',{method:'POST',headers:H,
+            body:JSON.stringify({p_key:DKEY})})
+        .then(function(r){ return r.json(); })
+        .then(function(d){ showCode(d && d.service_code); })
+        .catch(function(){});
+    };
+    pollCode(); setInterval(pollCode, 15000);
+  }
+}());
+</script>
+</body>
+</html>
