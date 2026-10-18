@@ -100,6 +100,28 @@
   .idle.on{display:grid;}
   .idle p{font-size:28.8px;font-weight:700;letter-spacing:.34em;text-transform:uppercase;
           color:rgba(255,255,255,.3);}
+  /* ── BOOTH CONTROLS ─────────────────────────────────────────
+     The stage scales to the window, so anything short of true fullscreen
+     means fiddling with window size and position. One click removes that. */
+  .fsbtn{
+    position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:400;
+    display:flex;flex-direction:column;align-items:center;gap:18px;
+    background:rgba(20,20,20,.96);border:1px solid rgba(255,255,255,.18);
+    border-radius:20px;padding:40px 48px;cursor:pointer;
+    font-family:'Montserrat',system-ui,sans-serif;color:#fff;
+    transition:border-color .2s ease;
+  }
+  .fsbtn:hover{border-color:var(--accent);}
+  .fsbtn svg{width:40px;height:40px;stroke:var(--accent);fill:none;stroke-width:1.8;
+             stroke-linecap:round;stroke-linejoin:round;}
+  .fsbtn b{font-size:15px;font-weight:900;letter-spacing:.26em;text-transform:uppercase;}
+  .fsbtn i{font-size:12px;font-weight:300;font-style:normal;color:rgba(255,255,255,.45);
+           letter-spacing:.04em;}
+  .fsbtn.gone{display:none;}
+  /* No mouse pointer on the projected image.
+     NB: named no-cursor, not idle - .idle is already the Ready panel's class
+     and is display:none, so putting `idle` on <body> hid the entire page. */
+  body.no-cursor{cursor:none;}
 </style>
 </head>
 <body>
