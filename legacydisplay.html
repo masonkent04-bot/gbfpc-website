@@ -98,10 +98,13 @@
   }
   .banner.on{opacity:1;transform:scale(1);}
   .banner .l{font-size:26px;font-weight:800;letter-spacing:.44em;text-transform:uppercase;
-             opacity:.55;margin-bottom:34px;}
-  .banner .m{font-size:132px;font-weight:900;letter-spacing:-.035em;line-height:.98;}
-  .banner .t{font-size:40px;font-weight:900;letter-spacing:-.02em;margin-top:40px;opacity:.6;
+             opacity:.5;margin-bottom:26px;}
+  .banner .x{font-size:30px;font-weight:800;letter-spacing:.34em;text-transform:uppercase;
+             opacity:.5;margin-bottom:10px;}
+  .banner .t{font-size:168px;font-weight:900;letter-spacing:-.045em;line-height:.92;
              font-variant-numeric:tabular-nums;}
+  .banner .m{font-size:58px;font-weight:800;letter-spacing:-.02em;line-height:1.12;
+             margin-top:34px;max-width:1400px;}
 
   /* shown before anything has been pledged */
   .idle{position:absolute;inset:0;display:none;place-items:center;background:var(--bg);z-index:4;}
@@ -180,8 +183,9 @@
 
   <div class="banner" id="banner">
     <div class="l" id="blabel"></div>
-    <div class="m" id="bmsg"></div>
+    <div class="x">We Crossed</div>
     <div class="t" id="btotal"></div>
+    <div class="m" id="bmsg"></div>
   </div>
 
   <div class="idle" id="idle"><p>Ready</p></div>
@@ -348,7 +352,8 @@
       document.getElementById('blabel').textContent = cm.label || 'Milestone';
       document.getElementById('bmsg').textContent   = cm.message || '';
       banner.style.background = cm.color || accent;
-      document.getElementById('btotal').textContent = usd0(total);
+      // the threshold just crossed - the live total is on the main screen
+      document.getElementById('btotal').textContent = usd0(Number(cm.amount));
       banner.classList.add('on');
       if(bannerTimer) clearTimeout(bannerTimer);
       if(echoTimer)   clearTimeout(echoTimer);
