@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=1920,initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow"/>
+<title>Legacy — Live Total (High Contrast)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;900&display=swap" rel="stylesheet"/>
+<style>
+  /* Built for 1920x1080. Sizes are in vw so it still scales if the projector
+     differs, but the proportions are tuned for 16:9. */
+  :root{ --accent:#c9a96e; --bg:#000000; --qrcol:520px; }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{height:100%;overflow:hidden;background:var(--bg);}
+
+  /* A fixed 1920x1080 stage scaled as a single unit to fit whatever the
+     projector actually gives us. vw/vh tracked only one axis, so any window
+     that wasn't exactly 16:9 pushed content off the bottom. Everything inside
+     is in design pixels; only the scale factor changes. */
+  .stage{
+    position:absolute;top:50%;left:50%;
+    width:1920px;height:1080px;
+    transform-origin:50% 50%;
+    display:grid;grid-template-columns:1fr var(--qrcol);align-items:center;
+    gap:77px;padding:0 115px;
+    transition:background 1s ease;
+  }
+  .stage.no-qr{grid-template-columns:1fr;}
+  body{
+    font-family:'Montserrat',system-ui,-apple-system,sans-serif;color:#fff;
+    margin:0;overflow:hidden;position:relative;
+  }
+
+  .main{min-width:0;}
+
+  /* QR must be dark-on-light to scan reliably, so it sits on a white card
+     even though the page is black. The card edge doubles as the quiet zone. */
+  .qr{display:flex;flex-direction:column;align-items:center;gap:23.8px;}
+  .qr-card{background:#fff;border-radius:26px;padding:22px;width:100%;
+           box-shadow:0 0 90px rgba(255,255,255,.12);}
+  .qr-svg{display:block;width:100%;height:auto;}
+  .qr-cap{font-size:44px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;
+          color:#fff;text-align:center;line-height:1.4;}
+  .qr-url{font-size:38px;font-weight:800;letter-spacing:.02em;color:#fff;
+          transition:color 1s ease;text-align:center;}
+  .stage.no-qr .qr{display:none;}
+
+  .top{display:flex;align-items:flex-end;justify-content:space-between;gap:76.8px;margin-bottom:60.5px;}
+  .eyebrow{font-size:34px;font-weight:800;letter-spacing:.32em;text-transform:uppercase;
+           color:rgba(255,255,255,.82);margin-bottom:23.8px;}
+  .total{font-size:208px;font-weight:900;line-height:.82;letter-spacing:-.045em;
+         font-variant-numeric:tabular-nums;color:var(--accent);transition:color 1s ease;
+         text-shadow:0 0 100px rgba(201,169,110,.18);}
+  .right{text-align:right;padding-bottom:15.1px;}
+  .right .n{font-size:92px;font-weight:900;letter-spacing:-.025em;line-height:1;
+            font-variant-numeric:tabular-nums;}
+  .right .l{font-size:34px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;
+            color:rgba(255,255,255,.82);margin-top:14px;}
+  .right.hide{display:none;}
+
+  .track{position:relative;height:84px;border-radius:99px;background:rgba(255,255,255,.15);
+         box-shadow:inset 0 0 0 2px rgba(255,255,255,.24);}
+  /* overflow:hidden matters - the ::after highlight is a fixed 230px, so on a
+     narrow fill (early in the night, when the total is a fraction of goal) it
+     spilled out past the bar as a grey smear. */
+  .fill{position:absolute;top:0;bottom:0;left:0;width:0;border-radius:99px;background:var(--accent);
+        overflow:hidden;
+        transition:width 1.6s cubic-bezier(.22,1,.36,1),background 1s ease;}
+  .fill::after{content:'';position:absolute;right:0;top:0;bottom:0;width:230.4px;border-radius:99px;
+               background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.22));}
+  .ticks{position:absolute;inset:0;pointer-events:none;}
+  .tick{position:absolute;top:-12px;bottom:-12px;width:4px;background:rgba(255,255,255,.45);
+        transition:background .6s ease;}
+  /* Tick labels removed: 13px is invisible at projector distance and seven of
+     them turned the bar into noise. Marks keep the positions; the next
+     milestone is called out in large type below. */
+  .tick b{display:none;}
+  .tick.hit{background:#fff;}
+  .tick.hit b{color:#fff;}
+  /* keep end labels inside the frame — projectors overscan and clip edges */
+  .tick.at-start b{left:0;transform:translateX(0);}
+  .tick.at-end   b{left:auto;right:0;transform:translateX(0);}
+  /* the track narrowed when the QR took a column, so adjacent labels can
+     collide; anything that would overlap drops to a second row */
+  .tick b.row2{bottom:-69.1px;}
+  .ticks.hide{display:none;}
+
+  .scale{display:flex;justify-content:space-between;align-items:baseline;margin-top:30px;
+         font-size:44px;font-weight:800;letter-spacing:.02em;text-transform:uppercase;color:#fff;}
+  .scale .muted{color:rgba(255,255,255,.6);font-size:34px;letter-spacing:.12em;}
+  .track.hide,.scale.hide{display:none;}
+
+  /* Crossing a milestone takes over the whole stage for a few seconds so the
+     room actually notices, then hands the screen back to the running total. */
+  .banner{
+    position:absolute;inset:0;z-index:50;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:0 150px;background:var(--accent);color:#0b0b0b;
+    opacity:0;pointer-events:none;
+  }
+  .banner.on{opacity:1;}
+
+  /* ── milestone animation modes: ?anim=cut | fade | scale ───────
+     Animating a scale across a full-screen element containing 168px text
+     forces the glyphs to be re-rasterised every frame, which an embedded
+     browser without GPU compositing cannot keep up with. cut costs nothing,
+     fade costs one cheap property, scale is the original look. */
+  body.anim-scale .banner{
+    transform:scale(.97);
+    transition:opacity .45s ease,transform .6s cubic-bezier(.22,1,.36,1);
+    will-change:opacity,transform;
+  }
+  body.anim-scale .banner.on{transform:scale(1);}
+  body.anim-fade .banner{transition:opacity .35s ease;will-change:opacity;}
+  body.anim-cut  .banner{transition:none;}
+  body.anim-cut  .echo{transition:none;}
+  .banner .l{font-size:36px;font-weight:800;letter-spacing:.44em;text-transform:uppercase;
+             opacity:.5;margin-bottom:26px;}
+  .banner .x{font-size:40px;font-weight:800;letter-spacing:.34em;text-transform:uppercase;
+             opacity:.5;margin-bottom:10px;}
+  .banner .t{font-size:168px;font-weight:900;letter-spacing:-.045em;line-height:.92;
+             font-variant-numeric:tabular-nums;}
+  .banner .m{font-size:70px;font-weight:800;letter-spacing:-.02em;line-height:1.12;
+             margin-top:34px;max-width:1400px;}
+
+  /* shown before anything has been pledged */
+  .idle{position:absolute;inset:0;display:none;place-items:center;background:var(--bg);z-index:4;}
+  .idle.on{display:grid;}
+  .idle p{font-size:28.8px;font-weight:700;letter-spacing:.34em;text-transform:uppercase;
+          color:rgba(255,255,255,.3);}
+  /* ── BOOTH CONTROLS ─────────────────────────────────────────
+     The stage scales to the window, so anything short of true fullscreen
+     means fiddling with window size and position. One click removes that. */
+  /* Tucked into a corner, not over the number: if nobody clicks it the
+     projected image is still clean. Fades out with the cursor. */
+  .fsbtn{
+    position:fixed;right:22px;bottom:22px;z-index:400;
+    display:flex;align-items:center;gap:10px;
+    background:rgba(20,20,20,.92);border:1px solid rgba(255,255,255,.16);
+    border-radius:100px;padding:11px 18px;cursor:pointer;
+    font-family:'Montserrat',system-ui,sans-serif;color:#fff;
+    transition:border-color .2s ease,opacity .5s ease;
+  }
+  .fsbtn:hover{border-color:var(--accent);}
+  .fsbtn svg{width:17px;height:17px;stroke:var(--accent);fill:none;stroke-width:1.9;
+             stroke-linecap:round;stroke-linejoin:round;}
+  .fsbtn b{font-size:10px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;}
+  .fsbtn i{display:none;}
+  .fsbtn.gone{display:none;}
+  /* once the cursor is parked, the control disappears too */
+  body.no-cursor .fsbtn{opacity:0;pointer-events:none;}
+  /* No mouse pointer on the projected image.
+     NB: named no-cursor, not idle - .idle is already the Ready panel's class
+     and is display:none, so putting `idle` on <body> hid the entire page. */
+  body.no-cursor{cursor:none;}
+  /* After the takeover hands the screen back, the message lingers under the
+     total for a few more seconds - long enough to read while someone is
+     speaking over it. Absolutely positioned so it can't shift the bar. */
+  .main{position:relative;}
+  /* Sits below the bar, where there is room, rather than crowding the total.
+     Absolutely positioned so showing and hiding it never moves the bar. */
+  .echo{
+    position:absolute;top:100%;left:0;right:0;margin-top:34px;
+    font-size:62px;font-weight:800;letter-spacing:-.02em;line-height:1.15;
+    color:var(--accent);
+    opacity:0;transition:opacity .55s ease,color 1s ease;
+  }
+  .echo.on{opacity:1;}
+  /* Service code, shown for anyone who missed the announcement.
+     Supplied via ?code= in the URL and never fetched from the database:
+     legacy_public_totals() deliberately withholds it, because an endpoint
+     that returned the code would let anyone on the internet read it and the
+     gate would be worthless. The booth puts it in the URL; the page just
+     prints what it is handed. */
+  .qr-code{margin-top:24px;padding-top:22px;width:100%;text-align:center;
+           border-top:2px solid rgba(255,255,255,.2);}
+  .qr-code[hidden]{display:none;}
+  .qc-l{display:block;font-size:30px;font-weight:800;letter-spacing:.28em;
+        text-transform:uppercase;color:rgba(255,255,255,.62);margin-bottom:8px;}
+  .qc-v{display:block;font-size:80px;font-weight:900;letter-spacing:.05em;
+        text-transform:uppercase;color:var(--accent);line-height:1;}
+</style>
+</head>
+<body>
+<button class="fsbtn" id="fsbtn" type="button" aria-label="Fill the screen">
+  <svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+  <b>Fill Screen</b>
+  <i>or press F &middot; Esc to exit</i>
+</button>
+<div class="stage" id="stage">
+  <div class="main">
+  <div class="top">
+    <div>
+      <div class="eyebrow" id="eyebrow">Legacy Offering</div>
+      <div class="total" id="total">$0</div>
+    </div>
+    <div class="right" id="rightBlock">
+      <div class="n" id="count">0</div>
+      <div class="l">Families</div>
+    </div>
+  </div>
+
+  <div class="track" id="track">
+    <div class="fill" id="fill"></div>
+    <div class="ticks" id="ticks"></div>
+  </div>
+  <div class="scale" id="scale"><span id="nextLabel"></span><span class="muted" id="goalLabel"></span></div>
+  <div class="echo" id="echo"></div>
+  </div>
+
+  <aside class="qr" id="qrPanel">
+    <div class="qr-card"><svg class="qr-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" shape-rendering="crispEdges"><rect width="29" height="29" fill="#ffffff"/><g transform="translate(2,2)" fill="#0b0b0b"><path d="M0 0h1v1h-1zM1 0h1v1h-1zM2 0h1v1h-1zM3 0h1v1h-1zM4 0h1v1h-1zM5 0h1v1h-1zM6 0h1v1h-1zM8 0h1v1h-1zM9 0h1v1h-1zM10 0h1v1h-1zM11 0h1v1h-1zM12 0h1v1h-1zM14 0h1v1h-1zM16 0h1v1h-1zM18 0h1v1h-1zM19 0h1v1h-1zM20 0h1v1h-1zM21 0h1v1h-1zM22 0h1v1h-1zM23 0h1v1h-1zM24 0h1v1h-1zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h1v1h-1zM9 1h1v1h-1zM10 1h1v1h-1zM11 1h1v1h-1zM16 1h1v1h-1zM18 1h1v1h-1zM24 1h1v1h-1zM0 2h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM8 2h1v1h-1zM9 2h1v1h-1zM10 2h1v1h-1zM11 2h1v1h-1zM12 2h1v1h-1zM13 2h1v1h-1zM14 2h1v1h-1zM18 2h1v1h-1zM20 2h1v1h-1zM21 2h1v1h-1zM22 2h1v1h-1zM24 2h1v1h-1zM0 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM11 3h1v1h-1zM12 3h1v1h-1zM13 3h1v1h-1zM16 3h1v1h-1zM18 3h1v1h-1zM20 3h1v1h-1zM21 3h1v1h-1zM22 3h1v1h-1zM24 3h1v1h-1zM0 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM8 4h1v1h-1zM10 4h1v1h-1zM13 4h1v1h-1zM14 4h1v1h-1zM16 4h1v1h-1zM18 4h1v1h-1zM20 4h1v1h-1zM21 4h1v1h-1zM22 4h1v1h-1zM24 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM9 5h1v1h-1zM10 5h1v1h-1zM11 5h1v1h-1zM14 5h1v1h-1zM16 5h1v1h-1zM18 5h1v1h-1zM24 5h1v1h-1zM0 6h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM19 6h1v1h-1zM20 6h1v1h-1zM21 6h1v1h-1zM22 6h1v1h-1zM23 6h1v1h-1zM24 6h1v1h-1zM10 7h1v1h-1zM11 7h1v1h-1zM13 7h1v1h-1zM14 7h1v1h-1zM15 7h1v1h-1zM0 8h1v1h-1zM3 8h1v1h-1zM4 8h1v1h-1zM5 8h1v1h-1zM6 8h1v1h-1zM7 8h1v1h-1zM8 8h1v1h-1zM11 8h1v1h-1zM12 8h1v1h-1zM14 8h1v1h-1zM15 8h1v1h-1zM17 8h1v1h-1zM20 8h1v1h-1zM22 8h1v1h-1zM23 8h1v1h-1zM24 8h1v1h-1zM0 9h1v1h-1zM1 9h1v1h-1zM2 9h1v1h-1zM3 9h1v1h-1zM5 9h1v1h-1zM7 9h1v1h-1zM8 9h1v1h-1zM11 9h1v1h-1zM12 9h1v1h-1zM14 9h1v1h-1zM15 9h1v1h-1zM19 9h1v1h-1zM20 9h1v1h-1zM21 9h1v1h-1zM22 9h1v1h-1zM23 9h1v1h-1zM3 10h1v1h-1zM4 10h1v1h-1zM5 10h1v1h-1zM6 10h1v1h-1zM8 10h1v1h-1zM11 10h1v1h-1zM15 10h1v1h-1zM16 10h1v1h-1zM17 10h1v1h-1zM18 10h1v1h-1zM19 10h1v1h-1zM21 10h1v1h-1zM24 10h1v1h-1zM1 11h1v1h-1zM3 11h1v1h-1zM4 11h1v1h-1zM7 11h1v1h-1zM9 11h1v1h-1zM10 11h1v1h-1zM11 11h1v1h-1zM12 11h1v1h-1zM14 11h1v1h-1zM15 11h1v1h-1zM17 11h1v1h-1zM19 11h1v1h-1zM21 11h1v1h-1zM22 11h1v1h-1zM23 11h1v1h-1zM24 11h1v1h-1zM0 12h1v1h-1zM2 12h1v1h-1zM6 12h1v1h-1zM8 12h1v1h-1zM16 12h1v1h-1zM18 12h1v1h-1zM19 12h1v1h-1zM24 12h1v1h-1zM0 13h1v1h-1zM2 13h1v1h-1zM4 13h1v1h-1zM8 13h1v1h-1zM10 13h1v1h-1zM12 13h1v1h-1zM13 13h1v1h-1zM14 13h1v1h-1zM15 13h1v1h-1zM16 13h1v1h-1zM20 13h1v1h-1zM23 13h1v1h-1zM0 14h1v1h-1zM1 14h1v1h-1zM3 14h1v1h-1zM4 14h1v1h-1zM5 14h1v1h-1zM6 14h1v1h-1zM7 14h1v1h-1zM9 14h1v1h-1zM10 14h1v1h-1zM14 14h1v1h-1zM15 14h1v1h-1zM16 14h1v1h-1zM17 14h1v1h-1zM18 14h1v1h-1zM20 14h1v1h-1zM21 14h1v1h-1zM22 14h1v1h-1zM23 14h1v1h-1zM24 14h1v1h-1zM0 15h1v1h-1zM5 15h1v1h-1zM7 15h1v1h-1zM9 15h1v1h-1zM10 15h1v1h-1zM12 15h1v1h-1zM15 15h1v1h-1zM19 15h1v1h-1zM21 15h1v1h-1zM22 15h1v1h-1zM24 15h1v1h-1zM0 16h1v1h-1zM2 16h1v1h-1zM5 16h1v1h-1zM6 16h1v1h-1zM8 16h1v1h-1zM9 16h1v1h-1zM10 16h1v1h-1zM11 16h1v1h-1zM12 16h1v1h-1zM13 16h1v1h-1zM16 16h1v1h-1zM17 16h1v1h-1zM18 16h1v1h-1zM19 16h1v1h-1zM20 16h1v1h-1zM22 16h1v1h-1zM23 16h1v1h-1zM8 17h1v1h-1zM11 17h1v1h-1zM16 17h1v1h-1zM20 17h1v1h-1zM22 17h1v1h-1zM23 17h1v1h-1zM0 18h1v1h-1zM1 18h1v1h-1zM2 18h1v1h-1zM3 18h1v1h-1zM4 18h1v1h-1zM5 18h1v1h-1zM6 18h1v1h-1zM8 18h1v1h-1zM12 18h1v1h-1zM13 18h1v1h-1zM14 18h1v1h-1zM16 18h1v1h-1zM18 18h1v1h-1zM20 18h1v1h-1zM24 18h1v1h-1zM0 19h1v1h-1zM6 19h1v1h-1zM8 19h1v1h-1zM11 19h1v1h-1zM13 19h1v1h-1zM16 19h1v1h-1zM20 19h1v1h-1zM24 19h1v1h-1zM0 20h1v1h-1zM2 20h1v1h-1zM3 20h1v1h-1zM4 20h1v1h-1zM6 20h1v1h-1zM8 20h1v1h-1zM11 20h1v1h-1zM12 20h1v1h-1zM14 20h1v1h-1zM15 20h1v1h-1zM16 20h1v1h-1zM17 20h1v1h-1zM18 20h1v1h-1zM19 20h1v1h-1zM20 20h1v1h-1zM0 21h1v1h-1zM2 21h1v1h-1zM3 21h1v1h-1zM4 21h1v1h-1zM6 21h1v1h-1zM8 21h1v1h-1zM12 21h1v1h-1zM14 21h1v1h-1zM15 21h1v1h-1zM17 21h1v1h-1zM18 21h1v1h-1zM23 21h1v1h-1zM24 21h1v1h-1zM0 22h1v1h-1zM2 22h1v1h-1zM3 22h1v1h-1zM4 22h1v1h-1zM6 22h1v1h-1zM10 22h1v1h-1zM11 22h1v1h-1zM13 22h1v1h-1zM14 22h1v1h-1zM15 22h1v1h-1zM20 22h1v1h-1zM21 22h1v1h-1zM22 22h1v1h-1zM23 22h1v1h-1zM24 22h1v1h-1zM0 23h1v1h-1zM6 23h1v1h-1zM9 23h1v1h-1zM11 23h1v1h-1zM12 23h1v1h-1zM14 23h1v1h-1zM17 23h1v1h-1zM18 23h1v1h-1zM19 23h1v1h-1zM20 23h1v1h-1zM22 23h1v1h-1zM23 23h1v1h-1zM24 23h1v1h-1zM0 24h1v1h-1zM1 24h1v1h-1zM2 24h1v1h-1zM3 24h1v1h-1zM4 24h1v1h-1zM5 24h1v1h-1zM6 24h1v1h-1zM8 24h1v1h-1zM9 24h1v1h-1zM16 24h1v1h-1zM17 24h1v1h-1zM18 24h1v1h-1zM21 24h1v1h-1zM24 24h1v1h-1z"/></g></svg></div>
+    <div class="qr-cap">Scan to Give</div>
+    <div class="qr-url">gbfpc.org/legacy</div>
+    <div class="qr-code" id="qrCode" hidden>
+      <span class="qc-l">Code</span>
+      <b class="qc-v" id="qrCodeVal"></b>
+    </div>
+  </aside>
+
+  <div class="banner" id="banner">
+    <div class="l" id="blabel"></div>
+    <div class="x">We Crossed</div>
+    <div class="t" id="btotal"></div>
+    <div class="m" id="bmsg"></div>
+  </div>
+
+  <div class="idle" id="idle"><p>Ready</p></div>
+</div>
+
+<script>
+(function(){
+  /* ── config, overridable from the URL so the booth can adjust without a
+     redeploy:  ?demo=1  ?poll=3000  ?families=0  ?ticks=0  ?bg=000000
+     ?banner=6000  ?echo=12000  ?idle=1  ?fs=0  ?anim=cut|fade|scale                                            */
+  function qp(k, d){
+    var m = new RegExp('[?&]'+k+'=([^&]*)').exec(location.search);
+    return m ? decodeURIComponent(m[1]) : d;
+  }
+  var DEMO       = qp('demo','0') === '1';
+  var POLL_MS    = parseInt(qp('poll','2000'),10) || 2000;   // how fast a new pledge shows
+  var BANNER_MS  = parseInt(qp('banner','4000'),10) || 4000;   // full-screen takeover
+  var ECHO_MS    = qp('echo','') === '0' ? 0 : (parseInt(qp('echo','9000'),10) || 9000);
+  var SHOW_FAM   = qp('families','1') !== '0';
+  var SHOW_TICKS = qp('ticks','1') !== '0';
+  // Off by default: the panel is inset:0 so it covered the QR, and a black
+  // screen with nothing to scan is exactly wrong before the first pledge.
+  // $0 with an empty bar and a visible QR is the correct opening state.
+  var SHOW_IDLE  = qp('idle','0') === '1';
+  var BG         = qp('bg','');
+  var SHOW_QR    = qp('qr','1') !== '0';
+  var QR_COL     = qp('qrsize','');
+  var SHOW_FS    = qp('fs','1') !== '0';
+  // printed verbatim from the URL - never read from the database, see CSS note
+  var CODE       = qp('code','');   // ?fs=0 when embedded in ProPresenter
+  // cut = instant (cheapest, immune to dropped frames), fade = opacity only,
+  // scale = opacity + scale. Switchable live from the URL.
+  var ANIM       = qp('anim','fade');
+  if (['cut','fade','scale'].indexOf(ANIM) === -1) ANIM = 'fade';
+  document.body.classList.add('anim-' + ANIM);
+  var stage      = document.getElementById('stage');
+  if (CODE) {
+    document.getElementById('qrCodeVal').textContent = CODE;
+    document.getElementById('qrCode').hidden = false;
+  }
+  if (!SHOW_QR) stage.classList.add('no-qr');
+  // qrsize stays a percentage of stage width, so the knob behaves as before
+  if (QR_COL) document.documentElement.style.setProperty('--qrcol', (parseFloat(QR_COL)*19.2)+'px');
+
+  /* Scale the whole 1920x1080 stage to fit, letterboxing whatever is left.
+     Never crops, never overflows, holds 16:9 on any window or projector. */
+  function fitStage(){
+    var s = Math.min(window.innerWidth/1920, window.innerHeight/1080);
+    stage.style.transform = 'translate(-50%,-50%) scale(' + s + ')';
+  }
+  fitStage();
+  window.addEventListener('resize', fitStage);
+  window.addEventListener('orientationchange', fitStage);
+  if (BG) document.documentElement.style.setProperty('--bg', '#'+BG.replace('#',''));
+  if (!SHOW_FAM) document.getElementById('rightBlock').classList.add('hide');
+  if (!SHOW_TICKS) document.getElementById('ticks').classList.add('hide');
+
+  var SUPABASE_URL = 'https://keuecvwaailuvouwegod.supabase.co';
+  var ANON_KEY     = 'sb_publishable_LRE10Uf2omW1sP2qqKsbEQ_gvPLaKVC';
+
+  /* ── demo loop, for rehearsing the look without touching real data ── */
+  var demoScript = [
+    {total:18400,count:12},{total:34250,count:21},{total:52900,count:38},
+    {total:78600,count:54},{total:104300,count:71},{total:128750,count:93},
+    {total:161200,count:118},{total:198400,count:142},{total:231900,count:167},
+    {total:262500,count:189}
+  ];
+  var demoMs = [
+    {amount:50000,label:'Strong Start',message:'We just crossed fifty thousand!',color:'#c9a96e'},
+    {amount:125000,label:'Halfway',message:'Halfway to the goal!',color:'#2e7d32'},
+    {amount:200000,label:'Almost There',message:'Two hundred thousand!',color:'#1565c0'},
+    {amount:250000,label:'Goal Reached',message:'We made it. To God be the glory.',color:'#b3261e'}
+  ];
+  var di = 0;
+  function demoState(){
+    var d = demoScript[di % demoScript.length]; di++;
+    var reached = demoMs.filter(function(m){ return d.total >= m.amount; });
+    return { campaign:'Legacy', goal:250000, total_pledged:d.total, pledge_count:d.count,
+      milestones: demoMs.map(function(m){
+        return {amount:m.amount,label:m.label,message:m.message,color:m.color,reached:d.total>=m.amount}; }),
+      current_milestone: reached.length ? reached[reached.length-1] : null,
+      next_milestone: demoMs.filter(function(m){ return d.total < m.amount; })[0] || null };
+  }
+
+  function fetchState(){
+    if (DEMO) return Promise.resolve(demoState());
+    return fetch(SUPABASE_URL + '/rest/v1/rpc/legacy_public_totals', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':ANON_KEY,'Authorization':'Bearer '+ANON_KEY},
+      body:'{}'
+    }).then(function(r){
+      if(!r.ok) throw new Error('HTTP '+r.status);
+      return r.json();
+    });
+  }
+
+  /* requestAnimationFrame is suspended whenever the page is not visible - a
+     minimised window, another desktop, or an offscreen ProPresenter layer. If
+     the count-up relied on it alone the number would silently freeze while the
+     page still looked fine. So: skip the animation outright when hidden, and
+     always write the final value on a timer as a backstop. */
+  function animateNumber(el, from, to, ms, fmt){
+    if (document.hidden) { el.textContent = fmt(to); return; }
+    var t0 = (window.performance && performance.now) ? performance.now() : Date.now();
+    function step(){
+      var now = (window.performance && performance.now) ? performance.now() : Date.now();
+      var p = Math.min(1,(now-t0)/ms), e = 1-Math.pow(1-p,3);
+      el.textContent = fmt(from+(to-from)*e);
+      if(p<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+    setTimeout(function(){ el.textContent = fmt(to); }, ms + 150);
+  }
+  function usd0(n){ return '$' + Math.round(n).toLocaleString('en-US'); }
+  function int0(n){ return Math.round(n).toLocaleString('en-US'); }
+
+  var elTotal = document.getElementById('total'),
+      elCount = document.getElementById('count'),
+      elFill  = document.getElementById('fill'),
+      elTicks = document.getElementById('ticks'),
+      elTrack = document.getElementById('track'),
+      elScale = document.getElementById('scale'),
+      banner  = document.getElementById('banner'),
+      idle    = document.getElementById('idle');
+
+  var prevTotal = 0, prevCount = 0, lastMs = null, first = true,
+      tickSig = '', bannerTimer = null, echoTimer = null;
+  var echoEl = document.getElementById('echo');
+
+  function render(s){
+    if(!s) return;
+    var total = Number(s.total_pledged||0),
+        goal  = Number(s.goal||0),
+        count = Number(s.pledge_count||0);
+    var pct = goal > 0 ? Math.min(100, total/goal*100) : 0;
+    var accent = (s.current_milestone && s.current_milestone.color) || '#c9a96e';
+    document.documentElement.style.setProperty('--accent', accent);
+
+    idle.classList.toggle('on', SHOW_IDLE && total <= 0 && count <= 0);
+
+    animateNumber(elTotal, first?0:prevTotal, total, 1500, usd0);
+    animateNumber(elCount, first?0:prevCount, count, 1500, int0);
+
+    var hasGoal = goal > 0;
+    elTrack.classList.toggle('hide', !hasGoal);
+    elScale.classList.toggle('hide', !hasGoal);
+    if(hasGoal){
+      elFill.style.width = pct + '%';
+      // read s.milestones directly: the local `ms` is not assigned until below
+      // tick labels are gone in this layout, so the goal must be stated here
+      document.getElementById('goalLabel').textContent = usd0(goal) + ' Goal';
+      var nm0 = s.next_milestone;
+      document.getElementById('nextLabel').textContent =
+        nm0 ? 'Next ' + usd0(Number(nm0.amount)) : 'Goal reached';
+    }
+
+    document.getElementById('eyebrow').textContent = (s.campaign || 'Legacy') + ' Offering';
+
+    /* rebuild ticks only when the milestone set actually changes */
+    var ms = s.milestones || [];
+    var sig = goal + '|' + ms.map(function(m){ return m.amount+':'+(m.label||''); }).join(',');
+    if(hasGoal && sig !== tickSig){
+      elTicks.innerHTML = ms.map(function(m){
+        var left = Math.max(0, Math.min(100, Number(m.amount)/goal*100));
+        var text = (m.label || usd0(m.amount)).replace(/[<>&]/g,'');
+        var edge = left > 92 ? ' at-end' : (left < 8 ? ' at-start' : '');
+        return '<div class="tick'+edge+'" data-a="'+Number(m.amount)+'" data-edge="'+edge+'" style="left:'+left+'%"><b>'+text+'</b></div>';
+      }).join('');
+      tickSig = sig;
+      destagger();
+    }
+    for(var i=0;i<elTicks.children.length;i++){
+      var t = elTicks.children[i];
+      var edge = t.getAttribute('data-edge') || '';
+      t.className = 'tick' + (total >= Number(t.getAttribute('data-a')) ? ' hit' : '') + edge;
+    }
+
+    var cm = s.current_milestone, key = cm ? String(cm.amount) : null;
+    if(key && key !== lastMs && !first){
+      document.getElementById('blabel').textContent = cm.label || 'Milestone';
+      document.getElementById('bmsg').textContent   = cm.message || '';
+      banner.style.background = cm.color || accent;
+      // the threshold just crossed - the live total is on the main screen
+      document.getElementById('btotal').textContent = usd0(Number(cm.amount));
+      banner.classList.add('on');
+      if(bannerTimer) clearTimeout(bannerTimer);
+      if(echoTimer)   clearTimeout(echoTimer);
+      echoEl.classList.remove('on');
+
+      var msg = cm.message || cm.label || '';
+      bannerTimer = setTimeout(function(){
+        banner.classList.remove('on');
+        // hand the screen back, but keep the words up while it's being talked over
+        if(ECHO_MS > 0 && msg){
+          echoEl.textContent = msg;
+          echoEl.classList.add('on');
+          echoTimer = setTimeout(function(){ echoEl.classList.remove('on'); }, ECHO_MS);
+        }
+      }, BANNER_MS);
+    }
+    lastMs = key;
+    prevTotal = total; prevCount = count; first = false;
+  }
+
+  /* Labels are positioned as percentages, so whether two collide depends on
+     the rendered width of the text - it has to be measured, not guessed. */
+  function destagger(){
+    var labels = [];
+    for(var i=0;i<elTicks.children.length;i++){
+      var b = elTicks.children[i].querySelector('b');
+      if(b){ b.className = ''; labels.push(b); }
+    }
+    if(labels.length < 2) return;
+    labels.sort(function(a,b){
+      return a.getBoundingClientRect().left - b.getBoundingClientRect().left;
+    });
+    var lastRight = -Infinity;
+    for(var j=0;j<labels.length;j++){
+      var r = labels[j].getBoundingClientRect();
+      if(r.left < lastRight + 12){        // 12px breathing room
+        labels[j].className = 'row2';
+      } else {
+        lastRight = r.right;
+      }
+    }
+  }
+  window.addEventListener('resize', destagger);
+
+  /* A failed poll must never blank the screen mid-service — keep the last
+     good values on screen and quietly try again. */
+  function tick(){
+    fetchState().then(render).catch(function(e){
+      if(window.console) console.warn('legacy poll failed, keeping last values:', e.message);
+    });
+  }
+
+  /* ── fullscreen, cursor, and keeping the display awake ──────────
+     Browsers only grant fullscreen from a real gesture, so there is one
+     button; after that the page runs untouched for the whole service. */
+  var fsbtn = document.getElementById('fsbtn');
+
+  function inFullscreen(){
+    return !!(document.fullscreenElement || document.webkitFullscreenElement ||
+              document.mozFullScreenElement || document.msFullscreenElement);
+  }
+  function requestFs(){
+    var el = document.documentElement;
+    var fn = el.requestFullscreen || el.webkitRequestFullscreen ||
+             el.mozRequestFullScreen || el.msRequestFullscreen;
+    if (fn) { try { fn.call(el); } catch(e){} }
+    keepAwake();
+  }
+  function syncFsButton(){
+    if (!SHOW_FS) { fsbtn.classList.add('gone'); }
+    else if (inFullscreen()) fsbtn.classList.add('gone');
+    else fsbtn.classList.remove('gone');
+    setTimeout(fitStage, 120);   // the viewport changes size on the way in/out
+  }
+  if (!SHOW_FS) fsbtn.style.display = 'none';
+  fsbtn.addEventListener('click', requestFs);
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'f' || e.key === 'F') requestFs();
+  });
+  ['fullscreenchange','webkitfullscreenchange','mozfullscreenchange','MSFullscreenChange']
+    .forEach(function(ev){ document.addEventListener(ev, syncFsButton); });
+  syncFsButton();
+
+  /* A projector showing a static number for an hour will happily sleep. */
+  var wakeLock = null;
+  function keepAwake(){
+    if (!navigator.wakeLock || !navigator.wakeLock.request) return;
+    navigator.wakeLock.request('screen').then(function(wl){
+      wakeLock = wl;
+      wl.addEventListener('release', function(){ wakeLock = null; });
+    }).catch(function(){});
+  }
+  document.addEventListener('visibilitychange', function(){
+    if (!document.hidden && !wakeLock) keepAwake();
+  });
+
+  /* hide the cursor once it stops moving */
+  var idleTimer = null;
+  function pokeCursor(){
+    document.body.classList.remove('no-cursor');
+    if (idleTimer) clearTimeout(idleTimer);
+    idleTimer = setTimeout(function(){ document.body.classList.add('no-cursor'); }, 2500);
+  }
+  document.addEventListener('mousemove', pokeCursor);
+  pokeCursor();
+
+  tick();
+  setInterval(tick, POLL_MS);
+  // catch up immediately if the window is restored or brought forward
+  document.addEventListener('visibilitychange', function(){ if(!document.hidden) tick(); });
+}());
+</script>
+</body>
+</html>
