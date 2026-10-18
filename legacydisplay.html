@@ -216,7 +216,7 @@
 (function(){
   /* ── config, overridable from the URL so the booth can adjust without a
      redeploy:  ?demo=1  ?poll=3000  ?families=0  ?ticks=0  ?bg=000000
-     ?banner=6000  ?echo=12000  ?idle=0  ?fs=0  ?anim=cut|fade|scale                                            */
+     ?banner=6000  ?echo=12000  ?idle=1  ?fs=0  ?anim=cut|fade|scale                                            */
   function qp(k, d){
     var m = new RegExp('[?&]'+k+'=([^&]*)').exec(location.search);
     return m ? decodeURIComponent(m[1]) : d;
@@ -227,7 +227,10 @@
   var ECHO_MS    = qp('echo','') === '0' ? 0 : (parseInt(qp('echo','9000'),10) || 9000);
   var SHOW_FAM   = qp('families','1') !== '0';
   var SHOW_TICKS = qp('ticks','1') !== '0';
-  var SHOW_IDLE  = qp('idle','1') !== '0';
+  // Off by default: the panel is inset:0 so it covered the QR, and a black
+  // screen with nothing to scan is exactly wrong before the first pledge.
+  // $0 with an empty bar and a visible QR is the correct opening state.
+  var SHOW_IDLE  = qp('idle','0') === '1';
   var BG         = qp('bg','');
   var SHOW_QR    = qp('qr','1') !== '0';
   var QR_COL     = qp('qrsize','');
