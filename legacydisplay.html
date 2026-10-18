@@ -11,54 +11,67 @@
 <style>
   /* Built for 1920x1080. Sizes are in vw so it still scales if the projector
      differs, but the proportions are tuned for 16:9. */
-  :root{ --accent:#c9a96e; --bg:#0b0b0b; --qrcol:25vw; }
+  :root{ --accent:#c9a96e; --bg:#0b0b0b; --qrcol:480px; }
   *{margin:0;padding:0;box-sizing:border-box;}
   html,body{height:100%;overflow:hidden;background:var(--bg);}
+
+  /* A fixed 1920x1080 stage scaled as a single unit to fit whatever the
+     projector actually gives us. vw/vh tracked only one axis, so any window
+     that wasn't exactly 16:9 pushed content off the bottom. Everything inside
+     is in design pixels; only the scale factor changes. */
+  .stage{
+    position:relative;
+    width:1920px;height:1080px;
+    transform-origin:50% 50%;
+    display:grid;grid-template-columns:1fr var(--qrcol);align-items:center;
+    gap:77px;padding:0 115px;
+    transition:background 1s ease;
+  }
+  .stage.no-qr{grid-template-columns:1fr;}
   body{
     font-family:'Montserrat',system-ui,-apple-system,sans-serif;color:#fff;
-    display:grid;grid-template-columns:1fr var(--qrcol);align-items:center;
-    gap:4vw;padding:0 6vw;transition:background 1s ease;
+    margin:0;display:grid;place-items:center;overflow:hidden;
   }
-  body.no-qr{grid-template-columns:1fr;}
+
   .main{min-width:0;}
 
   /* QR must be dark-on-light to scan reliably, so it sits on a white card
      even though the page is black. The card edge doubles as the quiet zone. */
-  .qr{display:flex;flex-direction:column;align-items:center;gap:2.2vh;}
-  .qr-card{background:#fff;border-radius:1.6vw;padding:1.5vw;width:100%;
+  .qr{display:flex;flex-direction:column;align-items:center;gap:23.8px;}
+  .qr-card{background:#fff;border-radius:30.7px;padding:28.8px;width:100%;
            box-shadow:0 0 90px rgba(255,255,255,.12);}
   .qr-svg{display:block;width:100%;height:auto;}
-  .qr-cap{font-size:1.05vw;font-weight:900;letter-spacing:.3em;text-transform:uppercase;
+  .qr-cap{font-size:20.2px;font-weight:900;letter-spacing:.3em;text-transform:uppercase;
           color:#fff;text-align:center;line-height:1.4;}
-  .qr-url{font-size:1.15vw;font-weight:700;letter-spacing:.06em;color:var(--accent);
+  .qr-url{font-size:22.1px;font-weight:700;letter-spacing:.06em;color:var(--accent);
           transition:color 1s ease;text-align:center;}
-  body.no-qr .qr{display:none;}
-  body.no-qr .banner{right:0;}
+  .stage.no-qr .qr{display:none;}
+  .stage.no-qr .banner{right:0;}
 
-  .top{display:flex;align-items:flex-end;justify-content:space-between;gap:4vw;margin-bottom:5.6vh;}
-  .eyebrow{font-size:.95vw;font-weight:700;letter-spacing:.42em;text-transform:uppercase;
-           color:rgba(255,255,255,.4);margin-bottom:2.2vh;}
-  .total{font-size:9.6vw;font-weight:900;line-height:.82;letter-spacing:-.045em;
+  .top{display:flex;align-items:flex-end;justify-content:space-between;gap:76.8px;margin-bottom:60.5px;}
+  .eyebrow{font-size:18.2px;font-weight:700;letter-spacing:.42em;text-transform:uppercase;
+           color:rgba(255,255,255,.4);margin-bottom:23.8px;}
+  .total{font-size:184.3px;font-weight:900;line-height:.82;letter-spacing:-.045em;
          font-variant-numeric:tabular-nums;color:var(--accent);transition:color 1s ease;
          text-shadow:0 0 100px rgba(201,169,110,.18);}
-  .right{text-align:right;padding-bottom:1.4vh;}
-  .right .n{font-size:3.6vw;font-weight:900;letter-spacing:-.025em;line-height:1;
+  .right{text-align:right;padding-bottom:15.1px;}
+  .right .n{font-size:69.1px;font-weight:900;letter-spacing:-.025em;line-height:1;
             font-variant-numeric:tabular-nums;}
-  .right .l{font-size:.8vw;font-weight:700;letter-spacing:.3em;text-transform:uppercase;
-            color:rgba(255,255,255,.35);margin-top:1.3vh;}
+  .right .l{font-size:15.4px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;
+            color:rgba(255,255,255,.35);margin-top:14px;}
   .right.hide{display:none;}
 
-  .track{position:relative;height:5.4vh;border-radius:99px;background:rgba(255,255,255,.07);
+  .track{position:relative;height:58.3px;border-radius:99px;background:rgba(255,255,255,.07);
          box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);}
   .fill{position:absolute;top:0;bottom:0;left:0;width:0;border-radius:99px;background:var(--accent);
         transition:width 1.6s cubic-bezier(.22,1,.36,1),background 1s ease;}
-  .fill::after{content:'';position:absolute;right:0;top:0;bottom:0;width:12vw;border-radius:99px;
+  .fill::after{content:'';position:absolute;right:0;top:0;bottom:0;width:230.4px;border-radius:99px;
                background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.22));}
   .ticks{position:absolute;inset:0;pointer-events:none;}
-  .tick{position:absolute;top:-3.4vh;bottom:-3.4vh;width:2px;background:rgba(255,255,255,.2);
+  .tick{position:absolute;top:-36.7px;bottom:-36.7px;width:2px;background:rgba(255,255,255,.2);
         transition:background .6s ease;}
-  .tick b{position:absolute;bottom:-3.2vh;left:50%;transform:translateX(-50%);white-space:nowrap;
-          font-size:.7vw;font-weight:700;letter-spacing:.24em;text-transform:uppercase;
+  .tick b{position:absolute;bottom:-34.6px;left:50%;transform:translateX(-50%);white-space:nowrap;
+          font-size:13.4px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;
           color:rgba(255,255,255,.38);transition:color .6s ease;}
   .tick.hit{background:#fff;}
   .tick.hit b{color:#fff;}
@@ -67,29 +80,30 @@
   .tick.at-end   b{left:auto;right:0;transform:translateX(0);}
   /* the track narrowed when the QR took a column, so adjacent labels can
      collide; anything that would overlap drops to a second row */
-  .tick b.row2{bottom:-6.4vh;}
+  .tick b.row2{bottom:-69.1px;}
   .ticks.hide{display:none;}
 
-  .scale{display:flex;justify-content:space-between;margin-top:9.5vh;
-         font-size:.82vw;font-weight:700;letter-spacing:.26em;text-transform:uppercase;
+  .scale{display:flex;justify-content:space-between;margin-top:102.6px;
+         font-size:15.7px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;
          color:rgba(255,255,255,.3);}
   .track.hide,.scale.hide{display:none;}
 
-  .banner{position:fixed;left:0;right:calc(var(--qrcol) + 8vw);bottom:0;padding:4.2vh 6vw;background:var(--accent);
+  .banner{position:absolute;left:0;right:calc(var(--qrcol) + 153.6px);bottom:0;padding:45.4px 115.2px;background:var(--accent);
           color:#0b0b0b;transform:translateY(110%);
           transition:transform .85s cubic-bezier(.22,1,.36,1);z-index:9;}
   .banner.on{transform:translateY(0);}
-  .banner .l{font-size:.88vw;font-weight:700;letter-spacing:.42em;text-transform:uppercase;opacity:.62;}
-  .banner .m{font-size:3.6vw;font-weight:900;letter-spacing:-.03em;line-height:1;margin-top:1.3vh;}
+  .banner .l{font-size:16.9px;font-weight:700;letter-spacing:.42em;text-transform:uppercase;opacity:.62;}
+  .banner .m{font-size:69.1px;font-weight:900;letter-spacing:-.03em;line-height:1;margin-top:14px;}
 
   /* shown before anything has been pledged */
-  .idle{position:fixed;inset:0;display:none;place-items:center;background:var(--bg);z-index:4;}
+  .idle{position:absolute;inset:0;display:none;place-items:center;background:var(--bg);z-index:4;}
   .idle.on{display:grid;}
-  .idle p{font-size:1.5vw;font-weight:700;letter-spacing:.34em;text-transform:uppercase;
+  .idle p{font-size:28.8px;font-weight:700;letter-spacing:.34em;text-transform:uppercase;
           color:rgba(255,255,255,.3);}
 </style>
 </head>
 <body>
+<div class="stage" id="stage">
   <div class="main">
   <div class="top">
     <div>
@@ -121,6 +135,7 @@
   </div>
 
   <div class="idle" id="idle"><p>Ready</p></div>
+</div>
 
 <script>
 (function(){
@@ -140,8 +155,20 @@
   var BG         = qp('bg','');
   var SHOW_QR    = qp('qr','1') !== '0';
   var QR_COL     = qp('qrsize','');
-  if (!SHOW_QR) document.body.classList.add('no-qr');
-  if (QR_COL) document.documentElement.style.setProperty('--qrcol', parseFloat(QR_COL)+'vw');
+  var stage      = document.getElementById('stage');
+  if (!SHOW_QR) stage.classList.add('no-qr');
+  // qrsize stays a percentage of stage width, so the knob behaves as before
+  if (QR_COL) document.documentElement.style.setProperty('--qrcol', (parseFloat(QR_COL)*19.2)+'px');
+
+  /* Scale the whole 1920x1080 stage to fit, letterboxing whatever is left.
+     Never crops, never overflows, holds 16:9 on any window or projector. */
+  function fitStage(){
+    var s = Math.min(window.innerWidth/1920, window.innerHeight/1080);
+    stage.style.transform = 'scale(' + s + ')';
+  }
+  fitStage();
+  window.addEventListener('resize', fitStage);
+  window.addEventListener('orientationchange', fitStage);
   if (BG) document.documentElement.style.setProperty('--bg', '#'+BG.replace('#',''));
   if (!SHOW_FAM) document.getElementById('rightBlock').classList.add('hide');
   if (!SHOW_TICKS) document.getElementById('ticks').classList.add('hide');
