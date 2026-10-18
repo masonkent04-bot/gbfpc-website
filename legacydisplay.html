@@ -103,21 +103,24 @@
   /* ── BOOTH CONTROLS ─────────────────────────────────────────
      The stage scales to the window, so anything short of true fullscreen
      means fiddling with window size and position. One click removes that. */
+  /* Tucked into a corner, not over the number: if nobody clicks it the
+     projected image is still clean. Fades out with the cursor. */
   .fsbtn{
-    position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:400;
-    display:flex;flex-direction:column;align-items:center;gap:18px;
-    background:rgba(20,20,20,.96);border:1px solid rgba(255,255,255,.18);
-    border-radius:20px;padding:40px 48px;cursor:pointer;
+    position:fixed;right:22px;bottom:22px;z-index:400;
+    display:flex;align-items:center;gap:10px;
+    background:rgba(20,20,20,.92);border:1px solid rgba(255,255,255,.16);
+    border-radius:100px;padding:11px 18px;cursor:pointer;
     font-family:'Montserrat',system-ui,sans-serif;color:#fff;
-    transition:border-color .2s ease;
+    transition:border-color .2s ease,opacity .5s ease;
   }
   .fsbtn:hover{border-color:var(--accent);}
-  .fsbtn svg{width:40px;height:40px;stroke:var(--accent);fill:none;stroke-width:1.8;
+  .fsbtn svg{width:17px;height:17px;stroke:var(--accent);fill:none;stroke-width:1.9;
              stroke-linecap:round;stroke-linejoin:round;}
-  .fsbtn b{font-size:15px;font-weight:900;letter-spacing:.26em;text-transform:uppercase;}
-  .fsbtn i{font-size:12px;font-weight:300;font-style:normal;color:rgba(255,255,255,.45);
-           letter-spacing:.04em;}
+  .fsbtn b{font-size:10px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;}
+  .fsbtn i{display:none;}
   .fsbtn.gone{display:none;}
+  /* once the cursor is parked, the control disappears too */
+  body.no-cursor .fsbtn{opacity:0;pointer-events:none;}
   /* No mouse pointer on the projected image.
      NB: named no-cursor, not idle - .idle is already the Ready panel's class
      and is display:none, so putting `idle` on <body> hid the entire page. */
@@ -127,7 +130,7 @@
 <body>
 <button class="fsbtn" id="fsbtn" type="button" aria-label="Fill the screen">
   <svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
-  <b>Fill the Screen</b>
+  <b>Fill Screen</b>
   <i>or press F &middot; Esc to exit</i>
 </button>
 <div class="stage" id="stage">
