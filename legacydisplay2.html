@@ -252,17 +252,42 @@
   var SHOW_QR    = qp('qr','1') !== '0';
   var QR_COL     = qp('qrsize','');
   var SHOW_FS    = qp('fs','1') !== '0';
-  // printed verbatim from the URL - never read from the database, see CSS note
-  var CODE       = qp('code','');   // ?fs=0 when embedded in ProPresenter
+  // ?code= still works as a manual override; ?key= is the normal path - the
+  // key is secret and lives only in this URL, so the server will hand the
+  // code to this display and to nobody else. Change the code in admin and
+  // the screen follows it without the URL ever being edited.
+  var CODE       = qp('code','');
+  var DKEY       = qp('key','');   // ?fs=0 when embedded in ProPresenter
   // cut = instant (cheapest, immune to dropped frames), fade = opacity only,
   // scale = opacity + scale. Switchable live from the URL.
   var ANIM       = qp('anim','fade');
   if (['cut','fade','scale'].indexOf(ANIM) === -1) ANIM = 'fade';
   document.body.classList.add('anim-' + ANIM);
   var stage      = document.getElementById('stage');
-  if (CODE) {
-    document.getElementById('qrCodeVal').textContent = CODE;
+  function showCode(v){
+    if (!v) return;
+    document.getElementById('qrCodeVal').textContent = v;
     document.getElementById('qrCode').hidden = false;
+  }
+  function hideCode(){ document.getElementById('qrCode').hidden = true; }
+
+  if (CODE) {
+    showCode(CODE);
+  } else if (DKEY) {
+    // re-checked on the same cadence as the totals, so turning the code off or
+    // changing it in admin reaches the screen within a poll
+    var pollCode = function(){
+      fetch(SUPABASE_URL + '/rest/v1/rpc/legacy_display_info', {
+        method:'POST',
+        headers:{ 'Content-Type':'application/json', 'apikey':ANON_KEY, 'Authorization':'Bearer '+ANON_KEY },
+        body: JSON.stringify({ p_key: DKEY })
+      })
+      .then(function(r){ return r.json(); })
+      .then(function(d){ if (d && d.service_code) showCode(d.service_code); else hideCode(); })
+      .catch(function(){});
+    };
+    pollCode();
+    setInterval(pollCode, 15000);
   }
   if (!SHOW_QR) stage.classList.add('no-qr');
   // qrsize stays a percentage of stage width, so the knob behaves as before
