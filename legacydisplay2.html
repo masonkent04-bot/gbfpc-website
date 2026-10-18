@@ -11,7 +11,7 @@
 <style>
   /* Built for 1920x1080. Sizes are in vw so it still scales if the projector
      differs, but the proportions are tuned for 16:9. */
-  :root{ --accent:#c9a96e; --bg:#000000; --qrcol:520px; }
+  :root{ --accent:#c9a96e; --bg:#000000; --qrcol:430px; }
   *{margin:0;padding:0;box-sizing:border-box;}
   html,body{height:100%;overflow:hidden;background:var(--bg);}
 
@@ -38,19 +38,19 @@
   /* QR must be dark-on-light to scan reliably, so it sits on a white card
      even though the page is black. The card edge doubles as the quiet zone. */
   .qr{display:flex;flex-direction:column;align-items:center;gap:23.8px;}
-  .qr-card{background:#fff;border-radius:26px;padding:22px;width:100%;
+  .qr-card{background:#fff;border-radius:22px;padding:18px;width:320px;max-width:100%;
            box-shadow:0 0 90px rgba(255,255,255,.12);}
   .qr-svg{display:block;width:100%;height:auto;}
-  .qr-cap{font-size:44px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;
+  .qr-cap{font-size:38px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;
           color:#fff;text-align:center;line-height:1.4;}
-  .qr-url{font-size:38px;font-weight:800;letter-spacing:.02em;color:#fff;
+  .qr-url{font-size:34px;font-weight:800;letter-spacing:.02em;color:#fff;
           transition:color 1s ease;text-align:center;}
   .stage.no-qr .qr{display:none;}
 
   .top{display:flex;align-items:flex-end;justify-content:space-between;gap:76.8px;margin-bottom:60.5px;}
   .eyebrow{font-size:34px;font-weight:800;letter-spacing:.32em;text-transform:uppercase;
            color:rgba(255,255,255,.82);margin-bottom:23.8px;}
-  .total{font-size:208px;font-weight:900;line-height:.82;letter-spacing:-.045em;
+  .total{font-size:234px;font-weight:900;line-height:.82;letter-spacing:-.045em;
          font-variant-numeric:tabular-nums;color:var(--accent);transition:color 1s ease;
          text-shadow:0 0 100px rgba(201,169,110,.18);}
   .right{text-align:right;padding-bottom:15.1px;}
@@ -174,12 +174,12 @@
      that returned the code would let anyone on the internet read it and the
      gate would be worthless. The booth puts it in the URL; the page just
      prints what it is handed. */
-  .qr-code{margin-top:24px;padding-top:22px;width:100%;text-align:center;
+  .qr-code{margin-top:20px;padding-top:18px;width:100%;text-align:center;
            border-top:2px solid rgba(255,255,255,.2);}
   .qr-code[hidden]{display:none;}
-  .qc-l{display:block;font-size:30px;font-weight:800;letter-spacing:.28em;
+  .qc-l{display:block;font-size:26px;font-weight:800;letter-spacing:.28em;
         text-transform:uppercase;color:rgba(255,255,255,.62);margin-bottom:8px;}
-  .qc-v{display:block;font-size:80px;font-weight:900;letter-spacing:.05em;
+  .qc-v{display:block;font-size:64px;font-weight:900;letter-spacing:.05em;
         text-transform:uppercase;color:var(--accent);line-height:1;}
 </style>
 </head>
