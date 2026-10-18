@@ -139,10 +139,13 @@
   /* After the takeover hands the screen back, the message lingers under the
      total for a few more seconds - long enough to read while someone is
      speaking over it. Absolutely positioned so it can't shift the bar. */
-  .top > div:first-child{position:relative;}
+  .main{position:relative;}
+  /* Sits below the bar, where there is room, rather than crowding the total.
+     Absolutely positioned so showing and hiding it never moves the bar. */
   .echo{
-    position:absolute;top:100%;left:0;margin-top:8px;white-space:nowrap;
-    font-size:34px;font-weight:800;letter-spacing:-.015em;color:var(--accent);
+    position:absolute;top:100%;left:0;right:0;margin-top:52px;
+    font-size:50px;font-weight:800;letter-spacing:-.02em;line-height:1.15;
+    color:var(--accent);
     opacity:0;transition:opacity .55s ease,color 1s ease;
   }
   .echo.on{opacity:1;}
@@ -160,7 +163,6 @@
     <div>
       <div class="eyebrow" id="eyebrow">Legacy Offering</div>
       <div class="total" id="total">$0</div>
-      <div class="echo" id="echo"></div>
     </div>
     <div class="right" id="rightBlock">
       <div class="n" id="count">0</div>
@@ -173,6 +175,7 @@
     <div class="ticks" id="ticks"></div>
   </div>
   <div class="scale" id="scale"><span>$0</span><span id="goalLabel">Goal</span></div>
+  <div class="echo" id="echo"></div>
   </div>
 
   <aside class="qr" id="qrPanel">
