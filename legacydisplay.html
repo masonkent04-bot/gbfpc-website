@@ -386,9 +386,9 @@
   /* hide the cursor once it stops moving */
   var idleTimer = null;
   function pokeCursor(){
-    document.body.classList.remove('idle');
+    document.body.classList.remove('no-cursor');
     if (idleTimer) clearTimeout(idleTimer);
-    idleTimer = setTimeout(function(){ document.body.classList.add('idle'); }, 2500);
+    idleTimer = setTimeout(function(){ document.body.classList.add('no-cursor'); }, 2500);
   }
   document.addEventListener('mousemove', pokeCursor);
   pokeCursor();
