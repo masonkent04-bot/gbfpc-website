@@ -20,7 +20,7 @@
      that wasn't exactly 16:9 pushed content off the bottom. Everything inside
      is in design pixels; only the scale factor changes. */
   .stage{
-    position:relative;
+    position:absolute;top:50%;left:50%;
     width:1920px;height:1080px;
     transform-origin:50% 50%;
     display:grid;grid-template-columns:1fr var(--qrcol);align-items:center;
@@ -30,7 +30,7 @@
   .stage.no-qr{grid-template-columns:1fr;}
   body{
     font-family:'Montserrat',system-ui,-apple-system,sans-serif;color:#fff;
-    margin:0;display:grid;place-items:center;overflow:hidden;
+    margin:0;overflow:hidden;position:relative;
   }
 
   .main{min-width:0;}
@@ -164,7 +164,7 @@
      Never crops, never overflows, holds 16:9 on any window or projector. */
   function fitStage(){
     var s = Math.min(window.innerWidth/1920, window.innerHeight/1080);
-    stage.style.transform = 'scale(' + s + ')';
+    stage.style.transform = 'translate(-50%,-50%) scale(' + s + ')';
   }
   fitStage();
   window.addEventListener('resize', fitStage);
