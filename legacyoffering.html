@@ -374,7 +374,7 @@
         <div class="section-head">Your Commitment</div>
 
         <div class="form-group">
-          <label class="form-label" for="lg-amount">Pledge Amount</label>
+          <label class="form-label" for="lg-amount">Pledge Amount <span style="text-transform:none;letter-spacing:0;font-weight:400;color:#bbb">&mdash; the total you are committing</span></label>
           <div class="amt-wrap">
             <input class="form-input amt-input" type="text" inputmode="decimal"
                    id="lg-amount" name="pledge_amount" placeholder="0.00" required/>
@@ -405,7 +405,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="form-label" for="lg-months">For how many months <span style="color:var(--c-brand)">*</span></label>
+              <label class="form-label" for="lg-months">Over how many months <span style="color:var(--c-brand)">*</span></label>
               <input class="form-input" type="number" min="1" max="600" id="lg-months"
                      name="duration_months" placeholder="12"/>
             </div>
@@ -716,10 +716,12 @@
 
     var meta = '<strong>' + name.replace(/[<>&]/g,'') + '</strong><br/>';
     if(isRec){
-      var freqWord = { weekly:'every week', biweekly:'every two weeks', monthly:'every month',
-                       quarterly:'every quarter', annually:'every year' }[form.frequency.value] || '';
-      meta += money(amt) + ' ' + freqWord + (months ? ' for ' + months + ' month' + (months===1?'':'s') : '');
-      if(months) meta += '<br/>Total: <strong>' + money(amt * months) + '</strong>';
+      // The amount IS the pledge. Frequency and duration describe how it gets
+      // paid out - they are NOT a multiplier. Presenting a multiplied "Total"
+      // here overstated what people thought they were committing.
+      var freqWord = { weekly:'weekly', biweekly:'every two weeks', monthly:'monthly',
+                       quarterly:'quarterly', annually:'annually' }[form.frequency.value] || '';
+      meta += 'Paid ' + freqWord + (months ? ' over ' + months + ' month' + (months===1?'':'s') : '');
     } else {
       meta += 'Given all at once';
     }
